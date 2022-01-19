@@ -1,0 +1,86 @@
+.card { 
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 0.25rem;
+    background: #ffffff;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    position: relative;
+    width: 100%;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 4px;
+}
+
+.ondot {
+    height: 15px;
+    width: 15px;
+    padding: 2px;
+    margin-inline-end: 5px;
+    background-color: #60A73C;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.offdot {
+    height: 15px;
+    width: 15px;
+    padding: 2px;
+    margin-inline-end: 5px;
+    background-color: #FC0000;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.card .lista ul {
+    display: block !important;
+    margin-top: 40px !important;
+    margin-left: -60px !important;
+}
+
+h3 {
+    padding: 5px;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-blue:hover {
+    background-color: #355492;
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #5474B2;
+    border-color: #5474B2;
+}
+
+.btn-purple {
+    color: #fff;
+    background-color: #A73C96;
+    border-color: #A73C96;
+}
+
+.btn-purple:hover {
+    background-color: #7D2D71;
+}
+
