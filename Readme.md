@@ -9,6 +9,7 @@ Recursos:
 - Gerador de carteirinhas de acesso (tira fotos e importa automaticamente no sistema).
 - Dados energia
 - TFTP telefone
+- Login externo - alunos
 
 Em desenvolvimento:
 - API para fechadura;
@@ -19,7 +20,6 @@ Em desenvolvimento:
 - Atualização de layout - sistema sirene
 - Gestão secretaria;
 - Gestão atividades
-- Login externo
 - Agenda laboratório
 
 

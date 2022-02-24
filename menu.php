@@ -17,6 +17,11 @@ Submenu
 </li>
 
 */
+    if($nivel == 0) {
+        echo "<li class='item'>";
+            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+        echo "</li>";
+    }
     if($nivel == 1) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -47,7 +52,10 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../catraca/index.php' class='menu-btn'><i class='fa fa-fw fa-calendar'></i> AcessoNet</a>";
-        echo "</li>";
+	echo "</li>";
+	echo "<li class='item'>";
+	echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span>Câmera</span></a>";
+	echo "</li>";
     } else if($nivel == 5) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -55,9 +63,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
         echo "</li>";
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../catraca/index.php' class='menu-btn'><i class='fa fa-fw fa-calendar'></i> AcessoNet</a>";
-        echo "</li>";
+        echo "</li>";*/
     } else if($nivel == 6) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -103,6 +111,9 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span> Registro</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../linksAulas/testeProf.php' class='menu-btn'><i class='fas fa-bell'></i><span> Teste</span></a>";

@@ -536,3 +536,86 @@
 [2021/12/15 09:23:00] Usuário jr.pereira logado.
 [2021/12/15 13:58:08] Usuário administrator logado.
 [2021/12/16 16:42:12] Usuário clauzemberg.santos logado.
+[2022/01/18 22:03:25] Usuário administrator logado.
+[2022/01/18 22:16:18] Usuário administrator logado.
+[2022/01/18 22:24:43] Usuário administrator logado.
+[2022/01/24 11:03:00] Tentativa de login do usuário jr.pereira falhou.
+[2022/01/24 11:03:10] Tentativa de login do usuário jr.pereira falhou.
+[2022/01/24 11:03:16] Tentativa de login do usuário jr.pereira falhou.
+[2022/01/24 11:04:48] Tentativa de login do usuário jr.pereira falhou.
+[2022/01/24 11:04:59] Tentativa de login do usuário jr.pereira falhou.
+[2022/01/24 11:05:21] Usuário administrator logado.
+[2022/01/24 13:32:29] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 13:32:53] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 13:37:28] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 13:37:55] Usuário administrator logado.
+[2022/01/24 13:45:42] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 13:55:19] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 14:17:35] Tentativa de login do usuário clauzemberg.santos falhou.
+[2022/01/24 14:44:55] Tentativa de login do usuário  falhou.
+[2022/01/25 16:22:38] Usuário administrator logado.
+[2022/01/30 16:11:23] Usuário administrator logado.
+[2022/01/31 18:02:08] Usuário administrator logado.
+[2022/02/01 17:49:22] Tentativa de login do usuário ivina falhou.
+[2022/02/01 17:50:57] Tentativa de login do usuário ivina falhou.
+[2022/02/01 17:51:15] Tentativa de login do usuário ivina falhou.
+[2022/02/01 18:09:28] Tentativa de login do usuário ivina falhou.
+[2022/02/01 18:09:35] Tentativa de login do usuário ivina falhou.
+[2022/02/01 18:10:19] Usuário ivina logado.
+[2022/02/01 18:11:11] Usuário ivina logado.
+[2022/02/01 18:12:40] Usuário ivina logado.
+[2022/02/01 18:12:54] Usuário administrator logado.
+[2022/02/02 07:00:11] Usuário administrator logado.
+[2022/02/04 08:58:27] Usuário administrator logado.
+[2022/02/04 09:12:08] Usuário administrator logado.
+[2022/02/04 11:04:37] Usuário jr.pereira logado.
+[2022/02/04 20:13:11] Usuário administrator logado.
+[2022/02/15 08:19:16] Usuário administrator logado.
+[2022/02/15 08:39:32] Usuário administrator logado.
+[2022/02/15 09:17:05] Usuário administrator logado.
+[2022/02/15 09:56:25] Usuário jr.pereira logado.
+[2022/02/15 15:41:11] Usuário administrator logado.
+[2022/02/15 15:49:54] Usuário asrocha logado.
+[2022/02/15 15:56:21] Usuário asrocha logado.
+[2022/02/15 17:36:40] Usuário asrocha logado.
+[2022/02/16 15:42:54] Usuário jr.pereira logado.
+[2022/02/17 11:48:38] Usuário jr.pereira logado.
+[2022/02/17 13:07:54] Usuário jr.pereira logado.
+[2022/02/17 13:17:13] Usuário jr.pereira logado.
+[2022/02/17 13:19:26] Usuário jr.pereira logado.
+[2022/02/17 13:22:16] Usuário asrocha logado.
+[2022/02/17 13:47:20] Usuário jr.pereira logado.
+[2022/02/17 14:35:35] Usuário jr.pereira logado.
+[2022/02/17 14:35:35] Usuário jr.pereira logado.
+[2022/02/17 19:34:52] Usuário administrator logado.
+[2022/02/18 07:46:42] Usuário administrator logado.
+[2022/02/18 09:15:41] Usuário jr.pereira logado.
+[2022/02/18 09:16:22] Usuário administrator logado.
+[2022/02/18 13:47:39] Usuário jr.pereira logado.
+[2022/02/18 14:52:42] Usuário jr.pereira logado.
+[2022/02/18 15:57:40] Usuário jr.pereira logado.
+[2022/02/19 23:45:02] Usuário administrator logado.
+[2022/02/20 11:54:07] Usuário administrator logado.
+[2022/02/20 13:31:01] Usuário administrator logado.
+[2022/02/20 17:42:38] Usuário administrator logado.
+[2022/02/20 19:26:58] Usuário administrator logado.
+[2022/02/20 19:40:03] Usuário administrator logado.
+[2022/02/20 23:22:08] Usuário administrator logado.
+[2022/02/20 23:32:52] Usuário administrator logado.
+[2022/02/20 23:48:35] Usuário administrator logado.
+[2022/02/21 09:27:31] Usuário jr.pereira logado.
+[2022/02/21 09:39:27] Usuário administrator logado.
+[2022/02/21 10:57:17] Usuário administrator logado.
+[2022/02/21 12:05:08] Usuário administrator logado.
+[2022/02/21 13:12:44] Usuário jr.pereira logado.
+[2022/02/22 09:41:46] Usuário administrator logado.
+[2022/02/22 10:51:19] Usuário administrator logado.
+[2022/02/22 12:28:05] Usuário administrator logado.
+[2022/02/22 12:56:39] Usuário administrator logado.
+[2022/02/22 13:02:57] Usuário jr.pereira logado.
+[2022/02/22 13:10:32] Usuário jr.pereira logado.
+[2022/02/22 15:22:54] Usuário jr.pereira logado.
+[2022/02/23 15:41:46] Usuário jr.pereira logado.
+[2022/02/24 15:14:04] Usuário administrator logado.
+[2022/02/24 15:29:17] Usuário administrator logado.
+[2022/02/24 19:00:50] Usuário administrator logado.

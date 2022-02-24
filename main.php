@@ -14,6 +14,12 @@
     
     $logado = $_SESSION['user'];
     $nivel = $_SESSION['group'];
+    if((!isset ($_SESSION['obs']) == true)) {
+        $obs==0;   
+    } else {
+        $obs = $_SESSION['obs'];
+    }
+    
 
     include('functions.php');
 ?>
@@ -54,7 +60,14 @@
         <!--Inicio conteúdo-->
             <div class="main-container">
                 <?php 
-                    if ($nivel == 1) {
+                    if($nivel == 0) {
+                        if($obs == 1) {
+                            include('resetPassContainer.php');
+                        } else {
+                            include('alunoContainer.php');
+                        }
+                    }
+                    else if ($nivel == 1) {
 
                     } else if ($nivel == 2) {
                         
@@ -72,6 +85,8 @@
                         
                     }  else if ($nivel == 9) {
                         include('adminContainer.php');
+                    } else if($nivel == 0) {
+                        
                     }
                 ?>
         </div>

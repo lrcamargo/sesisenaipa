@@ -36,6 +36,16 @@
     display: inline-block;
 }
 
+.standdot {
+    height: 15px;
+    width: 15px;
+    padding: 2px;
+    margin-inline-end: 5px;
+    background-color: rgb(213, 224, 59);
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .card .lista ul {
     display: block !important;
     margin-top: 40px !important;
