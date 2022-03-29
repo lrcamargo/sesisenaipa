@@ -9,11 +9,12 @@
         unset($_SESSION['sLogin']);
         unset($_SESSION['user']);
         unset($_SESSION['group']);
-        header('location:index.php');    
+        header('location:../index.php');    
     }
     
     $logado = $_SESSION['user'];
     $nivel = $_SESSION['group'];
+    
     
 ?>
 <html>
@@ -21,7 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Teste Links - Tela Professor</title>
+        <title>Alunos</title>
         
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
@@ -53,19 +54,15 @@
         <!--Fim sidebar-->
         <!--Inicio conteúdo-->
             <div class="main-container">
-                Adicionar link
-                <br/>
-                <form method="POST" action="cadTeste.php">
-                    Nome: <input type="text" name="nome"></input><br/>
-                    Link: <input type="text" name="link"></input><br/>
-                    <input type="hidden" name="docente" value=<?php echo $logado; ?>></input>
-                    <input type="submit" value="Adicionar"></input>
-                </form>                
-
-
-                <a href="testeAluno.php">Alunos</a>
+                <h3>Alteração de senha</h3> </br>
+        
+                <form method="POST" action="resetSenha.php">
+                    Registro: <input type="text" name="ra" autocomplete="off"></input><br/>
+                    Nova senha: <input type="password" name="nova" autocomplete="off"></input><br/>
+                    <br/>
+                    <input type="submit" class="btn btn-green" value="Alterar Senha"></input>
+                </form> 
             </div>
-        </div>
         <!--Fim wrapper-->
         <script type="text/javascript" src="../js/menu.js"></script>
     </body>

@@ -41,7 +41,7 @@
                     <div class="sidebar-btn"><i class="fas fa-bars"></i></div>
                     <ul>
                         <li><a href="#" class="user"><?php echo $logado; ?></a></li>
-                        <li><a href="#" class="logout"><i class="fas fa-power-off"></i></a></li>
+                        <li><a href="../sair.php" class="logout"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -56,9 +56,12 @@
         <!--Inicio conteúdo-->
             <div class="main-container">
                 Atividades para entregar:
+                <div style="background-image:url('../img/Semaforo.png');position: absolute;width: 250px;height: 350px;background-size: inherit;float: right;margin-top: 0;margin-right: 0%;margin-left: 50%;">
+                </div>
+                
                 <br/>
                 <?php
-                    include("conexaoteste.php");
+                    include("conexaoatv.php");
                     try {
                         $buscaAtividades = $conn->prepare("SELECT *, FORMAT(dataEntrega,'dd-MM-yyyy') as dataFormat FROM dbo.atividades WHERE turma = $codnivel ORDER BY dataEntrega DESC");
                         $buscaAtividades->execute();
@@ -89,7 +92,8 @@
                         die("Erro ao conectar ao banco de dados :" . $e->getMessage());
                     }
                 ?>
-
+                
+                </div>
 
                 
             </div>

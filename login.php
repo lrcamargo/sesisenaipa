@@ -214,7 +214,7 @@
                 $_SESSION['group'] = "2";
                 $log = 'Usuário '.$usuario.' logado.';
                 logToFile($log);
-                header("location: main.html");
+                header("location: ./atividades/professor.php");
             } else if(valida_sup() == 1) {
                 if($usuario == 'thiago') {
                     $_SESSION['sLogin'] = "1";

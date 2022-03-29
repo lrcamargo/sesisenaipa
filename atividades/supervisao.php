@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="../css/telefone.css">
+        <link rel="stylesheet" href="../css/atividades.css">
         
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -55,58 +56,22 @@
         <!--Fim sidebar-->
         <!--Inicio conteúdo-->
             <div class="main-container">
-                <div class="card-container">
-                    <div class="card">
-                        <h3 class="atv-titulo">Adicionar Atividade</h3>
-                        <br/>
-                        <form method="POST" class="atv-form" action="cadAtividade.php">
-                            Turma: 
-                            <select name="turma">
-                                <?php
-                                    try {
-                                        $buscaTurmas = $conn->prepare("SELECT id,descricao FROM niveis WHERE SUBSTRING(descricao,10,5) = '11775' AND SUBSTRING(descricao,16,2) = FORMAT(getdate(), 'yy') OR SUBSTRING(descricao,12,5) = '11775' AND SUBSTRING(descricao,18,2) = FORMAT(getdate(), 'yy')");
-                                        $buscaTurmas->execute();
-
-                                        $turmas = $buscaTurmas->fetchAll();
-                                        
-                                        foreach($turmas as $turmas) {
-                                            echo "<option value='".$turmas['id']."'>".$turmas['descricao']."</option>";
-                                        }
-                                    } catch(PDOException $e) {
-                                        die("Erro ao conectar ao banco de dados :" . $e->getMessage());
-                                    }
-                                ?>
-                            </select>
-                            <br/>
-                            Nome: <input type="text" name="nome"></input><br/>
-                            Data de Entrega: <input type="date" name="data"></input><br/>
-                            Disciplina: <input type="text" name="disciplina"></input><br/>
-                            Pontuada? <input type="checkbox" name="pontuada" onChange="pontos()"></input>  Valor: <input type="text" name="valor" disabled></input><br/>
-                            <input type="hidden" name="docente" value=<?php echo $logado; ?>></input>
-                            <br/>
-                            <input class='btn btn-green' type="submit" value="Adicionar" style="margin-right:20%"></input>
-                            <br/>
-                            <br/>
-                        </form>  
-                        <br/>
-                        <br/>
-                    </div>
                     <div class="card lista">
-                        <h3 style="text-align:center;width:100%">Minhas Atividades</h3>
-                        <br/>
-                        <table class="atv-lista" style="border: none !important">
+                        <h3 style="text-align:center;width:100%">Todas Atividades</h3>
+                        <table class="atv-lista-sup" style="border: none !important">
                             <thead>
                                 <tr>
-                                    <th class="id">#</th>
-                                    <th class="data">Data</th>
-                                    <th class="disc">Disciplina</th>
-                                    <th class="edit">Editar</th>
+                                    <th class="idsup">#</th>
+                                    <th class="datasup">Data</th>
+                                    <th class="discsup">Disciplina</th>
+                                    <th class="profsup">Professor</th>
+                                    <th class="editsup">Editar</th>
                                 </tr>
                             </thead>
                         <?php
                             include("conexaoatv.php");
                             try {
-                                $buscaAtividades = $conn->prepare("SELECT * FROM dbo.atividades WHERE docente = '$logado' ORDER BY dataEntrega DESC");
+                                $buscaAtividades = $conn->prepare("SELECT * FROM dbo.atividades ORDER BY dataEntrega DESC");
                                 $buscaAtividades->execute();
                                 
                                 $buscaAtividade = $buscaAtividades->fetchAll();
@@ -116,7 +81,8 @@
                                         echo "<td>" . $buscaAtividade['idAtividade'] . "</td>";
                                         echo "<td>".date("d-m-Y",strtotime($buscaAtividade['dataEntrega']))."</td>";
                                         echo "<td>".$buscaAtividade['disciplina']."</td>";
-                                        echo "<td align='center'><a href='listaAtividade.php?id=".$buscaAtividade['idAtividade']."&codturma=".$buscaAtividade['turma']."'><i class='fas fa-edit'></i></a></td>";
+                                        echo "<td>".$buscaAtividade['docente']."</td>";
+                                        echo "<td align='center'><a href='listaAtvTotal.php?id=".$buscaAtividade['idAtividade']."'><i class='fas fa-edit'></i></a></td>";
                                     echo "</tr>";
                                 }
                             } catch(PDOException $e) {

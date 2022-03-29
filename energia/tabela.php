@@ -49,7 +49,7 @@
                     <div class="sidebar-btn"><i class="fas fa-bars"></i></div>
                     <ul>
                         <li><a href="#" class="user"><?php echo $logado; ?></a></li>
-                        <li><a href="#" class="logout"><i class="fas fa-power-off"></i></a></li>
+                        <li><a href="../sair.php" class="logout"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>

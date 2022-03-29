@@ -1,6 +1,6 @@
 <?php
 
-include("conexaoteste.php");
+include("conexaoatv.php");
 $idAtividade = $_POST['idAtividade'];
 
 if(isset($_POST['submit'])){
@@ -12,6 +12,7 @@ if(isset($_POST['submit'])){
                 $cadStatus = $conn->prepare("INSERT INTO status (idAtividade, idAlunos) VALUES ('$idAtividade','$value')");
                 $cadStatus->execute();
                 
+                header("Location:professor.php");
             } catch (PDOException $e){
                 die("Erro ao conectar ao banco de dados :" . $e->getMessage());
             }

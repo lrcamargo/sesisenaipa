@@ -94,3 +94,65 @@ h3 {
     background-color: #7D2D71;
 }
 
+.btn-green {
+    color: #fff;
+    background-color: #60A73C;
+    border-color: #93BD3A;
+} 
+
+.btn-green:hover {
+    background-color: #37B35C ;
+}
+
+.atv-titulo {
+    text-align:center;
+    width:100%
+}
+
+.atv-lista {
+    width:100%; 
+    margin-left: -90%; 
+    margin-top:10%;
+    line-height: 75%
+}
+.atv-form {
+    width:100%; 
+    margin-left: -90%; 
+    margin-top:10% !important
+}
+
+@media (max-width: 768px) {
+    .card { 
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+        border-radius: 0.25rem;
+        background: #ffffff;
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin-bottom: 1rem;
+        min-height: 80px;
+        position: relative;
+        width: 100%;
+    }
+    .card-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-column-gap: 4px;
+    }
+
+    .atv-lista {
+        width:100%; 
+        margin-left: 2%; 
+        margin-top:-3%;
+        line-height: 80%
+    }
+    .atv-form {
+        width:100%; 
+        margin-left: 5%; 
+        margin-top:-2.5% !important;
+        white-space: no-wrap
+    }
+
+}
+

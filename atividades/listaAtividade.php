@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="../css/telefone.css">
+        <link rel="stylesheet" href="../css/atividades.css">
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
     </head>
@@ -42,7 +43,7 @@
                     <div class="sidebar-btn"><i class="fas fa-bars"></i></div>
                     <ul>
                         <li><a href="#" class="user"><?php echo $logado; ?></a></li>
-                        <li><a href="#" class="logout"><i class="fas fa-power-off"></i></a></li>
+                        <li><a href="../sair.php" class="logout"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -56,32 +57,39 @@
         <!--Fim sidebar-->
         <!--Inicio conteúdo-->
             <div class="main-container">
-                <?php echo $idAtividade; ?>
-                Entrega do aluno
+                <h3 align="center">Entregas</h3>
                 <br/>
                 <form method="POST" action="cadEntrega.php">
-                <?php
-                    include("../conexaosec.php");
-                    try {
-                        $buscaAlunos = $conn->prepare("SELECT * FROM dbo.pessoas WHERE nivel_id = '$codTurma' ORDER BY nome");
-                        $buscaAlunos->execute();
-                        
-                        $buscaAluno = $buscaAlunos->fetchAll();
-                        foreach ($buscaAluno as $buscaAluno) {
-                            echo $buscaAluno['n_identificador'];
-                            echo "-";
-                            echo $buscaAluno['nome'];
-                            echo "-";
-                            echo "<input type='checkbox' name='ra[]' value='".$buscaAluno['n_identificador']."'></input><br/>";
-                            echo "</br>";
-                        }
-                    } catch(PDOException $e) {
-                        die("Erro ao conectar ao banco de dados :" . $e->getMessage());
-                    }
-                ?>
-                
+                    <table>
+                    <thead>
+                        <tr>
+                            <th class="ra">Registro</th>
+                            <th class="nome">Nome</th>
+                            <th class="status">Status</th>
+                        </tr>
+                    </thead>
+                        <?php
+                            include("../conexaosec.php");
+                            try {
+                                $buscaAlunos = $conn->prepare("SELECT * FROM dbo.pessoas WHERE nivel_id = '$codTurma' ORDER BY nome");
+                                $buscaAlunos->execute();
+                                
+                                $buscaAluno = $buscaAlunos->fetchAll();
+                                foreach ($buscaAluno as $buscaAluno) {
+                                    echo "<tr>";
+                                        echo "<td>".$buscaAluno['n_identificador']."</td>";
+                                        echo "<td>".$buscaAluno['nome']."</td>";
+                                        echo "<td align=Center><input type='checkbox' name='ra[]' value='".$buscaAluno['n_identificador']."'></input></td>";
+                                    echo "</tr>";
+                                }
+                            } catch(PDOException $e) {
+                                die("Erro ao conectar ao banco de dados :" . $e->getMessage());
+                            }
+                        ?>
+                    </table>
+                        </br>
                     <input type="hidden" name="idAtividade" value=<?php echo $idAtividade; ?>></input>
-                    <input type="submit" value="Registrar" name="submit"></input>
+                    <input class='btn btn-green' type="submit" value="Registrar" name="submit"></input>
                 </form>  
                 <br/>
             </div>

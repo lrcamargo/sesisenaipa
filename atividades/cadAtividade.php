@@ -8,7 +8,7 @@
         header('location:../index.php');    
     }
     
-    include('conexaoteste.php');
+    include('conexaoatv.php');
     
     $turma = $_POST['turma'];
     $nome = $_POST['nome'];

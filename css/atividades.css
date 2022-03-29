@@ -1,0 +1,32 @@
+table {
+    border-radius: 10px;
+}
+table, th, td {
+    border: 1px solid #355492;
+    border-collapse: collapse;
+}
+
+.atv-lista-sup {
+    margin-left: -100%;
+    width:100%; 
+    margin-top:5%;
+    line-height: 75%
+}
+th.ra th.status {
+    width: 15%
+}
+th.id th.edit {
+    width: 10%
+}
+
+th.data {
+    width: 20%
+}
+
+th.disc {
+    width: 60%
+}
+
+
+
+

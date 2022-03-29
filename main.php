@@ -15,7 +15,7 @@
     $logado = $_SESSION['user'];
     $nivel = $_SESSION['group'];
     if((!isset ($_SESSION['obs']) == true)) {
-        $obs==0;   
+        $obs = 0;   
     } else {
         $obs = $_SESSION['obs'];
     }
@@ -70,7 +70,7 @@
                     else if ($nivel == 1) {
 
                     } else if ($nivel == 2) {
-                        
+                        include('./atividades/professor.php');
                     }  else if ($nivel == 3) {
                         include('supTecnicaContainer.php');
                     }  else if ($nivel == 4) {
