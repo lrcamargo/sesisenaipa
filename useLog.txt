@@ -731,3 +731,114 @@
 [2022/03/28 16:45:30] Usuário jpaes logado.
 [2022/03/28 17:52:28] Usuário jpaes logado.
 [2022/03/28 23:53:45] Usuário administrator logado.
+[2022/03/29 15:22:52] Usuário jpaes logado.
+[2022/03/29 15:41:07] Usuário jpaes logado.
+[2022/03/29 15:41:41] Usuário jpaes logado.
+[2022/03/29 15:45:18] Usuário jpaes logado.
+[2022/03/29 15:48:02] Usuário jpaes logado.
+[2022/03/29 16:52:41] Usuário administrator logado.
+[2022/03/30 09:07:22] Tentativa de login do usuário  falhou.
+[2022/03/31 18:09:32] Usuário abrandao logado.
+[2022/03/31 18:13:59] Usuário ccpaiva logado.
+[2022/03/31 18:25:33] Usuário mppaz logado.
+[2022/04/01 18:55:18] Usuário jlmacedo logado.
+[2022/04/06 15:38:49] Usuário clauzemberg.santos logado.
+[2022/04/06 15:41:28] Tentativa de login do usuário  falhou.
+[2022/04/06 15:42:21] Tentativa de login do usuário  falhou.
+[2022/04/06 15:50:35] Usuário clauzemberg.santos logado.
+[2022/04/06 15:52:34] Usuário clauzemberg.santos logado.
+[2022/04/08 10:25:48] Usuário administrator logado.
+[2022/04/08 16:53:24] Usuário administrator logado.
+[2022/04/10 14:37:19] Usuário mppaz logado.
+[2022/04/11 13:40:37] Usuário mppaz logado.
+[2022/04/11 19:58:43] Tentativa de login do usuário  falhou.
+[2022/04/11 19:59:01] Usuário jpaes logado.
+[2022/04/13 14:32:17] Usuário administrator logado.
+[2022/04/13 16:44:59] Usuário administrator logado.
+[2022/04/18 10:39:51] Usuário administrator logado.
+[2022/04/18 10:45:11] Usuário teste logado.
+[2022/04/18 11:11:51] Usuário teste logado.
+[2022/04/18 11:27:46] Usuário teste logado.
+[2022/04/18 11:27:46] Usuário teste logado.
+[2022/04/18 13:54:02] Tentativa de login do usuário  falhou.
+[2022/04/18 15:31:28] Usuário teste logado.
+[2022/04/19 01:13:19] Usuário administrator logado.
+[2022/04/19 08:39:40] Usuário cleide.souza logado.
+[2022/04/19 09:49:49] Usuário administrator logado.
+[2022/04/19 09:51:36] Usuário teste logado.
+[2022/04/19 09:56:57] Usuário teste logado.
+[2022/04/19 10:02:15] Usuário administrator logado.
+[2022/04/19 13:02:20] Usuário elaine.ribeiro logado.
+[2022/04/19 14:06:37] Usuário teste logado.
+[2022/04/19 18:52:25] Usuário jlmacedo logado.
+[2022/04/21 11:18:03] Usuário abrandao logado.
+[2022/04/21 19:15:47] Usuário jlmacedo logado.
+[2022/04/24 11:05:44] Usuário jlmacedo logado.
+[2022/04/24 16:53:52] Usuário mppaz logado.
+[2022/04/24 16:54:04] Tentativa de login do usuário  falhou.
+[2022/04/24 16:54:42] Tentativa de login do usuário  falhou.
+[2022/04/25 11:18:40] Usuário ecleide logado.
+[2022/04/30 20:08:41] Usuário apmachado logado.
+[2022/05/03 15:11:54] Usuário jpaes logado.
+[2022/05/04 18:40:18] Usuário clauzemberg.santos logado.
+[2022/05/05 12:18:39] Usuário clauzemberg.santos logado.
+[2022/05/05 13:41:43] Usuário clauzemberg.santos logado.
+[2022/05/05 17:36:53] Usuário clauzemberg.santos logado.
+[2022/05/05 20:30:13] Usuário clauzemberg.santos logado.
+[2022/05/06 13:07:40] Usuário clauzemberg.santos logado.
+[2022/05/06 14:01:44] Tentativa de login do usuário  falhou.
+[2022/05/06 14:03:08] Usuário clauzemberg.santos logado.
+[2022/05/08 20:27:18] Usuário administrator logado.
+[2022/05/08 21:26:19] Usuário administrator logado.
+[2022/05/08 23:05:47] Usuário administrator logado.
+[2022/05/09 07:29:15] Usuário jr.pereira logado.
+[2022/05/09 07:57:59] Usuário administrator logado.
+[2022/05/09 08:05:58] Usuário jr.pereira logado.
+[2022/05/09 08:13:44] Usuário administrator logado.
+[2022/05/09 08:40:06] Usuário jr.pereira logado.
+[2022/05/09 09:29:17] Usuário jr.pereira logado.
+[2022/05/10 16:43:31] Usuário administrator logado.
+[2022/05/10 17:55:47] Usuário clauzemberg.santos logado.
+[2022/05/11 07:20:52] Usuário jr.pereira logado.
+[2022/05/11 07:22:26] Usuário jr.pereira logado.
+[2022/05/11 07:46:04] Usuário jr.pereira logado.
+[2022/05/11 07:59:01] Usuário jr.pereira logado.
+[2022/05/11 09:19:14] Usuário jr.pereira logado.
+[2022/05/11 10:50:38] Usuário jr.pereira logado.
+[2022/05/11 11:11:43] Usuário jr.pereira logado.
+[2022/05/11 17:48:06] Usuário clauzemberg.santos logado.
+[2022/05/12 07:58:46] Usuário jr.pereira logado.
+[2022/05/14 11:18:53] Tentativa de login do usuário  falhou.
+[2022/05/15 11:45:02] Usuário jlmacedo logado.
+[2022/05/15 11:48:42] Usuário jlmacedo logado.
+[2022/05/15 21:21:33] Usuário administrator logado.
+[2022/05/17 19:25:14] Usuário clauzemberg.santos logado.
+[2022/05/18 09:47:18] Usuário jr.pereira logado.
+[2022/05/23 18:20:19] Usuário administrator logado.
+[2022/05/23 18:58:03] Usuário administrator logado.
+[2022/05/23 19:04:04] Usuário jlmacedo logado.
+[2022/05/23 20:44:44] Usuário jlmacedo logado.
+[2022/05/23 21:51:35] Usuário jlmacedo logado.
+[2022/05/24 09:39:16] Usuário administrator logado.
+[2022/05/24 13:38:17] Usuário administrator logado.
+[2022/05/24 15:37:21] Usuário administrator logado.
+[2022/05/24 17:07:48] Usuário administrator logado.
+[2022/05/24 19:07:35] Usuário jlmacedo logado.
+[2022/05/24 19:16:58] Usuário jlmacedo logado.
+[2022/05/25 18:37:48] Usuário jlmacedo logado.
+[2022/05/26 06:31:53] Usuário fandre logado.
+[2022/05/26 06:33:40] Usuário fandre logado.
+[2022/05/26 19:32:22] Usuário jlmacedo logado.
+[2022/05/27 08:29:57] Usuário administrator logado.
+[2022/05/27 20:48:01] Usuário administrator logado.
+[2022/05/31 19:33:03] Usuário jlmacedo logado.
+[2022/06/04 15:24:59] Usuário administrator logado.
+[2022/06/05 13:27:23] Tentativa de login do usuário  falhou.
+[2022/06/07 17:27:57] Tentativa de login do usuário  falhou.
+[2022/06/08 14:52:04] Usuário administrator logado.
+[2022/06/10 16:08:42] Usuário administrator logado.
+[2022/06/10 16:19:13] Usuário administrator logado.
+[2022/06/13 11:23:36] Tentativa de login do usuário  falhou.
+[2022/06/14 20:15:03] Usuário administrator logado.
+[2022/06/14 22:11:05] Usuário administrator logado.
+[2022/06/17 11:12:45] Tentativa de login do usuário  falhou.

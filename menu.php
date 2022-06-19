@@ -56,6 +56,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
         echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../controleTablets/scan.php' class='menu-btn'><i class='fas fa-tablet-alt'></i><span> Controle Tablets</span></a>";
+        echo "</li>";
         /*echo "<li class='item'>";
             echo "<a href='../sirene/index.php' class='menu-btn'><i class='fa fa-fw fa-bell'></i> Sirene</a>";
         echo "</li>";
@@ -81,6 +84,9 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../graficos/graficosenergia.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Monitorar elétrica</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../atividadesTeste/professor.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Atividades Professor</span></a>";
         echo "</li>";
     } else if($nivel == 7) {
         echo "<li class='item'>";
@@ -129,6 +135,9 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../linksAulas/testeProf.php' class='menu-btn'><i class='fas fa-bell'></i><span> Teste</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../controleTablets/scan.php' class='menu-btn'><i class='fas fa-tablet-alt'></i><span> Controle Tablets</span></a>";
         echo "</li>";
     } 
 ?>

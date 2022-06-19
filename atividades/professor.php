@@ -101,6 +101,7 @@
                                     <th class="data">Data</th>
                                     <th class="disc">Disciplina</th>
                                     <th class="edit">Editar</th>
+                                    <th class="fin">Finalizar</th>
                                 </tr>
                             </thead>
                         <?php
@@ -116,7 +117,8 @@
                                         echo "<td>" . $buscaAtividade['idAtividade'] . "</td>";
                                         echo "<td>".date("d-m-Y",strtotime($buscaAtividade['dataEntrega']))."</td>";
                                         echo "<td>".$buscaAtividade['disciplina']."</td>";
-                                        echo "<td align='center'><a href='listaAtividade.php?id=".$buscaAtividade['idAtividade']."&codturma=".$buscaAtividade['turma']."'><i class='fas fa-edit'></i></a></td>";
+                                        echo "<td align='center'><a href='editaAtv.php?id=".$buscaAtividade['idAtividade']."'><i class='fas fa-edit'></i></a></td>";
+                                        echo "<td align='center'><a href='listaAtividade.php?id=".$buscaAtividade['idAtividade']."&codturma=".$buscaAtividade['turma']."'><i class='fas fa-clipboard-check'></i></a></td>";
                                     echo "</tr>";
                                 }
                             } catch(PDOException $e) {
@@ -125,9 +127,12 @@
                         ?>
                         </table>
                         </br>
-                    </div>
+                    </div>                    
+                </div>
+                <h4>Recursos Adicionados:</h4>
+                <br/>
+                - Editar atividade
             </div>
-        </div>
         <!--Fim wrapper-->
         <script>
             function pontos() {
