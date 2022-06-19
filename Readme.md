@@ -19,8 +19,9 @@ Em desenvolvimento:
 - Controle de internet laboratórios, tablets e celulares (colocar aviso de liberação/bloqueio e registro de alguma forma)
 - Atualização de layout - sistema sirene
 - Gestão secretaria;
-- Gestão atividades
-- Agenda laboratório
+- Gestão atividades *EM DESENVOLVIMENTO*
+- Agenda laboratório *EM DESENVOLVIMENTO*
+- Controle de tablets - base de teste *EM DESENVOLVIMENTO*
 
 
 - Commits sem arquivos de conexão a base de dados, necessário criar.
