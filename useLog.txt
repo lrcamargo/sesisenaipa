@@ -842,3 +842,25 @@
 [2022/06/14 20:15:03] Usuário administrator logado.
 [2022/06/14 22:11:05] Usuário administrator logado.
 [2022/06/17 11:12:45] Tentativa de login do usuário  falhou.
+[2022/06/18 22:09:54] Usuário administrator logado.
+[2022/06/18 23:30:21] Usuário administrator logado.
+[2022/06/19 10:50:03] Usuário administrator logado.
+[2022/06/19 12:14:41] Usuário administrator logado.
+[2022/06/19 14:25:27] Usuário administrator logado.
+[2022/06/19 14:35:17] Usuário administrator logado.
+[2022/06/19 16:34:36] Usuário administrator logado.
+[2022/06/19 16:38:49] Tentativa de login do usuário  falhou.
+[2022/06/19 20:19:39] Usuário administrator logado.
+[2022/06/19 22:28:09] Usuário administrator logado.
+[2022/06/19 22:32:36] Usuário administrator logado.
+[2022/06/20 07:35:35] Usuário administrator logado.
+[2022/06/20 08:58:42] Usuário administrator logado.
+[2022/06/20 09:32:26] Usuário administrator logado.
+[2022/06/20 10:51:31] Usuário administrator logado.
+[2022/06/20 15:15:30] Usuário administrator logado.
+[2022/06/20 22:36:07] Usuário administrator logado.
+[2022/06/20 23:25:03] Usuário administrator logado.
+[2022/06/21 13:52:18] Usuário administrator logado.
+[2022/06/21 13:54:12] Usuário administrator logado.
+[2022/06/21 14:30:48] Usuário administrator logado.
+[2022/06/21 16:23:22] Usuário clrosa logado.

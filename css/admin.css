@@ -111,7 +111,7 @@
 .side-nav > li > ul > li > a {
   display: block;
   padding: 10px 15px 10px 38px;
-  text-decoration: none;
+  text-decoration: none !important;
   /*color: #999;*/
   color: #fff;
 }
