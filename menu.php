@@ -49,6 +49,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../controle/index.php' class='menu-btn'><i class='fa fa-fw fa-clock-o'></i> Registro</a>";
         echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+        echo "</li>";
     } else if($nivel == 4) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -67,6 +70,9 @@ Submenu
         echo "</li>";*/
         echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span>Câmera</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
     } else if($nivel == 5) {
         echo "<li class='item'>";
@@ -108,6 +114,9 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../graficos/graficosenergia.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Monitorar elétrica</span></a>";

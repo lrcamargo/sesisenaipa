@@ -3,6 +3,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
+    include("../../conexaosec.php");
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -21,7 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Laboratório 203</title>
+        <title>Laboratório 201</title>
         
         <link rel="stylesheet" href="../../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
@@ -50,7 +51,7 @@
                     dayMaxEventRows: true,
                     eventDisplay: 'block',
                     duration: { month: 2 },
-                    events: { url: '../listareservas.php?lab=3',
+                    events: { url: '../listareservas.php?lab=2',
                         failure: function() {
                             alert('Houve um erro ao buscar os eventos!');
                         }},
@@ -140,15 +141,31 @@
                 <b><span name="hInicio" style="display:none">Início: </span></b><input id="horainicio" name="horainicio" type="time" style="display:none">
                 <b><span name="hFim" style="display:none">Fim: </span></b><input id="horafim" name="horafim" type="time" style="display:none"> <br/>
                 <b>Turma:</b><br/>
-                <input type="text" name="turma">
-                <?php
-                    if($nivel = 4 || $nivel == 3 || $nivel = 9) {
-                        echo "<br/>";
-                        echo "<b>Solicitante:</b><br/>";
-                        echo "<input type='text' name='solicitante'>";
-                    }
-                ?>
-                <input type="hidden" name="lab" value="201a"></input>
+                <select name="turma">
+                    <?php
+                        try {
+                            $buscaTurmas = $conn->prepare("SELECT id,descricao FROM niveis");
+                            $buscaTurmas->execute();
+
+                            $turmas = $buscaTurmas->fetchAll();
+                                        
+                            foreach($turmas as $turmas) {
+                                echo "<option value='".$turmas['descricao']."'>".$turmas['descricao']."</option>";
+                            }
+                        } catch(PDOException $e) {
+                            die("Erro ao conectar ao banco de dados :" . $e->getMessage());
+                        }
+                    ?>
+                    <?php
+                        if($nivel = 4 || $nivel == 3 || $nivel = 9) {
+                            echo "<br/>";
+                            echo "<b>Solicitante:</b><br/>";
+                            echo "<input type='text' name='solicitante'>";
+                        } else {
+                            echo "<input type='hidden' name='solicitante' value=<?php echo ".$logado."; ?>></input>";
+                        }
+                    ?>
+                <input type="hidden" name="lab" value="202a"></input>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

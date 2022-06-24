@@ -3,6 +3,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
+    include("../../conexaosec.php");
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -21,13 +22,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Laboratório 203</title>
+        <title>Laboratório 201</title>
         
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link rel="stylesheet" href="../../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="../../css/telefone.css">
         <link rel='stylesheet' href='../../fullcalendar/main.min.css'/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         
         <script src='../../fullcalendar/main.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -50,7 +51,7 @@
                     dayMaxEventRows: true,
                     eventDisplay: 'block',
                     duration: { month: 2 },
-                    events: { url: '../listareservas.php?lab=3',
+                    events: { url: '../listareservas.php?lab=1',
                         failure: function() {
                             alert('Houve um erro ao buscar os eventos!');
                         }},
@@ -140,14 +141,46 @@
                 <b><span name="hInicio" style="display:none">Início: </span></b><input id="horainicio" name="horainicio" type="time" style="display:none">
                 <b><span name="hFim" style="display:none">Fim: </span></b><input id="horafim" name="horafim" type="time" style="display:none"> <br/>
                 <b>Turma:</b><br/>
-                <input type="text" name="turma">
-                <?php
-                    if($nivel = 4 || $nivel == 3 || $nivel = 9) {
-                        echo "<br/>";
-                        echo "<b>Solicitante:</b><br/>";
-                        echo "<input type='text' name='solicitante'>";
-                    }
-                ?>
+                <select name="turma">
+                    <?php
+                        try {
+                            $buscaTurmas = $conn->prepare("SELECT id,descricao FROM niveis");
+                            $buscaTurmas->execute();
+
+                            $turmas = $buscaTurmas->fetchAll();
+                                        
+                            foreach($turmas as $turmas) {
+                                echo "<option value='".$turmas['descricao']."'>".$turmas['descricao']."</option>";
+                            }
+                        } catch(PDOException $e) {
+                            die("Erro ao conectar ao banco de dados :" . $e->getMessage());
+                        }
+                    ?>
+                </select>
+                    <?php
+                        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
+                            echo "<br/>";
+                            echo "<br/>";
+                            echo "<b>Solicitante:</b><br/>";
+                            echo "<select name='solicitante'>";
+                            include("../conexaounidade.php");
+                                try {
+                                    $buscaSolicitante = $conn->prepare("SELECT * FROM funcionarios");
+                                    $buscaSolicitante->execute();
+
+                                    $solicitante = $buscaSolicitante->fetchAll();
+                                                   
+                                    foreach($solicitante as $solicitante) {
+                                        echo "<option value='".$solicitante['usuario']."'>".$solicitante['nome']."</option>";
+                                    }
+                                } catch(PDOException $e) {
+                                    die("Erro ao conectar ao banco de dados :" . $e->getMessage());
+                                }
+                            echo "</select>";
+                        } else {
+                            echo "<input type='hidden' name='solicitante' value=<?php echo ".$logado."; ?></input>";
+                        }
+                    ?>
                 <input type="hidden" name="lab" value="201a"></input>
             </div>
             <div class="modal-footer">
