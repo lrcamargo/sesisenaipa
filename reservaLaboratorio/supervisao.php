@@ -112,7 +112,7 @@
                             try {
                                 $buscaReservas = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, 
                                 LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas
-                                ORDER BY data,horarioInicio");
+                                WHERE data >= GETDATE() ORDER BY data,horarioInicio");
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
