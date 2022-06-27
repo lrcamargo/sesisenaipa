@@ -1,6 +1,7 @@
 <?php
-    include("conexaoteste.php");
+    include("conexao.php");
 
+    $id = $_POST['id'];
     $data = $_POST["dataInp"];
     $turno = $_POST["turno"];
     $periodo = $_POST["periodo"];
@@ -45,34 +46,14 @@
         $lab = 10;
     } else if($laboratorio == "cnc") {
         $lab = 11;
-    } else if($laboratorio == "lego") {
-        $lab = 12;
     }
     try {
-        $cadreserva = $conn->prepare("INSERT INTO reservaLabs (data,horarioInicio,horarioFim,solicitante,laboratorio,turma,aprovado) VALUES ('$data','$hInicio','$hFim','$solicitante','$lab','$turma',0)");
+        $cadreserva = $conn->prepare("UPDATE reservas SET data = '$data', horarioInicio = '$hInicio', horarioFim = '$hFim', laboratorio = '$lab', turma = '$turma' WHERE id = '$id'");
         $cadreserva->execute();
-
-        $buscaReserv = $conn->prepare("SELECT TOP 1 id FROM reservaLabs ORDER BY id DESC");
-        $buscaReserv->execute();
-        
-        $idRs = $buscaReserv->fetchAll();
-        foreach($idRs as $idRs) {
-            $id = $idRs['id'];
-        }
-        
-        /*$solicitante = str_replace('.','-',$solicitante);
-        $teste = str_replace('.','-',$solicitante)."_".$laboratorio."_".$data;
-        //$url="email.php?cod=1&sol='$solicitante'&lab='$laboratorio'&dt='$data'";
-        //$url="email.php?cod=1&sol='$solicitante'&lab='$laboratorio'&dt='$data'";
-        $url="email.php?cod=1&sol='$teste'";
-        $url=str_replace(PHP_EOL, '', $url);
-        $url=str_replace(' ', '', $url);*/
-        $url="email.php?cod=1&id=$id";
         
     } catch (PDOException $e){
         die("Erro ao conectar ao banco de dados :" . $e->getMessage());
     }
     
-    //solicitante, laboratorio, data
-    header("Location: $url");
+    header('location:supervisao.php');
 ?>

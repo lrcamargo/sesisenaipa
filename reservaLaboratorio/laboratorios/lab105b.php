@@ -22,7 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Laboratório 202</title>
+        <title>Laboratório 105B</title>
         
         <link rel="stylesheet" href="../../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
@@ -51,7 +51,7 @@
                     dayMaxEventRows: true,
                     eventDisplay: 'block',
                     duration: { month: 2 },
-                    events: { url: '../listareservas.php?lab=2',
+                    events: { url: '../listareservas.php?lab=7',
                         failure: function() {
                             alert('Houve um erro ao buscar os eventos!');
                         }},
@@ -181,7 +181,7 @@
                             echo "<input type='hidden' name='solicitante' value=<?php echo ".$logado."; ?></input>";
                         }
                     ?>
-                <input type="hidden" name="lab" value="202a"></input>
+                <input type="hidden" name="lab" value="105b"></input>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

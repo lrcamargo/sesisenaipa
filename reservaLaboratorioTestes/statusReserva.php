@@ -10,6 +10,7 @@
     } catch (PDOException $e){
         die("Erro ao conectar ao banco de dados :" . $e->getMessage());
     }
-    
-    header('location:supervisao.php');
+    $url="email.php?cod=2&id=$id";
+    header("Location: $url");
+    //header('location:supervisao.php');
 ?>

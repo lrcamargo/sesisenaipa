@@ -45,15 +45,25 @@
         $lab = 10;
     } else if($laboratorio == "cnc") {
         $lab = 11;
+    } else if($laboratorio == "lego") {
+        $lab = 12;
     }
     try {
-        $cadreserva = $conn->prepare("INSERT INTO reservalabs (data,horarioInicio,horarioFim,solicitante,laboratorio,turma,aprovado) VALUES ('$data','$hInicio','$hFim','$solicitante','$lab','$turma',0)");
+        $cadreserva = $conn->prepare("INSERT INTO reservas (data,horarioInicio,horarioFim,solicitante,laboratorio,turma,aprovado) VALUES ('$data','$hInicio','$hFim','$solicitante','$lab','$turma',0)");
         $cadreserva->execute();
+
+        $buscaReserv = $conn->prepare("SELECT TOP 1 id FROM reservaLabs ORDER BY id DESC");
+        $buscaReserv->execute();
         
+        $idRs = $buscaReserv->fetchAll();
+        foreach($idRs as $idRs) {
+            $id = $idRs['id'];
+        }
+        $url="email.php?cod=1&id=$id";
     } catch (PDOException $e){
         die("Erro ao conectar ao banco de dados :" . $e->getMessage());
     }
     
     //solicitante, laboratorio, data
-    header('location:email.php?cod=1&sol='.$solicitante.'&lab=.'.$laboratorio.'&dt='.$data);
+    header("Location: $url");
 ?>

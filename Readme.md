@@ -10,6 +10,7 @@ Recursos:
 - Dados energia
 - TFTP telefone
 - Login externo - alunos
+- Agenda laboratório v1.1 - reserva dos laboratórios e envio de e-mail padrão para reserva e alteração de status.
 
 Em desenvolvimento:
 - API para fechadura;
@@ -20,7 +21,7 @@ Em desenvolvimento:
 - Atualização de layout - sistema sirene
 - Gestão secretaria;
 - Gestão atividades *EM DESENVOLVIMENTO*
-- Agenda laboratório *EM DESENVOLVIMENTO*
+- Agenda laboratório *EM DESENVOLVIMENTO V1.2 - adicionar reserva vários dias supervisão e demais ambientes oficina.*
 - Controle de tablets - base de teste *EM DESENVOLVIMENTO*
 
 

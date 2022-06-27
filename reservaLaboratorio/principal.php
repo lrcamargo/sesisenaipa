@@ -3,7 +3,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    
+    include('../conexaosec.php');
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -22,16 +22,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Reserva de Laboratório</title>
-        
+        <title>Reserva de Laboratório - principal</title>
         
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="../css/telefone.css">
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>   
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-        
+
         <style>
             .labs {
                 margin-top: 15%;
@@ -88,10 +86,10 @@
                             <li><a href="laboratorios/lab106b.php">106B - Eletrônica</a><br/></li>
                             <li><a href="laboratorios/lab107b.php">107B - SENAI LAB</a><br/></li>
                             <li><a href="laboratorios/lab106c.php">106C - CNC</a><br/></li>
-                        </ul>                        
+                        </ul>     
                     </div>
                     <div class="card lista">
-                        <h3 style="text-align:center;width:100%">Reservas</h3>
+                        <h3 style="text-align:center;width:100%">Minhas Reservas</h3>
                         <br/>
                         <table class="atv-lista" style="border: none !important;text-align:center">
                             <thead>
@@ -101,10 +99,7 @@
                                     <th class="disc">Laboratório</th>
                                     <th class="edit">Início</th>
                                     <th class="fin">Fim</th>
-                                    <th class="fin">Solicitante</th>
                                     <th class="apv">Aprovado</th>
-                                    <th class="apv">Status</th>
-                                    <th class="apv">Editar</th>
                                 </tr>
                             </thead>
                         <?php
@@ -112,7 +107,7 @@
                             try {
                                 $buscaReservas = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, 
                                 LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas
-                                ORDER BY data,horarioInicio");
+                                WHERE solicitante = '$logado' ORDER BY data,horarioInicio");
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
@@ -127,37 +122,16 @@
                                             echo "<td>202A</td>";
                                         } else if($buscaReserva['laboratorio'] == 3) {
                                             echo "<td>203A</td>";
-                                        } else if($buscaReserva['laboratorio'] == 4) {
-                                            echo "<td>101B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 5) {
-                                            echo "<td>103B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 6) {
-                                            echo "<td>104B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 7) {
-                                            echo "<td>105B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 8) {
-                                            echo "<td>106B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 9) {
-                                            echo "<td>107B</td>";
-                                        } else if($buscaReserva['laboratorio'] == 10) {
-                                            echo "<td>101A</td>";
-                                        } else if($buscaReserva['laboratorio'] == 11) {
-                                            echo "<td>CNC</td>";
-                                        } else if($buscaReserva['laboratorio'] == 12) {
-                                            echo "<td>LEGO</td>";
                                         }                                        
                                         echo "<td>" . $buscaReserva['horarioInicio'] . "</td>";
                                         echo "<td>" . $buscaReserva['horarioFim'] . "</td>";
-                                        echo "<td>" . $buscaReserva['solicitante'] . "</td>";
                                         if($buscaReserva['aprovado'] == 0) {
                                             echo "<td>Aguardando</td>";
                                         } else if($buscaReserva['aprovado'] == 1) {
                                             echo "<td>Sim</td>";
                                         } else if($buscaReserva['aprovado'] == 2) {
                                             echo "<td>Não</td>";
-                                        } 
-                                        echo "<td align='center'><a href='statusReserva.php?id=".$buscaReserva['id']."&status=1'><i class='fas fa-check-circle'></i></a>  <a href='statusReserva.php?id=".$buscaReserva['id']."&status=2'><i class='fas fa-times-circle'></i></a></td>";
-                                        echo "<td align='center'><a href='editaReserva.php?id=".$buscaReserva['id']."'><i class='fas fa-pen-square'></i></a></td>";
+                                        }                                       
                                     echo "</tr>";
                                 }
                             } catch(PDOException $e) {
@@ -170,8 +144,6 @@
                 </div>
             </div>
         <!--Fim wrapper-->
-       
-        </div>
         <script type="text/javascript" src="../js/menu.js"></script>
     </body>
 </html>
