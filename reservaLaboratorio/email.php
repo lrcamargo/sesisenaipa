@@ -51,6 +51,14 @@
         $laboratorio = 'cnc';
     } else if($lab == 12) {
         $laboratorio = 'lego';
+    } else if($lab == 13) {
+        $laboratorio = 'tornearia';
+    } else if($lab == 14) {
+        $laboratorio = 'ferramentaria';
+    } else if($lab == 15) {
+        $laboratorio = 'manutenção';
+    } else if($lab == 16) {
+        $laboratorio = 'solda';
     } 
     //separar em arquivo de função
     //busca usuario
@@ -115,7 +123,7 @@
         $sup4 = 'ascustodio';
         $sup5 = 'cleide.souza';
         $sup6 = 'ivina';
-        $sup7 = 'lrcamargo';
+        $sup7 = 'thiago';
         enviaEmail($sup1,$rcpt,$subSup,$msgSup);
         enviaEmail($sup2,$rcpt,$subSup,$msgSup);
         enviaEmail($sup3,$rcpt,$subSup,$msgSup);
@@ -153,4 +161,9 @@
         //function redireciona() {
             
         //}
+        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
+            header('location:supervisao.php');
+        } else {
+            header('location:principal.php');
+        }
 ?>

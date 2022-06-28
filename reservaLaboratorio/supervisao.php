@@ -87,6 +87,10 @@
                             <li><a href="laboratorios/lab105b.php">105B - Elétrica Industrial</a><br/></li>
                             <li><a href="laboratorios/lab106b.php">106B - Eletrônica</a><br/></li>
                             <li><a href="laboratorios/lab107b.php">107B - SENAI LAB</a><br/></li>
+                            <li><a href="laboratorios/lab101c.php">101C - Usinagem</a><br/></li>
+                            <li><a href="laboratorios/lab103c.php">103C - Solda</a><br/></li>
+                            <li><a href="laboratorios/lab104c.php">104C - Manutenção</a><br/></li>
+                            <li><a href="laboratorios/lab105c.php">105C - Ferramentaria</a><br/></li>
                             <li><a href="laboratorios/lab106c.php">106C - CNC</a><br/></li>
                         </ul>                        
                     </div>

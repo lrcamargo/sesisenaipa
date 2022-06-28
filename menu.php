@@ -30,7 +30,7 @@ Submenu
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
-            echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
+            echo "<a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
         /*echo "<li class='item'>";
             echo "<a href='../controle_internet/controle.php' class='menu-btn'><i class='fas fa-lock'></i><span> Controle de Internet</span></a>";
@@ -38,6 +38,12 @@ Submenu
     } else if($nivel == 2) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
     } else if($nivel == 3) {
         echo "<li class='item'>";

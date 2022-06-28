@@ -47,12 +47,20 @@
         $lab = 11;
     } else if($laboratorio == "lego") {
         $lab = 12;
-    }
+    } else if($lab == 13) {
+        $laboratorio = 'tornearia';
+    } else if($lab == 14) {
+        $laboratorio = 'ferramentaria';
+    } else if($lab == 15) {
+        $laboratorio = 'manutenção';
+    } else if($lab == 16) {
+        $laboratorio = 'solda';
+    } 
     try {
         $cadreserva = $conn->prepare("INSERT INTO reservas (data,horarioInicio,horarioFim,solicitante,laboratorio,turma,aprovado) VALUES ('$data','$hInicio','$hFim','$solicitante','$lab','$turma',0)");
         $cadreserva->execute();
 
-        $buscaReserv = $conn->prepare("SELECT TOP 1 id FROM reservaLabs ORDER BY id DESC");
+        $buscaReserv = $conn->prepare("SELECT TOP 1 id FROM reservas ORDER BY id DESC");
         $buscaReserv->execute();
         
         $idRs = $buscaReserv->fetchAll();

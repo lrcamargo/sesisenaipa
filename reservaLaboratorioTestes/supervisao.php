@@ -3,7 +3,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    include('../conexaosec.php');
+    
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -22,7 +22,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Reserva de Laboratório - principal</title>
+        <title>Reserva de Laboratório</title>
         
         
         <link rel="stylesheet" href="../css/main.css">
@@ -35,7 +35,7 @@
         <style>
             .labs {
                 margin-top: 15%;
-                margin-left: -55%;
+                margin-left: -85%;
                 text-align: center;
             }
 
@@ -76,16 +76,18 @@
                         <br/>
                         <br/>
                         <ul class="labs">
-                            <li><a href="laboratorios/lab201.php">201A</a><br/></li>
-                            <li><a href="laboratorios/lab202.php">202A</a><br/></li>
-                            <li><a href="laboratorios/lab203.php">203A</a><br/></li>
-                            <li><a href="#">101A</a><br/></li>
-                            <li><a href="#">101B</a><br/></li>
-                            <li><a href="#">103B</a><br/></li>
-                            <li><a href="#">104B</a><br/></li>
-                            <li><a href="#">105B</a><br/></li>
-                            <li><a href="#">106B</a><br/></li>
-                            <li><a href="#">107B</a><br/></li>
+                            <li><a href="laboratorios/lab201.php">201A - Informática</a><br/></li>
+                            <li><a href="laboratorios/lab202.php">202A - Informática</a><br/></li>
+                            <li><a href="laboratorios/lab203.php">203A - Informática</a><br/></li>
+                            <li><a href="laboratorios/lab101a.php">101A - Química</a><br/></li>
+                            <li><a href="laboratorios/lab102a.php">102A - Robótica Lego</a><br/></li>
+                            <li><a href="laboratorios/lab101b.php">101B - Robótica Industrial</a><br/></li>
+                            <li><a href="laboratorios/lab103b.php">103B - Eletrohidropneumática</a><br/></li>
+                            <li><a href="laboratorios/lab104b.php">104B - Elétrica Predial</a><br/></li>
+                            <li><a href="laboratorios/lab105b.php">105B - Elétrica Industrial</a><br/></li>
+                            <li><a href="laboratorios/lab106b.php">106B - Eletrônica</a><br/></li>
+                            <li><a href="laboratorios/lab107b.php">107B - SENAI LAB</a><br/></li>
+                            <li><a href="laboratorios/lab106c.php">106C - CNC</a><br/></li>
                         </ul>                        
                     </div>
                     <div class="card lista">
@@ -109,8 +111,8 @@
                             include("conexaoteste.php");
                             try {
                                 $buscaReservas = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, 
-                                LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservalabs
-                                ORDER BY data,horarioInicio");
+                                LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas
+                                WHERE data >= GETDATE() ORDER BY data,horarioInicio");
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
@@ -125,6 +127,24 @@
                                             echo "<td>202A</td>";
                                         } else if($buscaReserva['laboratorio'] == 3) {
                                             echo "<td>203A</td>";
+                                        } else if($buscaReserva['laboratorio'] == 4) {
+                                            echo "<td>101B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 5) {
+                                            echo "<td>103B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 6) {
+                                            echo "<td>104B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 7) {
+                                            echo "<td>105B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 8) {
+                                            echo "<td>106B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 9) {
+                                            echo "<td>107B</td>";
+                                        } else if($buscaReserva['laboratorio'] == 10) {
+                                            echo "<td>101A</td>";
+                                        } else if($buscaReserva['laboratorio'] == 11) {
+                                            echo "<td>CNC</td>";
+                                        } else if($buscaReserva['laboratorio'] == 12) {
+                                            echo "<td>LEGO</td>";
                                         }                                        
                                         echo "<td>" . $buscaReserva['horarioInicio'] . "</td>";
                                         echo "<td>" . $buscaReserva['horarioFim'] . "</td>";
