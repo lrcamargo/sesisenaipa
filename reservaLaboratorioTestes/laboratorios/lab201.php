@@ -180,7 +180,7 @@
                             echo "<br/>";
                             echo "Reserva várias datas? <input type='checkbox' name='mult' onChange='multidata()'></input><br/>";
                         } else {
-                            echo "<input type='hidden' name='solicitante' value=<?php echo ".$logado."; ?></input>";
+                            echo "<input type='hidden' name='solicitante' value='<?php echo ".$logado."; ?>'</input>";
                         }
                     ?>
                 <input type="hidden" name="lab" value="201a"></input>
