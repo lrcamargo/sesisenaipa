@@ -18,7 +18,8 @@
     'AIRRC01M-1','AITA05M-1','AITA06T-1','HT-ELM-001-N-01','HT-ELT-001-M-01','HT-ELT-002-N-01','HT-ETT-001-N-01','HT-ETT-002-T-01','HT-ETT-003-N-01',
     'HT-MEC-001-N-02','HT-MEC-002-N-01','HT-MEC-004-M-01','HT-MET-003-N-01','HT-MMI-001-T-01','HT-MMI-002-N-01','HT-QUA-001-T-01',
     'HT-QUI-001-T-01','HT-QUI-002-N-01','HTAUTD-001-T-01','HTAUTD-002-T-01','TAI22N-3','TAIEAD03I-4','TAIEAD04I-2','TAIEAD05I-2','TMMECA28N-4','HT-MET-002-N-02','Funcionarios','AIAL02T-1', 'AICQ04T-1','AIAL01T-2',
-    'EF-6ºA-M-11775-22','EF-7ºA-M-11775-22','EF-8ºA-M-11775-22','EF-8ºB-M-11775-22','EF-9ºA-M-11775-22','AIMAELE02T-1','AICQ05N-1','EF-9ºA-M-11775-22','EF-9ºB-M-11775-22','HT-QUA-001-T-01','EM-1ªA-O-M-11775-22','EM-1ªA-A-M-11775-22','EM-2ªA-M-11775-22','EM-2ªB-M-11775-22','EM-3ªA-M-11775-22');
+    'EF-6ºA-M-11775-22','EF-7ºA-M-11775-22','EF-8ºA-M-11775-22','EF-8ºB-M-11775-22','EF-9ºA-M-11775-22','AIMAELE02T-1','AICQ05N-1','EF-9ºA-M-11775-22','EF-9ºB-M-11775-22','HT-QUA-001-T-01','EM-1ªA-O-M-11775-22','EM-1ªA-A-M-11775-22','EM-2ªA-M-11775-22','EM-2ªB-M-11775-22','EM-3ªA-M-11775-22','HT-FME-01-T-22-13310','AI-PPI-01-T-22-13310','AI-MEL-01-T-22-13310','AI-LOG-02-T-22-13310','AI-QUA-01-T-22-13310','AI-LOG-01-T-22-13310','HT-MET-01-N-22-13310','HT-ELT-01-N-22-13310','HT-MEC-01-N-22-13310','HT-FME-02-N-22-13310','HT-AUT-01-N-22-13310','HT-AUT-02-N-22-13310','AI-RCO-01-M-22-13310', 'AI-QUA-02-N-22-13310', 'AIADMEAD01T-1','NE-EF-22-11775-0001',
+    'QPPPRIND01I');
 
     $turmas = array('6º ANO A','7º ANO A', '8º ANO A', '1º ANO A', '1º ANO B', '1º ANO C', '2º ANO A','3º ANO A','QUAL. CONT. PROG. PRODUÇÃO',
     'QUAL. ELETRICISTA INDUSTRIAL','AP. CONTROLE QUALIDADE','APR. CONTROLE QUALIDADE','APR. CONTROLE QUALIDADE','APR. ELETROMECÂNICA',
@@ -34,7 +35,8 @@
     'TÉCNICO EM MECATRÔNICA','TÉCNICO EM MANUTENÇÃO DE MÁQUINAS','TÉCNICO EM MANUTENÇÃO DE MÁQUINAS','TÉCNICO EM QUALIDADE','TÉCNICO EM QUÍMICA',
     'TÉCNICO EM QUÍMICA','TÉCNICO EM AUTOMAÇÃO','TÉCNICO EM AUTOMAÇÃO','TÉCNICO EM AUTOMAÇÃO','TÉCNICO EM AUTOMAÇÃO',
     'TÉCNICO EM AUTOMAÇÃO','TÉCNICO EM MECATRÔNICA','TÉCNICO EM MECATRÔNICA','Funcionário','APR. AUX. LOGÍSTICA', 'APR. CONTROLE QUALIDADE', 'APR. AUX. LOGÍSTICA',
-    '6º ANO A','7º ANO A','8º ANO A','8º ANO B','9º ANO A','APR. MANUT. ELETROMECÂNICA','APR. CONTROLE QUALIDADE','9º ANO A','9º ANO B','TÉCNICO EM QUALIDADE','1º ANO','1º ANO','2º ANO', '2º ANO', '3º ANO');
+    '6º ANO A','7º ANO A','8º ANO A','8º ANO B','9º ANO A','APR. MANUT. ELETROMECÂNICA','APR. CONTROLE QUALIDADE','9º ANO A','9º ANO B','TÉCNICO EM QUALIDADE','1º ANO','1º ANO','2º ANO', '2º ANO', '3º ANO','TEC. FABRICAÇÃO MECÂNICA','APR. PROC. DE PROD. INDUSTRIAL','APR. MANUTENÇÃO ELETROMECÂNICA','APR. AUXILIAR LOGÍSTICA','APR. CONTROLE DE QUALIDADE','APR. AUXILIAR LOGÍSTICA','TÉCNICO MECATRÔNICA','TÉCNICO EM ELETRÔNICA','TÉCNICO EM MECÂNICA','TÉC. FABRICAÇÃO MECÂNICA','TÉC. AUTOMAÇÃO INDUSTRIAL','TÉC. AUTOMAÇÃO INDUSTRIAL','APR. REDES DE COMPUTADORES','APR. CONTROLE QUALIDADE','APR. ASSIST. ADMINISTRATIVO','ENS. JOVENS ADULTOS',
+    'QUAL. EM PROC. DE PROD. INDUSTRIAL');
     
 
     require("../fpdf/i25.php");
@@ -62,12 +64,12 @@
     $pdf->AddPage("L", array(54,86));
     $pdf->AddFont('Univers','','univers.php');
     $pdf->SetAutoPageBreak(false);
-    $pdf->Image("../img/modeloCracha.png", 0, 0, 86, 54);
+    $pdf->Image("../img/ModeloCrachaNovo.png", 0, 0, 86, 54);
     $pdf->SetRightMargin(0.5);
 
     $f = 8;
     $pdf->SetFont('Univers', '', $f);
-    $pdf->SetXY(28.8,17.5);
+    $pdf->SetXY(24.8,19.5);
     while ($pdf->GetStringWidth($nome) > 50) {
         $f-=0.2;
         $pdf->SetFontSize($f);
@@ -76,13 +78,13 @@
 
     $escola='Escola SESI/SENAI Orlando Chiarini';
     $pdf->SetFont('Univers', '', '8');
-    $pdf->SetXY(28.8,26);
+    $pdf->SetXY(24.8,27.5);
     $pdf->Write(6, $escola);
 
     $font = 8;
     $busca = array_search($nivel,$codigos);
     $pdf->SetFont('Univers', '', $font);
-    $pdf->SetXY(28.8,34.5);
+    $pdf->SetXY(24.8,34.5);
     while ($pdf->GetStringWidth($turmas[$busca]) > 35) {
         $font-=0.5;
         $pdf->SetFontSize($font);
@@ -102,22 +104,22 @@
         $turno = 'Integral';
     }
     $pdf->SetFont('Univers', '', '8');
-    $pdf->SetXY(63,34.5);
+    $pdf->SetXY(60,34.5);
     $pdf->Write(6, utf8_decode($turno));
 
     $val = substr($validade,0,-9);
     $data=explode("-",$val);
-    $pdf->SetFont('Univers', '', '6');
-    $pdf->SetXY(14,48);
+    $pdf->SetFont('Univers', '', '7');
+    $pdf->SetXY(16,46.7);
     $pdf->Write(6, $data[2]."/".$data[1]."/".$data[0]);
 
-    $pdf->SetFont('Univers', '', '6');
+    $pdf->SetFont('Univers', '', '7');
     $pdf->i25(38,39,str_pad($registro,10,"0",STR_PAD_LEFT),1.3,14);
-    $pdf->SetXY(14,39);
+    $pdf->SetXY(15.7,39);
     $pdf->Write(14,str_pad($registro,10,"0",STR_PAD_LEFT));
 
     $imagem = "/home/suporte/fotos/".$id."-1.jpg";
-    $pdf->Image($imagem,4.3,11.4,24);
+    $pdf->Image($imagem,1.6,11.8,23.8);
     
     $arquivo = $nome . "_" . $nivel . ".pdf";
     $filename = $arquivo;

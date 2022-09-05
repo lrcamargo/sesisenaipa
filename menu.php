@@ -58,6 +58,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+        echo "</li>";
     } else if($nivel == 4) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -80,6 +83,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+        echo "</li>";
     } else if($nivel == 5) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -100,6 +106,9 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../atividadesTeste/professor.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Atividades Professor</span></a>";
         echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+        echo "</li>";
     } else if($nivel == 7) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -113,6 +122,9 @@ Submenu
     } else if($nivel == 8) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";
     } else if($nivel == 9) {
         echo "<li class='item'>";
@@ -153,6 +165,9 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../controleTablets/scan.php' class='menu-btn'><i class='fas fa-tablet-alt'></i><span> Controle Tablets</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";
     } 
 ?>

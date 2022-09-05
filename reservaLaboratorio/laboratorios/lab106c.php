@@ -178,7 +178,7 @@
                                 }
                             echo "</select>";
                         } else {
-                            echo "<input type='hidden' name='solicitante' value='<?php echo ".$logado."; ?>'></input>";
+                            echo "<input type='hidden' name='solicitante' value='".$logado."'></input>";
                         }
                     ?>
                 <input type="hidden" name="lab" value="cnc"></input>

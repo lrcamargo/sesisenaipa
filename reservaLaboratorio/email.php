@@ -87,11 +87,6 @@
             $mail->Body    = $msg;
 
             $mail->send();
-            if($nivel == '4' || $nivel == '3' || $nivel == '9') {
-                header('location:supervisao.php');
-            } else {
-                header('location:principal.php');
-            }
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
@@ -123,7 +118,6 @@
         $sup4 = 'ascustodio';
         $sup5 = 'cleide.souza';
         $sup6 = 'ivina';
-        $sup7 = 'thiago';
         enviaEmail($sup1,$rcpt,$subSup,$msgSup);
         enviaEmail($sup2,$rcpt,$subSup,$msgSup);
         enviaEmail($sup3,$rcpt,$subSup,$msgSup);
@@ -131,6 +125,12 @@
         enviaEmail($sup5,$rcpt,$subSup,$msgSup);
         enviaEmail($sup6,$rcpt,$subSup,$msgSup);
         enviaEmail($sup7,$rcpt,$subSup,$msgSup);
+
+        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
+            header('location:supervisao.php');
+        } else {
+            header('location:principal.php');
+        }
     } else if($funcao == 2) {
         include('conexaounidade.php');
         try {
@@ -158,9 +158,6 @@
     } else if($funcao=3) {
         
     }
-        //function redireciona() {
-            
-        //}
         if($nivel == '4' || $nivel == '3' || $nivel == '9') {
             header('location:supervisao.php');
         } else {

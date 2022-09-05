@@ -46,7 +46,17 @@
         $lab = 10;
     } else if($laboratorio == "cnc") {
         $lab = 11;
-    }
+    } else if($laboratorio == "lego") {
+        $lab = 12;
+    } else if($lab == 13) {
+        $laboratorio = 'tornearia';
+    } else if($lab == 14) {
+        $laboratorio = 'ferramentaria';
+    } else if($lab == 15) {
+        $laboratorio = 'manutenção';
+    } else if($lab == 16) {
+        $laboratorio = 'solda';
+    } 
     try {
         $cadreserva = $conn->prepare("UPDATE reservas SET data = '$data', horarioInicio = '$hInicio', horarioFim = '$hFim', laboratorio = '$lab', turma = '$turma' WHERE id = '$id'");
         $cadreserva->execute();

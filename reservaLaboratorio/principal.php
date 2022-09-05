@@ -76,7 +76,6 @@
                         <ul class="labs">
                             <li><a href="laboratorios/lab201.php">201A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab202.php">202A - Informática</a><br/></li>
-                            <li><a href="laboratorios/lab203.php">203A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab101a.php">101A - Química</a><br/></li>
                             <li><a href="laboratorios/lab102a.php">102A - Robótica Lego</a><br/></li>
                             <li><a href="laboratorios/lab101b.php">101B - Robótica Industrial</a><br/></li>
@@ -115,7 +114,7 @@
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
-                                
+
                                 foreach ($buscaReserva as $buscaReserva) {
                                     echo "<tr>";
                                         echo "<td>" . $buscaReserva['id'] . "</td>";

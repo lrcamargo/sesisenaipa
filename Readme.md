@@ -14,6 +14,8 @@ Recursos:
 
 ## Agenda de Laboratório - histórico de Versão
 
+    * 1.3
+        * Removido laboratório 203A.
     * 1.2
         * Correção de bugs e adição de mais ambientes.
     * 1.1 
@@ -29,10 +31,11 @@ Recursos:
 - Links para aulas
 - Controle de internet laboratórios, tablets e celulares (colocar aviso de liberação/bloqueio e registro de alguma forma)
 - Atualização de layout - sistema sirene
-- Gestão secretaria - Recurso 1 listar todos alunos catraca para aproveitar as fotos;
-- Gestão atividades *EM DESENVOLVIMENTO*
-- Agenda laboratório *EM DESENVOLVIMENTO V1.2 - adicionar reserva vários dias supervisão e demais ambientes oficina.*
+- Gestão secretaria - Recurso 1: listar todos alunos catraca para aproveitar as fotos;
+- Gestão atividades *EM DESENVOLVIMENTO v1.0*
+- Agenda laboratório *EM DESENVOLVIMENTO V1.4 - adicionar reserva vários dias supervisão, adicionar reserva de tablets. Corrigir envio de e-mails*
 - Controle de tablets - base de teste *EM DESENVOLVIMENTO*
+- Solicitação de compras *EM DESENVOLVIMENTO v1.0 - tela de cadastro de solicitação*
 
 
 - Commits sem arquivos de conexão a base de dados, necessário criar.

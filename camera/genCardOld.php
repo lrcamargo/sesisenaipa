@@ -11,7 +11,7 @@
     $pdf->AddPage("L", array(54,86));
     $pdf->AddFont('Univers','','univers.php');
     $pdf->SetAutoPageBreak(false);
-    $pdf->Image("../img/modeloCracha2.png", 0, 0, 86, 54);
+    $pdf->Image("../img/modeloCracha.png", 0, 0, 86, 54);
 
     $nome='Leticia Rosa Camargo';
     $pdf->SetFont('Univers', '', '8');
