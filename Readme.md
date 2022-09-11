@@ -10,19 +10,7 @@ Recursos:
 - Dados energia
 - TFTP telefone
 - Login externo - alunos
-- Agenda laboratório v1.1 - 
-
-## Agenda de Laboratório - histórico de Versão
-
-    * 1.3
-        * Removido laboratório 203A.
-    * 1.2
-        * Correção de bugs e adição de mais ambientes.
-    * 1.1 
-        * Reserva dos laboratórios e envio de e-mail padrão para reserva e alteração de status.
-    * v1.0
-        * Versão inicial.
-
+- Agenda laboratório v1.3 - 
 
 ## Em desenvolvimento:
 - API para fechadura;
@@ -35,7 +23,22 @@ Recursos:
 - Gestão atividades *EM DESENVOLVIMENTO v1.0*
 - Agenda laboratório *EM DESENVOLVIMENTO V1.4 - adicionar reserva vários dias supervisão, adicionar reserva de tablets. Corrigir envio de e-mails*
 - Controle de tablets - base de teste *EM DESENVOLVIMENTO*
-- Solicitação de compras *EM DESENVOLVIMENTO v1.0 - tela de cadastro de solicitação*
+- Solicitação de compras *EM DESENVOLVIMENTO v1.0 - criar solicitação de compras, aprovação e definir centro de custo/unidade*
 
+## Agenda de Laboratório - histórico de Versão
+
+    * 1.3
+        * Removido laboratório 203A.
+    * 1.2
+        * Correção de bugs e adição de mais ambientes.
+    * 1.1 
+        * Reserva dos laboratórios e envio de e-mail padrão para reserva e alteração de status.
+    * v1.0
+        * Versão inicial.
+
+## Solicitação de Compras - histórico de Versão
+
+    * v1.0
+        * Versão inicial.
 
 - Commits sem arquivos de conexão a base de dados, necessário criar.

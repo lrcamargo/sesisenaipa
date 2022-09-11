@@ -45,7 +45,7 @@
                     <div class="sidebar-btn"><i class="fas fa-bars"></i></div>
                     <ul>
                         <li><a href="#" class="user"><?php echo $logado; ?></a></li>
-                        <li><a href="sair.php" class="logout"><i class="fas fa-power-off"></i></a></li>
+                        <li><a href="../sair.php" class="logout"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -96,10 +96,12 @@
                                         } else if($solicitacao['status'] == 2) {
                                             echo "<td>Aguardando informações</td>";
                                         } else if($solicitacao['status'] == 3) {
-                                            echo "<td>Aguardando entrega</td>";
+                                            echo "<td>Realizando Compra</td>";
                                         } else if($solicitacao['status'] == 4) {
+                                            echo "<td>Aguardando entrega</td>";
+                                        } else if($solicitacao['status'] == 5) {
                                             echo "<td>Finalizado</td>";
-                                        }
+                                        } 
                                         echo "<td>".$solicitacao['dataHora']."</td>";
                                         echo "<td align='center'><a href='detalhes.php?id=".$solicitacao['idSolicitacao']."'><i class='fas fa-edit'></i></a></td>";
                                     echo "</tr>";

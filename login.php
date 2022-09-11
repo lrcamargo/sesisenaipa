@@ -223,6 +223,13 @@
                     $log = 'Usuário '.$usuario.' logado.';
                     logToFile($log);
                     header("location: main.php"); 
+                } else if($usuario == 'lrcamargo') {
+                    $_SESSION['sLogin'] = "1";
+                    $_SESSION['user'] = $usuario;
+                    $_SESSION['group'] = "9";
+                    $log = 'Usuário '.$usuario.' logado.';
+                    logToFile($log);
+                    header("location: main.php"); 
                 } else {
                     $_SESSION['sLogin'] = "1";
                     $_SESSION['user'] = $usuario;
@@ -259,7 +266,7 @@
                 $log = 'Usuário '.$usuario.' logado.';
                 logToFile($log);
                 header("location: main.php");
-            } else if($usuario == 'administrator') {
+            } else if($usuario == 'administrator' || $usuario == 'lrcamargo') {
                 $_SESSION['sLogin'] = "1";
                 $_SESSION['user'] = $usuario;
                 $_SESSION['group'] = "9";

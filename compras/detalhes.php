@@ -62,15 +62,23 @@
                 <h3>Detalhes da Solicitação</h3>
                 <br/>
                 <?php
-                    if($logado == 'administrator') {
-                        echo "Aprovar";
+                    if($logado == 'administrator' || $logado == 'jlboari') {
+                        echo "<b>Aprovação: </b>";
+                        echo "<td align='center'><a href='aprovaCompra.php?id=".$id."&status=1'>Aprovar</a> || <a href='aprovaCompra.php?id=".$id."&status=2'>Reprovar</a>";
                         echo "<br/>";
-                        echo "Definir unidade";
+                        echo "<b>Definir unidade para todos os produtos: </b>";
+                        echo "<td align='center'><a href='unidadeTotal.php?id=".$id."&status=1'>SESI</a> || <a href='unidadeTotal.php?id=".$id."&status=2'>SENAI</a>";
                         echo "<br/>";
-                        echo "Definir centro de custo";
+                        echo "<b>Definir centro de custo para todos os produtos: </b>";
+                        echo "<br/>";
+                        echo "<i>SESI: </i><td align='center'><a href='ccTotal.php?id=".$id."&cc=2201'>2201</a> || <a href='ccTotal.php?id=".$id."&cc=3111'>3111</a> || <a href='ccTotal.php?id=".$id."&cc=3112'>3112</a> || <a href='ccTotal.php?id=".$id."&cc=3147'>3147</a> || <a href='ccTotal.php?id=".$id."&cc=3158'>3158</a> || <a href='ccTotal.php?id=".$id."&cc=3163'>3163</a> || <a href='ccTotal.php?id=".$id."&cc=3168'>3168</a> || <a href='ccTotal.php?id=".$id."&cc=3172'>3172</a> || <a href='ccTotal.php?id=".$id."&cc=5310'>5310</a> || <a href='ccTotal.php?id=".$id."&cc=5316'>5316</a>";
+                        echo "<br/>";
+                        echo "<i>SENAI: </i><td align='center'><a href='ccTotal.php?id=".$id."&cc=2201'>2201</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3172'>3172</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3182'>3182</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3192'>3192</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3484'>3484</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3614'>3614</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3804'>3804</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3865'>3865</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=5306'>5306</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=5316'>5316</a>";
+                        echo "<br/>";
                         echo "<br/>";
                     } else if($logado == 'ritaveloso' || $logado == 'scleidi') {
-                        echo "Status";
+                        echo "<a href='statusCompra.php?id=".$id."&status=1'>Realizando Orçamento</a> || <a href='statusCompra.php?id=".$id."&status=2'>Aguardando Informações</a> || <a href='statusCompra.php?id=".$id."&status=3'>Realizando Compra</a> || <a href='statusCompra.php?id=".$id."&status=3'>Aguardando Entrega</a> || <a href='statusCompra.php?id=".$id."&status=5'>Finalizado</a>";
+                        echo "<br/>";
                         echo "<br/>";
                     }
                 ?>
@@ -84,6 +92,7 @@
                         <th>Aplicacao</th>
                         <th>Unidade</th>
                         <th>CC</th>
+                        <th>Editar</th>
                     </thead>
                     <tbody>
                         <?php
@@ -101,8 +110,13 @@
                                         echo "<td>".$solicitacao['unMedida']."</td>";
                                         echo "<td>".$solicitacao['quantidade']."</td>";
                                         echo "<td>".$solicitacao['aplicacao']."</td>";
-                                        echo "<td align='center'></td>";
-                                        echo "<td align='center'></td>";
+                                        if($solicitacao['unidade'] == 1) {
+                                            echo "<td>SESI</td>";
+                                        } else if($solicitacao['unidade'] == 2) {
+                                            echo "<td>SENAI</td>";
+                                        }
+                                        echo "<td align='center'>".$solicitacao['cc']."</td>";
+                                        echo "<td align='center'><a href='editaProduto.php?id=".$solicitacao['idItem']."'><i class='fas fa-edit'></i></a></td>";
                                     echo "</tr>";
                                 }
                             } catch(PDOException $e) {
