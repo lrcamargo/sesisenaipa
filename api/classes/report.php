@@ -1,6 +1,6 @@
 <?php
     class report {
-        public function buscaLinks(docente) {
+        public function buscaLinks($docente) {
             include("../linksAulas/conexaoTeste.php");
 
             try {
@@ -23,6 +23,10 @@
             }
 
            return $resultados;
-        }
+	}
+	public function libera($parametros) {
+		$resultados = {"status":"teste","dados:",$parametros};
+		return $resultados;
+	}
     }
 ?>

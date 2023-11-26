@@ -99,7 +99,7 @@ $(document).ready(function() {
                     data:{folder_name:folder_name,action:action},
                     success:function(data){
                         alert(data);
-                        location.href('www.sesisenai.br/camera/camera.php');
+                        location.href('192.168.254.16/camera/camera.php');
                         folder_list();
                     }
                 });

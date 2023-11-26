@@ -61,17 +61,19 @@
     </div>
     <!--Fim info box-->
     <!--Inicio info-box-->
-    <div class="info-box info-bg-deepgreen">
-        <span class="info-box-icon"><i class="fas fa-phone"></i></span>
+    <!--<div class="info-box info-bg-deepgreen">
+        <span class="info-box-icon"><i class="fas fa-phone"></i></span>-->
         <!--Inicio info-box conteúdo-->
-        <div class="info-box-content info-bg-white">
+        <!--<div class="info-box-content info-bg-white">
             <span class="info-box-text">Troncos | Ramais Online</span>
                 <span class="info-box-number"><?php echo buscaQuantTroncos(); echo " | "; echo buscaQuantRamais();?><a href="telefone.php" class="info-box-label info-box-txt-deepgreen"><i class ="fas fa-plus-square"></i></a>
             </span>
-        </div>
+        </div>-->
         <!--Fim info-box conteúdo-->
     </div>
     <!--Fim info box-->
+    <br/><br/><br/><br/><br/>
+    
 </div>
 <!--Fim grid-->
     <!--Inicio info-box-->
@@ -148,9 +150,10 @@
             </div>
         </div>
         <!--Fim info-box conteúdo-->
+        
     </div>
     <!--Fim info box-->
-
+    
     <script src="../js/energia.js"></script>
     <script src="../libs/gauge.js/dist/gauge.min.js"></script>
 </html>

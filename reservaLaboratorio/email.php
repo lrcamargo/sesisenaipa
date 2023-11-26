@@ -90,6 +90,12 @@
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
+
+        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
+            header('location:supervisao.php');
+        } else {
+            header('location:principal.php');
+        }
     }
 
     if($funcao == 1) { //solicitação - solicitante e supervisao
@@ -116,21 +122,16 @@
         $sup2 = 'frgoncalves';
         $sup3 = 'iprata';
         $sup4 = 'ascustodio';
-        $sup5 = 'cleide.souza';
-        $sup6 = 'ivina';
         enviaEmail($sup1,$rcpt,$subSup,$msgSup);
         enviaEmail($sup2,$rcpt,$subSup,$msgSup);
         enviaEmail($sup3,$rcpt,$subSup,$msgSup);
         enviaEmail($sup4,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup5,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup6,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup7,$rcpt,$subSup,$msgSup);
-
         if($nivel == '4' || $nivel == '3' || $nivel == '9') {
             header('location:supervisao.php');
         } else {
             header('location:principal.php');
         }
+
     } else if($funcao == 2) {
         include('conexaounidade.php');
         try {
@@ -149,18 +150,13 @@
         $msg = "Olá, " . $rcpt . "!<br/>O estado da solicitação ".$busca." foi alterado pela supervisão. <br/> De acordo com as demandas a reserva pode ter 
         sofrido alterações, então confira atentamente os detalhes da sua reserva antes do uso. <br/>Em caso de dúvidas ou alguma necessidade específica procurar a supervisão para maiores esclarecimentos.<br/><br/>Atenção: este é um e-mail automático. Por favor não responda.";
         enviaEmail($usuario,$rcpt,$sub,$msg);
-
         if($nivel == '4' || $nivel == '3' || $nivel == '9') {
             header('location:supervisao.php');
         } else {
             header('location:principal.php');
         }
+
     } else if($funcao=3) {
         
     }
-        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
-            header('location:supervisao.php');
-        } else {
-            header('location:principal.php');
-        }
 ?>

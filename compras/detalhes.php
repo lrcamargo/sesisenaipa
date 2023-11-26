@@ -76,7 +76,7 @@
                         echo "<i>SENAI: </i><td align='center'><a href='ccTotal.php?id=".$id."&cc=2201'>2201</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3172'>3172</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3182'>3182</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3192'>3192</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3484'>3484</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3614'>3614</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3804'>3804</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=3865'>3865</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=5306'>5306</a> || <td align='center'><a href='ccTotal.php?id=".$id."&cc=5316'>5316</a>";
                         echo "<br/>";
                         echo "<br/>";
-                    } else if($logado == 'ritaveloso' || $logado == 'scleidi') {
+                    } else if($logado == 'ritaveloso' || $logado == 'scleidi' || $logado == 'lrcamargo') {
                         echo "<a href='statusCompra.php?id=".$id."&status=1'>Realizando Orçamento</a> || <a href='statusCompra.php?id=".$id."&status=2'>Aguardando Informações</a> || <a href='statusCompra.php?id=".$id."&status=3'>Realizando Compra</a> || <a href='statusCompra.php?id=".$id."&status=3'>Aguardando Entrega</a> || <a href='statusCompra.php?id=".$id."&status=5'>Finalizado</a>";
                         echo "<br/>";
                         echo "<br/>";
@@ -89,7 +89,7 @@
                         <th>Descricao</th>
                         <th>Un. Medida</th>
                         <th>Quant.</th>
-                        <th>Aplicacao</th>
+                        <th>Justificativa</th>
                         <th>Unidade</th>
                         <th>CC</th>
                         <th>Editar</th>

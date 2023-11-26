@@ -166,7 +166,8 @@
                             echo "<select name='solicitante'>";
                             include("../conexaounidade.php");
                                 try {
-                                    $buscaSolicitante = $conn->prepare("SELECT * FROM funcionarios");
+                                    $buscaSolicitante = $conn->prepare("SELECT * FROM funcionarios order by nome");
+			
                                     $buscaSolicitante->execute();
 
                                     $solicitante = $buscaSolicitante->fetchAll();

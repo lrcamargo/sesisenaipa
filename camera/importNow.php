@@ -12,7 +12,7 @@
 
     $folder = utf8_decode($pasta);
     
-        if (file_exists(utf8_encode("snaps/2021/".$folder."/".utf8_decode($nome).".jpg"))) {
+        if (file_exists(utf8_encode("snap/2021/".$folder."/".utf8_decode($nome).".jpg"))) {
             echo "Nao";
             try {
                 $buscaAluno = $conn->prepare("SELECT id, n_identificador,nome FROM pessoas WHERE nome = '". $nome."' AND n_identificador IS NOT NULL");
@@ -20,10 +20,9 @@
                     
                 $buscaAlunos = $buscaAluno->fetchAll();
                 foreach ($buscaAlunos as $buscaAlunos) {
-                    $original = utf8_encode("snaps/2021/".$folder."/".utf8_decode($nome).".jpg");
+                    $original = utf8_encode("snap/2021/".$folder."/".utf8_decode($nome).".jpg");
                     rename($original, "/home/suporte/fotos/".$buscaAlunos['id']."-1.jpg");               
                 }
-                    
             } catch (PDOException $e) {
                 die("Erro ao conectar ao banco de dados $dbname :" . $e->getMessage());
             } 

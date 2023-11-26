@@ -11,7 +11,7 @@
             $nome = explode('  ', substr($line, 10, 99));
             $folder = explode(' ', substr($line, 124,25));
                 
-            if (file_exists(utf8_encode("snaps/2021/".$folder[0]."/".$nome[0].".jpg"))) {
+            if (file_exists(utf8_encode("snap//2021/".$folder[0]."/".$nome[0].".jpg"))) {
                 try {
                     $buscaAluno = $conn->prepare("SELECT id, n_identificador FROM pessoas WHERE n_identificador = ". $registro);
                                             
@@ -19,7 +19,7 @@
                     
                     $buscaAlunos = $buscaAluno->fetchAll();
                     foreach ($buscaAlunos as $buscaAlunos) {
-                        $original = utf8_encode("snaps/2021/".$folder[0]."/".$nome[0].".jpg");
+                        $original = utf8_encode("snap/2021/".$folder[0]."/".$nome[0].".jpg");
                         rename($original, "/home/suporte/fotos/".$buscaAlunos['id']."-1.jpg");
                     }
                     

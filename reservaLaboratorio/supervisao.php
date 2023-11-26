@@ -78,7 +78,6 @@
                         <ul class="labs">
                             <li><a href="laboratorios/lab201.php">201A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab202.php">202A - Informática</a><br/></li>
-                            <li><a href="laboratorios/lab203.php">203A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab101a.php">101A - Química</a><br/></li>
                             <li><a href="laboratorios/lab102a.php">102A - Robótica Lego</a><br/></li>
                             <li><a href="laboratorios/lab101b.php">101B - Robótica Industrial</a><br/></li>
@@ -115,8 +114,8 @@
                             include("conexao.php");
                             try {
                                 $buscaReservas = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, 
-                                LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas
-                                ORDER BY data,horarioInicio");
+                                LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas 
+                                WHERE data >= CONVERT(DATE,GETDATE()) ORDER BY data,horarioInicio");
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
@@ -156,9 +155,9 @@
                                         if($buscaReserva['aprovado'] == 0) {
                                             echo "<td>Aguardando</td>";
                                         } else if($buscaReserva['aprovado'] == 1) {
-                                            echo "<td>Sim</td>";
+                                            echo "<td style='color:green'>Sim</td>";
                                         } else if($buscaReserva['aprovado'] == 2) {
-                                            echo "<td>Não</td>";
+                                            echo "<td style='color:red'>Não</td>";
                                         } 
                                         echo "<td align='center'><a href='statusReserva.php?id=".$buscaReserva['id']."&status=1'><i class='fas fa-check-circle'></i></a>  <a href='statusReserva.php?id=".$buscaReserva['id']."&status=2'><i class='fas fa-times-circle'></i></a></td>";
                                         echo "<td align='center'><a href='editaReserva.php?id=".$buscaReserva['id']."'><i class='fas fa-pen-square'></i></a></td>";

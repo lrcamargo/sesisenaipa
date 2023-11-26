@@ -47,7 +47,7 @@ if((!isset ($_SESSION['obs']) == true)) {
     for($i = 0;$i<count($data);$i++) {
         $codigo = $data[$i]['Codigo'];
         $quantidade = $data[$i]['Quantidade'];
-        $aplicacao = $data[$i]['Aplicação'];
+        $aplicacao = $data[$i]['Justificativa'];
         try {
             $solicitar = $conn->prepare("INSERT INTO itens (codigoProduto,quantidade,aplicacao,codSolicitacao,dataHora) VALUES ('$codigo','$quantidade','$aplicacao','$idSolicitacao','$dataHora')");
             $solicitar->execute();

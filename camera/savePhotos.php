@@ -15,10 +15,10 @@
 	
 	$name = $_POST['nome'];
 	
-	if (!file_exists("snaps/2021/".$_POST['turma'])) {
-		mkdir("snaps/2021/".$_POST['turma'], 0777, true);
+	if (!file_exists("snap/2021/".$_POST['turma'])) {
+		mkdir("snap/2021/".$_POST['turma'], 0777, true);
 	}
-	$path = "snaps/2021/".$_POST['turma']."/{$name}.jpg";
+	$path = "snap/2021/".$_POST['turma']."/{$name}.jpg";
 
 	//data
 	$data = explode(',', $data);

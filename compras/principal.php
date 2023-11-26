@@ -9,7 +9,7 @@
         unset($_SESSION['sLogin']);
         unset($_SESSION['user']);
         unset($_SESSION['group']);
-        header('location:index.php');    
+        header('location:../index.php');    
     }
     
     $logado = $_SESSION['user'];
@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     </head>
     <body>
         <!-- Início Wrapper -->
@@ -57,9 +58,21 @@
         <!--Fim sidebar-->
         <!--Inicio conteúdo-->
             <div class="main-container">
-                <a href="solicitacao.php">Solicitação de Compras</a>
+                <a href="solicitacao.php">Criar nova solicitação</a>
+                <br/><br/>
+                <a href="lista.php">Listar solicitações</a>
+                <br/>
+                <br/>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 50%;"><canvas id="grupos" style="width: 50% !important; float:left;"></canvas></td>
+                        <td style="width: 50%;"><canvas id="solicitante" style="float:right; width: 50% !important"></canvas></td>
+                    </tr>
+                </table>
             </div>
         <!--Fim wrapper-->
         <script type="text/javascript" src="../js/menu.js"></script>
+        <script src="../js/graficos/compras/solicitanteCompras.js"></script>
+        <script src="../js/graficos/compras/grupos.js"></script>
     </body>
 </html>

@@ -97,13 +97,15 @@
                         </div>
                     </div>
                     <br/>
-                    <b>Unidade de Medida:</b>
+                    <b>Unidade de Medida: </b>
                     <input type="text" name='uni'>
                     <br/>
-                    <b>Quantidade:</b><input type="number" name='quant'>
+                    <b>Quantidade: </b><input type="number" name='quant'>
                     <br/>
-                    <b>Aplicação:</b><input type="text" name='aplic'>
-                    <button id="incrementCount" class="counter-button">
+                    <b>Justificativa: </b><input type="text" name='aplic'>
+                    <br/>
+                    <b>Detalhes: </b><input type="textarea" name='det'>
+                    <button id="incrementCount" class="counter-button" onclick="fragm()">
                         <span class="icon-button-icon-content">
                             <i class ="fas fa-plus-square"></i></a>
                             <span class="icon-button-text-content">Adicionar</span>
@@ -112,7 +114,7 @@
                     </button>
                 <br/>
                 <br/>
-                <table id="tabela" class="tabela">
+                <table BORDER=1 id="tabela" class="tabela">
                     <thead>
                         <th>Codigo</th>
                         <th>Nome</th>
@@ -121,24 +123,29 @@
                         <th>Reg. Preço</th>
                         <th>GISU</th>
                         <th>Quantidade</th>
-                        <th>Aplicação</th>
+                        <th>Justificativa</th>
                     </thead>
                     <tbody>
                     </tbody>
-                </table>       
+                </table>  
+                <br/>     
                 <button id="incrementCount" class="criar">
                         <span class="icon-button-icon-content">
                             <i class ="fas fa-plus-square"></i></a>
                             <span class="icon-button-text-content">Criar Pedido</span>
                         </span>
         
-                    </button>       
+                    </button>    
+                <br/><br/>Produto desejado não existe? <a href='novoProduto.php'>Solicitar cadastro</a>
             </div>
         <!--Fim wrapper-->
         <script type="text/javascript" src="../js/menu.js"></script>
         <script>
             function unidade() {
                 const box = document.querySelector('input[value=parcial]');
+            }
+            function fragm() {
+                alert("ATENÇÃO! Este produto já foi comprado recentemente e pode gerar fragmentação de compra. \nVerifique com o gerente se a compra poderá ser realizada.")
             }
         </script>
         <script>
@@ -227,9 +234,10 @@
                     url  : "solicitar.php",
                     data : { table },// passing the values
                     success: function(res){
-                        console.log(res);  
+                        window.location.href = "lista.php";
                         if(res.status === 'sucess') {
-                            console.log("ok");
+                            
+                            
                         }    
                     }
                 });

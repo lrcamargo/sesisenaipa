@@ -1,7 +1,8 @@
 
 <?php
 header('Content-Type: application/json; charset: utf-8');
-require_once 'classes/report.php';
+#require_once 'classes/report.php';
+require_once 'classes/acesso.php';
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
   header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");

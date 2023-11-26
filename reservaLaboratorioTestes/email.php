@@ -83,13 +83,15 @@
             $mail->Body    = $msg;
 
             $mail->send();
-            if($nivel == '4' || $nivel == '3' || $nivel == '9') {
-                header('location:supervisao.php');
-            } else {
-                header('location:principal.php');
-            }
+            
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
+        if($nivel == '4' || $nivel == '3' || $nivel == '9') {
+            header('location:supervisao.php');
+        } else {
+            header('location:principal.php');
         }
     }
 

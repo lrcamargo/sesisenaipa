@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Stringable' => $vendorDir . '/myclabs/php-enum/stubs/Stringable.php',
 );
