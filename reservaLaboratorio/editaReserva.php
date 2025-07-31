@@ -158,6 +158,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 2) {
                                 echo "<b>Laboratório: </b>";
@@ -178,6 +180,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 3) {
                                 echo "<b>Laboratório: </b>";
@@ -198,6 +202,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 4) {
                                 echo "<b>Laboratório: </b>";
@@ -218,6 +224,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 5) {
                                 echo "<b>Laboratório: </b>";
@@ -238,6 +246,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 6) {
                                 echo "<b>Laboratório: </b>";
@@ -258,6 +268,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 7) {
                                 echo "<b>Laboratório: </b>";
@@ -278,6 +290,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 8) {
                                 echo "<b>Laboratório: </b>";
@@ -298,6 +312,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 9) {
                                 echo "<b>Laboratório: </b>";
@@ -318,6 +334,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 10) {
                                 echo "<b>Laboratório: </b>";
@@ -338,6 +356,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 11) {
                                 echo "<b>Laboratório: </b>";
@@ -358,6 +378,8 @@
                                     echo "<option value='manutencao'>104C - Manutenção</option>";
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc' selected>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
                                 echo "</select>";
                             } else if($laboratorio == 12) {
                                 echo "<b>Laboratório: </b>";
@@ -459,7 +481,51 @@
                                     echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
                                     echo "<option value='cnc'>106C - CNC</option>";
                                 echo "</select>";
-                            }
+                            } else if($laboratorio == 17) {
+                                echo "<b>Laboratório: </b>";
+                                echo "<select name='lab'>";
+                                    echo "<option value='201a'>201A - Informática</option>";
+                                    echo "<option value='202a'>202A - Informática</option>";
+                                    echo "<option value='203a'>203A - Informática</option>";
+                                    echo "<option value='101a'>101A - Química</option>";
+                                    echo "<option value='lego'>102A - Robótica Lego</option>";
+                                    echo "<option value='101b'>101B - Robótica Industrial</option>";
+                                    echo "<option value='103b'>103B - Eletrohidropneumática</option>";
+                                    echo "<option value='104b'>104B - Elétrica Predial</option>";
+                                    echo "<option value='105b'>105B - Elétrica Industrial</option>";
+                                    echo "<option value='106b'>106B - Eletrônica</option>";
+                                    echo "<option value='107b'>107B - SENAI LAB</option>";                                    
+                                    echo "<option value='tornearia'>101C - Usinagem</option>";
+                                    echo "<option value='solda'>103C - Solda</option>";
+                                    echo "<option value='manutencao'>104C - Manutenção</option>";
+                                    echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
+                                    echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro' selected>Teatro</option>";
+                                    echo "<option value='biblioteca'>Biblioteca</option>";
+                                echo "</select>";
+                            } else if($laboratorio == 18) {
+                                echo "<b>Laboratório: </b>";
+                                echo "<select name='lab'>";
+                                    echo "<option value='201a'>201A - Informática</option>";
+                                    echo "<option value='202a'>202A - Informática</option>";
+                                    echo "<option value='203a'>203A - Informática</option>";
+                                    echo "<option value='101a'>101A - Química</option>";
+                                    echo "<option value='lego'>102A - Robótica Lego</option>";
+                                    echo "<option value='101b'>101B - Robótica Industrial</option>";
+                                    echo "<option value='103b'>103B - Eletrohidropneumática</option>";
+                                    echo "<option value='104b'>104B - Elétrica Predial</option>";
+                                    echo "<option value='105b'>105B - Elétrica Industrial</option>";
+                                    echo "<option value='106b'>106B - Eletrônica</option>";
+                                    echo "<option value='107b'>107B - SENAI LAB</option>";                                    
+                                    echo "<option value='tornearia'>101C - Usinagem</option>";
+                                    echo "<option value='solda'>103C - Solda</option>";
+                                    echo "<option value='manutencao'>104C - Manutenção</option>";
+                                    echo "<option value='ferramentaria'>105C - Ferramentaria</option>";
+                                    echo "<option value='cnc'>106C - CNC</option>";
+                                    echo "<option value='teatro'>Teatro</option>";
+                                    echo "<option value='biblioteca' selected>Biblioteca</option>";
+                                echo "</select>";
+                            } 
                         ?>
                         <br/>
                         <input type="hidden" name='id' value="<?php echo $idReserva;?>">

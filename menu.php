@@ -15,8 +15,14 @@ Submenu
             <a href="#"><i class="fas fa-address-card"></i><span>Registro de Acesso</span></a>
     </div>
 </li>
+        //alterado instrutor
+        /*echo "<li class='item'>";
+            echo "<a href='../controle_internet/controle.php' class='menu-btn'><i class='fas fa-lock'></i><span> Controle de Internet</span></a>";
+        echo "</li>";*/
 
-*/
+        // LINK PARA MENU EM MANUTENÇÃO
+        // echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+
     if($nivel == 0) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
@@ -27,55 +33,47 @@ Submenu
     }
     if($nivel == 1) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
-        if((strpos($_SERVER['REQUEST_URI'],"laboratorios")) == true) {
-            echo "<li class='item'>";
-                echo "<a href='../principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } else {
-            echo "<li class='item'>";
-                echo "<a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        }
-        /*echo "<li class='item'>";
-            echo "<a href='../controle_internet/controle.php' class='menu-btn'><i class='fas fa-lock'></i><span> Controle de Internet</span></a>";
-        echo "</li>";*/
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../principal.php' : '../reservaLaboratorio/principal.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
+        echo "</li>";
+       // echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+        
     } else if($nivel == 2) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
         echo "<li class='item'>";
-            echo "<a href='../avaliacoes/resultadosDocente.php' class='menu-btn'><i class='fas fa-chalkboard-teacher'></i><span> Resultados Avaliações</span></a>";
+            echo "<a href='" . ($isInLabsSection ? '../principal.php' : '../reservaLaboratorio/principal.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
         echo "</li>";
-        echo "<li class='item'>";
-            echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
-        echo "</li>";
-        if((strpos($_SERVER['REQUEST_URI'],"laboratorios")) == true) {
-            echo "<li class='item'>";
-                echo "<a href='../principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } else {
-            echo "<li class='item'>";
-                echo "<a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        }
+        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
     } else if($nivel == 3) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
-        if((strpos($_SERVER['REQUEST_URI'],"laboratorios")) == true) {
-            echo "<li class='item'>";
-                echo "<a href='../supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } else {
-            echo "<li class='item'>";
-                echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        }
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
         echo "<li class='item'>";
-            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
         echo "</li>";
+        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+        /*echo "<li class='item'>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+        echo "</li>";*/
         echo "<li class='item'>";
             echo "<a href='../controle/index.php' class='menu-btn'><i class='fa fa-fw fa-clock-o'></i> Registro</a>";
         echo "</li>";
@@ -84,20 +82,21 @@ Submenu
         echo "</li>";
     } else if($nivel == 4) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
+        echo "</li>";*/
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
         echo "</li>";
-        if((strpos($_SERVER['REQUEST_URI'],"laboratorios")) == true) {
-            echo "<li class='item'>";
-                echo "<a href='../supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } else {
-            echo "<li class='item'>";
-                echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        }
+        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+
         echo "<li class='item' id='notas'>";
             echo "<a href='#notas' class='menu-btn'>";
                 echo "<i class='fas fa-chalkboard-teacher'></i><span>Resultados Avaliações <i class='fas fa-chevron-down drop-down'></i></span>";
@@ -107,37 +106,46 @@ Submenu
                 echo "<a href='avaliacoes/resultadosGeral.php'><i class='fas fa-clipboard-list'></i><span>Relatórios</span></a>";
             echo "</div>";
         echo "</li>";
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../atividades/professor.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../controleTablets/scan.php' class='menu-btn'><i class='fas fa-tablet-alt'></i><span> Controle Tablets</span></a>";
-        echo "</li>";
+        echo "</li>";*/
         /*echo "<li class='item'>";
             echo "<a href='../sirene/index.php' class='menu-btn'><i class='fa fa-fw fa-bell'></i> Sirene</a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../catraca/index.php' class='menu-btn'><i class='fa fa-fw fa-calendar'></i> AcessoNet</a>";
         echo "</li>";*/
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span>Câmera</span></a>";
-        echo "</li>";
+        echo "</li>";*/
     } else if($nivel == 5) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
         echo "</li>";
-        echo "<li class='item'>";
-            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
-        echo "</li>";
         /*echo "<li class='item'>";
-            echo "<a href='../catraca/index.php' class='menu-btn'><i class='fa fa-fw fa-calendar'></i> AcessoNet</a>";
+            echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";*/
+        echo "<li class='item'>";
+            echo "<a href='../catraca/index.php' class='menu-btn'><i class='fa fa-fw fa-calendar'></i> AcessoNet</a>";
+        echo "</li>";
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
+        echo "</li>";
+        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
     } else if($nivel == 6) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../graficos/graficosenergia.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Monitorar elétrica</span></a>";
@@ -145,42 +153,51 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../atividadesTeste/professor.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Atividades Professor</span></a>";
         echo "</li>";
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
-        echo "</li>";
+        echo "</li>";*/
     } else if($nivel == 7) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
         echo "</li>";
-        echo "<li class='item'>";
+        /*echo "<li class='item'>";
             echo "<a href='../atividades/senha.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
-        echo "</li>";
+        echo "</li>";*/
     } else if($nivel == 8) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
+        echo "</li>";
+        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         echo "<li class='item'>";
             echo "<a href='../compras/lista.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";
     } else if($nivel == 9) {
         echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
-            echo "<a href='../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
+            echo "<a href='../../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
         echo "</li>";
-        if((strpos($_SERVER['REQUEST_URI'],"laboratorios")) == true) {
-            echo "<li class='item'>";
-                echo "<a href='../supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } else {
-            echo "<li class='item'>";
-                echo "<a href='../reservaLaboratorio/supervisao.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-            echo "</li>";
-        } 
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
+        echo "</li>";
+        
         echo "<li class='item' id='notas'>";
             echo "<a href='#notas' class='menu-btn'>";
                 echo "<i class='fas fa-chalkboard-teacher'></i><span>Resultados Avaliações <i class='fas fa-chevron-down drop-down'></i></span>";

@@ -70,7 +70,7 @@
                     else if ($nivel == 1) {
 
                     } else if ($nivel == 2) {
-                        include('./atividades/professor.php');
+                        //include('./atividades/professor.php');
                     }  else if ($nivel == 3) {
                         include('supTecnicaContainer.php');
                     }  else if ($nivel == 4) {

@@ -56,6 +56,10 @@
         $laboratorio = 'manutenção';
     } else if($lab == 16) {
         $laboratorio = 'solda';
+    } else if($lab == 17) {
+        $laboratorio = 'teatro';
+    } else if($lab == 18) {
+        $laboratorio = 'biblioteca';
     } 
     try {
         $cadreserva = $conn->prepare("UPDATE reservas SET data = '$data', horarioInicio = '$hInicio', horarioFim = '$hFim', laboratorio = '$lab', turma = '$turma' WHERE id = '$id'");

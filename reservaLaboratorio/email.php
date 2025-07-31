@@ -115,17 +115,17 @@
         $subSol = "Solicitação de Reserva de Laboratório";
         $msgSol = "Olá, " . $rcpt . "! <br/>Sua solicitação de reserva do laboratório ".strtoupper($laboratorio)." para o dia ".$data." foi realizada com sucesso. <br/> Aguarde aprovação da solicitação pela supervisão.
         Você pode conferir mais detalhes sobre a sua reserva na tela inicial do sistema de reservas.<br/><br/><br/>Atenção: este é um e-mail automático. Por favor não responda.";
-        enviaEmail($usuario,$rcpt,$subSol,$msgSol);
+        #enviaEmail($usuario,$rcpt,$subSol,$msgSol);
         $subSup = "Nova Solicitação de Reserva";
         $msgSup = "Olá! <br/>Uma nova solicitação de laboratório foi feita e está pendente de aprovação.";
         $sup1 = 'asrocha';
         $sup2 = 'frgoncalves';
         $sup3 = 'iprata';
         $sup4 = 'ascustodio';
-        enviaEmail($sup1,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup2,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup3,$rcpt,$subSup,$msgSup);
-        enviaEmail($sup4,$rcpt,$subSup,$msgSup);
+        #enviaEmail($sup1,$rcpt,$subSup,$msgSup);
+        #enviaEmail($sup2,$rcpt,$subSup,$msgSup);
+        #enviaEmail($sup3,$rcpt,$subSup,$msgSup);
+        #enviaEmail($sup4,$rcpt,$subSup,$msgSup);
         if($nivel == '4' || $nivel == '3' || $nivel == '9') {
             header('location:supervisao.php');
         } else {
@@ -149,7 +149,7 @@
         $sub = "Alteração de status";
         $msg = "Olá, " . $rcpt . "!<br/>O estado da solicitação ".$busca." foi alterado pela supervisão. <br/> De acordo com as demandas a reserva pode ter 
         sofrido alterações, então confira atentamente os detalhes da sua reserva antes do uso. <br/>Em caso de dúvidas ou alguma necessidade específica procurar a supervisão para maiores esclarecimentos.<br/><br/>Atenção: este é um e-mail automático. Por favor não responda.";
-        enviaEmail($usuario,$rcpt,$sub,$msg);
+        #enviaEmail($usuario,$rcpt,$sub,$msg);
         if($nivel == '4' || $nivel == '3' || $nivel == '9') {
             header('location:supervisao.php');
         } else {

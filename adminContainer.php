@@ -8,7 +8,7 @@
     $total = buscaAlunosTotal() + $doisNSesi + $doisNSenai;
 ?>
 <html>
-
+<a href="http://192.168.254.17">Teste</a>
 <!--Inicio grid-->
 <div class="info-container">
     <!--Inicio info-box-->

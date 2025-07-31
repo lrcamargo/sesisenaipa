@@ -8,7 +8,7 @@
     }
 
     try {
-        $buscareserva = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas WHERE laboratorio = '$lab'");
+        $buscareserva = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado, descricao FROM reservas WHERE laboratorio = '$lab'");
         $buscareserva->execute();
         
         $reservas = [];
@@ -23,6 +23,7 @@
                 $solicitante = $buscaRes['solicitante'];
                 $turma = $buscaRes['turma'];
                 $aprovado = $buscaRes['aprovado'];
+                $descricao = $buscaRes['descricao'];
 
                 if($aprovado == 0) {
                     $color = "gray";
@@ -35,6 +36,7 @@
                     'title' => $solicitante . " " . $turma,
                     'color' => $color,
                     'status' => $aprovado,
+                    'descricao' => $descricao,
                     'backgroundColor' => $color,
                     'start' => $data."T".$horaInicio,
                     'end' => $data."T".$horaFim,

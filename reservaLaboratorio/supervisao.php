@@ -91,6 +91,8 @@
                             <li><a href="laboratorios/lab104c.php">104C - Manutenção</a><br/></li>
                             <li><a href="laboratorios/lab105c.php">105C - Ferramentaria</a><br/></li>
                             <li><a href="laboratorios/lab106c.php">106C - CNC</a><br/></li>
+                            <li><a href="laboratorios/teatro.php">Teatro</a><br/></li>
+                            <li><a href="laboratorios/biblioteca.php">Biblioteca</a><br/></li>
                         </ul>                        
                     </div>
                     <div class="card lista">
@@ -148,7 +150,12 @@
                                             echo "<td>CNC</td>";
                                         } else if($buscaReserva['laboratorio'] == 12) {
                                             echo "<td>LEGO</td>";
-                                        }                                        
+                                        } else if($buscaReserva['laboratorio'] == 17) {
+                                            echo "<td>Teatro</td>";
+                                        } else if($buscaReserva['laboratorio'] == 18) {
+                                            echo "<td>Biblioteca</td>";
+                                        }   
+                                                                                
                                         echo "<td>" . $buscaReserva['horarioInicio'] . "</td>";
                                         echo "<td>" . $buscaReserva['horarioFim'] . "</td>";
                                         echo "<td>" . $buscaReserva['solicitante'] . "</td>";

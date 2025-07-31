@@ -188,11 +188,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["xls_file"]) && $_FILE
         <option value='7'>9º Ano B</option>
         <option value='8'>1º Ano Alfa</option>
         <option value='9'>1º Ano Ômega</option>
-        <option value='10'>2º Ano FGB</option>
-        <option value='11'>2º Ano Alfa</option>
-        <option value='12'>2º Ano Ômega</option>
-        <option value='13'>3º Ano A</option>
-        <option value='14'>3º Ano B</option>
+        <option value='10'>2º Ano Alfa</option>
+        <option value='11'>2º Ano Ômega</option>
+        <option value='12'>3º Ano Alfa</option>
+        <option value='13'>3º Ano Ômega</option>
     </select>
     <br/>
     Selecione um arquivo XLS: <input type="file" name="xls_file">
