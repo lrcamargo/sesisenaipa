@@ -8,7 +8,8 @@
     $total = buscaAlunosTotal() + $doisNSesi + $doisNSenai;
 ?>
 <html>
-<a href="http://192.168.254.17">Teste</a>
+    <body>
+        Interface Administrator - atualizado local
 <!--Inicio grid-->
 <div class="info-container">
     <!--Inicio info-box-->
@@ -154,6 +155,7 @@
     </div>
     <!--Fim info box-->
     
+    </body>
     <script src="../js/energia.js"></script>
     <script src="../libs/gauge.js/dist/gauge.min.js"></script>
 </html>

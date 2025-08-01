@@ -14,3 +14,4 @@ reservaLaboratorio/conexaoteste.php
 reservaLaboratorioTestes/**
 reservaLaboratorioTestes/supervisao.php
 camera/snap/*
+gestaoUsuarios/conect.php

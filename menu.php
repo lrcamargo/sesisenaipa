@@ -58,7 +58,7 @@ Submenu
             echo "</a>";
         echo "</li>";
         //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-    } else if($nivel == 3) {
+    } else if($nivel == 3) { #sup tecnica
         echo "<li class='item'>";
             echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
@@ -70,7 +70,10 @@ Submenu
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
-        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+        //EM MANUTENÇÃO
+        echo "<li class='item'>";
+            echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-users'></i><span> Gestão Usuários</span></a>";
+        echo "</li>";
         /*echo "<li class='item'>";
             echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";*/
@@ -80,7 +83,7 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../graficos/graficosenergia.php' class='menu-btn'><i class='fas fa-bolt'></i><span> Monitorar elétrica</span></a>";
         echo "</li>";
-    } else if($nivel == 4) {
+    } else if($nivel == 4) { #sup. pedagogica
         echo "<li class='item'>";
             echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
@@ -95,8 +98,10 @@ Submenu
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
-        //echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
-
+        //EM MANUTENÇÃO
+        echo "<li class='item'>";
+            echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-users'></i><span> Gestão Usuários</span></a>";
+        echo "</li>";
         echo "<li class='item' id='notas'>";
             echo "<a href='#notas' class='menu-btn'>";
                 echo "<i class='fas fa-chalkboard-teacher'></i><span>Resultados Avaliações <i class='fas fa-chevron-down drop-down'></i></span>";
@@ -182,23 +187,31 @@ Submenu
         echo "<li class='item'>";
             echo "<a href='../compras/lista.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";
-    } else if($nivel == 9) {
+    } else if($nivel == 9) { #administrator
         echo "<li class='item'>";
             echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
         echo "<li class='item'>";
-            echo "<a href='../../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Câmera</span></a>";
+            echo "<a href='../../camera/camera.php' class='menu-btn'><i class='fas fa-camera-retro'></i><span> Gerador Carteirinha</span></a>";
         echo "</li>";
         $currentPath = $_SERVER['REQUEST_URI'];
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
-        
         echo "<li class='item'>";
             echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
-        
-        echo "<li class='item' id='notas'>";
+        echo "<li class='item'>";
+            echo "<a href='../../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span> Gestão Usuários</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span> Sirene</span></a>";
+        echo "</li>";
+        echo "<li class='item'>";
+            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> AcessoNet</span></a>";
+        echo "</li>";
+        ##desativados
+        /*echo "<li class='item' id='notas'>";
             echo "<a href='#notas' class='menu-btn'>";
                 echo "<i class='fas fa-chalkboard-teacher'></i><span>Resultados Avaliações <i class='fas fa-chevron-down drop-down'></i></span>";
             echo "</a>";
@@ -220,12 +233,6 @@ Submenu
             echo "</div>";
         echo "</li>";
         echo "<li class='item'>";
-            echo "<a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span> Sirene</span></a>";
-        echo "</li>";
-        echo "<li class='item'>";
-            echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> AcessoNet</span></a>";
-        echo "</li>";
-        echo "<li class='item'>";
             echo "<a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span> Registro</span></a>";
         echo "</li>";
         echo "<li class='item'>";
@@ -239,6 +246,6 @@ Submenu
         echo "</li>";
         echo "<li class='item'>";
             echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
-        echo "</li>";
+        echo "</li>";*/
     } 
 ?>
