@@ -1,5 +1,8 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
+## Versão atual intranet: 2.1.1
+- Gerador de carteirinhas está com erro devido a mudanças no servidor. Para geração genérica de funcionários foi removida a busca pela foto.
+
 ## Versão atual intranet: 2.1
 - Removidos alguns recursos atualmente desnecessários que estavam em desenvolvimento.
 - Iniciando desenvolvimento de novo sistema de login - listar usuários, base de dados inicial, ativar/desativar usuários e iniciando tela de login e criação de perfis de acesso.
@@ -45,3 +48,4 @@ Recursos da versão:
         * Reserva dos laboratórios e envio de e-mail padrão para reserva e alteração de status.
     * v1.0
         * Versão inicial.
+
