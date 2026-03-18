@@ -55,18 +55,44 @@
                         failure: function() {
                             alert('Houve um erro ao buscar os eventos!');
                         }},
-                    dateClick: function(info) {
-                        var today = new Date();
-                        var date = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2, '0')+'-'+String(today.getDate()).padStart(2, '0');
-                        if(info.dateStr<date) {
-                            alert("Data escolhida: "+ info.dateStr + "\nOps, ainda não temos um DeLorean, então você não pode voltar no tempo para fazer essa reserva.\nEscolha outra data.");
-                        } else {
-                            let array = info.dateStr.split("-");
-                            let dataSel = `${array[2]}-${array[1]}-${array[0]}`;
-                            $("#reservaModal #data").text(dataSel);
-                            document.querySelector('input[name=dataInp]').setAttribute('value',info.dateStr);
-                            $("#reservaModal").modal();
-                        }
+                    dateClick: function(info){
+    var today = new Date();
+    var date = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+
+    if(info.dateStr < date){
+        alert("Não é possível reservar datas passadas.");
+    } else{
+
+        let array = info.dateStr.split("-");
+        let dataSel = `${array[2]}-${array[1]}-${array[0]}`;
+
+        $("#reservaModal #data").text(dataSel);
+
+        document.querySelector('input[name=dataInp]').setAttribute('value',info.dateStr);
+
+        $("#reservaModal").modal();
+
+        fetch('../buscarTurmasAPI.php?data='+info.dateStr)
+        .then(response => response.json())
+        .then(data => {
+
+        let select = document.getElementById("turmaSelect");
+        select.innerHTML = "";
+
+        data.forEach(function(turma){
+
+        let option = document.createElement("option");
+        option.value = turma;
+        option.text = turma;
+
+        select.appendChild(option);
+
+        });
+
+        });
+
+    }
+
                     },
                     eventClick: function(info) {
                         $("#dadosModal #dadosModalLabel").text(info.event.title);

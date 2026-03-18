@@ -3,7 +3,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    include('../conexaosec.php');
+    
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -22,14 +22,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Reserva de Laboratório - principal</title>
+        <title>Reserva de Laboratório</title>
+        
         
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
         <link rel="stylesheet" href="../css/telefone.css">
         
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>   
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-
+        
         <style>
             .labs {
                 margin-top: 15%;
@@ -74,7 +76,7 @@
                         <br/>
                         <br/>
                         <ul class="labs">
-                            <li><a href="laboratorios/lab201.php">201A - Informática</a><br/></li>
+                            <li><a href="laboratorios.php?lab=1">201A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab202.php">202A - Informática</a><br/></li>
                             <li><a href="laboratorios/lab101a.php">101A - Química</a><br/></li>
                             <li><a href="laboratorios/lab102a.php">102A - Robótica Lego</a><br/></li>
@@ -91,10 +93,10 @@
                             <li><a href="laboratorios/lab106c.php">106C - CNC</a><br/></li>
                             <li><a href="laboratorios/teatro.php">Teatro</a><br/></li>
                             <li><a href="laboratorios/biblioteca.php">Biblioteca</a><br/></li>
-                        </ul>     
+                        </ul>                        
                     </div>
                     <div class="card lista">
-                        <h3 style="text-align:center;width:100%">Minhas Reservas</h3>
+                        <h3 style="text-align:center;width:100%">Reservas</h3>
                         <br/>
                         <table class="atv-lista" style="border: none !important;text-align:center">
                             <thead>
@@ -104,19 +106,33 @@
                                     <th class="disc">Laboratório</th>
                                     <th class="edit">Início</th>
                                     <th class="fin">Fim</th>
+                                    <th class="fin">Solicitante</th>
                                     <th class="apv">Aprovado</th>
+                                    <th class="apv">Status</th>
+                                    <th class="apv">Editar</th>
                                 </tr>
                             </thead>
                         <?php
-                            include("conexao.php");
+                            include("../conexao.php");
                             try {
-                                $buscaReservas = $conn->prepare("SELECT id,data,LEFT(RTRIM(CONVERT(TIME, horarioInicio)), 8) AS horarioInicio, 
-                                LEFT(RTRIM(CONVERT(TIME, horarioFim)), 8) AS horarioFim,solicitante,laboratorio,turma,aprovado FROM reservas
-                                WHERE solicitante = '$logado' AND YEAR(data) = YEAR(GETDATE()) ORDER BY data,horarioInicio");
+                                $buscaReservas = $pdo->prepare("SELECT 
+idReserva AS id,
+data,
+TIME(horarioInicio) AS horarioInicio,
+TIME(horarioFim) AS horarioFim,
+solicitante,
+laboratorio,
+turma,
+aprovado
+FROM reservas
+JOIN usuarios 
+ON usuarios.id = reservas.solicitante
+WHERE data >= CURDATE()
+ORDER BY data, horarioInicio");
                                 $buscaReservas->execute();
                                 
                                 $buscaReserva = $buscaReservas->fetchAll();
-
+                                
                                 foreach ($buscaReserva as $buscaReserva) {
                                     echo "<tr>";
                                         echo "<td>" . $buscaReserva['id'] . "</td>";
@@ -149,16 +165,20 @@
                                             echo "<td>Teatro</td>";
                                         } else if($buscaReserva['laboratorio'] == 18) {
                                             echo "<td>Biblioteca</td>";
-                                        }                                           
+                                        }   
+                                                                                
                                         echo "<td>" . $buscaReserva['horarioInicio'] . "</td>";
                                         echo "<td>" . $buscaReserva['horarioFim'] . "</td>";
+                                        echo "<td>" . $buscaReserva['solicitante'] . "</td>";
                                         if($buscaReserva['aprovado'] == 0) {
                                             echo "<td>Aguardando</td>";
                                         } else if($buscaReserva['aprovado'] == 1) {
-                                            echo "<td>Sim</td>";
+                                            echo "<td style='color:green'>Sim</td>";
                                         } else if($buscaReserva['aprovado'] == 2) {
-                                            echo "<td>Não</td>";
-                                        }                                       
+                                            echo "<td style='color:red'>Não</td>";
+                                        } 
+                                        echo "<td align='center'><a href='statusReserva.php?id=".$buscaReserva['id']."&status=1'><i class='fas fa-check-circle'></i></a>  <a href='statusReserva.php?id=".$buscaReserva['id']."&status=2'><i class='fas fa-times-circle'></i></a></td>";
+                                        echo "<td align='center'><a href='editaReserva.php?id=".$buscaReserva['id']."'><i class='fas fa-pen-square'></i></a></td>";
                                     echo "</tr>";
                                 }
                             } catch(PDOException $e) {
@@ -171,6 +191,8 @@
                 </div>
             </div>
         <!--Fim wrapper-->
+       
+        </div>
         <script type="text/javascript" src="../js/menu.js"></script>
     </body>
 </html>

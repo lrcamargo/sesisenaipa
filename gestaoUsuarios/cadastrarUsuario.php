@@ -3,7 +3,7 @@
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
-        include('../conexaosec.php');
+        include('../conexao.php');
         session_start();
         
         if((!isset ($_SESSION['sLogin']) == true)) {
@@ -181,9 +181,9 @@
                 <div class="main-container">
                 <div class="form-container">
                     <div class="form-header">
-                        <h2>Editar Usuário</h2>
+                        <h2>Cadastrar Usuário</h2>
                     </div>
-                    <form action="editaUsuario.php" method="POST">
+                    <form action="cadUser.php" method="POST">
                         <div class="form-group">
                             <label for="registro">Registro (é possível encontrar na intranet)</label>
                             <input type="text" id="registro" name="registro" placeholder="Número de Registro" required>
@@ -193,8 +193,12 @@
                             <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
                         </div>
                         <div class="form-group">
+                            <label for="nome">E-mail</label>
+                            <input type="text" id="email" name="email" placeholder="E-mail corporativo" required>
+                        </div>
+                        <div class="form-group">
                             <label for="user">Usuário (começo do e-mail/usuário da intranet)</label>
-                            <input type="text" id="user" name="user" placeholder="usuario" required>
+                            <input type="text" id="user" name="user" placeholder="usuario" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="senha">Senha</label>
@@ -235,13 +239,24 @@
                             </div>
                         </div>
         
-                        <button type="submit" class="submit-button">Editar</button>
+                        <button type="submit" class="submit-button">Cadastrar</button>
                     </form>
                 </div>
                 </div>
                 </div>
             <!--Fim wrapper-->
-            
+            <script>
+                document.getElementById("email").addEventListener("input", function() {
+
+                    let email = this.value;
+                    
+                    if(email.includes("@")){
+                        let usuario = email.split("@")[0];
+                        document.getElementById("user").value = usuario;
+                    }
+
+                });
+            </script>
             <script type="text/javascript" src="../js/menu.js"></script>
     
         </body>

@@ -1,1 +1,0 @@
-c:\Users\leros\Documents\SENAI\intranet\controle_internet\routeros_api.class.php

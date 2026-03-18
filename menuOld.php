@@ -1,26 +1,37 @@
 <?php
-error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-      
-    $logado = $_SESSION['user'];
-    $nivel = $_SESSION['group'];
 
-    if($nivel == 'Professor') {
+/*
+Menu
+<li class="item">
+    <a href="#" class="menu-btn"><i class="fas fa-home"></i><span>Dashboard</span></a>
+</li>
+Submenu
+<li class="item" id="bloqueio">
+    <a href="#bloqueio" class="menu-btn">
+        <i class="fas fa-globe"></i><span>Controle de Internet <i class="fas fa-chevron-down drop-down"></i></span>
+    </a>
+    <div class="sub-menu">
+        <a href="#"><i class="fas fa-image"></i><span>Bloqueio</span></a>
+            <a href="#"><i class="fas fa-address-card"></i><span>Registro de Acesso</span></a>
+    </div>
+</li>
+        //alterado instrutor
+        /*echo "<li class='item'>";
+            echo "<a href='../controle_internet/controle.php' class='menu-btn'><i class='fas fa-lock'></i><span> Controle de Internet</span></a>";
+        echo "</li>";*/
+
+        // LINK PARA MENU EM MANUTENÇÃO
+        // echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
+
+    if($nivel == 0) {
         echo "<li class='item'>";
             echo "<a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
-        $currentPath = $_SERVER['REQUEST_URI'];
-        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
-        
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? '../principal.php' : '../reservaLaboratorio/principal.php') . "' class='menu-btn'>";
-            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
-            echo "</a>";
+            echo "<a href='../atividades/aluno.php' class='menu-btn'><i class='fas fa-tasks'></i><span> Atividades</span></a>";
         echo "</li>";
-        
     }
-    if($nivel == "Instrutor") {
+    if($nivel == 1) {
         echo "<li class='item'>";
             echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
@@ -34,7 +45,7 @@ error_reporting(E_ALL);
         echo "</li>";
        // echo "<a href='../manutencao.html' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a>";
         
-    } else if($_SESSION['group'] == 'Instrutor') {
+    } else if($nivel == 2) {
         echo "<li class='item'>";
             echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
         echo "</li>";
@@ -55,7 +66,7 @@ error_reporting(E_ALL);
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
         
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? 'supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
@@ -83,7 +94,7 @@ error_reporting(E_ALL);
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
         
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? 'supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
@@ -132,7 +143,7 @@ error_reporting(E_ALL);
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
         
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? 'supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
@@ -168,7 +179,7 @@ error_reporting(E_ALL);
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
         
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? 'supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
@@ -183,7 +194,7 @@ error_reporting(E_ALL);
         $currentPath = $_SERVER['REQUEST_URI'];
         $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
         echo "<li class='item'>";
-            echo "<a href='" . ($isInLabsSection ? 'supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
             echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
             echo "</a>";
         echo "</li>";
@@ -222,5 +233,16 @@ error_reporting(E_ALL);
         echo "<li class='item'>";
             echo "<a href='../compras/principal.php' class='menu-btn'><i class='fas fa-shopping-cart'></i><span>Compras</span></a>";
         echo "</li>";*/
-    }  
+    }  else { #administrator
+        echo "<li class='item'>";
+            echo "<a href='../../main.php' class='menu-btn'><i class='fas fa-home'></i><span> Dashboard</span></a>";
+        echo "</li>";
+        $currentPath = $_SERVER['REQUEST_URI'];
+        $isInLabsSection = (strpos($currentPath, "laboratorios") !== false);
+        echo "<li class='item'>";
+            echo "<a href='" . ($isInLabsSection ? '../supervisao.php' : '../reservaLaboratorio/supervisao.php') . "' class='menu-btn'>";
+            echo "<i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>";
+            echo "</a>";
+        echo "</li>";
+    }
 ?>

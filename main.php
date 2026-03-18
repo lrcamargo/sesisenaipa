@@ -14,6 +14,7 @@
     
     $logado = $_SESSION['user'];
     $nivel = $_SESSION['group'];
+    
     if((!isset ($_SESSION['obs']) == true)) {
         $obs = 0;   
     } else {
@@ -60,6 +61,7 @@
         <!--Inicio conteúdo-->
             <div class="main-container">
                 <?php 
+                
                     if($nivel == 0) {
                         if($obs == 1) {
                             include('resetPassContainer.php');

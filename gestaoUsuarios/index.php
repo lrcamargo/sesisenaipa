@@ -3,7 +3,8 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    include('../conexaosec.php');
+    //include('../conexaosec.php');
+    include('../conexao.php');
     session_start();
     
     if((!isset ($_SESSION['sLogin']) == true)) {
@@ -87,7 +88,7 @@
             <div class="main-container">
             Gestão Usuários - Página Inicial
             <br/>
-            <button class="btn btn-blue"><i class="fas fa-user-plus"></i> Cadastrar Usuário</button>    
+            <button class="btn btn-blue"><a href='cadastrarUsuario.php'><i class="fas fa-user-plus"></i> Cadastrar Usuário</button>    </a>
             <p>
             <table id="usuarios" class="display">
                 <thead>
@@ -130,7 +131,7 @@
                     data: null, // Coluna de ação, não busca dados
                     orderable: false,
                     render: function(data, type, row) {
-                        return '<a href="editUsuario.php?id=' + row.id + '" class="btn-editar">Editar</a>';
+                        return '<a href="editarUsuario.php?id=' + row.id + '" class="btn-editar">Editar</a>';
                     }
                 },
                 {

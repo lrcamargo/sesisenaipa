@@ -1,98 +1,61 @@
 <?php
-include('conect.php');
-
-// 2. Receber os parâmetros do DataTables
-$draw = isset($_POST['draw']) ? intval($_POST['draw']) : 0;
-$start = isset($_POST['start']) ? intval($_POST['start']) : 0;
-$length = isset($_POST['length']) ? intval($_POST['length']) : 10;
-$search_value = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
-
-// 3. Mapear os índices das colunas do frontend para o banco de dados
-$colunas_db = ['id', 'registro', 'nome', 'usuario', 'status', 'perfil', 'id', 'id'];
-
-// 4. Lógica de Ordenação Personalizada
-$order_by_column = 'nome'; 
-$order_by_dir = 'asc';
-
-if (isset($_POST['order'][0]['column'])) {
-    $order_by_column_index = $_POST['order'][0]['column'];
-    
-    if ($order_by_column_index > 0 && $order_by_column_index < 6) {
-        $order_by_column = $colunas_db[$order_by_column_index];
-        $order_by_dir = $_POST['order'][0]['dir'];
-    }
-}
-
-$order_by_clause = " ORDER BY status DESC, " . $order_by_column . " " . $order_by_dir;
-
-// 5. Construir a cláusula WHERE de forma segura com Prepared Statements
-$where_clause = "";
-$where_params = [];
-if (!empty($search_value)) {
-    $where_clause = " WHERE ";
-    $condicoes = [];
-    $search_param = '%' . $search_value . '%';
-
-    foreach ($colunas_db as $coluna) {
-        if ($coluna != 'id') {
-            $condicoes[] = "$coluna LIKE ?";
-            $where_params[] = $search_param;
-        }
-    }
-    $where_clause .= implode(" OR ", $condicoes);
-}
-
-// 6. Contar o total de registros filtrados (de forma segura)
-$total_filtered_records_query = "SELECT COUNT(*) AS total FROM funcionarios" . $where_clause;
-$total_filtered_records_stmt = sqlsrv_query($conn, $total_filtered_records_query, $where_params);
-$total_filtered_records = sqlsrv_fetch_array($total_filtered_records_stmt)['total'];
-
-// 7. Contar o total de registros (sem filtro)
-$total_records_query = "SELECT COUNT(*) AS total FROM funcionarios";
-$total_records_stmt = sqlsrv_query($conn, $total_records_query);
-$total_records = sqlsrv_fetch_array($total_records_stmt)['total'];
-
-
-// 8. Consulta final para buscar os dados (de forma segura)
-$query = "SELECT id, registro, nome, usuario, status, perfil FROM funcionarios" . $where_clause;
-$query .= $order_by_clause . " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-
-// Combinar os parâmetros da busca e da paginação em um único array
-$query_params = array_merge($where_params, [$start, $length]);
-
-$stmt = sqlsrv_query($conn, $query, $query_params);
-
-if ($stmt === false) {
-    header('Content-Type: application/json');
-    echo json_encode([
-        "draw" => $draw,
-        "recordsTotal" => $total_records,
-        "recordsFiltered" => $total_filtered_records,
-        "data" => [],
-        "error" => print_r(sqlsrv_errors(), true)
-    ]);
-    exit;
-}
-
-$data = [];
-while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-    $row['registro'] = $row['registro'] ?? '';
-    $row['tag'] = $row['tag'] ?? '';
-    $data[] = $row;
-}
-
-// 9. Formatar a resposta no padrão JSON do DataTables
-$response = [
-    "draw" => intval($draw),
-    "recordsTotal" => intval($total_records),
-    "recordsFiltered" => intval($total_filtered_records),
-    "data" => $data
-];
+error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+require_once __DIR__ . '/../conexao.php';
 
 header('Content-Type: application/json');
-echo json_encode($response);
 
-// 10. Fechar a conexão
-sqlsrv_free_stmt($stmt);
-sqlsrv_close($conn);
-?>
+$draw = $_POST['draw'] ?? 0;
+$start = $_POST['start'] ?? 0;
+$length = $_POST['length'] ?? 10;
+$search = $_POST['search']['value'] ?? '';
+
+$where = "";
+$params = [];
+
+if ($search != "") {
+
+    $where = " WHERE registro LIKE ? OR nome LIKE ? OR usuario LIKE ? OR perfil LIKE ?";
+
+    $like = "%$search%";
+    $params = [$like,$like,$like,$like];
+}
+
+$sql = "SELECT COUNT(*) as total FROM usuarios $where";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
+
+$totalFiltered = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+$stmt = $pdo->query("SELECT COUNT(*) as total FROM usuarios");
+$total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+$sql = "SELECT id, registro, nome, usuario, status, perfil
+        FROM usuarios
+        $where
+        ORDER BY status DESC, nome ASC
+        LIMIT ?, ?";
+
+$stmt = $pdo->prepare($sql);
+
+$i = 1;
+
+foreach ($params as $p) {
+    $stmt->bindValue($i++, $p, PDO::PARAM_STR);
+}
+
+$stmt->bindValue($i++, (int)$start, PDO::PARAM_INT);
+$stmt->bindValue($i++, (int)$length, PDO::PARAM_INT);
+
+$stmt->execute();
+
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode([
+    "draw" => intval($draw),
+    "recordsTotal" => intval($total),
+    "recordsFiltered" => intval($totalFiltered),
+    "data" => $data
+]);
