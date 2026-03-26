@@ -1,10 +1,23 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
-## Versão atual intranet: 2.1.1
+
+##Versão atual intranet: 2.2
+- Removido gerador de carteirinhas
+- Modificado sistema de login - sai do AD e passa para banco de dados local.
+- Criada interface de gestão de usuários para gestores.
+- Atualizado sistema de reservas de laboratórios
+    - Mudança de prazo de reserva para supervisão pedagógica e técnica.
+    - Liberada reserva recorrente para supervisão técnica.
+    - Alterada interface principal de laboratórios e reservas.
+    - Busca de turmas da catraca nova.
+    - Integrados todos os laboratórios em apenas uma interface.
+    - Alterações gerais de layout.
+
+## Versão intranet: 2.1.1
 - Gerador de carteirinhas está com erro devido a mudanças no servidor. Para geração genérica de funcionários foi removida a busca pela foto.
 - Adicionada página teste do botão de update do github.
 
-## Versão atual intranet: 2.1
+## Versão intranet: 2.1
 - Removidos alguns recursos atualmente desnecessários que estavam em desenvolvimento.
 - Iniciando desenvolvimento de novo sistema de login - listar usuários, base de dados inicial, ativar/desativar usuários e iniciando tela de login e criação de perfis de acesso.
 
@@ -18,7 +31,7 @@ Recursos da versão:
 - Login externo - alunos
 - Agenda laboratório v1.3
 
-## Versão atual intranet: 2.0
+## Versão intranet: 2.0
 Recursos da versão: 
 - Controle horário sirene;
 - Registro horários;
@@ -29,25 +42,19 @@ Recursos da versão:
 - Login externo - alunos
 - Agenda laboratório v1.3 - 
 
-## Em desenvolvimento:
-- Mudança no sistema de login - criação de novo sistema de gestão de usuários internos. *EM DESENVOLVIMENTO V1.0 - adicionar funções de editar usuário, definir visualização de acordo com perfil de acesso.*
+## Em desenvolvimento (update 25/03/2026):
+- Mudança no sistema de login - criação de novo sistema de gestão de usuários internos. *EM DESENVOLVIMENTO - melhoria nas funções de editar usuário - puxar dados direto do banco na edição, permitir edição sem alterar senha, adicionar usuário na base da catraca simultâneo*
+- Agenda laboratório *EM DESENVOLVIMENTO - adicionar reserva vários dias supervisão. Corrigir envio de e-mails. Melhorar layout. Adicionar aprovação automática. Edição/aprovação/cancelamento de reservas. Fila de e-mails de comunicados*
+- Cadastro de ambientes
+- Troca do logo
 - Reorganização dos arquivos de tela principal.
-- Reorganização de menus.
-- Alterar data final de curso;
-- Gráficos - dados alunos (dados da base da catraca - um dia de atraso)
 - Atualização de layout - sistema sirene
+- Gestão de estoque
+- Atualizar sistema diretamente pelo GitHub e automaticamente
+- Quem - onde está *Integração com reservas de laboratórios e posteriormente com as portas*
+- Integrar/criar botão centralizado para todos os sistemas internos *catraca, ar, portas*
+- Listar eventos no teatro na interface principal
 - Gestão secretaria - Recurso 1: listar todos alunos catraca para aproveitar as fotos;
-- Agenda laboratório *EM DESENVOLVIMENTO V1.4 - adicionar reserva vários dias supervisão. Corrigir envio de e-mails. Melhorar layout*
 
-## Agenda de Laboratório - histórico de Versão
-
-    * 1.3
-        * Removido laboratório 203A.
-    * 1.2
-        * Correção de bugs e adição de mais ambientes.
-    * 1.1 
-        * Reserva dos laboratórios e envio de e-mail padrão para reserva e alteração de status.
-    * v1.0
-        * Versão inicial.
 
 

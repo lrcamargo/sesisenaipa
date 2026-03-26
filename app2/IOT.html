@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduIoT — Sesi Senai · Pouso Alegre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e17;
+  --surface:#111827;
+  --surface2:#1a2235;
+  --border:#1f2e45;
+  --accent:#00d4ff;
+  --accent2:#00ff9d;
+  --warn:#ffb800;
+  --danger:#ff4d6d;
+  --text:#e2eaf7;
+  --text-dim:#5a7299;
+  --text-mid:#8ba3c7;
+  --online:#00ff9d;
+  --offline:#ff4d6d;
+  --r:12px;
+  --shadow:rgba(0,0,0,0.3);
+  --card-hover:rgba(0,212,255,0.05);
+  --toggle-bg:#1a2235;
+  --toggle-thumb:#00d4ff;
+}
+
+/* Modo Claro */
+body.light {
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface2:#f0f2f5;
+  --border:#e0e4e8;
+  --text:#1e293b;
+  --text-dim:#64748b;
+  --text-mid:#475569;
+  --shadow:rgba(0,0,0,0.05);
+  --card-hover:rgba(0,212,255,0.1);
+  --toggle-bg:#e0e4e8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background 0.3s, color 0.3s;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* Login */
+#login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:44px 40px;width:380px;box-shadow:0 8px 32px var(--shadow);}
+.login-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.login-sub{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:32px;}
+.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;margin-bottom:16px;outline:none;}
+.login-input:focus{border-color:var(--accent);}
+.login-btn{width:100%;background:var(--accent);border:none;border-radius:10px;padding:13px;color:#0a0e17;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
+.login-err{color:var(--danger);font-family:'DM Mono',monospace;font-size:12px;margin-top:10px;display:none;text-align:center;}
+.nivel-badge{display:inline-flex;padding:3px 9px;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;}
+.nivel-dev{background:rgba(255,184,0,.15);color:var(--warn);border:1px solid rgba(255,184,0,.3);}
+.nivel-admin{background:rgba(0,212,255,.15);color:var(--accent);border:1px solid rgba(0,212,255,.3);}
+.nivel-op{background:rgba(0,255,157,.15);color:var(--accent2);border:1px solid rgba(0,255,157,.3);}
+
+/* Sidebar */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--surface);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;}
+.sidebar-header{padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.sidebar-brand{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--accent);}
+.sidebar-sub{font-size:10px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-top:2px;}
+.user-card{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.user-name{font-size:13px;font-weight:500;color:var(--text);}
+.broker-status{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(0,255,157,.04);border-bottom:1px solid var(--border);font-size:11px;cursor:pointer;}
+.broker-status:hover{background:rgba(0,255,157,.08);}
+.broker-dot{width:8px;height:8px;border-radius:50%;background:var(--offline);transition:all 0.2s;}
+.broker-dot.online{background:var(--online);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,157,.4)}50%{opacity:.7;box-shadow:0 0 0 4px rgba(0,255,157,0)}}
+.nav-section{padding:12px 20px 4px;font-size:9px;font-family:'DM Mono',monospace;color:var(--text-dim);text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;font-size:13px;color:var(--text-mid);cursor:pointer;border-left:2px solid transparent;transition:all .15s;}
+.nav-item:hover{background:var(--card-hover);color:var(--text);}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,212,255,.08);}
+.nav-item.hidden{display:none;}
+.nav-icon{font-size:16px;width:22px;text-align:center;}
+.sidebar-footer{margin-top:auto;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.logout-btn{width:100%;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);color:var(--danger);font-family:'DM Mono',monospace;font-size:12px;padding:10px;border-radius:8px;cursor:pointer;}
+.theme-toggle{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface2);border-radius:8px;cursor:pointer;border:1px solid var(--border);}
+.theme-toggle span{font-size:11px;font-family:'DM Mono',monospace;color:var(--text-dim);}
+.theme-switch{width:40px;height:20px;background:var(--toggle-bg);border-radius:20px;position:relative;transition:0.2s;}
+.theme-switch::after{content:'☀️';position:absolute;width:18px;height:18px;background:var(--surface);border-radius:50%;top:1px;left:2px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:0.2s;}
+body.light .theme-switch::after{content:'🌙';left:20px;}
+
+/* Main */
+.main{margin-left:240px;padding:24px;min-height:100vh;}
+.page{display:none;animation:fadeUp .25s ease;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.topbar h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;}
+.time-badge{font-family:'DM Mono',monospace;font-size:12px;background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:8px;}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:relative;box-shadow:0 2px 8px var(--shadow);}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--al,var(--accent));}
+.stat-card.g{--al:var(--accent2)}.stat-card.w{--al:var(--warn)}.stat-card.d{--al:var(--danger)}
+.stat-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;}
+.stat-value{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;}
+.stat-card.g .stat-value{color:var(--accent2);}
+.stat-card.w .stat-value{color:var(--warn);}
+.stat-card.d .stat-value{color:var(--danger);}
+.stat-sub{font-size:11px;color:var(--text-dim);margin-top:4px;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:0 2px 8px var(--shadow);}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;}
+.tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:3px 8px;border-radius:6px;}
+
+/* Room Cards AC */
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.room-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:all .2s;}
+.room-card.ac-on{border-color:var(--accent);background:rgba(0,212,255,.05);}
+.room-header{display:flex;justify-content:space-between;margin-bottom:10px;}
+.room-name{font-size:13px;font-weight:600;}
+.room-dot{width:8px;height:8px;border-radius:50%;background:var(--offline);}
+.room-dot.on{background:var(--online);animation:pulse 2s infinite;}
+.room-temp{font-size:26px;font-weight:700;font-family:'DM Mono',monospace;margin-bottom:8px;}
+.room-temp span{font-size:12px;color:var(--text-dim);}
+.marca-badge{font-size:10px;padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:8px;}
+.marca-badge.disabled{cursor:not-allowed;opacity:0.6;filter:grayscale(0.2);}
+.marca-badge:not(.disabled){cursor:pointer;}
+.marca-agratto{color:#ff9500;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.1);}
+.marca-consul{color:var(--accent);border:1px solid rgba(0,212,255,.4);background:rgba(0,212,255,.1);}
+.marca-hitachi{color:#b06dff;border:1px solid rgba(176,109,255,.4);background:rgba(176,109,255,.1);}
+.marca-samsung{color:#00c8ff;border:1px solid rgba(0,200,255,.4);background:rgba(0,200,255,.1);}
+.temp-control{display:flex;align-items:center;gap:8px;margin:10px 0;padding:8px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.temp-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;}
+.temp-set{font-family:'DM Mono',monospace;font-size:14px;font-weight:600;flex:1;text-align:center;color:var(--accent);}
+.ac-buttons{display:flex;gap:8px;margin-top:8px;}
+.ac-btn{flex:1;padding:6px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;text-align:center;}
+.ac-btn.on{background:rgba(0,255,157,.1);border-color:var(--accent2);color:var(--accent2);}
+.ac-btn.off{background:rgba(255,77,109,.1);border-color:var(--danger);color:var(--danger);}
+
+/* Door Cards */
+.door-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.door-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.door-card.online{border-color:rgba(0,255,157,.3);}
+.door-card.offline{border-color:rgba(255,77,109,.2);opacity:.7;}
+.door-header{display:flex;justify-content:space-between;margin-bottom:12px;}
+.door-name{font-size:14px;font-weight:600;}
+.door-status{font-size:11px;padding:3px 10px;border-radius:20px;}
+.door-status.aberta{background:rgba(0,255,157,.15);color:var(--accent2);}
+.door-status.fechada{background:rgba(0,212,255,.1);color:var(--accent);}
+.door-status.offline{background:rgba(255,77,109,.1);color:var(--danger);}
+.door-info{font-size:11px;font-family:'DM Mono',monospace;color:var(--text-dim);margin-bottom:4px;}
+.door-info span{color:var(--text-mid);}
+
+/* Tables */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);padding:0 12px 12px;border-bottom:1px solid var(--border);}
+td{padding:10px 12px;border-bottom:1px solid rgba(31,46,69,.5);}
+tr:hover td{background:var(--card-hover);}
+.badge-ok{color:var(--accent2);}.badge-neg{color:var(--danger);}
+.act-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;font-size:10px;cursor:pointer;margin:0 2px;}
+.act-btn.disabled{opacity:0.4;cursor:not-allowed;}
+.act-btn.edit:hover{border-color:var(--accent);color:var(--accent);}
+.act-btn.del:hover{border-color:var(--danger);color:var(--danger);}
+
+/* Filters */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.filter-input{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;}
+.filter-select{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;}
+
+/* Heatmap */
+.heatmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;}
+.hm-cell{border-radius:8px;padding:10px;text-align:center;}
+.hm-room{font-size:9px;margin-bottom:4px;}
+.hm-val{font-size:18px;font-weight:700;}
+
+/* Forms */
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;display:block;margin-bottom:4px;text-transform:uppercase;}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;}
+.form-input:focus{border-color:var(--accent);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-primary{background:var(--accent);border:none;padding:10px 20px;border-radius:8px;color:#0a0e17;font-weight:700;cursor:pointer;}
+.btn-secondary{background:var(--surface2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;color:var(--text-mid);cursor:pointer;}
+.btn-danger{background:rgba(255,77,109,.15);border:1px solid var(--danger);padding:8px 16px;border-radius:8px;color:var(--danger);cursor:pointer;}
+
+/* OTA */
+.file-input-wrap{background:var(--surface2);border:1px dashed var(--border);border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:border-color .2s;margin-bottom:8px;}
+.file-input-wrap:hover{border-color:var(--accent);}
+.file-input-wrap input[type=file]{display:none;}
+.file-name{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-mid);}
+.upload-label{font-size:10px;color:var(--text-dim);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;display:block;}
+.btn-upload{background:rgba(0,212,255,.1);border:1px solid var(--accent);color:var(--accent);font-family:'DM Mono',monospace;font-size:12px;padding:8px 14px;border-radius:7px;cursor:pointer;transition:all .2s;}
+.btn-upload:hover{background:rgba(0,212,255,.2);}
+.btn-upload:disabled{opacity:.4;cursor:not-allowed;}
+.btn-force{padding:8px 13px;border-radius:7px;border:1px solid;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-force.ar{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07);}
+.btn-force.ar:hover{background:rgba(0,212,255,.17);}
+.btn-force.porta{border-color:var(--accent2);color:var(--accent2);background:rgba(0,255,157,.07);}
+.btn-force.porta:hover{background:rgba(0,255,157,.17);}
+.progress-wrap{margin-top:9px;display:none;}
+.progress-bar-bg{background:var(--surface2);border-radius:4px;height:5px;overflow:hidden;}
+.progress-bar{height:100%;background:var(--accent);border-radius:4px;width:0;transition:width .3s;}
+.progress-text{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:4px;}
+.ota-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:6px;}
+.ota-card{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-family:'DM Mono',monospace;}
+.ota-id{color:var(--accent);font-size:11px;font-weight:500;}
+.ota-st{color:var(--text-dim);font-size:10px;margin-top:2px;}
+.ota-st.ok{color:var(--accent2);}.ota-st.upd{color:var(--warn);}.ota-st.err{color:var(--danger);}
+.log-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;height:170px;overflow-y:auto;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);line-height:1.8;}
+.ll.ok{color:var(--accent2);}.ll.warn{color:var(--warn);}.ll.err{color:var(--danger);}.ll.info{color:var(--accent);}
+.info-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.info-row:last-child{border:none;}
+.info-label{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;}
+.info-value{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);}
+.info-value.ok{color:var(--accent2);}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:420px;max-width:90vw;}
+.modal-title{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:16px;}
+.modal-btns{display:flex;gap:12px;justify-content:flex-end;margin-top:20px;}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-family:'DM Mono',monospace;font-size:13px;z-index:9999;display:none;}
+.toast.ok{border-color:var(--accent2);color:var(--accent2);}
+.toast.err{border-color:var(--danger);color:var(--danger);}
+.toast.warn{border-color:var(--warn);color:var(--warn);}
+
+.empty-state{text-align:center;padding:40px;color:var(--text-dim);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+@media(max-width:768px){.sidebar{width:60px;}.main{margin-left:60px;}.sidebar .brand,.sidebar-sub,.user-card,.nav-section,.nav-item span{display:none;}.nav-item{justify-content:center;padding:12px;}.stats-row{grid-template-columns:1fr 1fr;}.grid-2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">⚡ EduIoT</div>
+    <div class="login-sub">Sesi Senai · Pouso Alegre</div>
+    <input class="login-input" id="login-user" type="text" placeholder="Usuário">
+    <input class="login-input" id="login-pass" type="password" placeholder="Senha">
+    <button class="login-btn" onclick="doLogin()">ENTRAR</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar" style="display:none">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">⚡ EduIoT</div>
+    <div class="sidebar-sub">Sesi Senai</div>
+  </div>
+  <div class="user-card">
+    <span class="user-name" id="user-name">—</span>
+    <span id="user-nivel"></span>
+  </div>
+  <div class="broker-status" onclick="reconnectMQTT()">
+    <div class="broker-dot" id="broker-dot"></div>
+    <span id="broker-text">broker · conectando...</span>
+    <span style="margin-left:auto;font-size:10px;">🔄</span>
+  </div>
+  <div class="nav-section">Visão Geral</div>
+  <div class="nav-item active" onclick="nav('overview',this)"><span class="nav-icon">🏠</span><span>Dashboard</span></div>
+  <div class="nav-item" onclick="nav('temps',this)"><span class="nav-icon">🌡️</span><span>Temperaturas</span></div>
+  <div class="nav-section">Controle AC</div>
+  <div class="nav-item" onclick="nav('blocoA',this)"><span class="nav-icon">🅰️</span><span>Bloco A</span></div>
+  <div class="nav-item" onclick="nav('blocoB',this)"><span class="nav-icon">🅱️</span><span>Bloco B</span></div>
+  <div class="nav-section">Acesso</div>
+  <div class="nav-item" onclick="nav('doors',this)"><span class="nav-icon">🔐</span><span>Portas</span></div>
+  <div class="nav-item" onclick="nav('history',this)"><span class="nav-icon">📋</span><span>Histórico</span></div>
+  <div class="nav-item" id="nav-rfid" onclick="nav('rfid',this)"><span class="nav-icon">🆔</span><span>Cadastro RFID</span></div>
+  <div class="nav-section nivel-admin nivel-dev">Sistema</div>
+  <div class="nav-item nivel-admin nivel-dev" id="nav-users" onclick="nav('users',this)"><span class="nav-icon">👥</span><span>Usuários</span></div>
+  <div class="nav-item nivel-dev" id="nav-ota" onclick="nav('ota',this)"><span class="nav-icon">🔄</span><span>OTA Firmware</span></div>
+  <div class="sidebar-footer">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span>🌓 Tema</span>
+      <div class="theme-switch"></div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">⏻ Sair</button>
+  </div>
+</aside>
+
+<main class="main" id="main-area" style="display:none">
+
+<!-- Dashboard -->
+<div id="page-overview" class="page active">
+  <div class="topbar"><h1>Dashboard</h1><div class="time-badge" id="clock">--:--:--</div></div>
+  <div class="stats-row">
+    <div class="stat-card g"><div class="stat-label">ACs Online</div><div class="stat-value" id="stat-ac-online">—</div><div class="stat-sub">de 20</div></div>
+    <div class="stat-card"><div class="stat-label">ACs Ligados</div><div class="stat-value" id="stat-ac-on">—</div><div class="stat-sub">em funcionamento</div></div>
+    <div class="stat-card w"><div class="stat-label">Temp. Média</div><div class="stat-value" id="stat-temp">—°C</div><div class="stat-sub">sensores ativos</div></div>
+    <div class="stat-card d"><div class="stat-label">Acessos Hoje</div><div class="stat-value" id="stat-acessos">—</div><div class="stat-sub">registros</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Bloco A <span class="tag">temperaturas</span></div><div class="room-grid" id="overview-a"></div></div>
+    <div class="card"><div class="card-title">Bloco B <span class="tag">temperaturas</span></div><div class="room-grid" id="overview-b"></div></div>
+  </div>
+  <div class="card"><div class="card-title">Últimos Acessos <span class="tag">tempo real</span></div><div class="table-wrap"><table><thead><tr><th>DATA/HORA</th><th>NOME</th><th>CRACHÁ</th><th>PORTA</th><th>STATUS</th></tr></thead><tbody id="last-access"></tbody></table></div></div>
+</div>
+
+<!-- Temperaturas -->
+<div id="page-temps" class="page">
+  <div class="topbar"><h1>Mapa de Calor</h1><div class="time-badge" id="clock2">--:--:--</div></div>
+  <div class="card"><div class="card-title">Todas as Salas</div><div class="heatmap-grid" id="heatmap"></div></div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Bloco A</div><div id="temps-list-a"></div></div>
+    <div class="card"><div class="card-title">Bloco B</div><div id="temps-list-b"></div></div>
+  </div>
+</div>
+
+<!-- Bloco A -->
+<div id="page-blocoA" class="page">
+  <div class="topbar"><h1>Bloco A — Controle AC</h1></div>
+  <div class="card"><div class="card-title">Salas</div><div class="room-grid" id="rooms-a"></div></div>
+</div>
+
+<!-- Bloco B -->
+<div id="page-blocoB" class="page">
+  <div class="topbar"><h1>Bloco B — Controle AC</h1></div>
+  <div class="card"><div class="card-title">Salas</div><div class="room-grid" id="rooms-b"></div></div>
+</div>
+
+<!-- Portas -->
+<div id="page-doors" class="page">
+  <div class="topbar"><h1>Status das Portas</h1></div>
+  <div class="stats-row">
+    <div class="stat-card g"><div class="stat-label">Online</div><div class="stat-value" id="door-online">—</div></div>
+    <div class="stat-card w"><div class="stat-label">Offline</div><div class="stat-value" id="door-offline">—</div></div> 
+  </div>
+  <div class="door-grid" id="doors-grid"></div>
+</div>
+
+<!-- Histórico -->
+<div id="page-history" class="page">
+  <div class="topbar"><h1>Histórico de Acessos</h1></div>
+  <div class="card">
+    <div class="card-title">Registros <span class="tag" id="hist-count">—</span></div>
+    <div class="filter-bar">
+      <input class="filter-input" id="hist-search" placeholder="🔍 Nome ou crachá..." oninput="filterHistory()" style="flex:2">
+      <select class="filter-select" id="hist-porta" onchange="filterHistory()"><option value="">Todas as portas</option><option>101</option><option>102</option><option>103</option><option>104</option><option>106</option><option>107</option><option>SESI</option></select>
+      <select class="filter-select" id="hist-status" onchange="filterHistory()"><option value="">Todos</option><option value="ok">Autorizado</option><option value="negado">Negado</option></select>
+      <button class="btn-secondary" onclick="clearHistoryFilters()" style="padding:8px 16px;">Limpar</button>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>DATA/HORA</th><th>NOME</th><th>CRACHÁ</th><th>REGISTRO</th><th>PORTA</th></tr></thead><tbody id="history-table"></tbody></table></div>
+  </div>
+</div>
+
+<!-- Cadastro RFID -->
+<div id="page-rfid" class="page">
+  <div class="topbar"><h1>Cadastro de Usuários RFID</h1></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">➕ Novo Cadastro</div>
+      <input type="hidden" id="rfid-id">
+      <div class="form-group"><label class="form-label">Nome completo</label><input class="form-input" id="rfid-nome" placeholder="Nome do usuário"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Número</label><input class="form-input" id="rfid-numero" placeholder="Número"></div>
+        <div class="form-group"><label class="form-label">Registro</label><input class="form-input" id="rfid-registro" placeholder="Registro"></div>
+      </div>
+      <div class="form-group"><label class="form-label">ID do Crachá (HEX)</label><input class="form-input" id="rfid-cracha" placeholder="Ex: 73FE9C" style="text-transform:uppercase"></div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn-primary" id="btn-save-rfid" onclick="saveRFID()">✓ Salvar</button>
+        <button class="btn-secondary" onclick="clearRFIDForm()">Limpar</button>
+      </div>
+      <div id="rfid-status" style="margin-top:12px;font-size:11px;color:var(--text-dim)"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Lista de Cadastrados <span class="tag" id="rfid-count">0</span></div>
+      <input class="filter-input" id="rfid-search" placeholder="🔍 Buscar..." oninput="filterRFID()" style="width:100%;margin-bottom:12px">
+      <div class="table-wrap" style="max-height:400px;overflow-y:auto"><table><thead><tr><th>#</th><th>NOME</th><th>CRACHÁ</th><th>AÇÕES</th></tr></thead><tbody id="rfid-table"></tbody></table></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-title">📡 Status dos Dispositivos</div>
+    <div id="device-status" style="display:flex;flex-wrap:wrap;gap:10px"></div>
+  </div>
+</div>
+
+<!-- OTA (apenas dev) -->
+<div id="page-ota" class="page">
+  <div class="topbar"><h1>OTA Firmware Manager</h1><div class="time-badge" id="clock3">--:--:--</div></div>
+  <div class="grid-2" style="margin-bottom:14px">
+    <div class="card">
+      <div class="card-title">🖥️ Servidor OTA</div>
+      <div class="info-row"><span class="info-label">Servidor</span><span class="info-value">100.98.98.249:1880</span></div>
+      <div class="info-row"><span class="info-label">FW AR — versão</span><span class="info-value ok" id="ota-ver-ar">—</span></div>
+      <div class="info-row"><span class="info-label">FW AR — tamanho</span><span class="info-value" id="ota-size-ar">—</span></div>
+      <div class="info-row"><span class="info-label">FW Porta — versão</span><span class="info-value ok" id="ota-ver-porta">—</span></div>
+      <div class="info-row"><span class="info-label">FW Porta — tamanho</span><span class="info-value" id="ota-size-porta">—</span></div>
+    </div>
+    <div class="card"><div class="card-title">📋 Log OTA</div><div class="log-box" id="ota-log"><div class="ll info">Aguardando /+/ota/status...</div></div></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:14px">
+    <div class="card">
+      <div class="card-title">🌡️ Firmware AR <span class="tag">20 dispositivos</span></div>
+      <label class="upload-label">Firmware .bin</label>
+      <div class="file-input-wrap" onclick="document.getElementById('ff-ar').click()"><span>📁</span><span class="file-name" id="fn-ar">Selecionar .bin</span><input type="file" id="ff-ar" accept=".bin" onchange="onFile('ar','fw')"></div>
+      <label class="upload-label">Versão .txt</label>
+      <div class="file-input-wrap" onclick="document.getElementById('fv-ar').click()"><span>📄</span><span class="file-name" id="vn-ar">Selecionar version.txt</span><input type="file" id="fv-ar" accept=".txt" onchange="onFile('ar','ver')"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn-upload" id="bu-ar" onclick="doUpload('ar')" disabled>⬆ Enviar</button>
+        <button class="btn-force ar" onclick="forceOTA('ar')">🔄 Forçar 20 ACs</button>
+      </div>
+      <div class="progress-wrap" id="prog-ar"><div class="progress-bar-bg"><div class="progress-bar" id="pbar-ar"></div></div><div class="progress-text" id="ptxt-ar"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔐 Firmware Portas <span class="tag">8 dispositivos</span></div>
+      <label class="upload-label">Firmware .bin</label>
+      <div class="file-input-wrap" onclick="document.getElementById('ff-porta').click()"><span>📁</span><span class="file-name" id="fn-porta">Selecionar .bin</span><input type="file" id="ff-porta" accept=".bin" onchange="onFile('porta','fw')"></div>
+      <label class="upload-label">Versão .txt</label>
+      <div class="file-input-wrap" onclick="document.getElementById('fv-porta').click()"><span>📄</span><span class="file-name" id="vn-porta">Selecionar version.txt</span><input type="file" id="fv-porta" accept=".txt" onchange="onFile('porta','ver')"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn-upload" id="bu-porta" onclick="doUpload('porta')" disabled>⬆ Enviar</button>
+        <button class="btn-force porta" onclick="forceOTA('porta')">🔄 Forçar 8 Portas</button>
+      </div>
+      <div class="progress-wrap" id="prog-porta"><div class="progress-bar-bg"><div class="progress-bar" id="pbar-porta"></div></div><div class="progress-text" id="ptxt-porta"></div></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Status OTA — ACs</div><div class="ota-grid" id="ota-ar"></div></div>
+    <div class="card"><div class="card-title">Status OTA — Portas</div><div class="ota-grid" id="ota-porta"></div></div>
+  </div>
+</div>
+
+<!-- Usuários Sistema -->
+<div id="page-users" class="page">
+  <div class="topbar"><h1>Usuários do Sistema</h1></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">➕ Novo Usuário</div>
+      <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="user-nome" placeholder="Nome completo"></div>
+      <div class="form-group"><label class="form-label">Usuário (login)</label><input class="form-input" id="user-login" placeholder="login"></div>
+      <div class="form-group"><label class="form-label">Senha</label><input class="form-input" id="user-senha" type="password" placeholder="senha"></div>
+      <div class="form-group"><label class="form-label">Nível</label><select class="form-input" id="user-nivel"><option value="operacao">operação</option><option value="admin">admin</option><option value="dev">dev</option></select></div>
+      <button class="btn-primary" onclick="createUser()" style="margin-top:8px">✓ Criar Usuário</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Níveis de Acesso</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><span class="nivel-badge nivel-dev">dev</span> — Acesso total: OTA, usuários, configurações</div>
+        <div><span class="nivel-badge nivel-admin">admin</span> — Cadastro RFID, controle AC/portas, altera marca</div>
+        <div><span class="nivel-badge nivel-op">operação</span> — Liga/desliga AC, ajusta temperatura, visualiza tudo (não altera marca)</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Usuários Cadastrados <span class="tag" id="user-count">—</span></div>
+    <div class="table-wrap"><table><thead><tr><th>NOME</th><th>USUÁRIO</th><th>NÍVEL</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody id="user-table"></tbody></table></div>
+  </div>
+</div>
+
+</main>
+
+<div class="modal-overlay" id="modal-delete"><div class="modal"><div class="modal-title">⚠️ Confirmar exclusão</div><p>Deseja excluir <strong id="delete-name"></strong>?</p><div class="modal-btns"><button class="btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn-danger" onclick="confirmDelete()">Excluir</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== CONFIG ====================
+const API = 'http://100.98.98.249:1880';
+const BROKER_IP = '100.98.98.249';
+const BROKER_PORT = 9001;
+const MARCAS = ['agratto', 'consul', 'hitachi', 'samsung'];
+const SALAS_A = ['201a', '202a', '203a', '204a', '205a', '206a', '207a', '208a', '209a', '210a', '211a'];
+const SALAS_B = ['201b', '202b', '203b', '204b', '205b', '206b', '207b', '208b', '209b'];
+const PORTAS = [
+  {id:'101', name:'Lab 101 - Automação'},
+  {id:'102', name:'Lab 102 - Robótica'},
+  {id:'103', name:'Lab 103 - EHP'},
+  {id:'104', name:'Lab 104 - Elétrica'},
+  {id:'106', name:'Lab 106'},
+  {id:'107', name:'Lab 107 - Senailab'},
+  {id:'SESI', name:'Entrada SESI'}
+];
+
+let currentUser = null;
+let mqttClient = null;
+let acState = {};
+let acTemp = {};
+let acSetTemp = {};
+let acMarca = {};
+let doorState = {};
+let accessLog = [];
+let rfidUsers = [];
+let systemUsers = [];
+let historyData = [];
+let otaFiles = { ar: { fw: null, ver: null, fwName: '', verName: '' }, porta: { fw: null, ver: null, fwName: '', verName: '' } };
+
+// ==================== TEMA ====================
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.body.classList.add('light');
+}
+
+// ==================== PERMISSÕES ====================
+const canControlAC = () => currentUser && (currentUser.nivel === 'op' || currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canChangeMarca = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageRFID = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageUsers = () => currentUser && currentUser.nivel === 'dev';
+const canAccessOTA = () => currentUser && currentUser.nivel === 'dev';
+
+// ==================== LOGIN ====================
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  if (!user || !pass) return;
+  try {
+    const res = await fetch(`${API}/api/login`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ usuario: user, senha: pass })
+    });
+    const data = await res.json();
+    if (!data.ok) { showLoginError(data.erro || 'Credenciais inválidas'); return; }
+    currentUser = { token: data.token, nivel: data.nivel, nome: data.nome };
+    sessionStorage.setItem('auth', JSON.stringify(currentUser));
+    startApp();
+  } catch(e) { showLoginError('Servidor indisponível'); }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+
+function doLogout() {
+  if (mqttClient?.isConnected()) mqttClient.disconnect();
+  currentUser = null;
+  sessionStorage.removeItem('auth');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('main-area').style.display = 'none';
+}
+
+function startApp() {
+  loadTheme();
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('sidebar').style.display = 'flex';
+  document.getElementById('main-area').style.display = 'block';
+  document.getElementById('user-name').textContent = currentUser.nome;
+  
+  const nivelMap = { dev:'nivel-dev', admin:'nivel-admin', op:'nivel-op' };
+  const nivelLabel = { dev:'⚡ Dev', admin:'🛡 Admin', op:'👁 Operação' };
+  document.getElementById('user-nivel').innerHTML = `<span class="nivel-badge ${nivelMap[currentUser.nivel]}">${nivelLabel[currentUser.nivel]}</span>`;
+  
+  const isAdmin = currentUser.nivel === 'admin' || currentUser.nivel === 'dev';
+  const isDev = currentUser.nivel === 'dev';
+  
+  document.querySelectorAll('.nivel-admin').forEach(el => { if(!isAdmin) el.classList.add('hidden'); });
+  document.querySelectorAll('.nivel-dev').forEach(el => { if(!isDev) el.classList.add('hidden'); });
+  
+  if (!canManageRFID()) {
+    const rfidNav = document.getElementById('nav-rfid');
+    if (rfidNav) rfidNav.classList.add('hidden');
+  }
+  if (!canManageUsers()) {
+    const usersNav = document.getElementById('nav-users');
+    if (usersNav) usersNav.classList.add('hidden');
+  }
+  if (!canAccessOTA()) {
+    const otaNav = document.getElementById('nav-ota');
+    if (otaNav) otaNav.classList.add('hidden');
+  }
+  
+  initMQTT();
+  loadRFIDUsers();
+  loadHistory();
+  loadSystemUsers();
+  setInterval(updateClock, 1000);
+  updateClock();
+  setInterval(() => { renderAll(); }, 1000);
+  if (canAccessOTA()) {
+    loadOtaStatus();
+    initOtaLogListener();
+  }
+}
+
+// ==================== API ====================
+async function apiFetch(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentUser?.token}` }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(API + path, opts);
+  return res.json();
+}
+
+// ==================== RFID CRUD ====================
+async function loadRFIDUsers() {
+  try {
+    const data = await apiFetch('/api/cadastro');
+    if (data.ok) rfidUsers = data.dados;
+    renderRFID();
+  } catch(e) { console.error(e); }
+}
+
+function renderRFID() {
+  const tb = document.getElementById('rfid-table');
+  const ct = document.getElementById('rfid-count');
+  const search = document.getElementById('rfid-search')?.value.toLowerCase() || '';
+  const filtered = rfidUsers.filter(u => u.nome?.toLowerCase().includes(search) || u.cracha?.toLowerCase().includes(search));
+  ct.textContent = rfidUsers.length;
+  const canEdit = canManageRFID();
+  tb.innerHTML = filtered.map((u, i) => `<tr><td>${i+1}</td><td style="color:var(--text)">${u.nome}</td><td style="color:var(--accent)">${u.cracha}</td><td>${canEdit ? `<button class="act-btn edit" onclick="editRFID(${u.id})">✏️</button><button class="act-btn del" onclick="deleteRFID(${u.id}, '${u.nome}')">🗑️</button>` : '<span class="act-btn disabled">—</span>'}</td></tr>`).join('');
+}
+
+function filterRFID() { renderRFID(); }
+function clearRFIDForm() { if(!canManageRFID()) return; document.getElementById('rfid-id').value = ''; document.getElementById('rfid-nome').value = ''; document.getElementById('rfid-numero').value = ''; document.getElementById('rfid-registro').value = ''; document.getElementById('rfid-cracha').value = ''; document.getElementById('rfid-status').textContent = ''; }
+function editRFID(id) { if(!canManageRFID()) return; const u = rfidUsers.find(x => x.id === id); if(u) { document.getElementById('rfid-id').value = u.id; document.getElementById('rfid-nome').value = u.nome; document.getElementById('rfid-numero').value = u.numero || ''; document.getElementById('rfid-registro').value = u.registro || ''; document.getElementById('rfid-cracha').value = u.cracha; } }
+async function saveRFID() { if(!canManageRFID()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; } const id = document.getElementById('rfid-id').value; const nome = document.getElementById('rfid-nome').value.trim(); const numero = document.getElementById('rfid-numero').value.trim(); const registro = document.getElementById('rfid-registro').value.trim(); const cracha = document.getElementById('rfid-cracha').value.trim().toUpperCase(); if(!nome || !cracha) { toast('Nome e crachá obrigatórios', 'err'); return; } try { let data; if(id) { data = await apiFetch(`/api/cadastro/${id}`, 'PUT', { nome, numero, registro, cracha }); } else { data = await apiFetch('/api/cadastro', 'POST', { nome, numero, registro, cracha }); } if(data.ok) { toast(`✓ Usuário ${id ? 'atualizado' : 'cadastrado'}!`, 'ok'); clearRFIDForm(); loadRFIDUsers(); publishRFIDList(); } else { toast(data.erro || 'Erro', 'err'); } } catch(e) { toast('Erro no servidor', 'err'); } }
+let deleteId = null;
+function deleteRFID(id, nome) { if(!canManageRFID()) return; deleteId = id; document.getElementById('delete-name').textContent = nome; document.getElementById('modal-delete').classList.add('open'); }
+function closeModal() { document.getElementById('modal-delete').classList.remove('open'); deleteId = null; }
+async function confirmDelete() { if(!deleteId || !canManageRFID()) return; try { const data = await apiFetch(`/api/cadastro/${deleteId}`, 'DELETE'); if(data.ok) { toast('✓ Usuário removido!', 'ok'); loadRFIDUsers(); publishRFIDList(); } } catch(e) { toast('Erro ao excluir', 'err'); } closeModal(); }
+async function publishRFIDList() { const lista = rfidUsers.map(u => u.cracha).join(','); PORTAS.forEach(p => mqttPublish(`/${p.id}/acesso`, lista)); toast('📡 Lista enviada aos ESP32', 'ok'); }
+
+// ==================== SISTEMA USUÁRIOS ====================
+async function loadSystemUsers() { if(!canManageUsers()) return; try { const data = await apiFetch('/api/usuarios'); if(data.ok) systemUsers = data.dados; renderSystemUsers(); } catch(e) { console.error(e); } }
+function renderSystemUsers() { if(!canManageUsers()) return; const tb = document.getElementById('user-table'); const ct = document.getElementById('user-count'); ct.textContent = systemUsers.length; tb.innerHTML = systemUsers.map(u => `<tr><td style="color:var(--text)">${u.nome}</td><td>${u.usuario}</td><td><span class="nivel-badge ${u.nivel === 'dev' ? 'nivel-dev' : u.nivel === 'admin' ? 'nivel-admin' : 'nivel-op'}">${u.nivel}</span></td><td style="color:${u.ativo ? 'var(--accent2)' : 'var(--danger)'}">${u.ativo ? 'Ativo' : 'Inativo'}</td><td>${u.usuario !== currentUser.nome ? `<button class="act-btn del" onclick="disableUser(${u.id}, '${u.nome}')">Desativar</button>` : '—'}</td></tr>`).join(''); }
+async function createUser() { if(!canManageUsers()) { toast('Permissão negada', 'warn'); return; } const nome = document.getElementById('user-nome').value.trim(); const usuario = document.getElementById('user-login').value.trim(); const senha = document.getElementById('user-senha').value; const nivel = document.getElementById('user-nivel').value; if(!nome || !usuario || !senha) { toast('Preencha todos os campos', 'err'); return; } try { const data = await apiFetch('/api/usuarios', 'POST', { nome, usuario, senha, nivel }); if(data.ok) { toast('✓ Usuário criado!', 'ok'); document.getElementById('user-nome').value = ''; document.getElementById('user-login').value = ''; document.getElementById('user-senha').value = ''; loadSystemUsers(); } else { toast(data.erro || 'Erro', 'err'); } } catch(e) { toast('Erro', 'err'); } }
+async function disableUser(id, nome) { if(!canManageUsers()) return; if(!confirm(`Desativar usuário "${nome}"?`)) return; try { const data = await apiFetch(`/api/usuarios/${id}`, 'DELETE'); if(data.ok) { toast('✓ Usuário desativado', 'ok'); loadSystemUsers(); } } catch(e) { toast('Erro', 'err'); } }
+
+// ==================== HISTÓRICO ====================
+async function loadHistory() { try { const data = await apiFetch('/api/historico?limit=500'); if(data.ok) historyData = data.dados; renderHistory(); } catch(e) { console.error(e); } }
+function renderHistory() { const tb = document.getElementById('history-table'); const ct = document.getElementById('hist-count'); const search = document.getElementById('hist-search')?.value.toLowerCase() || ''; const porta = document.getElementById('hist-porta')?.value || ''; const status = document.getElementById('hist-status')?.value || ''; const combined = [...accessLog, ...historyData]; const filtered = combined.filter(h => { const matchSearch = !search || (h.nome || '').toLowerCase().includes(search) || (h.cracha || '').toLowerCase().includes(search); const matchPorta = !porta || h.porta === porta; const matchStatus = !status || h.status === status; return matchSearch && matchPorta && matchStatus; }); ct.textContent = filtered.length; if(filtered.length === 0) { tb.innerHTML = '<tr><td colspan="6" class="empty-state">Nenhum registro encontrado</td></tr>'; return; } tb.innerHTML = filtered.slice(0, 500).map(h => { let dataHora = h.time || h.data_hora || ''; if(!dataHora && h.data && h.hora) dataHora = `${h.data} ${h.hora}`; if(!dataHora && h.timestamp) { const d = new Date(h.timestamp); dataHora = d.toLocaleString('pt-BR'); } return `<tr><td>${dataHora || '—'}</td><td style="color:var(--text)">${h.nome || '—'}</td><td style="color:var(--accent)">${h.cracha || '—'}</td><td>${h.registro || '—'}</td><td>${h.porta || '—'}</td></tr>`; }).join(''); }
+function filterHistory() { renderHistory(); }
+function clearHistoryFilters() { document.getElementById('hist-search').value = ''; document.getElementById('hist-porta').value = ''; document.getElementById('hist-status').value = ''; renderHistory(); }
+
+// ==================== MQTT ====================
+function mqttPublish(topic, payload) { if(!mqttClient?.isConnected()) { toast('MQTT desconectado', 'warn'); return; } const msg = new Paho.MQTT.Message(String(payload)); msg.destinationName = topic; mqttClient.send(msg); }
+function setBrokerStatus(online) { const dot = document.getElementById('broker-dot'); const txt = document.getElementById('broker-text'); if(online) { dot.className = 'broker-dot online'; txt.textContent = 'broker · online'; } else { dot.className = 'broker-dot'; txt.textContent = 'broker · offline'; } }
+function reconnectMQTT() { if(!mqttClient?.isConnected()) initMQTT(); }
+function initMQTT() { const script = document.createElement('script'); script.src = 'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js'; script.onload = () => connectMQTT(); document.head.appendChild(script); }
+function connectMQTT() { if(mqttClient?.isConnected()) return; mqttClient = new Paho.MQTT.Client(BROKER_IP, BROKER_PORT, 'dash_' + Date.now()); mqttClient.onConnectionLost = () => { setBrokerStatus(false); setTimeout(connectMQTT, 10000); }; mqttClient.onMessageArrived = onMQTTMessage; mqttClient.connect({ keepAliveInterval: 60, onSuccess: () => { setBrokerStatus(true); const topics = ['/+/temperatura', '/+/estado', '/+/marca/get', '/+/status', '/+/entrada', '/cracha', '/+/ota/status']; topics.forEach(t => mqttClient.subscribe(t)); toast('MQTT conectado!', 'ok'); }, onFailure: () => setTimeout(connectMQTT, 5000) }); }
+function onMQTTMessage(msg) { const top = msg.destinationName; const pay = msg.payloadString.trim(); const tm = top.match(/\/(2\d\d[ab])\/temperatura/); if(tm) { acTemp[tm[1]] = parseFloat(pay); renderAll(); return; } const em = top.match(/\/(2\d\d[ab])\/estado/); if(em) { const valor = parseInt(pay); acState[em[1]] = (valor > 0) ? 'on' : 'off'; renderAll(); return; } const mm = top.match(/\/(2\d\d[ab])\/marca\/get/); if(mm) { acMarca[mm[1]] = pay; renderAll(); return; } const pm = top.match(/\/(10\d|SESI)\/status/); if(pm) { try { const d = JSON.parse(pay); doorState[pm[1]] = { status: d.mqtt === 'connected' ? 'fechada' : 'offline', mac: d.mac, rssi: d.rssi, fw: d.fw_version }; } catch(e) { doorState[pm[1]] = { status: 'offline' }; } renderDoors(); updateDeviceStatus(); return; } const im = top.match(/\/(10\d|SESI)\/entrada/); if(im) { const user = rfidUsers.find(u => u.cracha.toUpperCase() === pay.toUpperCase()); const now = new Date(); const dataHora = now.toLocaleString('pt-BR'); const entry = { time: dataHora, data: now.toISOString().split('T')[0], hora: now.toLocaleTimeString('pt-BR'), nome: user?.nome || '—', cracha: pay.toUpperCase(), registro: user?.registro || '—', porta: im[1], status: 'ok' }; accessLog.unshift(entry); accessLog = accessLog.slice(0, 500); renderHistory(); renderLastAccess(); return; } if(top === '/cracha') { const crachaHex = pay.trim().toUpperCase(); const crachaInput = document.getElementById('rfid-cracha'); if(crachaInput) { crachaInput.value = crachaHex; crachaInput.style.borderColor = 'var(--accent2)'; crachaInput.style.backgroundColor = 'rgba(0,255,157,.1)'; setTimeout(() => { crachaInput.style.borderColor = ''; crachaInput.style.backgroundColor = ''; }, 2000); toast(`📇 Crachá ${crachaHex} detectado! Preencha os dados e clique em Salvar`, 'ok'); document.getElementById('rfid-nome').focus(); } return; } const otaMatch = top.match(/\/(2\d\d[ab]|10\d|SESI)\/ota\/status/); if(otaMatch && canAccessOTA()) { addOtaLog(`${otaMatch[1]}: ${pay}`, pay === 'atualizado' ? 'ok' : pay === 'falha_ota' ? 'err' : 'info'); return; } }
+
+// ==================== AC CONTROL ====================
+function toggleAC(id, cmd) {
+  acState[id] = cmd;
+  mqttPublish(`/${id}/comando`, cmd === 'on' ? '1' : '0');
+  toast(`AC ${id.toUpperCase()} → ${cmd === 'on' ? 'LIGADO' : 'DESLIGADO'}`, 'ok');
+  renderAll();
+}
+
+function adjustTemp(id, delta) {
+  let newTemp = (acSetTemp[id] || 20) + delta;
+  newTemp = Math.min(30, Math.max(18, newTemp));
+  acSetTemp[id] = newTemp;
+  if (acState[id] === 'on') mqttPublish(`/${id}/comando`, newTemp.toString());
+  toast(`${id.toUpperCase()}: setpoint ${newTemp}°C`, 'ok');
+  renderAll();
+}
+
+function setMarca(id, marca) {
+  if (!canChangeMarca()) { 
+    toast('Permissão negada - apenas admin/dev podem alterar a marca', 'warn'); 
+    return; 
+  }
+  acMarca[id] = marca;
+  mqttPublish(`/${id}/marca`, marca);
+  toast(`${id.toUpperCase()} → Marca: ${marca}`, 'ok');
+  renderAll();
+}
+
+
+// ==================== RENDER ====================
+function getTempColor(t) { if(!t) return '#5a7299'; if(t < 20) return '#00d4ff'; if(t < 24) return '#00ff9d'; if(t < 27) return '#ffb800'; return '#ff4d6d'; }
+function buildRoomCard(id) { const on = acState[id] === 'on'; const t = acTemp[id]; const setTemp = acSetTemp[id] || 20; const marca = acMarca[id] || 'consul'; const canCtrl = canControlAC(); const canMarca = canChangeMarca(); const nextMarca = marca === 'consul' ? 'hitachi' : marca === 'hitachi' ? 'samsung' : marca === 'samsung' ? 'agratto' : 'consul'; return `<div class="room-card ${on ? 'ac-on' : ''}"><div class="room-header"><span class="room-name">Sala ${id.toUpperCase()}</span><div class="room-dot ${on ? 'on' : ''}"></div></div><div class="room-temp" style="color:${getTempColor(t)}">${t != null ? t : '—'}<span>°C</span></div><div class="marca-badge marca-${marca} ${!canMarca ? 'disabled' : ''}" ${canMarca ? `onclick="setMarca('${id}', '${nextMarca}')"` : ''}>${marca} ${canMarca ? '▼' : '🔒'}</div><div class="temp-control"><button class="temp-btn" onclick="adjustTemp('${id}', -1)">−</button><span class="temp-set">${setTemp}°C</span><button class="temp-btn" onclick="adjustTemp('${id}', 1)">+</button></div><div class="ac-buttons"><button class="ac-btn ${on ? 'on' : ''}" onclick="toggleAC('${id}', 'on')">LIGA</button><button class="ac-btn off" onclick="toggleAC('${id}', 'off')">DESL</button></div></div>`; }
+function renderRooms() { const a = document.getElementById('rooms-a'); const b = document.getElementById('rooms-b'); const ova = document.getElementById('overview-a'); const ovb = document.getElementById('overview-b'); if(a) a.innerHTML = SALAS_A.map(id => buildRoomCard(id)).join(''); if(b) b.innerHTML = SALAS_B.map(id => buildRoomCard(id)).join(''); if(ova) ova.innerHTML = SALAS_A.slice(0,6).map(id => buildRoomCard(id)).join(''); if(ovb) ovb.innerHTML = SALAS_B.slice(0,6).map(id => buildRoomCard(id)).join(''); const acOn = Object.values(acState).filter(v => v === 'on').length; const temps = Object.values(acTemp).filter(v => v != null); const avg = temps.length ? (temps.reduce((a,b)=>a+b,0)/temps.length).toFixed(1) : '—'; document.getElementById('stat-ac-on').textContent = acOn; document.getElementById('stat-temp').textContent = avg + (avg !== '—' ? '°C' : ''); const online = Object.values(doorState).filter(d => d.status !== 'offline').length; document.getElementById('stat-ac-online').textContent = online; }
+function renderDoors() { const grid = document.getElementById('doors-grid'); if(!grid) return; let online = 0; grid.innerHTML = PORTAS.map(p => { const d = doorState[p.id] || { status: 'offline' }; if(d.status !== 'offline') online++; return `<div class="door-card ${d.status === 'offline' ? 'offline' : 'online'}"><div class="door-header"><span class="door-name">${p.name}</span><span class="door-status ${d.status}">${d.status === 'aberta' ? '🔓 ABERTA' : d.status === 'fechada' ? '🔒 FECHADA' : '⭕ OFFLINE'}</span></div><div class="door-info">MAC: <span>${d.mac || '—'}</span></div><div class="door-info">RSSI: <span>${d.rssi != null ? d.rssi + ' dBm' : '—'}</span></div><div class="door-info">FW: <span>${d.fw || '—'}</span></div></div>`; }).join(''); document.getElementById('door-online').textContent = online; document.getElementById('door-offline').textContent = PORTAS.length - online; }
+function renderHeatmap() { const el = document.getElementById('heatmap'); if(!el) return; const todas = [...SALAS_A, ...SALAS_B]; el.innerHTML = todas.map(id => { const t = acTemp[id]; const c = getTempColor(t); return `<div class="hm-cell" style="background:${c}22;border:1px solid ${c}55"><div class="hm-room">${id.toUpperCase()}</div><div class="hm-val" style="color:${c}">${t != null ? t : '—'}</div><div class="hm-unit">°C</div></div>`; }).join(''); const row = id => `<div style="display:flex;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px"><span>${id.toUpperCase()}</span><span style="color:${getTempColor(acTemp[id])}">${acTemp[id] != null ? acTemp[id] + '°C' : '—'}</span></div>`; const ta = document.getElementById('temps-list-a'); const tb = document.getElementById('temps-list-b'); if(ta) ta.innerHTML = SALAS_A.filter(id => acTemp[id] != null).map(row).join('') || '<div class="empty-state">Nenhum dado</div>'; if(tb) tb.innerHTML = SALAS_B.filter(id => acTemp[id] != null).map(row).join('') || '<div class="empty-state">Nenhum dado</div>'; }
+function renderLastAccess() { const el = document.getElementById('last-access'); if(!el) return; el.innerHTML = accessLog.slice(0, 10).map(a => `<tr><td>${a.time || a.data_hora || '—'}</td><td style="color:var(--text)">${a.nome || '—'}</td><td style="color:var(--accent)">${a.cracha || '—'}</td><td>${a.porta || '—'}</td><td class="${a.status === 'ok' ? 'badge-ok' : 'badge-neg'}">${a.status === 'ok' ? '✓ OK' : '✗ NEGADO'}</td></tr>`).join(''); const today = new Date().toISOString().split('T')[0]; const todayCount = accessLog.filter(a => a.data === today || a.time?.startsWith(today)).length; document.getElementById('stat-acessos').textContent = todayCount; }
+function updateDeviceStatus() { const el = document.getElementById('device-status'); if(!el) return; el.innerHTML = PORTAS.map(p => { const d = doorState[p.id] || {}; const online = d.status !== 'offline'; return `<div style="display:flex;align-items:center;gap:8px;background:var(--surface2);padding:6px 12px;border-radius:8px"><div style="width:8px;height:8px;border-radius:50%;background:${online ? 'var(--online)' : 'var(--offline)'}"></div><span style="font-size:11px">${p.name}</span>${online ? `<span style="font-size:10px;color:var(--text-dim)">${d.mac?.slice(-8) || ''} · ${d.rssi || '—'}dBm</span>` : ''}</div>`; }).join(''); }
+function renderAll() { renderRooms(); renderDoors(); renderHeatmap(); renderLastAccess(); }
+
+// ==================== OTA ====================
+function onFile(type, fileType) { const input = document.getElementById(fileType === 'fw' ? `ff-${type}` : `fv-${type}`); const file = input.files[0]; if(!file) return; const nameSpan = document.getElementById(fileType === 'fw' ? `fn-${type}` : `vn-${type}`); nameSpan.textContent = file.name; const reader = new FileReader(); reader.onload = function(e) { const arrayBuffer = e.target.result; const uint8Array = new Uint8Array(arrayBuffer); if(fileType === 'fw') { otaFiles[type].fw = uint8Array; otaFiles[type].fwName = file.name; } else { const text = new TextDecoder('utf-8').decode(uint8Array); otaFiles[type].ver = text.trim(); otaFiles[type].verName = file.name; } const uploadBtn = document.getElementById(`bu-${type}`); if(otaFiles[type].fw && otaFiles[type].ver) { uploadBtn.disabled = false; uploadBtn.style.opacity = '1'; } else { uploadBtn.disabled = true; uploadBtn.style.opacity = '0.6'; } const progDiv = document.getElementById(`prog-${type}`); progDiv.style.display = 'block'; const pbar = document.getElementById(`pbar-${type}`); const ptxt = document.getElementById(`ptxt-${type}`); pbar.style.width = '100%'; ptxt.textContent = `✓ ${file.name} carregado`; setTimeout(() => { pbar.style.width = '0%'; ptxt.textContent = ''; }, 2000); }; reader.readAsArrayBuffer(file); }
+async function doUpload(type) { const files = otaFiles[type]; if(!files.fw || !files.ver) { toast('Selecione firmware.bin e version.txt', 'warn'); return; } const progDiv = document.getElementById(`prog-${type}`); const pbar = document.getElementById(`pbar-${type}`); const ptxt = document.getElementById(`ptxt-${type}`); progDiv.style.display = 'block'; try { pbar.style.width = '30%'; ptxt.textContent = 'Enviando firmware...'; const fwBlob = new Blob([files.fw], { type: 'application/octet-stream' }); const fwFormData = new FormData(); fwFormData.append('file', fwBlob, files.fwName); const fwEndpoint = type === 'ar' ? '/upload-fw-ar' : '/upload-fw-porta'; const fwRes = await fetch(`${API}${fwEndpoint}`, { method: 'POST', headers: { 'Authorization': `Bearer ${currentUser?.token}` }, body: fwFormData }); if(!fwRes.ok) throw new Error('Falha no upload do firmware'); pbar.style.width = '60%'; ptxt.textContent = 'Enviando versão...'; const verBlob = new Blob([files.ver], { type: 'text/plain' }); const verFormData = new FormData(); verFormData.append('file', verBlob, files.verName); const verEndpoint = type === 'ar' ? '/upload-version-ar' : '/upload-version-porta'; const verRes = await fetch(`${API}${verEndpoint}`, { method: 'POST', headers: { 'Authorization': `Bearer ${currentUser?.token}` }, body: verFormData }); if(!verRes.ok) throw new Error('Falha no upload da versão'); pbar.style.width = '100%'; ptxt.textContent = '✓ Upload concluído!'; toast(`${type === 'ar' ? 'Firmware AR' : 'Firmware Porta'} atualizado com sucesso!`, 'ok'); setTimeout(() => { progDiv.style.display = 'none'; pbar.style.width = '0%'; ptxt.textContent = ''; }, 3000); loadOtaStatus(); } catch(err) { console.error(err); toast(`Erro no upload: ${err.message}`, 'err'); progDiv.style.display = 'none'; } }
+async function loadOtaStatus() { if(!canAccessOTA()) return; try { const arRes = await fetch(`${API}/ota/ar/status`, { headers: { 'Authorization': `Bearer ${currentUser?.token}` } }); const arData = await arRes.json(); if(arData.success) { document.getElementById('ota-ver-ar').textContent = arData.version || '—'; const sizeEl = document.getElementById('ota-size-ar'); if(arData.firmwareSize) sizeEl.textContent = formatFileSize(arData.firmwareSize); else sizeEl.textContent = '—'; } const portaRes = await fetch(`${API}/ota/porta/status`, { headers: { 'Authorization': `Bearer ${currentUser?.token}` } }); const portaData = await portaRes.json(); if(portaData.success) { document.getElementById('ota-ver-porta').textContent = portaData.version || '—'; const sizeEl = document.getElementById('ota-size-porta'); if(portaData.firmwareSize) sizeEl.textContent = formatFileSize(portaData.firmwareSize); else sizeEl.textContent = '—'; } } catch(err) { console.error('Erro ao carregar status OTA:', err); } }
+function formatFileSize(bytes) { if(bytes === 0) return '0 Bytes'; const k = 1024; const sizes = ['Bytes', 'KB', 'MB']; const i = Math.floor(Math.log(bytes) / Math.log(k)); return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]; }
+async function forceOTA(type) { if(!canAccessOTA()) { toast('Permissão negada - apenas dev pode forçar OTA', 'warn'); return; } const devices = type === 'ar' ? SALAS_A.concat(SALAS_B) : PORTAS.map(p => p.id); toast(`🔄 Forçando OTA em ${devices.length} dispositivos...`, 'warn'); let sent = 0; for(const dev of devices) { const topic = type === 'ar' ? `/${dev}/comando` : `/${dev}/acesso`; mqttPublish(topic, 'ota_update'); sent++; await new Promise(r => setTimeout(r, 100)); } toast(`📡 Comando enviado para ${sent} dispositivos`, 'ok'); addOtaLog(`Forçado OTA para ${sent} dispositivos (${type})`, 'info'); }
+function addOtaLog(msg, type = 'info') { const logBox = document.getElementById('ota-log'); if(!logBox) return; const time = new Date().toLocaleTimeString('pt-BR'); const typeClass = type === 'ok' ? 'ok' : type === 'warn' ? 'warn' : type === 'err' ? 'err' : 'info'; logBox.innerHTML += `<div class="ll ${typeClass}">[${time}] ${msg}</div>`; logBox.scrollTop = logBox.scrollHeight; const lines = logBox.children; if(lines.length > 100) lines[0].remove(); }
+function initOtaLogListener() { addOtaLog('Painel OTA iniciado - aguardando status dos dispositivos', 'info'); }
+
+// ==================== UTIL ====================
+function updateClock() { const t = new Date().toLocaleTimeString('pt-BR'); document.getElementById('clock').textContent = t; const c2 = document.getElementById('clock2'); if(c2) c2.textContent = t; const c3 = document.getElementById('clock3'); if(c3) c3.textContent = t; }
+function toast(msg, type = 'ok') { const el = document.getElementById('toast'); el.textContent = msg; el.className = 'toast ' + type; el.style.display = 'block'; clearTimeout(el._t); el._t = setTimeout(() => el.style.display = 'none', 3000); }
+function nav(id, el) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById(`page-${id}`).classList.add('active'); el.classList.add('active'); if(id === 'history') loadHistory(); if(id === 'rfid') loadRFIDUsers(); if(id === 'users') loadSystemUsers(); if(id === 'ota' && canAccessOTA()) loadOtaStatus(); }
+
+// Inicialização
+(function() { const saved = sessionStorage.getItem('auth'); if(saved) { try { currentUser = JSON.parse(saved); if(currentUser?.token) { startApp(); return; } } catch(e) {} } document.getElementById('login-screen').style.display = 'flex'; })();
+</script>
+</body>
+</html>
