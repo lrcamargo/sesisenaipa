@@ -7,7 +7,7 @@
     session_start();
 
     if(isset($_SESSION['sLogin'])){
-        header("Location: index.php");
+        header("Location: main.php");
         exit;
     }
 ?>

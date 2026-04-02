@@ -3,48 +3,50 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    //include('../conexaosec.php');
     include('../conexao.php');
     session_start();
-    
-    if((!isset ($_SESSION['sLogin']) == true)) {
+
+    if(!isset($_SESSION['sLogin'])){
         unset($_SESSION['sLogin']);
         unset($_SESSION['user']);
         unset($_SESSION['group']);
-        header('location:../index.php');    
+        header('location:../index.php');
+        exit;
     }
-    
-    $logado = $_SESSION['user'];
-    $nivel = $_SESSION['group'];
-    
+
+    $logado    = $_SESSION['user'];
+    $nivel     = $_SESSION['group'];
+    $nivelNorm = strtolower(str_replace('.', '', $nivel));
+
+    $permReset = in_array($nivelNorm, [
+        'admin', 'administrator', 'sup tecnica', 'gerencia', 'sup pedagogica'
+    ]);
+
+    // Mensagens de retorno de ações
+    $msgs = [
+        'senha_resetada'  => ['tipo'=>'success', 'texto'=>'Senha redefinida. O usuário será solicitado a criar nova senha no próximo login.'],
+        'nao_encontrado'  => ['tipo'=>'danger',  'texto'=>'Usuário não encontrado.'],
+        'erro_permissao'  => ['tipo'=>'danger',  'texto'=>'Você não tem permissão para esta ação.'],
+        'erro_db'         => ['tipo'=>'danger',  'texto'=>'Erro ao processar. Tente novamente.'],
+        'erro_param'      => ['tipo'=>'danger',  'texto'=>'Requisição inválida.'],
+    ];
 ?>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <title>Gestão de Usuários</title>
-        
+
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="../css/telefone.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
-          
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 
         <style>
-            .labs {
-                margin-top: 15%;
-                margin-left: -85%;
-                text-align: center;
-            }
-
-            .labs li:before {
-                display: inline-block;
-                margin-left: -1.3em; /* same as padding-left set on li */
-                width: 1.3em; /* same as padding-left set on li */
-            }
-
             td.details-control {
                 background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
                 cursor: pointer;
@@ -52,20 +54,37 @@
             tr.shown td.details-control {
                 background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
             }
+            .status-ativo   { color: green; }
+            .status-inativo { color: red;   }
 
-            .status-ativo {
-                color: green;
+            /* ── Botões de ação da tabela ────────────────────────────
+               Usam <button> em vez de <a> para evitar o efeito de
+               link visitado (cor roxa) que confundia os usuários.   */
+            .btn-acao {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                padding: 4px 10px;
+                border: none;
+                border-radius: 4px;
+                font-size: 0.82rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: filter .15s ease;
+                white-space: nowrap;
             }
+            .btn-acao:hover  { filter: brightness(.88); }
+            .btn-acao:active { filter: brightness(.78); }
 
-            .status-inativo {
-                color: red;
-            }
+            .btn-editar   { background:#007bff; color:#fff; }
+            .btn-desativar{ background:#dc3545; color:#fff; }
+            .btn-ativar   { background:#28a745; color:#fff; }
+            .btn-reset    { background:#fd7e14; color:#fff; }
         </style>
     </head>
     <body>
-        <!-- Início Wrapper -->
         <div class="wrapper">
-        <!-- Início Cabeçalho -->
+
             <div class="header">
                 <div class="header-menu">
                     <div class="title"><img src="../img/logo_white.svg"></div>
@@ -76,134 +95,172 @@
                     </ul>
                 </div>
             </div>
-        <!-- Fim Cabeçalho -->
-        <!--Inicio sidebar-->
+
             <div class="sidebar">
                 <div class="sidebar-menu">
                     <?php include_once('../menu.php'); ?>
                 </div>
             </div>
-        <!--Fim sidebar-->
-        <!--Inicio conteúdo-->
-            <div class="main-container">
-            Gestão Usuários - Página Inicial
-            <br/>
-            <button class="btn btn-blue"><a href='cadastrarUsuario.php'><i class="fas fa-user-plus"></i> Cadastrar Usuário</button>    </a>
-            <p>
-            <table id="usuarios" class="display">
-                <thead>
-                    <tr>
-                        <th></th> <th>Registro</th>
-                        <th>Nome</th>
-                        <th>Usuário</th>
-                        <th>Editar</th>
-                        <th>Desativar</th>
-                    </tr>
-                </thead>
 
-            </table>
+            <div class="main-container">
+
+                <?php
+                if(isset($_GET['msg'])){
+                    $cod = $_GET['msg'];
+                    if(isset($msgs[$cod])){
+                        $m = $msgs[$cod];
+                        echo "<div class='alert alert-{$m['tipo']} text-center'>{$m['texto']}</div>";
+                    }
+                }
+                ?>
+
+                Gestão Usuários — Página Inicial
+                <br><br>
+
+                <!-- Botão de cadastro corrigido: <button> real, sem <a> dentro -->
+                <button class="btn btn-primary mb-3"
+                        onclick="location.href='cadastrarUsuario.php'">
+                    <i class="fas fa-user-plus mr-1"></i> Cadastrar Usuário
+                </button>
+
+                <table id="usuarios" class="display">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Registro</th>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>Editar</th>
+                            <?php if($permReset){ echo '<th>Resetar Senha</th>'; } ?>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                </table>
+
             </div>
-            </div>
-        <!--Fim wrapper-->
+        </div>
+
         <script type="text/javascript" src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
         <script type="text/javascript" src="../js/menu.js"></script>
 
         <script>
-        let table = new DataTable('#usuarios', {
-            responsive: true, // Habilita a responsividade
-            processing: true, // Exibe uma mensagem de "Processando"
-            serverSide: true, // Habilita o processamento no lado do servidor
-            ajax: {
-                url: 'dadosUsuarios.php', // URL do script PHP que fornece os dados
-                type: 'POST' // Método HTTP para a requisição
-            },
-            columns: [
-                {
-                    className: 'details-control', // Classe CSS para o botão de expandir
-                    orderable: false, // Esta coluna não pode ser ordenada
-                    data: null, // Não busca dados do banco, é apenas um controle
-                    defaultContent: '' // Conteúdo padrão vazio
-                },
-                { data: 'registro' },
-                { data: 'nome' },
-                { data: 'usuario' },             
-                { 
-                    data: null, // Coluna de ação, não busca dados
-                    orderable: false,
-                    render: function(data, type, row) {
-                        return '<a href="editarUsuario.php?id=' + row.id + '" class="btn-editar">Editar</a>';
-                    }
-                },
-                {
-                    data: null,
-                    orderable: false,
-                    render: function(data, type, row) {
-                        // Verifica o status para decidir qual botão exibir
-                        if (row.status == 1) {
-                            return '<a href="desativaUsuario.php?id=' + row.id + '" class="btn-desativar">Desativar</a>';
-                        } else {
-                            return '<a href="ativaUsuario.php?id=' + row.id + '" class="btn-ativar">Ativar</a>';
-                        }
-                    }
-                }
+        var permReset = <?php echo $permReset ? 'true' : 'false'; ?>;
 
-            ],
-            order: [[2, 'asc']], // Define a ordenação padrão para a segunda coluna (id)
-            language: {
-                // Configurações de tradução para português
-                sEmptyTable: "Nenhum registro encontrado",
-                sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
-                sInfoFiltered: "(Filtrados de _MAX_ registros)",
-                sInfoPostFix: "",
-                sInfoThousands: ".",
-                sLengthMenu: "_MENU_ resultados por página",
-                sLoadingRecords: "Carregando...",
-                sProcessing: "Processando...",
-                sZeroRecords: "Nenhum registro encontrado",
-                sSearch: "Pesquisar",
-                oPaginate: {
-                    sNext: "Próximo",
-                    sPrevious: "Anterior",
-                    sFirst: "Primeiro",
-                    sLast: "Último"
-                },
-                oAria: {
-                    sSortAscending: ": Ordenar colunas de forma ascendente",
-                    sSortDescending: ": Ordenar colunas de forma descendente"
-                },
-                select: {
-                    rows: {
-                        _: "Selecionado %d linhas",
-                        0: "Nenhuma linha selecionada",
-                        1: "Selecionado 1 linha"
-                    }
+        // Monta as colunas dinamicamente conforme a permissão
+        var colunas = [
+            {
+                className: 'details-control',
+                orderable: false,
+                data: null,
+                defaultContent: ''
+            },
+            { data: 'registro' },
+            { data: 'nome'     },
+            { data: 'usuario'  },
+            {
+                data: null,
+                orderable: false,
+                render: function(data, type, row){
+                    return '<button class="btn-acao btn-editar" '
+                         + 'onclick="location.href=\'editarUsuario.php?id=' + row.id + '\'">'
+                         + '<i class="fas fa-pen"></i> Editar'
+                         + '</button>';
+                }
+            },
+        ];
+
+        // Coluna de reset só para quem tem permissão
+        if(permReset){
+            colunas.push({
+                data: null,
+                orderable: false,
+                render: function(data, type, row){
+                    return '<button class="btn-acao btn-reset" '
+                         + 'onclick="confirmarReset(' + row.id + ', \'' + escHtml(row.nome) + '\')">'
+                         + '<i class="fas fa-key"></i> Resetar Senha'
+                         + '</button>';
+                }
+            });
+        }
+
+        // Coluna de ativar/desativar
+        colunas.push({
+            data: null,
+            orderable: false,
+            render: function(data, type, row){
+                if(row.status == 1){
+                    return '<button class="btn-acao btn-desativar" '
+                         + 'onclick="location.href=\'desativaUsuario.php?id=' + row.id + '\'">'
+                         + '<i class="fas fa-user-slash"></i> Desativar'
+                         + '</button>';
+                } else {
+                    return '<button class="btn-acao btn-ativar" '
+                         + 'onclick="location.href=\'ativaUsuario.php?id=' + row.id + '\'">'
+                         + '<i class="fas fa-user-check"></i> Ativar'
+                         + '</button>';
                 }
             }
         });
 
-        // Função que formata o conteúdo da linha filha para o "collapse"
-        function format(d) {
-            let statusText = d.status == 1 ? 'Ativo' : 'Inativo';
-            let statusClass = d.status == 1 ? 'status-ativo' : 'status-inativo';
+        let table = new DataTable('#usuarios', {
+            responsive:  true,
+            processing:  true,
+            serverSide:  true,
+            ajax: { url: 'dadosUsuarios.php', type: 'POST' },
+            columns: colunas,
+            order: [[2, 'asc']],
+            language: {
+                sEmptyTable:    "Nenhum registro encontrado",
+                sInfo:          "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                sInfoEmpty:     "Mostrando 0 até 0 de 0 registros",
+                sInfoFiltered:  "(Filtrados de _MAX_ registros)",
+                sInfoThousands: ".",
+                sLengthMenu:    "_MENU_ resultados por página",
+                sLoadingRecords:"Carregando...",
+                sProcessing:    "Processando...",
+                sZeroRecords:   "Nenhum registro encontrado",
+                sSearch:        "Pesquisar",
+                oPaginate: {
+                    sNext: "Próximo", sPrevious: "Anterior",
+                    sFirst: "Primeiro", sLast: "Último"
+                }
+            }
+        });
 
-            return `<p>Detalhes do perfil para ${d.nome}:</p>
-                    <ul>
-                        <li><strong>ID:</strong> ${d.id}</li>
-                        <li><strong>Registro:</strong> ${d.registro}</li>
-                        <li><strong>Nome:</strong> ${d.nome}</li>
-                        <li><strong>Usuário:</strong> ${d.usuario}</li>
-                        <li><strong>Status:</strong> <span class="${statusClass}">${statusText}</span></li>
-                        <li><strong>Perfil:</strong> ${d.perfil}</li>
-                    </ul>`;
+        // Confirmação antes de resetar a senha
+        function confirmarReset(id, nome){
+            if(confirm('Resetar a senha de "' + nome + '"?\n')){
+                location.href = 'resetSenha.php?id=' + id;
+            }
         }
 
-        // Evento de clique para expandir/esconder a linha filha
-        $('#usuarios tbody').on('click', 'td.details-control', function() {
-            var tr = $(this).closest('tr');
-            var row = table.row(tr);
+        // Escapa HTML para uso em atributos
+        function escHtml(str){
+            return String(str)
+                .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+                .replace(/'/g,"&#39;");
+        }
 
-            if (row.child.isShown()) {
+        // Expand/collapse da linha de detalhes
+        function format(d){
+            var statusText  = d.status == 1 ? 'Ativo'   : 'Inativo';
+            var statusClass = d.status == 1 ? 'status-ativo' : 'status-inativo';
+            return '<p>Detalhes do perfil para ' + escHtml(d.nome) + ':</p>'
+                 + '<ul>'
+                 + '<li><strong>ID:</strong> '       + d.id       + '</li>'
+                 + '<li><strong>Registro:</strong> ' + d.registro + '</li>'
+                 + '<li><strong>Nome:</strong> '     + escHtml(d.nome)    + '</li>'
+                 + '<li><strong>Usuário:</strong> '  + escHtml(d.usuario) + '</li>'
+                 + '<li><strong>Status:</strong> <span class="' + statusClass + '">' + statusText + '</span></li>'
+                 + '<li><strong>Perfil:</strong> '   + escHtml(d.perfil)  + '</li>'
+                 + '</ul>';
+        }
+
+        $('#usuarios tbody').on('click', 'td.details-control', function(){
+            var tr  = $(this).closest('tr');
+            var row = table.row(tr);
+            if(row.child.isShown()){
                 row.child.hide();
                 tr.removeClass('shown');
             } else {
@@ -211,7 +268,6 @@
                 tr.addClass('shown');
             }
         });
-
-    </script>
+        </script>
     </body>
 </html>

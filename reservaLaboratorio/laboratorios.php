@@ -873,15 +873,51 @@ if(isset($_GET['ok'])){
 
 <b>Turno:</b><br>
 
+<?php if($permDiaInteiro){ ?>
+
+<!--
+    [MULTI-TURNO] Usuários com permissão maior usam checkboxes:
+    - 1 marcado  → mostra seção Período normalmente
+    - 2+ marcados → oculta Período/Hora e usa início do 1º + fim do último
+    - "Dia inteiro" marca todos e trava
+-->
+<div id="turnosCheckbox">
+
+    <label class="mr-3">
+        <input type="checkbox" name="turnos[]" value="manha"
+               id="ckManha" onchange="atualizarTurnos()"> Manhã
+    </label>
+    <label class="mr-3">
+        <input type="checkbox" name="turnos[]" value="tarde"
+               id="ckTarde" onchange="atualizarTurnos()"> Tarde
+    </label>
+    <label class="mr-3">
+        <input type="checkbox" name="turnos[]" value="noite"
+               id="ckNoite" onchange="atualizarTurnos()"> Noite
+    </label>
+    <label>
+        <input type="checkbox" name="turnos[]" value="dia"
+               id="ckDia" onchange="atualizarTurnos()"> Dia inteiro
+    </label>
+
+    <!-- Hidden que o PHP recebe como "turno" quando há múltiplos -->
+    <input type="hidden" id="turnoHidden" name="turno" value="">
+
+</div>
+
+<?php } else { ?>
+
+<!-- Usuários comuns: comportamento original com radios -->
 <input type="radio" name="turno" value="manha"> Manhã
 <input type="radio" name="turno" value="tarde"> Tarde
 <input type="radio" name="turno" value="noite"> Noite
 
-<?php if($permDiaInteiro){ ?>
-<input type="radio" name="turno" value="dia"> Dia inteiro
 <?php } ?>
 
 <br><br>
+
+<!-- Seção Período — oculta automaticamente quando 2+ turnos marcados -->
+<div id="secaoPeriodo">
 
 <b>Período:</b><br>
 
@@ -897,6 +933,16 @@ if(isset($_GET['ok'])){
 
 <span name="hFim" style="display:none"><b>Fim</b></span>
 <input id="horafim" name="horafim" type="text" placeholder="HH:MM" autocomplete="off" style="display:none">
+
+</div>
+
+<!-- Aviso exibido quando 2+ turnos estão marcados -->
+<div id="avisoMultiTurno" style="display:none">
+    <span class="badge badge-info" style="font-size:0.9em">
+        <i class="fas fa-info-circle mr-1"></i>
+        <span id="textoHorarioMulti"></span>
+    </span>
+</div>
 
 <br><br>
 
@@ -1237,6 +1283,80 @@ function horarios(){
         document.querySelector('input[name=horafim]').style.display    = "none";
     }
 
+}
+
+// ================================================================
+// [MULTI-TURNO] Checkboxes de turno — só para permissão maior
+// Horários idênticos aos definidos no solicita.php
+// ================================================================
+var HORARIOS_TURNO = {
+    manha: { inicio: '07:00', fim: '12:20' },
+    tarde: { inicio: '13:00', fim: '17:30' },
+    noite: { inicio: '18:00', fim: '22:30' },
+    dia:   { inicio: '06:00', fim: '23:00' }
+};
+var ORDEM_TURNOS = ['manha', 'tarde', 'noite'];
+
+function atualizarTurnos() {
+    var ckManha = document.getElementById('ckManha');
+    var ckTarde = document.getElementById('ckTarde');
+    var ckNoite = document.getElementById('ckNoite');
+    var ckDia   = document.getElementById('ckDia');
+    if (!ckManha) return;
+
+    // Dia inteiro: trava os outros
+    if (ckDia && ckDia.checked) {
+        ckManha.checked = ckTarde.checked = ckNoite.checked = false;
+        ckManha.disabled = ckTarde.disabled = ckNoite.disabled = true;
+    } else {
+        ckManha.disabled = ckTarde.disabled = ckNoite.disabled = false;
+    }
+
+    var marcados = [];
+    if (ckManha.checked) marcados.push('manha');
+    if (ckTarde.checked) marcados.push('tarde');
+    if (ckNoite.checked) marcados.push('noite');
+
+    var secao  = document.getElementById('secaoPeriodo');
+    var aviso  = document.getElementById('avisoMultiTurno');
+    var texto  = document.getElementById('textoHorarioMulti');
+    var hidden = document.getElementById('turnoHidden');
+
+    // Dia inteiro
+    if (ckDia && ckDia.checked) {
+        secao.style.display = 'none';
+        aviso.style.display = 'block';
+        texto.textContent   = 'Dia inteiro: 06:00 – 23:00';
+        hidden.value        = 'dia';
+        document.getElementById('horainicio').value = '';
+        document.getElementById('horafim').value    = '';
+        return;
+    }
+
+    // Nenhum ou 1 turno: modo normal
+    if (marcados.length <= 1) {
+        secao.style.display = 'block';
+        aviso.style.display = 'none';
+        hidden.value        = marcados.length === 1 ? marcados[0] : '';
+        return;
+    }
+
+    // 2+ turnos: calcula início do 1º e fim do último
+    var ordenados = ORDEM_TURNOS.filter(function(t){ return marcados.indexOf(t) !== -1; });
+    var hInicio   = HORARIOS_TURNO[ordenados[0]].inicio;
+    var hFim      = HORARIOS_TURNO[ordenados[ordenados.length-1]].fim;
+
+    secao.style.display = 'none';
+    aviso.style.display = 'block';
+    texto.textContent   = ordenados.map(function(t){
+        return t.charAt(0).toUpperCase() + t.slice(1);
+    }).join(' + ') + ': ' + hInicio + ' – ' + hFim;
+
+    hidden.value = ordenados.join('+'); // ex: "manha+tarde"
+
+    // Preenche campos de hora para o submit
+    document.getElementById('horainicio').value = hInicio;
+    document.getElementById('horafim').value    = hFim;
 }
 
 </script>

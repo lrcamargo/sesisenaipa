@@ -85,14 +85,14 @@ $mensagens = [
     text-decoration:none;
 }
 .lab-btn .lab-nome{
-    font-size:1rem;
+    font-size:0.85rem;
     font-weight:600;
+    opacity:.85;
     line-height:1.2;
 }
 .lab-btn .lab-desc{
-    font-size:0.75rem;
-    font-weight:600;
-    opacity:.85;
+    font-size:1rem;
+    font-weight:700;
     margin-top:5px;
     line-height:1.3;
 }

@@ -1,7 +1,18 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
+## Versão intranet: 2.3
+- Corrigido redirecionamento de login
+- Alterado layout da tela de troca de senha
+- Gestão de Usuários:
+    - Adicionada função de resetar senha do usuário
+    - Corrigida edição de usuário que precisava digitar os dados
+    - Adicionando cadastro vinculado a catraca - caso não esteja online deixa uma lista em json para cadastro automatizado depois.
+- Reserva de Laboratórios:
+    - Adicionada opção de selecionar dois turnos para supervisão pedagógica,técnica e admin.
+    - Adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
+    - Adicionado nome do ambiente no botão da reserva.
 
-##Versão atual intranet: 2.2
+## Versão intranet: 2.2
 - Removido gerador de carteirinhas
 - Modificado sistema de login - sai do AD e passa para banco de dados local.
 - Criada interface de gestão de usuários para gestores.

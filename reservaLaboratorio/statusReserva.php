@@ -161,7 +161,8 @@ if($status === 2){
 
     // Envia e-mail de notificação só ao reprovar reserva de outro
     if(!$ehPropria){
-        header("Location: email.php?cod=2&id={$idReserva}");
+        //header("Location: email.php?cod=2&id={$idReserva}");
+        header('location:principal.php?msg=reprovada');
         exit;
     }
 
