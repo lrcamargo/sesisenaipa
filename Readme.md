@@ -3,6 +3,8 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 ## Versão intranet: 2.3
 - Corrigido redirecionamento de login
 - Alterado layout da tela de troca de senha
+- Adicionada fuñção de deploy remoto manual para desenvolvimento em ambiente próprio.
+- Adicionada função para deploy agendado.
 - Gestão de Usuários:
     - Adicionada função de resetar senha do usuário
     - Corrigida edição de usuário que precisava digitar os dados
@@ -11,6 +13,7 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
     - Adicionada opção de selecionar dois turnos para supervisão pedagógica,técnica e admin.
     - Adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
     - Adicionado nome do ambiente no botão da reserva.
+
 
 ## Versão intranet: 2.2
 - Removido gerador de carteirinhas
