@@ -1,0 +1,65 @@
+=== Deploy iniciado ===
+Branch   : dev
+Usuário  : Administrador
+Data/hora: 02/04/2026 22:30:31
+------------------------------------------------
+🔒 Backup: conexao.php
+
+$ git fetch origin
+
+$ git checkout dev
+Already on 'dev'
+Your branch is up to date with 'origin/dev'.
+$ git pull origin dev
+From https://github.com/lrcamargo/sesisenaipa
+ * branch            dev        -> FETCH_HEAD
+Already up to date.
+🔓 Restaurado: conexao.php
+
+📝 Versão atual: 6da36d6
+------------------------------------------------
+
+=== Deploy iniciado ===
+Branch   : dev
+Usuário  : Administrador
+Data/hora: 02/04/2026 22:33:06
+------------------------------------------------
+🔒 Backup: conexao.php
+
+$ git fetch origin
+
+$ git checkout dev
+Already on 'dev'
+M	deploy.php
+Your branch is up to date with 'origin/dev'.
+$ git pull origin dev
+From https://github.com/lrcamargo/sesisenaipa
+ * branch            dev        -> FETCH_HEAD
+Already up to date.
+🔓 Restaurado: conexao.php
+
+📝 Versão atual: 6da36d6
+------------------------------------------------
+
+=== Deploy iniciado ===
+Branch   : main
+Usuário  : Administrador
+Data/hora: 02/04/2026 22:33:16
+------------------------------------------------
+🔒 Backup: conexao.php
+
+$ git fetch origin
+
+$ git checkout main
+Switched to branch 'main'
+M	deploy.php
+Your branch is up to date with 'origin/main'.
+$ git pull origin main
+From https://github.com/lrcamargo/sesisenaipa
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+🔓 Restaurado: conexao.php
+
+📝 Versão atual: 6da36d6
+------------------------------------------------
+

@@ -85,7 +85,8 @@
         echo "<li class='item'><a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span>Dashboard</span></a></li>";
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a></li>";
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
-        echo "<li class='item'><a href='../deploy.php' class='menu-btn'><i class='fas fa-rocket mr-1'></i><span>Deploy</span></a></li>";
+        echo "<li class='item'><a href='../gestaoAmbientes/index.php' class='menu-btn'><i class='fas fa-map-signs'></i><span>Gestão Ambientes</span></a></li>";
+        echo "<li class='item'><a href='../scripts/deploy.php' class='menu-btn'><i class='fas fa-rocket mr-1'></i><span>Deploy</span></a></li>";
         echo "<li class='item'><a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span>Sirene</span></a></li>";
     }
     /* GRUPO NÃO RECONHECIDO

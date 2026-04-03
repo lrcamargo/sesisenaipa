@@ -103,7 +103,7 @@ if(!in_array($nivelNorm, ['admin', 'administrator', 'sup tecnica'])){
 </div>
 
 <div class="sidebar">
-    <div class="sidebar-menu"><?php include_once('menu.php'); ?></div>
+    <div class="sidebar-menu"><?php include_once('../menu.php'); ?></div>
 </div>
 
 <div class="main-container">
@@ -117,7 +117,7 @@ if(!in_array($nivelNorm, ['admin', 'administrator', 'sup tecnica'])){
         <h5><i class="fas fa-code-branch mr-2 text-primary"></i>Status das versões</h5>
 
         <div id="statusArea" class="mb-3">
-            <button class="btn btn-outline-primary btn-sm" onclick="verificarStatus()">
+            <button class="btn btn-outline-primary btn-sm" onclick="verificarStatus(this)">
                 <i class="fas fa-sync-alt mr-1"></i>Verificar agora
             </button>
         </div>
@@ -228,9 +228,10 @@ function spinner(btn, ativo){
 }
 
 /* ── Verificar status (compara hash local vs remoto) ── */
-function verificarStatus(){
-    var btn = event.currentTarget;
-    spinner(btn, true);
+// btn é opcional — passado quando chamado por clique, ausente quando chamado pelo load
+function verificarStatus(btn){
+    btn = btn || null;
+    if(btn) spinner(btn, true);
 
     fetch('deployExec.php', {
         method:'POST',
@@ -239,7 +240,7 @@ function verificarStatus(){
     })
     .then(r => r.json())
     .then(data => {
-        spinner(btn, false);
+        if(btn) spinner(btn, false);
 
         var html = '';
 
@@ -279,17 +280,17 @@ function verificarStatus(){
         });
 
         html += '<div class="mt-2">'
-              + '<button class="btn btn-outline-primary btn-sm" onclick="verificarStatus()">'
+              + '<button class="btn btn-outline-primary btn-sm" onclick="verificarStatus(this)">'
               + '<i class="fas fa-sync-alt mr-1"></i>Atualizar</button></div>';
 
         document.getElementById('statusArea').innerHTML = html;
         document.getElementById('ultimaVerificacao').textContent = new Date().toLocaleString('pt-BR');
     })
     .catch(function(e){
-        spinner(btn, false);
+        if(btn) spinner(btn, false);
         document.getElementById('statusArea').innerHTML =
             '<div class="alert alert-danger py-2">Erro ao verificar: ' + e.message + '</div>'
-          + '<button class="btn btn-outline-primary btn-sm" onclick="verificarStatus()">'
+          + '<button class="btn btn-outline-primary btn-sm" onclick="verificarStatus(this)">'
           + '<i class="fas fa-sync-alt mr-1"></i>Tentar novamente</button>';
     });
 }
@@ -327,7 +328,7 @@ function executarDeploy(branch){
 }
 
 // Verifica o status automaticamente ao carregar a página
-window.addEventListener('load', verificarStatus);
+window.addEventListener('load', function(){ verificarStatus(null); });
 
 </script>
 </body>

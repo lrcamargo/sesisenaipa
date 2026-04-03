@@ -31,7 +31,8 @@
     ];
     $oks = [
         1 => "Usuário cadastrado com sucesso e sincronizado com a catraca.",
-        2 => "Usuário cadastrado no sistema. <strong>Atenção:</strong> não foi possível sincronizar com a catraca agora — o cadastro foi adicionado à fila e será enviado automaticamente.",
+        2 => "Usuário cadastrado no sistema. <strong>Atenção:</strong> não foi possível contatar a catraca agora — o cadastro foi adicionado à fila e será enviado automaticamente.",
+        3 => "Usuário cadastrado no sistema. O registro já existia na catraca — nenhuma ação necessária lá.",
     ];
 ?>
 <html>
@@ -125,6 +126,7 @@
             $cod = intval($_GET['ok']);
             if($cod === 1) echo "<div class='alert alert-success text-center mb-3'>{$oks[1]}</div>";
             if($cod === 2) echo "<div class='alert alert-warning text-center mb-3'>{$oks[2]}</div>";
+            if($cod === 3) echo "<div class='alert alert-info text-center mb-3'>{$oks[3]}</div>";
         }
         ?>
 

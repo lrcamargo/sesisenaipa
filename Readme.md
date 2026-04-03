@@ -3,8 +3,9 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 ## Versão intranet: 2.3
 - Corrigido redirecionamento de login
 - Alterado layout da tela de troca de senha
-- Adicionada fuñção de deploy remoto manual para desenvolvimento em ambiente próprio.
-- Adicionada função para deploy agendado.
+- Adicionada função de deploy remoto manual para desenvolvimento em ambiente próprio.
+- Adicionada função para checar versão de deploy agendado.
+- Cadastro de ambientes
 - Gestão de Usuários:
     - Adicionada função de resetar senha do usuário
     - Corrigida edição de usuário que precisava digitar os dados
@@ -13,7 +14,6 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
     - Adicionada opção de selecionar dois turnos para supervisão pedagógica,técnica e admin.
     - Adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
     - Adicionado nome do ambiente no botão da reserva.
-
 
 ## Versão intranet: 2.2
 - Removido gerador de carteirinhas
@@ -56,10 +56,9 @@ Recursos da versão:
 - Login externo - alunos
 - Agenda laboratório v1.3 - 
 
-## Em desenvolvimento (update 25/03/2026):
-- Mudança no sistema de login - criação de novo sistema de gestão de usuários internos. *EM DESENVOLVIMENTO - melhoria nas funções de editar usuário - puxar dados direto do banco na edição, permitir edição sem alterar senha, adicionar usuário na base da catraca simultâneo*
-- Agenda laboratório *EM DESENVOLVIMENTO - adicionar reserva vários dias supervisão. Corrigir envio de e-mails. Melhorar layout. Adicionar aprovação automática. Edição/aprovação/cancelamento de reservas. Fila de e-mails de comunicados*
-- Cadastro de ambientes
+## Em desenvolvimento (update 02/04/2026):
+- Mudança no sistema de login - criação de novo sistema de gestão de usuários internos.
+- Agenda laboratório *EM DESENVOLVIMENTO - Melhoria layout. Edição/aprovação/cancelamento de reservas, buscar ambientes para reserva apenas que são laboratório (não estoque) *
 - Troca do logo
 - Reorganização dos arquivos de tela principal.
 - Atualização de layout - sistema sirene
@@ -68,7 +67,10 @@ Recursos da versão:
 - Quem - onde está *Integração com reservas de laboratórios e posteriormente com as portas*
 - Integrar/criar botão centralizado para todos os sistemas internos *catraca, ar, portas*
 - Listar eventos no teatro na interface principal
-- Gestão secretaria - Recurso 1: listar todos alunos catraca para aproveitar as fotos;
 
-
+## A desenvolver (update 02/04/2026):
+- Deploy automático por script às madrugadas.
+- Script para cadastrar na catraca os usuários de catraca offline.
+- Sistema de login: envio de e-mail automático na criação de usuário e na alteração de senha.
+- Reserva de laboratórios: envio de e-mail para reprovações ou reservas feitas pela supervisão; Adicionar aprovação automática; Fila de e-mails de comunicados; API para node-red; apagar registros antigos na base de histórico (cancelados/reprovados); paginação das reservas.
 

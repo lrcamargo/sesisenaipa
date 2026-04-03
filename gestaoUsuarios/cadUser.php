@@ -2,77 +2,155 @@
 /*
  * cadUser.php
  *
- * Cadastra o usuário internamente e tenta sincronizar com a catraca.
- * Se a catraca falhar, registra em catraca_pendentes.json para
- * reprocessamento posterior por script agendado (Python/cron).
+ * Fluxo:
+ *   1. INSERT interno no banco
+ *   2. GET na catraca para verificar se o registro já existe
+ *        a) Catraca inacessível  → grava em catraca_pendentes.json
+ *        b) Pessoa já existe     → nada a fazer na catraca
+ *        c) Pessoa não existe    → POST para criar na catraca
+ *                                   → falha no POST → grava pendente
  */
 
 require_once __DIR__ . '/../conexao.php';
 session_start();
- 
+
 if(!isset($_SESSION['sLogin'])){
     header('location:../index.php');
     exit;
 }
- 
-// ARQUIVO DE FILA DE PENDENTES DA CATRACA 
+
+/* ── CONFIGURAÇÕES ── */
+
+define('API_BASE',     'http://172.16.95.253:3002/backapi');
+define('TIMEOUT_CONN', 5);   // segundos para estabelecer conexão
+define('TIMEOUT_REQ',  10);  // segundos para a resposta completa
+
+// Arquivo de fila para cadastros pendentes na catraca
 define('FILA_CATRACA', __DIR__ . '/../data/catraca_pendentes.json');
- 
-// Garante que a pasta data existe
+
 if(!is_dir(__DIR__ . '/../data')){
     mkdir(__DIR__ . '/../data', 0750, true);
 }
- 
+
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     header('location:cadastrarUsuario.php');
     exit;
 }
- 
+
+/* ── RECEBE OS CAMPOS ── */
+
 $registro = trim($_POST['registro'] ?? '');
 $nome     = trim($_POST['nome']     ?? '');
 $email    = trim($_POST['email']    ?? '');
 $usuario  = trim($_POST['user']     ?? '');
 $senha    = $_POST['senha']          ?? '';
 $perfil   = trim($_POST['perfil']   ?? '');
- 
+
 /* ── VALIDAÇÃO ── */
- 
+
 if(!$registro || !$nome || !$email || !$usuario || !$senha || !$perfil){
     header('location:cadastrarUsuario.php?erro=1');
     exit;
 }
- 
-/* ── VERIFICA DUPLICIDADE ── */
- 
+
+/* ── VERIFICA DUPLICIDADE INTERNA ── */
+
 $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE usuario = ? OR email = ?");
 $stmtCheck->execute([$usuario, $email]);
 if($stmtCheck->fetchColumn() > 0){
     header('location:cadastrarUsuario.php?erro=2');
     exit;
 }
- 
+
 /* ── INSERT INTERNO ── */
- 
+
 $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
- 
+
 try{
-    $stmt = $pdo->prepare("
+    $pdo->prepare("
         INSERT INTO usuarios (registro, nome, email, usuario, senha, perfil, status, primeiro_login)
         VALUES (?, ?, ?, ?, ?, ?, 1, 1)
-    ");
-    $stmt->execute([$registro, $nome, $email, $usuario, $senhaHash, $perfil]);
- 
+    ")->execute([$registro, $nome, $email, $usuario, $senhaHash, $perfil]);
+
 } catch(PDOException $e){
-    error_log("[cadUser] INSERT: ".$e->getMessage());
+    error_log("[cadUser] INSERT: " . $e->getMessage());
     header('location:cadastrarUsuario.php?erro=3');
     exit;
 }
- 
-/* ── INTEGRAÇÃO COM A CATRACA ── */
- 
+
+/* ── PREPARA DADOS DA CATRACA ── */
+
 $tipoCatraca = (strtolower($perfil) === 'professor') ? 4 : 2;
 $validoAte   = (new DateTime())->modify('+5 years')->format('Y-m-d\TH:i:s');
- 
+
+/* ════════════════════════════════════════════════════════════
+   PASSO 1 — Verifica se o registro já existe na catraca
+   GET /backapi/Pessoas?documento={registro}
+   ════════════════════════════════════════════════════════════ */
+
+$urlBusca = API_BASE . '/Pessoas?documento=' . urlencode($registro);
+
+$chBusca = curl_init($urlBusca);
+curl_setopt_array($chBusca, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPGET        => true,
+    CURLOPT_HTTPHEADER     => ['Accept: application/json'],
+    CURLOPT_TIMEOUT        => TIMEOUT_REQ,
+    CURLOPT_CONNECTTIMEOUT => TIMEOUT_CONN,
+]);
+
+$respostaBusca = curl_exec($chBusca);
+$httpBusca     = curl_getinfo($chBusca, CURLINFO_HTTP_CODE);
+$erroBusca     = curl_error($chBusca);
+curl_close($chBusca);
+
+/* ── Catraca inacessível na busca ── */
+if($erroBusca || $httpBusca === 0){
+    error_log("[cadUser] Catraca inacessível na busca. cURL: {$erroBusca}");
+    gravarPendente($registro, $nome, $tipoCatraca, $validoAte, 0, $erroBusca);
+    header('location:cadastrarUsuario.php?ok=2');
+    exit;
+}
+
+/* ── Interpreta a resposta da busca ──
+ *
+ * Trata os cenários mais comuns:
+ *   - HTTP 404              → pessoa não existe
+ *   - HTTP 200 + array []   → pessoa não existe
+ *   - HTTP 200 + dados      → pessoa já existe
+ *   - Outro código          → tratado como "não existe" para tentar o POST
+ */
+
+$pessoaExiste = false;
+
+if($httpBusca === 200 && !empty($respostaBusca)){
+    $dados = json_decode($respostaBusca, true);
+
+    if(is_array($dados) && count($dados) > 0){
+        // Retornou array com dados → pessoa existe
+        $pessoaExiste = true;
+    } elseif(is_array($dados) && count($dados) === 0){
+        // Array vazio → pessoa não existe
+        $pessoaExiste = false;
+    } elseif(is_object($dados) || (is_array($dados) && isset($dados['id']))){
+        // Retornou objeto único → pessoa existe
+        $pessoaExiste = true;
+    }
+    // JSON inválido → trata como não existe e tenta POST
+}
+
+/* ── Pessoa já existe na catraca: nada a fazer ── */
+if($pessoaExiste){
+    error_log("[cadUser] Registro {$registro} já existe na catraca. Cadastrado apenas internamente.");
+    header('location:cadastrarUsuario.php?ok=3'); // ok=3 = interno ok, catraca já tinha
+    exit;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PASSO 2 — Pessoa não existe: cria na catraca
+   POST /backapi/Pessoas
+   ════════════════════════════════════════════════════════════ */
+
 $payload = json_encode([
     'tipo'      => $tipoCatraca,
     'nome'      => $nome,
@@ -80,70 +158,71 @@ $payload = json_encode([
     'validoAte' => $validoAte,
     'ativo'     => true,
 ]);
- 
-$ch = curl_init('http://172.16.95.253:3002/backapi/Pessoas');
-curl_setopt_array($ch, [
+
+$chPost = curl_init(API_BASE . '/Pessoas');
+curl_setopt_array($chPost, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POST           => true,
     CURLOPT_POSTFIELDS     => $payload,
-    CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'Accept: application/json'],
-    CURLOPT_TIMEOUT        => 10,
-    CURLOPT_CONNECTTIMEOUT => 5,
+    CURLOPT_HTTPHEADER     => [
+        'Content-Type: application/json',
+        'Accept: application/json',
+    ],
+    CURLOPT_TIMEOUT        => TIMEOUT_REQ,
+    CURLOPT_CONNECTTIMEOUT => TIMEOUT_CONN,
 ]);
- 
-$respostaCatraca = curl_exec($ch);
-$httpCode        = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$erroCurl        = curl_error($ch);
-curl_close($ch);
- 
-$catracaOk = ($httpCode >= 200 && $httpCode < 300 && empty($erroCurl));
- 
-if(!$catracaOk){
- 
-    // ── REGISTRA NA FILA DE PENDENTES ────────────────────────────
-    // O script Python agendado (cron) lê este arquivo, tenta enviar
-    // cada entrada para a catraca e remove as que tiverem sucesso.
-    //
-    // Estrutura de cada entrada:
-    // {
-    //   "registro":  "12345",
-    //   "nome":      "Fulano",
-    //   "tipo":      2,
-    //   "validoAte": "2030-01-01T00:00:00",
-    //   "ativo":     true,
-    //   "tentativas": 0,
-    //   "criadoEm":  "2025-04-01T14:00:00"
-    // }
- 
+
+$respostaPost = curl_exec($chPost);
+$httpPost     = curl_getinfo($chPost, CURLINFO_HTTP_CODE);
+$erroPost     = curl_error($chPost);
+curl_close($chPost);
+
+$catracaOk = ($httpPost >= 200 && $httpPost < 300 && empty($erroPost));
+
+if($catracaOk){
+    header('location:cadastrarUsuario.php?ok=1');
+    exit;
+}
+
+/* ── POST falhou: grava na fila de pendentes ── */
+error_log("[cadUser] Falha no POST da catraca. HTTP: {$httpPost} | cURL: {$erroPost}");
+gravarPendente($registro, $nome, $tipoCatraca, $validoAte, $httpPost, $erroPost);
+header('location:cadastrarUsuario.php?ok=2');
+exit;
+
+function gravarPendente(
+    string $registro,
+    string $nome,
+    int    $tipo,
+    string $validoAte,
+    int    $httpCode,
+    string $erroMsg
+): void {
+
     $fila = [];
+
     if(file_exists(FILA_CATRACA)){
-        $filaBruta = file_get_contents(FILA_CATRACA);
-        $decoded   = json_decode($filaBruta, true);
+        $decoded = json_decode(file_get_contents(FILA_CATRACA), true);
         if(is_array($decoded)) $fila = $decoded;
     }
- 
+
+    // Evita duplicatas: se o registro já está na fila, não adiciona de novo
+    foreach($fila as $entrada){
+        if(($entrada['registro'] ?? '') === $registro) return;
+    }
+
     $fila[] = [
         'registro'  => $registro,
         'nome'      => $nome,
-        'tipo'      => $tipoCatraca,
+        'tipo'      => $tipo,
         'validoAte' => $validoAte,
         'ativo'     => true,
         'tentativas'=> 0,
         'criadoEm'  => (new DateTime())->format('Y-m-d\TH:i:s'),
         'erroHttp'  => $httpCode,
-        'erroCurl'  => $erroCurl,
+        'erroCurl'  => $erroMsg,
     ];
- 
+
     file_put_contents(FILA_CATRACA, json_encode($fila, JSON_PRETTY_PRINT));
- 
-    error_log("[cadUser] Catraca falhou (HTTP:{$httpCode}). Adicionado à fila: {$registro}");
- 
-    // ok=2 → interno ok, catraca na fila
-    header('location:cadastrarUsuario.php?ok=2');
-    exit;
 }
- 
-// ok=1 → tudo certo
-header('location:cadastrarUsuario.php?ok=1');
-exit;
 ?>

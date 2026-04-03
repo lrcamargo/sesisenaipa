@@ -158,7 +158,7 @@ if(isset($_GET['restaurada'])){
 <div class="lab-container">
 <?php
 // Busca nome E descrição
-$stmt = $pdo->prepare("SELECT idLaboratorio, nome, descricao FROM laboratorios ORDER BY nome");
+$stmt = $pdo->prepare("SELECT idLaboratorio, nome, descricao FROM laboratorios WHERE temReserva = '1' ORDER BY nome");
 $stmt->execute();
 $labs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
