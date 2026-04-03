@@ -1,73 +1,104 @@
 <?php
-    include("conexao.php");
+/*
+ * edit.php
+ * Processa o formulário de edição de reserva.
+ * Substitui a versão antiga que usava $conn e interpolação direta de variáveis no SQL.
+ */
 
-    $id = $_POST['id'];
-    $data = $_POST["dataInp"];
-    $turno = $_POST["turno"];
-    $periodo = $_POST["periodo"];
-    $hInicio = $_POST["horainicio"];
-    $hFim = $_POST["horafim"];
-    $turma = $_POST["turma"];
-    $solicitante = $_POST["solicitante"];
-    $laboratorio = $_POST["lab"];
+include("../conexao.php");
+session_start();
 
-    if($periodo == "todo") {
-        if($turno == "manha") {
-            $hInicio = "07:00";
-            $hFim = "12:20";
-        } else if($turno=="tarde"){
-            $hInicio = "13:00";
-            $hFim = "17:30";
-        } else {
-            $hInicio = "18:00";
-            $hFim = "22:30";
-        }
-    }
-    //checar com Aline e Anderson oficina mecânica - solda, ajustagem,manutencao...
-    if($laboratorio == "201a") {
-        $lab = 1;
-    } else if($laboratorio == "202a") {
-        $lab = 2;
-    } else if($laboratorio == "203a") {
-        $lab = 3;
-    } else if($laboratorio == "101b") {
-        $lab = 4;
-    } else if($laboratorio == "103b") {
-        $lab = 5;
-    } else if($laboratorio == "104b") {
-        $lab = 6;
-    } else if($laboratorio == "105b") {
-        $lab = 7;
-    } else if($laboratorio == "106b") {
-        $lab = 8;
-    } else if($laboratorio == "107b") {
-        $lab = 9;
-    } else if($laboratorio == "101a") {
-        $lab = 10;
-    } else if($laboratorio == "cnc") {
-        $lab = 11;
-    } else if($laboratorio == "lego") {
-        $lab = 12;
-    } else if($lab == 13) {
-        $laboratorio = 'tornearia';
-    } else if($lab == 14) {
-        $laboratorio = 'ferramentaria';
-    } else if($lab == 15) {
-        $laboratorio = 'manutenção';
-    } else if($lab == 16) {
-        $laboratorio = 'solda';
-    } else if($lab == 17) {
-        $laboratorio = 'teatro';
-    } else if($lab == 18) {
-        $laboratorio = 'biblioteca';
-    } 
-    try {
-        $cadreserva = $conn->prepare("UPDATE reservas SET data = '$data', horarioInicio = '$hInicio', horarioFim = '$hFim', laboratorio = '$lab', turma = '$turma' WHERE id = '$id'");
-        $cadreserva->execute();
-        
-    } catch (PDOException $e){
-        die("Erro ao conectar ao banco de dados :" . $e->getMessage());
-    }
-    
-    header('location:supervisao.php');
+if(!isset($_SESSION['sLogin'])){
+    header('location:../index.php');
+    exit;
+}
+
+$logado    = $_SESSION['user'];
+$nivel     = $_SESSION['group'];
+$nivelNorm = strtolower(str_replace('.', '', $nivel));
+
+$supervisao = in_array($nivelNorm,[
+    'sup tecnica','sup pedagogica','gerencia',
+    'sup adm','admin','administrator'
+]);
+
+/* ── Recebe os campos ── */
+$id          = intval($_POST['id']          ?? 0);
+$data        = trim($_POST['dataInp']       ?? '');
+$turno       = trim($_POST['turno']         ?? '');
+$periodo     = trim($_POST['periodo']       ?? '');
+$hInicio     = trim($_POST['horainicio']    ?? '');
+$hFim        = trim($_POST['horafim']       ?? '');
+$turma       = trim($_POST['turma']         ?? '');
+$laboratorio = intval($_POST['laboratorio'] ?? 0);
+$solicitante = intval($_POST['solicitante'] ?? 0);
+
+if(!$id || !$data || !$laboratorio){
+    header("location:editaReserva.php?id={$id}&msg=erro_vazio");
+    exit;
+}
+
+/* ── Horários fixos por turno ── */
+$horariosTurno = [
+    'manha' => ['inicio'=>'07:00','fim'=>'12:20'],
+    'tarde' => ['inicio'=>'13:00','fim'=>'17:30'],
+    'noite' => ['inicio'=>'18:00','fim'=>'22:30'],
+];
+
+if($periodo === 'todo' && isset($horariosTurno[$turno])){
+    $hInicio = $horariosTurno[$turno]['inicio'];
+    $hFim    = $horariosTurno[$turno]['fim'];
+}
+
+if(empty($hInicio) || empty($hFim)){
+    header("location:editaReserva.php?id={$id}&msg=erro_vazio");
+    exit;
+}
+
+/* ── Permissão: só supervisão ou próprio solicitante ── */
+$stmtU = $pdo->prepare("SELECT id FROM usuarios WHERE nome = ?");
+$stmtU->execute([$logado]);
+$uLogado  = $stmtU->fetch(PDO::FETCH_ASSOC);
+$idLogado = $uLogado['id'] ?? 0;
+
+$stmtR = $pdo->prepare("SELECT solicitante FROM reservas WHERE idReserva = ?");
+$stmtR->execute([$id]);
+$reservaAtual = $stmtR->fetch(PDO::FETCH_ASSOC);
+
+if(!$supervisao && $idLogado != ($reservaAtual['solicitante'] ?? -1)){
+    header("location:index.php?msg=erro_permissao");
+    exit;
+}
+
+/* ── Verifica conflito (exclui a própria reserva da verificação) ── */
+$stmtConf = $pdo->prepare("
+    SELECT COUNT(*) FROM reservas
+    WHERE laboratorio = ?
+      AND data = ?
+      AND idReserva != ?
+      AND (? < horarioFim)
+      AND (? > horarioInicio)
+");
+$stmtConf->execute([$laboratorio, $data, $id, $hInicio, $hFim]);
+if($stmtConf->fetchColumn() > 0){
+    header("location:editaReserva.php?id={$id}&msg=erro_conf");
+    exit;
+}
+
+/* ── UPDATE ── */
+try{
+    $pdo->prepare("
+        UPDATE reservas
+        SET data = ?, horarioInicio = ?, horarioFim = ?,
+            laboratorio = ?, turma = ?, solicitante = ?
+        WHERE idReserva = ?
+    ")->execute([$data, $hInicio, $hFim, $laboratorio, $turma, $solicitante, $id]);
+
+    header("location:editaReserva.php?id={$id}&msg=ok");
+
+} catch(PDOException $e){
+    error_log("[edit] ".$e->getMessage());
+    header("location:editaReserva.php?id={$id}&msg=erro_db");
+}
+exit;
 ?>

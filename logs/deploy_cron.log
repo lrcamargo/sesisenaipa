@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
@@ -38,3 +39,6 @@
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
 /bin/sh: 1: /var/www/html/scripts/deploy_cron.sh: not found
+=======
+
+>>>>>>> Stashed changes

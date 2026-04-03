@@ -1,8 +1,0 @@
-<DIALTEMPLATE>
-    <TEMPLATE MATCH="5.." TIMEOUT="0"/>
-    <TEMPLATE MATCH="........." TIMEOUT="1"/>
-    <TEMPLATE MATCH="............" TIMEOUT="1"/>
-    <TEMPLATE MATCH=".........." TIMEOUT="1"/>
-    <TEMPLATE MATCH="*#" TIMEOUT="0" REWRITE="%1"/>
-    <TEMPLATE MATCH="*" TIMEOUT="1"/>
-</DIALTEMPLATE>
