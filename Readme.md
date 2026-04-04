@@ -6,6 +6,7 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 - Adicionada função de deploy remoto manual para desenvolvimento em ambiente próprio.
 - Adicionada função para checar versão de deploy agendado.
 - Cadastro de ambientes
+- Troca do logo
 - Gestão de Usuários:
     - Adicionada função de resetar senha do usuário
     - Corrigida edição de usuário que precisava digitar os dados
@@ -14,6 +15,12 @@ Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
     - Adicionada opção de selecionar dois turnos para supervisão pedagógica,técnica e admin.
     - Adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
     - Adicionado nome do ambiente no botão da reserva.
+    - Paginação das reservas.
+- Gestão de ambientes e turmas:
+    - Cadastro de ambientes
+    - Cadastro de turmas
+    - Mapeamento de turma x sala
+    - Painel de ocupação interno e externo = quem/onde está?
 
 ## Versão intranet: 2.2
 - Removido gerador de carteirinhas
@@ -59,7 +66,6 @@ Recursos da versão:
 ## Em desenvolvimento (update 02/04/2026):
 - Mudança no sistema de login - criação de novo sistema de gestão de usuários internos.
 - Agenda laboratório *EM DESENVOLVIMENTO - Melhoria layout. Edição/aprovação/cancelamento de reservas, buscar ambientes para reserva apenas que são laboratório (não estoque) *
-- Troca do logo
 - Reorganização dos arquivos de tela principal.
 - Atualização de layout - sistema sirene
 - Gestão de estoque
@@ -72,5 +78,5 @@ Recursos da versão:
 - Deploy automático por script às madrugadas.
 - Script para cadastrar na catraca os usuários de catraca offline.
 - Sistema de login: envio de e-mail automático na criação de usuário e na alteração de senha.
-- Reserva de laboratórios: envio de e-mail para reprovações ou reservas feitas pela supervisão; Adicionar aprovação automática; Fila de e-mails de comunicados; API para node-red; apagar registros antigos na base de histórico (cancelados/reprovados); paginação das reservas.
+- Reserva de laboratórios: envio de e-mail para reprovações ou reservas feitas pela supervisão; Adicionar aprovação automática; Fila de e-mails de comunicados; API para node-red; apagar registros antigos na base de histórico (cancelados/reprovados).
 
