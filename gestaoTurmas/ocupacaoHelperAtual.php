@@ -1,15 +1,10 @@
 <?php
-// =============================================================
-// VERSÃO B — Turmas EM: sala mantida como ocupada (🎒 materiais)
-//            quando a turma está no laboratório.
-//            Demais turmas: sala fica livre normalmente.
-// =============================================================
 // Garante fuso horário correto em todas as operações de data
 date_default_timezone_set('America/Sao_Paulo');
 
 /*
  * ocupacaoHelper.php
- * Lógica central de ocupação compartilhada entre painel.php e painel_logado.php.
+ * Lógica de ocupação compartilhada entre painel.php e painel_logado.php.
  *
  * Dias da semana — bitmask (TINYINT):
  *   Seg=1  Ter=2  Qua=4  Qui=8  Sex=16  Sáb=32
@@ -190,31 +185,12 @@ function calcularOcupacao(
                 }
 
                 if($turmaNoLab){
-                    /*
-                     * Versão B — Turmas EM são integrais e deixam materiais
-                     * na sala quando vão ao laboratório. A sala aparece como
-                     * ocupada com ícone discreto 🎒 em vez de "Livre".
-                     * Demais turmas: sala fica livre normalmente.
-                     */
-                    $ehTurmaEM = preg_match('/^EM-/i', $codTurma);
-
-                    if($ehTurmaEM){
-                        // Sala com materiais — turma EM está no laboratório
-                        $resultado[$id][$turnoKey] = [
-                            'status'      => 'na-sala',   // mantém cor de "ocupada"
-                            'turma'       => $vinc['codigoTurma'].'🎒',
-                            'sub'         => '',
-                            'solicitante' => '',
-                        ];
-                    } else {
-                        // Outras turmas — sala fica livre
-                        $resultado[$id][$turnoKey] = [
-                            'status'      => 'livre',
-                            'turma'       => 'Livre',
-                            'sub'         => "{$codTurma} está no laboratório",
-                            'solicitante' => '',
-                        ];
-                    }
+                    $resultado[$id][$turnoKey] = [
+                        'status'      => 'livre',
+                        'turma'       => 'Livre',
+                        'sub'         => "{$codTurma} está no laboratório",
+                        'solicitante' => '',
+                    ];
                 } else {
                     $resultado[$id][$turnoKey] = [
                         'status'      => 'na-sala',

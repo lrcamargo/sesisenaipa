@@ -164,7 +164,7 @@
                         include('gerContainer.php');
 
                     } elseif($nivelNorm === 'secretaria'){
-                        include('secContainer.php');
+                        include('containers/secContainer.php');
 
                     } elseif(in_array($nivelNorm, ['admin','administrator'])){
                         include('containers/adminContainer.php');

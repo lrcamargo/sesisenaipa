@@ -10,7 +10,7 @@ if(!$data || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $data)){
 
 // ── CONFIGURAÇÕES ──────────────────────────────────────────────
 
-$urlCatraca   = 'http://172.19.95.253:3002/backapi/Turmas';
+$urlCatraca   = 'http://172.16.95.253:3002/backapi/Turmas';
 $timeoutSegundos = 5;        // desiste da catraca após 5s
 $cacheMinutos    = 10;       // reutiliza lista de turmas por 10 min
 $cacheArquivo    = sys_get_temp_dir() . '/turmas_cache.json';

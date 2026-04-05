@@ -13,7 +13,7 @@ $supervisao = in_array($nivelNorm,[
     'sup tecnica','sup pedagogica','gerencia','sup adm','admin','administrator'
 ]);
 
-$diasVisiveis = $supervisao ? 15 : 7;
+$diasVisiveis = $supervisao ? 20 : 7;
 
 $hoje    = date('Y-m-d');
 $datas   = [];

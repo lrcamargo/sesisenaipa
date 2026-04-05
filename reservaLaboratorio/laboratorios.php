@@ -585,14 +585,19 @@
                     }
 
                     // API OK — preenche o select normalmente
-                    select.innerHTML = '';
+                     select.innerHTML = '';
+                    // Opção vazia forçando seleção consciente
+                    var vazia = document.createElement('option');
+                    vazia.value = '';
+                    vazia.text  = '— Selecione a turma —';
+                    select.appendChild(vazia);
                     data.forEach(function(turma) {
                         var option = document.createElement('option');
                         option.value = turma;
                         option.text  = turma;
                         select.appendChild(option);
                     });
-                })
+                })  
                 .catch(function(err) {
                     console.warn('[carregarTurmas] Erro no fetch:', err.message);
                     ativarModoManual(select, wrapper, 'API de turmas indisponível.');
@@ -637,40 +642,44 @@
          * Retorna false e impede o submit se o código manual for inválido.
          */
         function prepararSubmitReserva(formId, selectId, wrapperManualId, hiddenTurmaId) {
-            var select  = document.getElementById(selectId);
-            var wrapper = document.getElementById(wrapperManualId);
-            var hidden  = document.getElementById(hiddenTurmaId);
-
-            // Modo API normal: select visível
-            if (select && select.style.display !== 'none' && select.value) {
-                if (hidden) hidden.value = select.value;
-                return true;
-            }
-
-            // Modo manual: valida e copia
-            if (wrapper && wrapper.style.display !== 'none') {
-                var inputManual = wrapper.querySelector('input[type=text]');
-                if (!inputManual || !inputManual.value.trim()) {
-                    alert('Informe o código da turma.');
-                    return false;
-                }
-                var resultado = validarCodigoTurma(inputManual.value);
-                if (!resultado.valido) {
-                    alert('Código de turma inválido.\n' + resultado.mensagem);
-                    return false;
-                }
-                // Preserva capitalização original para valores fixos (ex: Funcionários)
-                var valorFinal = inputManual.value.trim();
-                var ehFixo = TURMA_VALORES_FIXOS.some(function(v){
-                    return valorFinal.toLowerCase() === v.toLowerCase();
-                });
-                if (hidden) hidden.value = ehFixo ? valorFinal : valorFinal.toUpperCase();
-                return true;
-            }
-
-            alert('Selecione ou informe uma turma.');
+    var select  = document.getElementById(selectId);
+    var wrapper = document.getElementById(wrapperManualId);
+    var hidden  = document.getElementById(hiddenTurmaId);
+ 
+    // Modo API normal: select visível
+    if (select && select.style.display !== 'none') {
+        if (!select.value || select.value.trim() === '') {
+            alert('Selecione uma turma.');
+            select.focus();
             return false;
         }
+        if (hidden) hidden.value = select.value;
+        return true;
+    }
+ 
+    // Modo manual: valida e copia
+    if (wrapper && wrapper.style.display !== 'none') {
+        var inputManual = wrapper.querySelector('input[type=text]');
+        if (!inputManual || !inputManual.value.trim()) {
+            alert('Informe o código da turma.');
+            return false;
+        }
+        var resultado = validarCodigoTurma(inputManual.value);
+        if (!resultado.valido) {
+            alert('Código de turma inválido.\n' + resultado.mensagem);
+            return false;
+        }
+        var valorFinal = inputManual.value.trim();
+        var ehFixo = TURMA_VALORES_FIXOS.some(function(v){
+            return valorFinal.toLowerCase() === v.toLowerCase();
+        });
+        if (hidden) hidden.value = ehFixo ? valorFinal : valorFinal.toUpperCase();
+        return true;
+    }
+ 
+    alert('Selecione ou informe uma turma.');
+    return false;
+}
 
         // ============================================================
         // FUNÇÕES DO MODAL DE RESERVA POR PERÍODO
@@ -856,7 +865,7 @@ if(isset($_GET['ok'])){
 
 <div class="modal-header">
 <h5 class="modal-title">Solicitar Reserva</h5>
-<button type="button" class="btn-close" data-dismiss="modal"></button>
+<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 </div>
 
 <div class="modal-body">
@@ -1038,7 +1047,7 @@ if($permSolicitante){
 
 <div class="modal-header">
 <h5 class="modal-title">Informações da Reserva</h5>
-<button type="button" class="btn-close" data-dismiss="modal"></button>
+<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 </div>
 
 <div class="modal-body">
