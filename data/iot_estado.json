@@ -1,0 +1,128 @@
+{
+  "106": {
+    "topico_id": "106",
+    "status": "offline",
+    "device_name": "IOT_Acess_106",
+    "mac": "F0:24:F9:44:98:CC",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -55,
+    "ultima_vez": "2026-04-18 19:40:48",
+    "ultimo_acesso": {
+      "cracha": "E347EAD",
+      "nome": "Max Machado",
+      "data_hora": "2026-04-17 18:13:20"
+    }
+  },
+  "103": {
+    "topico_id": "103",
+    "status": "offline",
+    "device_name": "IOT_Acess_103",
+    "mac": "34:5F:45:AB:23:80",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -58,
+    "ultima_vez": "2026-04-18 19:40:48",
+    "ultimo_acesso": {
+      "cracha": "53786FC",
+      "nome": "Fabricio",
+      "data_hora": "2026-04-17 17:59:07"
+    }
+  },
+  "102": {
+    "topico_id": "102",
+    "status": "online",
+    "device_name": "IOT_Acess_102",
+    "mac": "F0:24:F9:45:6C:FC",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -48,
+    "ultima_vez": "2026-04-18 21:35:16",
+    "ultimo_acesso": {
+      "cracha": "397C9C",
+      "nome": "Jonas barbora",
+      "data_hora": "2026-04-18 15:52:08"
+    },
+    "tipo": "porta_ambiente",
+    "nomeAmbiente": "102B"
+  },
+  "101": {
+    "topico_id": "101",
+    "status": "offline",
+    "device_name": "IOT_Acess_101",
+    "mac": "EC:62:60:B2:9A:5C",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -63,
+    "ultima_vez": "2026-04-18 19:40:48",
+    "ultimo_acesso": {
+      "cracha": "53786FC",
+      "nome": "Fabricio",
+      "data_hora": "2026-04-17 18:49:46"
+    }
+  },
+  "107": {
+    "topico_id": "107",
+    "status": "online",
+    "ultima_vez": "2026-04-19 19:56:42",
+    "device_name": "IOT_Acess_107",
+    "mac": "CC:7B:5C:1E:EE:08",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -69,
+    "tipo": "porta_ambiente",
+    "nomeAmbiente": null
+  },
+  "104": {
+    "topico_id": "104",
+    "status": "offline",
+    "device_name": "IOT_Acess_104",
+    "mac": "F0:24:F9:45:81:1C",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -54,
+    "ultima_vez": "2026-04-18 19:40:48",
+    "ultimo_acesso": {
+      "cracha": "E347EAD",
+      "nome": "Max Machado",
+      "data_hora": "2026-04-17 20:03:17"
+    }
+  },
+  "SESI": {
+    "topico_id": "SESI",
+    "status": "online",
+    "device_name": "IOT_Acess_SESI",
+    "mac": "34:5F:45:AB:EC:EC",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -76,
+    "ultima_vez": "2026-04-19 19:08:00",
+    "ultimo_acesso": {
+      "cracha": "D36772D",
+      "nome": "Rita",
+      "data_hora": "2026-04-18 06:02:56"
+    },
+    "tipo": "porta_ambiente",
+    "nomeAmbiente": null
+  },
+  "cadastro": {
+    "topico_id": "cadastro",
+    "status": "online",
+    "device_name": "IOT_Acess_cadastro",
+    "mac": "D4:8C:49:58:54:44",
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -56,
+    "ultima_vez": "2026-04-18 19:40:48",
+    "tipo": "porta_ambiente",
+    "nomeAmbiente": null
+  },
+  "203b_ar": {
+    "chave": "203b_ar",
+    "topico_id": "203b",
+    "tipo": "ar_condicionado",
+    "marca": "hitachi",
+    "status": "offline",
+    "ultima_vez": "2026-04-18 19:40:48"
+  }
+}

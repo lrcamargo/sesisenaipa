@@ -1,0 +1,307 @@
+nohup: ignorando entrada
+17/04/2026 17:42:49 [INFO] Iniciando mqttMonitor (pid=442590)...
+17/04/2026 17:42:49 [INFO] Conectado ao broker MQTT localhost:1883
+17/04/2026 17:42:49 [INFO] Inscrito em: #
+17/04/2026 17:42:49 [INFO] [106/status] online mac=F0:24:F9:44:98:CC rssi=-55
+17/04/2026 17:42:49 [INFO] [103/status] online mac=34:5F:45:AB:23:80 rssi=-58
+17/04/2026 17:42:49 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-53
+17/04/2026 17:42:49 [INFO] [101/status] online mac=EC:62:60:B2:9A:5C rssi=-63
+17/04/2026 17:42:49 [INFO] [107/status] offline
+17/04/2026 17:42:49 [INFO] [104/status] online mac=F0:24:F9:45:81:1C rssi=-54
+17/04/2026 17:42:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-79
+17/04/2026 17:42:49 [INFO] [cadastro/status] online mac=D4:8C:49:58:54:44 rssi=-56
+17/04/2026 17:48:16 [INFO] [101/entrada] crachá=39955C nome=Leandro Vieira
+17/04/2026 17:59:07 [INFO] [103/entrada] crachá=53786FC nome=Fabricio
+17/04/2026 18:13:20 [INFO] [106/entrada] crachá=E347EAD nome=Max Machado
+17/04/2026 18:49:46 [INFO] [101/entrada] crachá=53786FC nome=Fabricio
+17/04/2026 18:53:21 [INFO] [SESI/status] offline
+17/04/2026 18:55:53 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80
+17/04/2026 18:56:45 [INFO] [SESI/status] offline
+17/04/2026 18:59:56 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-83
+17/04/2026 19:08:51 [INFO] [SESI/status] offline
+17/04/2026 19:08:55 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80
+17/04/2026 20:00:39 [INFO] [SESI/status] offline
+17/04/2026 20:02:01 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77
+17/04/2026 20:03:17 [INFO] [104/entrada] crachá=E347EAD nome=Max Machado
+17/04/2026 20:22:45 [INFO] [SESI/status] offline
+17/04/2026 20:29:00 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76
+17/04/2026 20:59:39 [INFO] [SESI/status] offline
+17/04/2026 21:02:02 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-83
+17/04/2026 21:06:27 [INFO] [SESI/status] offline
+17/04/2026 21:08:01 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-51
+17/04/2026 21:09:23 [INFO] [SESI/status] offline
+17/04/2026 21:10:05 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-78
+17/04/2026 21:11:27 [INFO] [SESI/status] offline
+17/04/2026 21:16:06 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+17/04/2026 21:18:55 [INFO] [SESI/status] offline
+17/04/2026 21:22:18 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-83
+17/04/2026 21:24:39 [INFO] [SESI/status] offline
+17/04/2026 21:25:09 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-83
+17/04/2026 21:29:45 [INFO] [SESI/status] offline
+17/04/2026 21:32:03 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+17/04/2026 21:35:05 [INFO] [102/status] offline
+17/04/2026 21:35:05 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-51
+17/04/2026 21:35:15 [INFO] [104/status] offline
+17/04/2026 21:35:21 [INFO] [101/status] offline
+17/04/2026 21:35:21 [INFO] [103/status] offline
+17/04/2026 21:35:27 [INFO] [106/status] offline
+17/04/2026 21:36:02 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-51
+17/04/2026 21:51:15 [INFO] [SESI/status] offline
+17/04/2026 22:17:08 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77
+18/04/2026 01:03:57 [INFO] [SESI/status] offline
+18/04/2026 01:07:35 [INFO] [SESI/status] offline
+18/04/2026 01:09:17 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-73
+18/04/2026 06:02:56 [INFO] [SESI/entrada] crachá=D36772D nome=Rita
+18/04/2026 07:54:21 [INFO] [SESI/status] offline
+18/04/2026 07:54:41 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76
+18/04/2026 08:04:39 [INFO] [SESI/status] offline
+18/04/2026 08:04:44 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-83
+18/04/2026 08:23:09 [INFO] [SESI/status] offline
+18/04/2026 08:24:46 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-84
+18/04/2026 09:43:15 [INFO] [SESI/status] offline
+18/04/2026 09:43:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-74
+18/04/2026 15:52:08 [INFO] [102/entrada] crachá=397C9C nome=Jonas barbora
+18/04/2026 19:11:21 [INFO] [SESI/status] offline
+18/04/2026 19:15:36 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81
+nohup: ignorando entrada
+18/04/2026 19:40:48 [INFO] Estado anterior carregado: 9 entradas.
+18/04/2026 19:40:48 [INFO] Iniciando mqttMonitor (pid=896938)...
+18/04/2026 19:40:48 [INFO] Conectado ao broker MQTT localhost:1883
+18/04/2026 19:40:48 [INFO] Inscrito em: #
+18/04/2026 19:40:48 [INFO] [106/status] offline
+18/04/2026 19:40:48 [INFO] [103/status] offline
+18/04/2026 19:40:48 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 19:40:48 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-51 ambiente=102B
+18/04/2026 19:40:48 [INFO] [101/status] offline
+18/04/2026 19:40:48 [INFO] [107/status] offline
+18/04/2026 19:40:48 [INFO] [104/status] offline
+18/04/2026 19:40:48 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81 ambiente=—
+18/04/2026 19:40:48 [INFO] [cadastro/status] online mac=D4:8C:49:58:54:44 rssi=-56 ambiente=—
+18/04/2026 19:40:48 [INFO] [203b/marca/get] hitachi
+18/04/2026 19:40:48 [INFO] [203b/ar/status] offline
+18/04/2026 21:35:16 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-48
+18/04/2026 21:35:16 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 21:35:16 [INFO] [102/status] online mac=F0:24:F9:45:6C:FC rssi=-48 ambiente=102B
+18/04/2026 21:39:57 [INFO] [SESI/status] offline
+18/04/2026 21:39:57 [INFO] [SESI/status] offline
+18/04/2026 21:47:40 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77
+18/04/2026 21:47:40 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 21:47:40 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77 ambiente=—
+18/04/2026 21:56:03 [INFO] [SESI/status] offline
+18/04/2026 21:56:03 [INFO] [SESI/status] offline
+18/04/2026 21:59:41 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+18/04/2026 21:59:41 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 21:59:41 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82 ambiente=—
+18/04/2026 22:19:51 [INFO] [SESI/status] offline
+18/04/2026 22:19:51 [INFO] [SESI/status] offline
+18/04/2026 22:30:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+18/04/2026 22:30:49 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 22:30:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82 ambiente=—
+18/04/2026 22:38:45 [INFO] [SESI/status] offline
+18/04/2026 22:38:45 [INFO] [SESI/status] offline
+18/04/2026 22:39:43 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+18/04/2026 22:39:43 [INFO] Cache de MACs atualizado: 5 entradas.
+18/04/2026 22:39:43 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82 ambiente=—
+19/04/2026 00:54:15 [INFO] [SESI/status] offline
+19/04/2026 00:54:15 [INFO] [SESI/status] offline
+19/04/2026 00:54:50 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-78
+19/04/2026 00:54:50 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 00:54:50 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-78 ambiente=—
+19/04/2026 01:20:45 [INFO] [SESI/status] offline
+19/04/2026 01:20:45 [INFO] [SESI/status] offline
+19/04/2026 01:20:51 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75
+19/04/2026 01:20:51 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 01:20:51 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75 ambiente=—
+19/04/2026 04:28:27 [INFO] [SESI/status] offline
+19/04/2026 04:28:27 [INFO] [SESI/status] offline
+19/04/2026 04:30:23 [INFO] [SESI/status] offline
+19/04/2026 04:30:23 [INFO] [SESI/status] offline
+19/04/2026 04:32:23 [INFO] [SESI/status] offline
+19/04/2026 04:32:23 [INFO] [SESI/status] offline
+19/04/2026 04:33:23 [INFO] [SESI/status] offline
+19/04/2026 04:33:23 [INFO] [SESI/status] offline
+19/04/2026 04:35:12 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75
+19/04/2026 04:35:12 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 04:35:12 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75 ambiente=—
+19/04/2026 04:52:51 [INFO] [SESI/status] offline
+19/04/2026 04:52:51 [INFO] [SESI/status] offline
+19/04/2026 05:10:13 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76
+19/04/2026 05:10:13 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 05:10:13 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76 ambiente=—
+19/04/2026 09:42:39 [INFO] [SESI/status] offline
+19/04/2026 09:42:39 [INFO] [SESI/status] offline
+19/04/2026 09:43:22 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-73
+19/04/2026 09:43:22 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 09:43:22 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-73 ambiente=—
+19/04/2026 11:42:39 [INFO] [SESI/status] offline
+19/04/2026 11:42:39 [INFO] [SESI/status] offline
+19/04/2026 11:43:30 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81
+19/04/2026 11:43:30 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 11:43:30 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81 ambiente=—
+19/04/2026 12:00:11 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-68
+19/04/2026 12:00:11 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 12:00:11 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-68 ambiente=—
+19/04/2026 12:10:09 [INFO] [SESI/status] offline
+19/04/2026 12:10:09 [INFO] [SESI/status] offline
+19/04/2026 12:10:32 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81
+19/04/2026 12:10:32 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 12:10:32 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81 ambiente=—
+19/04/2026 12:20:27 [INFO] [SESI/status] offline
+19/04/2026 12:20:27 [INFO] [SESI/status] offline
+19/04/2026 12:21:33 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-79
+19/04/2026 12:21:33 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 12:21:33 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-79 ambiente=—
+19/04/2026 12:59:03 [INFO] [SESI/status] offline
+19/04/2026 12:59:03 [INFO] [SESI/status] offline
+19/04/2026 12:59:36 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77
+19/04/2026 12:59:36 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 12:59:36 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-77 ambiente=—
+19/04/2026 14:13:21 [INFO] [SESI/status] offline
+19/04/2026 14:13:21 [INFO] [SESI/status] offline
+19/04/2026 14:13:41 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75
+19/04/2026 14:13:41 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 14:13:41 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-75 ambiente=—
+19/04/2026 14:41:03 [INFO] [107/status] offline
+19/04/2026 14:41:03 [INFO] [107/status] offline
+19/04/2026 14:41:20 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-66
+19/04/2026 14:41:20 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 14:41:20 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-66 ambiente=—
+19/04/2026 14:47:51 [INFO] [SESI/status] offline
+19/04/2026 14:47:51 [INFO] [SESI/status] offline
+19/04/2026 14:54:46 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76
+19/04/2026 14:54:46 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 14:54:46 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76 ambiente=—
+19/04/2026 15:32:27 [INFO] [SESI/status] offline
+19/04/2026 15:32:27 [INFO] [SESI/status] offline
+19/04/2026 15:32:45 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80
+19/04/2026 15:32:45 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 15:32:45 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80 ambiente=—
+19/04/2026 16:02:27 [INFO] [SESI/status] offline
+19/04/2026 16:02:27 [INFO] [SESI/status] offline
+19/04/2026 16:03:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80
+19/04/2026 16:03:49 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 16:03:49 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80 ambiente=—
+19/04/2026 16:07:27 [INFO] [SESI/status] offline
+19/04/2026 16:07:27 [INFO] [SESI/status] offline
+19/04/2026 16:07:48 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80
+19/04/2026 16:07:48 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-80 ambiente=—
+19/04/2026 16:09:57 [INFO] [SESI/status] offline
+19/04/2026 16:09:57 [INFO] [SESI/status] offline
+19/04/2026 16:10:48 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81
+19/04/2026 16:10:48 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 16:10:48 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-81 ambiente=—
+19/04/2026 16:52:45 [INFO] [SESI/status] offline
+19/04/2026 16:52:45 [INFO] [SESI/status] offline
+19/04/2026 16:53:51 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82
+19/04/2026 16:53:51 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 16:53:51 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-82 ambiente=—
+19/04/2026 19:07:27 [INFO] [SESI/status] offline
+19/04/2026 19:07:27 [INFO] [SESI/status] offline
+19/04/2026 19:08:00 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76
+19/04/2026 19:08:00 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 19:08:00 [INFO] [SESI/status] online mac=34:5F:45:AB:EC:EC rssi=-76 ambiente=—
+19/04/2026 19:12:21 [INFO] [107/status] offline
+19/04/2026 19:12:21 [INFO] [107/status] offline
+19/04/2026 19:12:38 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-70
+19/04/2026 19:12:38 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-70 ambiente=—
+19/04/2026 19:56:21 [INFO] [107/status] offline
+19/04/2026 19:56:21 [INFO] [107/status] offline
+19/04/2026 19:56:42 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-69
+19/04/2026 19:56:42 [INFO] Cache de MACs atualizado: 5 entradas.
+19/04/2026 19:56:42 [INFO] [107/status] online mac=CC:7B:5C:1E:EE:08 rssi=-69 ambiente=—
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/data': Operação não permitida
+/bin/chown: alterando o dono de '/var/www/html/logs': Operação não permitida

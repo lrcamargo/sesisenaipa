@@ -18,11 +18,17 @@ if($id > 0){
     $amb = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 if(!$amb){ header('location:index.php?msg=nao_encontrado'); exit; }
+
 $msgs = [
     'ok'        => ['tipo'=>'success','texto'=>'Ambiente atualizado com sucesso.'],
     'erro_vazio'=> ['tipo'=>'danger', 'texto'=>'Preencha todos os campos obrigatórios.'],
     'erro_db'   => ['tipo'=>'danger', 'texto'=>'Erro ao salvar. Tente novamente.'],
 ];
+
+$portaAtual = intval($amb['temPorta']          ?? 0);
+$arAtual    = intval($amb['temArCondicionado'] ?? 0);
+$macPorta   = htmlspecialchars($amb['macPorta']          ?? '');
+$macAr      = htmlspecialchars($amb['macArCondicionado'] ?? '');
 ?>
 <html>
 <head>
@@ -36,7 +42,7 @@ $msgs = [
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 .form-container { max-width:600px; margin:0 auto; }
-.form-header h2 { color:#333; font-size:1.5rem; margin-bottom:1.5rem; }
+.form-header h2 { color:#333; font-size:1.5rem; margin-bottom:.5rem; }
 .toggle-tags { display:flex; gap:10px; }
 .toggle-tags input[type="radio"] { display:none; }
 .toggle-tag {
@@ -55,6 +61,14 @@ $msgs = [
 }
 .submit-button:hover { background:#0056b3; }
 .funcoes-hint { font-size:.82rem; color:#666; margin-top:6px; }
+.mac-field {
+    margin-top:10px; padding:10px 14px;
+    background:#e8f4fd; border:1px solid #90caf9; border-radius:6px;
+    display:none;
+}
+.mac-field label { font-size:.83rem; font-weight:600; color:#0d47a1; margin-bottom:4px; }
+.mac-field input { font-family:monospace; text-transform:uppercase; letter-spacing:.05em; }
+.mac-field small { color:#555; font-size:.75rem; }
 </style>
 </head>
 <body>
@@ -86,6 +100,7 @@ $msgs = [
         <h2>Editar Ambiente</h2>
         <small class="text-muted">Editando: <strong><?php echo htmlspecialchars($amb['nome']); ?></strong></small>
     </div>
+    <br>
 
     <form action="atualizarAmbiente.php" method="POST">
 
@@ -118,9 +133,7 @@ $msgs = [
         <div class="form-group">
             <label><b>Funções do Ambiente</b></label>
             <p class="funcoes-hint">Um ambiente pode ter mais de uma função.</p>
-
             <div class="d-flex flex-column" style="gap:10px">
-
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
                            id="temReserva" name="temReserva" value="1"
@@ -131,7 +144,6 @@ $msgs = [
                         <small class="text-muted d-block">Aparece como opção no sistema de reservas</small>
                     </label>
                 </div>
-
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
                            id="temEstoque" name="temEstoque" value="1"
@@ -142,7 +154,6 @@ $msgs = [
                         <small class="text-muted d-block">Aparece no sistema de controle de estoque</small>
                     </label>
                 </div>
-
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
                            id="temSala" name="temSala" value="1"
@@ -153,42 +164,60 @@ $msgs = [
                         <small class="text-muted d-block">Identificado como sala de aula no sistema</small>
                     </label>
                 </div>
-
             </div>
         </div>
 
-        <!-- IoT -->
+        <!-- Porta IoT + MAC -->
         <div class="form-group">
             <label><b>Tem Porta IoT?</b></label><br>
-            <?php $portaAtual = intval($amb['temPorta'] ?? 0); ?>
             <div class="toggle-tags">
                 <input type="radio" id="porta_sim" name="temPorta" value="1"
+                       onchange="toggleMac('macPortaField', true)"
                        <?php echo $portaAtual === 1 ? 'checked' : ''; ?> required>
                 <label for="porta_sim" class="toggle-tag tag-sim">
                     <i class="fas fa-door-open mr-1"></i>Sim
                 </label>
                 <input type="radio" id="porta_nao" name="temPorta" value="0"
+                       onchange="toggleMac('macPortaField', false)"
                        <?php echo $portaAtual === 0 ? 'checked' : ''; ?> required>
                 <label for="porta_nao" class="toggle-tag tag-nao">
                     <i class="fas fa-times mr-1"></i>Não
                 </label>
             </div>
+            <div class="mac-field" id="macPortaField">
+                <label><i class="fas fa-wifi mr-1"></i>MAC Address da porta</label>
+                <input type="text" name="macPorta" class="form-control form-control-sm"
+                       placeholder="AA:BB:CC:DD:EE:FF" maxlength="17"
+                       value="<?php echo $macPorta; ?>"
+                       oninput="formatarMac(this)" autocomplete="off">
+                <small>Formato: XX:XX:XX:XX:XX:XX</small>
+            </div>
         </div>
 
+        <!-- Ar Condicionado IoT + MAC -->
         <div class="form-group">
             <label><b>Tem Ar Condicionado IoT?</b></label><br>
-            <?php $arAtual = intval($amb['temArCondicionado'] ?? 0); ?>
             <div class="toggle-tags">
                 <input type="radio" id="ar_sim" name="temArCondicionado" value="1"
+                       onchange="toggleMac('macArField', true)"
                        <?php echo $arAtual === 1 ? 'checked' : ''; ?> required>
                 <label for="ar_sim" class="toggle-tag tag-sim">
                     <i class="fas fa-snowflake mr-1"></i>Sim
                 </label>
                 <input type="radio" id="ar_nao" name="temArCondicionado" value="0"
+                       onchange="toggleMac('macArField', false)"
                        <?php echo $arAtual === 0 ? 'checked' : ''; ?> required>
                 <label for="ar_nao" class="toggle-tag tag-nao">
                     <i class="fas fa-times mr-1"></i>Não
                 </label>
+            </div>
+            <div class="mac-field" id="macArField">
+                <label><i class="fas fa-wifi mr-1"></i>MAC Address do ar condicionado</label>
+                <input type="text" name="macArCondicionado" class="form-control form-control-sm"
+                       placeholder="AA:BB:CC:DD:EE:FF" maxlength="17"
+                       value="<?php echo $macAr; ?>"
+                       oninput="formatarMac(this)" autocomplete="off">
+                <small>Formato: XX:XX:XX:XX:XX:XX</small>
             </div>
         </div>
 
@@ -201,5 +230,32 @@ $msgs = [
 </div>
 </div>
 <script src="../js/menu.js"></script>
+<script>
+function toggleMac(fieldId, mostrar) {
+    var el = document.getElementById(fieldId);
+    if (!el) return;
+    el.style.display = mostrar ? 'block' : 'none';
+    if (!mostrar) {
+        var inp = el.querySelector('input');
+        if (inp) inp.value = '';
+    }
+}
+
+function formatarMac(el) {
+    var v = el.value.replace(/[^A-Fa-f0-9]/g, '').toUpperCase();
+    var fmt = '';
+    for (var i = 0; i < v.length && i < 12; i++) {
+        if (i > 0 && i % 2 === 0) fmt += ':';
+        fmt += v[i];
+    }
+    el.value = fmt;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Estado inicial baseado nos valores salvos no banco
+    toggleMac('macPortaField', <?php echo $portaAtual === 1 ? 'true' : 'false'; ?>);
+    toggleMac('macArField',    <?php echo $arAtual    === 1 ? 'true' : 'false'; ?>);
+});
+</script>
 </body>
 </html>

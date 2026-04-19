@@ -16,7 +16,6 @@
     $logado    = $_SESSION['user'];
     $nivel     = $_SESSION['group'];
     $nivelNorm = strtolower(str_replace('.', '', $nivel));
-
     //include('functions.php');
 ?>
 <html>
@@ -76,7 +75,8 @@
             color: #fff;
         }
         .btn-atalho-painel:hover { color: #fff; }
-
+        .btn-atalho-usuarios { background: linear-gradient(135deg, #E84910, #FFB347); color:#fff; }
+        .btn-atalho-usuarios:hover { color: #fff; }
         /* Futuro — exemplo de cores para outros atalhos:
            .btn-atalho-reservas { background: linear-gradient(135deg,#155724,#28a745); color:#fff; }
            .btn-atalho-usuarios { background: linear-gradient(135deg,#721c24,#dc3545); color:#fff; }
@@ -120,7 +120,9 @@
                        class="btn-atalho btn-atalho-painel"
                        title="Abre o painel de ocupação em nova aba">
                         <i class="fas fa-th-large"></i>
-                        <span>Painel de<br>Ocupação</span>
+                        <center>
+                            <span>Painel de<br>Ocupação</span>
+                        </center>
                     </a>
 
                     <?php
@@ -135,6 +137,36 @@
                      *           </a>";
                      * }
                      */
+                     if(in_array($nivelNorm, ['admin','administrator','sup tecnica','gerencia','sup pedagogica'])){
+                          echo "<a href='gestaoTurmas/painelDocentes.php' class='btn-atalho btn-atalho-usuarios'>
+                                    <i class='fas fa-university'></i>
+                                    <center>
+                                        <span>Gestão de<br>Instrutores</span>
+                                    </center>
+                                </a>";
+                          echo "<a href='gestaoTurmas/consultaHorario.php' class='btn-atalho' 
+                                    style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff'
+                                    title='Consultar horário de instrutores e turmas'>
+                                    <i class='fas fa-calendar-alt'></i>
+                                    <center><span>Consulta de<br>Horários</span></center>
+                                </a>";
+                     }
+                     /*if(in_array($nivelNorm,['sup tecnica','sup pedagogica','gerencia','admin','administrator'])){
+                            echo "<a href='gestaoTurmas/consultaHorario.php' class='btn-atalho' 
+                                    style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff'
+                                    title='Consultar horário de instrutores e turmas'>
+                                    <i class='fas fa-calendar-search'></i>
+                                    <span>Consulta de<br>Horários</span>
+                                </a>";
+                        }*/
+                     if($nivelNorm === 'instrutor'){
+                        echo "<a href='gestaoTurmas/meuHorario.php' class='btn-atalho' style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff' title='Ver meu calendário de aulas'>
+                                  <i class='fas fa-calendar-alt'></i>
+                                  <center>
+                                    <span>Meu<br>Horário</span>
+                                  </center>
+                              </a>";
+                    }
                     ?>
 
                 </div>

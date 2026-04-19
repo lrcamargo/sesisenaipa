@@ -1,20 +1,28 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
+## Versão intranet: 3.1
+- Leitura de horário do Excel - painel de gestão de instrutores e meus horários.
+- Monitor IoT - integração com portas e ar (leitura de status e dados).
+
 ## Versão intranet: 2.3
+- Reorganização dos arquivos de tela principal.
 - Corrigido redirecionamento de login
 - Alterado layout da tela de troca de senha
 - Adicionada função de deploy remoto manual para desenvolvimento em ambiente próprio.
 - Adicionada função para checar versão de deploy agendado.
 - Cadastro de ambientes
 - Troca do logo
-- Gestão de Usuários:
+- Quem - onde está *Integração com reservas de laboratórios*
+- Listar eventos no teatro na interface principal da secretaria
+- Gestão de Usuários - Mudança no sistema de login - criação de novo sistema de gestão de usuários internos:
     - Adicionada função de resetar senha do usuário
     - Corrigida edição de usuário que precisava digitar os dados
     - Adicionando cadastro vinculado a catraca - caso não esteja online deixa uma lista em json para cadastro automatizado depois.
 - Reserva de Laboratórios:
+    - Melhoria layout. 
     - Adicionada opção de selecionar dois turnos para supervisão pedagógica,técnica e admin.
-    - Adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
-    - Adicionado nome do ambiente no botão da reserva.
+    - Edição/aprovação/cancelamento de reservas: adicionada opção de cancelar reserva própria e de reprovar uma reserva pela supervisão, além de restaurar uma reserva reprovada.
+    - Adicionado nome do ambiente no botão da reserva - buscar ambientes para reserva apenas que são laboratório (não estoque).
     - Paginação das reservas.
 - Gestão de ambientes e turmas:
     - Cadastro de ambientes
@@ -64,15 +72,11 @@ Recursos da versão:
 - Agenda laboratório v1.3 - 
 
 ## Em desenvolvimento (update 02/04/2026):
-- Mudança no sistema de login - criação de novo sistema de gestão de usuários internos.
-- Agenda laboratório *EM DESENVOLVIMENTO - Melhoria layout. Edição/aprovação/cancelamento de reservas, buscar ambientes para reserva apenas que são laboratório (não estoque) *
-- Reorganização dos arquivos de tela principal.
 - Atualização de layout - sistema sirene
 - Gestão de estoque
 - Atualizar sistema diretamente pelo GitHub e automaticamente
-- Quem - onde está *Integração com reservas de laboratórios e posteriormente com as portas*
 - Integrar/criar botão centralizado para todos os sistemas internos *catraca, ar, portas*
-- Listar eventos no teatro na interface principal
+- Monitoramento dos dispositivos IoT.
 
 ## A desenvolver (update 02/04/2026):
 - Deploy automático por script às madrugadas.

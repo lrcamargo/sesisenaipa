@@ -2,16 +2,11 @@
 conexao.php
 conexaosec.php
 conexaoteste.php
-conexaoatv.php
 conexaoteste.php
 conexaounidade.php
-camera/snaps/2021/
-camera/snaps/2020/**
-camera/snaps/**
-atividadesTeste/**
-controleTablets/conexaoteste.php
 reservaLaboratorio/conexaoteste.php
 reservaLaboratorioTestes/**
 reservaLaboratorioTestes/supervisao.php
 camera/snap/*
 gestaoUsuarios/conect.php
+data/*.xlsms

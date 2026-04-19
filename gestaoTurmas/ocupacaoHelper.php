@@ -1,14 +1,12 @@
 <?php
-// =============================================================
-// VERSÃO B — Turmas EM: sala mantida como ocupada (🎒 materiais)
-//            quando a turma está no laboratório.
-//            Demais turmas: sala fica livre normalmente.
-// =============================================================
 // Garante fuso horário correto em todas as operações de data
 date_default_timezone_set('America/Sao_Paulo');
 
+// Cache de horários dos instrutores (gerado pelo script Python)
+require_once __DIR__ . '/horariosHelper.php';
+
 /*
- * ocupacaoHelper.php
+ * ocupacao_helper.php
  * Lógica central de ocupação compartilhada entre painel.php e painel_logado.php.
  *
  * Dias da semana — bitmask (TINYINT):
@@ -78,6 +76,60 @@ function sobreposicao(string $ini1, string $fim1, string $ini2, string $fim2): b
        'solicitante' => string
    ]
    ───────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────
+   Busca o nome completo de um instrutor no banco
+   comparando o primeiro nome da planilha com usuarios.
+   Ex: planilha="Patrick" → banco="Patrick Souza Lima"
+   ───────────────────────────────────────────────────── */
+function nomeCompletoInstrutor(PDO $pdo, string $nomeNaPlanilha): string {
+    static $cache = [];
+    $token = mb_strtolower(trim($nomeNaPlanilha));
+    if(isset($cache[$token])) return $cache[$token];
+
+    /*
+     * Estratégia de busca (ordem de prioridade):
+     *
+     * 1. Primeiro nome exato: LOWER(SUBSTRING_INDEX(nome,' ',1)) = 'patrick'
+     *    → cobre 'Patrick', 'Patrick Souza Lima'
+     *
+     * 2. Qualquer token do nome: LOWER(nome) LIKE '% pompeu %' ou
+     *    LOWER(nome) LIKE 'pompeu %' ou LOWER(nome) LIKE '% pompeu'
+     *    → cobre sobrenome isolado ('POMPEU' → 'José Carlos Pompeu')
+     *
+     * 3. Fallback: retorna o token em maiúsculas
+     *
+     * Filtro: perfil = 'Instrutor' em todas as buscas
+     * (evita conflito com professores de mesmo nome)
+     */
+
+    // Tentativa 1 — primeiro nome exato
+    $stmt = $pdo->prepare("
+        SELECT nome FROM usuarios
+        WHERE perfil = 'Instrutor'
+          AND LOWER(SUBSTRING_INDEX(nome, ' ', 1)) = ?
+        LIMIT 1
+    ");
+    $stmt->execute([$token]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!$row){
+        // Tentativa 2 — token em qualquer posição do nome (sobrenome/apelido)
+        $like = '%' . $token . '%';
+        $stmt2 = $pdo->prepare("
+            SELECT nome FROM usuarios
+            WHERE perfil = 'Instrutor'
+              AND LOWER(nome) LIKE ?
+            LIMIT 1
+        ");
+        $stmt2->execute([$like]);
+        $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+    }
+
+    $resultado = $row ? mb_strtoupper($row['nome']) : mb_strtoupper($nomeNaPlanilha);
+    $cache[$token] = $resultado;
+    return $resultado;
+}
+
 function calcularOcupacao(
     PDO    $pdo,
     string $data,
@@ -104,21 +156,15 @@ function calcularOcupacao(
     $vinculos = $stmtV->fetchAll(PDO::FETCH_ASSOC);
 
     /*
-     * vincIdxSala[idSala][turno] = [
-     *   'codigoTurma' => string,
-     *   'diasSemana'  => int (bitmask),
-     * ]
-     * Expande 'integral' para 'manha' e 'tarde'.
+     * vincIdxSala[idSala][turno][] = [codigoTurma, diasSemana]
+     * Múltiplos vínculos por célula (dias diferentes).
      */
     $vincIdxSala = [];
     foreach($vinculos as $v){
-        $turnos_v = $v['turno'] === 'integral' ? ['manha','tarde'] : [$v['turno']];
-        foreach($turnos_v as $tv){
-            $vincIdxSala[$v['idSala']][$tv] = [
-                'codigoTurma' => $v['codigoTurma'],
-                'diasSemana'  => (int)($v['diasSemana'] ?? 31),
-            ];
-        }
+        $vincIdxSala[$v['idSala']][$v['turno']][] = [
+            'codigoTurma' => $v['codigoTurma'],
+            'diasSemana'  => (int)($v['diasSemana'] ?? 31),
+        ];
     }
 
     /*
@@ -143,42 +189,63 @@ function calcularOcupacao(
             $tIni = $turno['inicio'];
             $tFim = $turno['fim'];
 
-            /* 1. Reserva direta neste ambiente/turno */
-            $reservaDireta = null;
-            foreach($reservas as $r){
-                if($r['laboratorio'] == $id
-                    && sobreposicao($r['horarioInicio'], $r['horarioFim'], $tIni, $tFim)){
-                    $reservaDireta = $r;
-                    break;
+            /* ══════════════════════════════════════════════
+               LABORATÓRIO — reserva direta no banco
+               Exibe solicitante do banco (nome completo já
+               está em usuarios.nome). Sem planilha aqui.
+               ══════════════════════════════════════════════ */
+            if($amb['temReserva'] && !$amb['temSala']){
+                $reservaDireta = null;
+                foreach($reservas as $r){
+                    if($r['laboratorio'] == $id
+                        && sobreposicao($r['horarioInicio'], $r['horarioFim'], $tIni, $tFim)){
+                        $reservaDireta = $r;
+                        break;
+                    }
                 }
-            }
 
-            if($reservaDireta){
-                $resultado[$id][$turnoKey] = [
-                    'status'      => $reservaDireta['aprovado']==1 ? 'ocupado' : 'aguardando',
-                    'turma'       => $reservaDireta['turma'],
-                    'sub'         => $reservaDireta['aprovado']==1 ? 'Reservado' : 'Aguardando',
-                    'solicitante' => $reservaDireta['solicitante'] ?? '',
-                ];
+                if($reservaDireta){
+                    $resultado[$id][$turnoKey] = [
+                        'status'      => $reservaDireta['aprovado']==1 ? 'ocupado' : 'aguardando',
+                        'turma'       => $reservaDireta['turma'] ?? '',
+                        'sub'         => $reservaDireta['aprovado']==1 ? 'Reservado' : 'Aguardando',
+                        // Nome completo do banco, em maiúsculas
+                        'solicitante' => mb_strtoupper($reservaDireta['solicitante'] ?? ''),
+                    ];
+                } else {
+                    $resultado[$id][$turnoKey] = [
+                        'status'=>'vazio','turma'=>'','sub'=>'','solicitante'=>''
+                    ];
+                }
                 continue;
             }
 
-            /* 2. Sala com turma vinculada */
+            /* ══════════════════════════════════════════════
+               SALA DE AULA — preenche da planilha
+               Busca vínculo turma→sala para este dia/turno,
+               depois pega o instrutor do cache de horários.
+               ══════════════════════════════════════════════ */
             if($amb['temSala'] && isset($vincIdxSala[$id][$turnoKey])){
-                $vinc     = $vincIdxSala[$id][$turnoKey];
-                $codTurma = $vinc['codigoTurma'];
-                $diasBit  = $vinc['diasSemana'];
 
-                /* Verifica se a turma ocorre neste dia (operação de bit) */
-                if(!turmaOcorreNoDia($diasBit, $bit)){
+                // Encontra o vínculo que ocorre neste dia da semana
+                $vincAtivo = null;
+                foreach($vincIdxSala[$id][$turnoKey] as $v){
+                    if(turmaOcorreNoDia($v['diasSemana'], $bit)){
+                        $vincAtivo = $v;
+                        break;
+                    }
+                }
+
+                if(!$vincAtivo){
                     $resultado[$id][$turnoKey] = [
                         'status'=>'vazio','turma'=>'','sub'=>'','solicitante'=>''
                     ];
                     continue;
                 }
 
-                /* Verifica se a turma está reservada em laboratório
-                   durante qualquer parte deste turno */
+                $codTurma = $vincAtivo['codigoTurma'];
+
+                /* Verifica se a turma está no laboratório neste turno */
                 $turmaNoLab = false;
                 if(isset($turmaReservas[$codTurma])){
                     foreach($turmaReservas[$codTurma] as $r){
@@ -190,39 +257,30 @@ function calcularOcupacao(
                 }
 
                 if($turmaNoLab){
-                    /*
-                     * Versão B — Turmas EM são integrais e deixam materiais
-                     * na sala quando vão ao laboratório. A sala aparece como
-                     * ocupada com ícone discreto 🎒 em vez de "Livre".
-                     * Demais turmas: sala fica livre normalmente.
-                     */
-                    $ehTurmaEM = preg_match('/^EM-/i', $codTurma);
-
-                    if($ehTurmaEM){
-                        // Sala com materiais — turma EM está no laboratório
-                        $resultado[$id][$turnoKey] = [
-                            'status'      => 'na-sala',   // mantém cor de "ocupada"
-                            'turma'       => $vinc['codigoTurma'].'🎒',
-                            'sub'         => '',
-                            'solicitante' => '',
-                        ];
-                    } else {
-                        // Outras turmas — sala fica livre
-                        $resultado[$id][$turnoKey] = [
-                            'status'      => 'livre',
-                            'turma'       => 'Livre',
-                            'sub'         => "{$codTurma} está no laboratório",
-                            'solicitante' => '',
-                        ];
-                    }
-                } else {
                     $resultado[$id][$turnoKey] = [
-                        'status'      => 'na-sala',
-                        'turma'       => $codTurma,
-                        'sub'         => 'Na sala',
+                        'status'      => 'livre',
+                        'turma'       => 'Livre',
+                        'sub'         => "{$codTurma} está no laboratório",
                         'solicitante' => '',
                     ];
+                    continue;
                 }
+
+                // Turma na sala — busca instrutor na planilha
+                $infoHorario = horario_get($codTurma, $data);
+                $nomeInstrutor = '';
+
+                if($infoHorario && !empty($infoHorario['instrutor'])){
+                    // Compara primeiro nome da planilha com o banco
+                    $nomeInstrutor = nomeCompletoInstrutor($pdo, $infoHorario['instrutor']);
+                }
+
+                $resultado[$id][$turnoKey] = [
+                    'status'      => 'na-sala',
+                    'turma'       => $codTurma,
+                    'sub'         => 'Na sala',
+                    'solicitante' => $nomeInstrutor,
+                ];
                 continue;
             }
 

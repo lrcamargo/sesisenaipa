@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduIoT — Sistema Modular de Gerenciamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ==================== ESTILOS (mesmos do original) ==================== */
+:root{
+  --bg:#0a0e17;--surface:#111827;--surface2:#1a2235;--border:#1f2e45;
+  --accent:#00d4ff;--accent2:#00ff9d;--warn:#ffb800;--danger:#ff4d6d;
+  --text:#e2eaf7;--text-dim:#5a7299;--text-mid:#8ba3c7;
+  --online:#00ff9d;--offline:#ff4d6d;--r:12px;
+  --shadow:rgba(0,0,0,0.3);--card-hover:rgba(0,212,255,0.05);
+}
+body.light {
+  --bg:#f5f7fb;--surface:#ffffff;--surface2:#f0f2f5;--border:#e0e4e8;
+  --text:#1e293b;--text-dim:#64748b;--text-mid:#475569;--shadow:rgba(0,0,0,0.05);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;transition:background 0.3s;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* Login */
+#login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:44px 40px;width:380px;box-shadow:0 8px 32px var(--shadow);}
+.login-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px;}
+.login-sub{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:32px;}
+.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;margin-bottom:16px;outline:none;}
+.login-input:focus{border-color:var(--accent);}
+.login-btn{width:100%;background:var(--accent);border:none;border-radius:10px;padding:13px;color:#0a0e17;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
+.login-err{color:var(--danger);font-family:'DM Mono',monospace;font-size:12px;margin-top:10px;display:none;text-align:center;}
+.nivel-badge{display:inline-flex;padding:3px 9px;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;}
+.nivel-dev{background:rgba(255,184,0,.15);color:var(--warn);border:1px solid rgba(255,184,0,.3);}
+.nivel-admin{background:rgba(0,212,255,.15);color:var(--accent);border:1px solid rgba(0,212,255,.3);}
+.nivel-op{background:rgba(0,255,157,.15);color:var(--accent2);border:1px solid rgba(0,255,157,.3);}
+
+/* Sidebar */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--surface);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;}
+.sidebar-header{padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.sidebar-brand{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--accent);}
+.sidebar-sub{font-size:10px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-top:2px;}
+.user-card{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.user-name{font-size:13px;font-weight:500;color:var(--text);}
+.broker-status{display:flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(0,255,157,.04);border-bottom:1px solid var(--border);font-size:11px;cursor:pointer;}
+.broker-status:hover{background:rgba(0,255,157,.08);}
+.broker-dot{width:8px;height:8px;border-radius:50%;background:var(--offline);transition:all 0.2s;}
+.broker-dot.online{background:var(--online);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,157,.4)}50%{opacity:.7;box-shadow:0 0 0 4px rgba(0,255,157,0)}}
+.nav-section{padding:12px 20px 4px;font-size:9px;font-family:'DM Mono',monospace;color:var(--text-dim);text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;font-size:13px;color:var(--text-mid);cursor:pointer;border-left:2px solid transparent;transition:all .15s;}
+.nav-item:hover{background:var(--card-hover);color:var(--text);}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,212,255,.08);}
+.nav-item.hidden{display:none;}
+.nav-icon{font-size:16px;width:22px;text-align:center;}
+.sidebar-footer{margin-top:auto;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.logout-btn{width:100%;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);color:var(--danger);font-family:'DM Mono',monospace;font-size:12px;padding:10px;border-radius:8px;cursor:pointer;}
+.theme-toggle{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface2);border-radius:8px;cursor:pointer;border:1px solid var(--border);}
+.theme-toggle span{font-size:11px;font-family:'DM Mono',monospace;color:var(--text-dim);}
+.theme-switch{width:40px;height:20px;background:var(--surface);border-radius:20px;position:relative;transition:0.2s;border:1px solid var(--border);}
+.theme-switch::after{content:'☀️';position:absolute;width:18px;height:18px;background:var(--surface);border-radius:50%;top:0px;left:1px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:0.2s;}
+body.light .theme-switch::after{content:'🌙';left:19px;}
+
+/* Main */
+.main{margin-left:240px;padding:24px;min-height:100vh;}
+.page{display:none;animation:fadeUp .25s ease;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.topbar h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;}
+.time-badge{font-family:'DM Mono',monospace;font-size:12px;background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:8px;}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;position:relative;box-shadow:0 2px 8px var(--shadow);}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--al,var(--accent));}
+.stat-card.g{--al:var(--accent2)}.stat-card.w{--al:var(--warn)}.stat-card.d{--al:var(--danger)}
+.stat-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;}
+.stat-value{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;}
+.stat-card.g .stat-value{color:var(--accent2);}
+.stat-card.w .stat-value{color:var(--warn);}
+.stat-card.d .stat-value{color:var(--danger);}
+.stat-sub{font-size:11px;color:var(--text-dim);margin-top:4px;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:0 2px 8px var(--shadow);}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:3px 8px;border-radius:6px;}
+.btn-icon{padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;}
+.btn-icon:hover{background:var(--card-hover);border-color:var(--accent);}
+
+/* Room Cards AC */
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.room-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;transition:all .2s;position:relative;}
+.room-card.ac-on{border-color:var(--accent);background:rgba(0,212,255,.05);}
+.room-header{display:flex;justify-content:space-between;margin-bottom:10px;}
+.room-name{font-size:13px;font-weight:600;}
+.room-dot{width:8px;height:8px;border-radius:50%;background:var(--offline);}
+.room-dot.on{background:var(--online);animation:pulse 2s infinite;}
+.room-temp{font-size:26px;font-weight:700;font-family:'DM Mono',monospace;margin-bottom:8px;}
+.room-temp span{font-size:12px;color:var(--text-dim);}
+.marca-badge{font-size:10px;padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:8px;cursor:pointer;}
+.marca-badge.disabled{cursor:not-allowed;opacity:0.6;}
+.marca-agratto{color:#ff9500;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.1);}
+.marca-consul{color:var(--accent);border:1px solid rgba(0,212,255,.4);background:rgba(0,212,255,.1);}
+.marca-hitachi{color:#b06dff;border:1px solid rgba(176,109,255,.4);background:rgba(176,109,255,.1);}
+.marca-samsung{color:#00c8ff;border:1px solid rgba(0,200,255,.4);background:rgba(0,200,255,.1);}
+.temp-control{display:flex;align-items:center;gap:8px;margin:10px 0;padding:8px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.temp-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;}
+.temp-set{font-family:'DM Mono',monospace;font-size:14px;font-weight:600;flex:1;text-align:center;color:var(--accent);}
+.ac-buttons{display:flex;gap:8px;margin-top:8px;}
+.ac-btn{flex:1;padding:6px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;text-align:center;}
+.ac-btn.on{background:rgba(0,255,157,.1);border-color:var(--accent2);color:var(--accent2);}
+.ac-btn.off{background:rgba(255,77,109,.1);border-color:var(--danger);color:var(--danger);}
+.room-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s;}
+.room-card:hover .room-actions{opacity:1;}
+.room-actions button{background:var(--surface);border:1px solid var(--border);border-radius:4px;width:22px;height:22px;cursor:pointer;font-size:10px;}
+.room-actions button:hover{background:var(--danger);color:white;border-color:var(--danger);}
+
+/* Door Cards */
+.door-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.door-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;}
+.door-card.online{border-color:rgba(0,255,157,.3);}
+.door-card.offline{border-color:rgba(255,77,109,.2);opacity:.7;}
+.door-header{display:flex;justify-content:space-between;margin-bottom:12px;}
+.door-name{font-size:14px;font-weight:600;}
+.door-status{font-size:11px;padding:3px 10px;border-radius:20px;}
+.door-status.aberta{background:rgba(0,255,157,.15);color:var(--accent2);}
+.door-status.fechada{background:rgba(0,212,255,.1);color:var(--accent);}
+.door-status.offline{background:rgba(255,77,109,.1);color:var(--danger);}
+.door-info{font-size:11px;font-family:'DM Mono',monospace;color:var(--text-dim);margin-bottom:4px;}
+.door-info span{color:var(--text-mid);}
+.door-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s;}
+.door-card:hover .door-actions{opacity:1;}
+.door-actions button{background:var(--surface);border:1px solid var(--border);border-radius:4px;width:22px;height:22px;cursor:pointer;font-size:10px;}
+.door-actions button:hover{background:var(--danger);color:white;border-color:var(--danger);}
+
+/* Tables */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);padding:0 12px 12px;border-bottom:1px solid var(--border);}
+td{padding:10px 12px;border-bottom:1px solid rgba(31,46,69,.5);}
+tr:hover td{background:var(--card-hover);}
+.badge-ok{color:var(--accent2);}.badge-neg{color:var(--danger);}
+.act-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;font-size:10px;cursor:pointer;margin:0 2px;}
+.act-btn.edit:hover{border-color:var(--accent);color:var(--accent);}
+.act-btn.del:hover{border-color:var(--danger);color:var(--danger);}
+
+/* Forms */
+.form-group{margin-bottom:14px;}
+.form-label{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;display:block;margin-bottom:4px;text-transform:uppercase;}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;}
+.form-input:focus{border-color:var(--accent);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn-primary{background:var(--accent);border:none;padding:10px 20px;border-radius:8px;color:#0a0e17;font-weight:700;cursor:pointer;}
+.btn-secondary{background:var(--surface2);border:1px solid var(--border);padding:10px 20px;border-radius:8px;color:var(--text-mid);cursor:pointer;}
+.btn-danger{background:rgba(255,77,109,.15);border:1px solid var(--danger);padding:8px 16px;border-radius:8px;color:var(--danger);cursor:pointer;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:500px;max-width:90vw;max-height:80vh;overflow-y:auto;}
+.modal-title{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:16px;}
+.modal-btns{display:flex;gap:12px;justify-content:flex-end;margin-top:20px;}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-family:'DM Mono',monospace;font-size:13px;z-index:9999;display:none;}
+.toast.ok{border-color:var(--accent2);color:var(--accent2);}
+.toast.err{border-color:var(--danger);color:var(--danger);}
+.toast.warn{border-color:var(--warn);color:var(--warn);}
+
+.empty-state{text-align:center;padding:40px;color:var(--text-dim);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+@media(max-width:768px){.sidebar{width:60px;}.main{margin-left:60px;}.sidebar .brand,.sidebar-sub,.user-card,.nav-section,.nav-item span{display:none;}.nav-item{justify-content:center;padding:12px;}.stats-row{grid-template-columns:1fr 1fr;}.grid-2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">⚡ EduIoT</div>
+    <div class="login-sub">Sesi Senai · Pouso Alegre</div>
+    <input class="login-input" id="login-user" type="text" placeholder="Usuário">
+    <input class="login-input" id="login-pass" type="password" placeholder="Senha">
+    <button class="login-btn" onclick="doLogin()">ENTRAR</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar" style="display:none">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">⚡ EduIoT</div>
+    <div class="sidebar-sub">Sesi Senai</div>
+  </div>
+  <div class="user-card">
+    <span class="user-name" id="user-name">—</span>
+    <span id="user-nivel"></span>
+  </div>
+  <div class="broker-status" onclick="reconnectMQTT()">
+    <div class="broker-dot" id="broker-dot"></div>
+    <span id="broker-text">broker · conectando...</span>
+    <span style="margin-left:auto;font-size:10px;">🔄</span>
+  </div>
+  <div class="nav-section">Visão Geral</div>
+  <div class="nav-item active" onclick="nav('overview',this)"><span class="nav-icon">🏠</span><span>Dashboard</span></div>
+  <div class="nav-item" onclick="nav('temps',this)"><span class="nav-icon">🌡️</span><span>Temperaturas</span></div>
+  <div class="nav-section">Controle AC</div>
+  <div id="ac-nav-container"></div>
+  <div class="nav-section">Acesso</div>
+  <div class="nav-item" onclick="nav('doors',this)"><span class="nav-icon">🔐</span><span>Portas</span></div>
+  <div class="nav-item" onclick="nav('history',this)"><span class="nav-icon">📋</span><span>Histórico</span></div>
+  <div class="nav-item" id="nav-rfid" onclick="nav('rfid',this)"><span class="nav-icon">🆔</span><span>Cadastro RFID</span></div>
+  <div class="nav-section nivel-admin nivel-dev">Sistema</div>
+  <div class="nav-item nivel-admin nivel-dev" id="nav-users" onclick="nav('users',this)"><span class="nav-icon">👥</span><span>Usuários</span></div>
+  <div class="nav-item nivel-dev" id="nav-config" onclick="nav('config',this)"><span class="nav-icon">⚙️</span><span>Configurações</span></div>
+  <div class="sidebar-footer">
+    <div class="theme-toggle" onclick="toggleTheme()"><span>🌓 Tema</span><div class="theme-switch"></div></div>
+    <button class="logout-btn" onclick="doLogout()">⏻ Sair</button>
+  </div>
+</aside>
+
+<main class="main" id="main-area" style="display:none">
+
+<!-- Dashboard -->
+<div id="page-overview" class="page active">
+  <div class="topbar"><h1>Dashboard</h1><div class="time-badge" id="clock">--:--:--</div></div>
+  <div class="stats-row">
+    <div class="stat-card g"><div class="stat-label">ACs Online</div><div class="stat-value" id="stat-ac-online">—</div><div class="stat-sub">de <span id="total-acs">0</span></div></div>
+    <div class="stat-card"><div class="stat-label">ACs Ligados</div><div class="stat-value" id="stat-ac-on">—</div><div class="stat-sub">em funcionamento</div></div>
+    <div class="stat-card w"><div class="stat-label">Temp. Média</div><div class="stat-value" id="stat-temp">—°C</div><div class="stat-sub">sensores ativos</div></div>
+    <div class="stat-card d"><div class="stat-label">Acessos Hoje</div><div class="stat-value" id="stat-acessos">—</div><div class="stat-sub">registros</div></div>
+  </div>
+  <div id="dashboard-groups" class="grid-2"></div>
+  <div class="card"><div class="card-title">Últimos Acessos <span class="tag">tempo real</span></div><div class="table-wrap"></table><thead><tr><th>DATA/HORA</th><th>NOME</th><th>CRACHÁ</th><th>PORTA</th><th>STATUS</th></tr></thead><tbody id="last-access"></tbody></table></div></div>
+</div>
+
+<!-- Temperaturas -->
+<div id="page-temps" class="page">
+  <div class="topbar"><h1>Mapa de Calor</h1><div class="time-badge" id="clock2">--:--:--</div></div>
+  <div class="card"><div class="card-title">Todas as Salas</div><div class="heatmap-grid" id="heatmap"></div></div>
+  <div id="temps-groups" class="grid-2"></div>
+</div>
+
+<!-- Controle AC (dinâmico por grupo) -->
+<div id="page-ac-group" class="page">
+  <div class="topbar"><h1 id="ac-group-title">Controle AC</h1></div>
+  <div class="card"><div class="card-title">Salas</div><div class="room-grid" id="rooms-ac"></div></div>
+</div>
+
+<!-- Portas -->
+<div id="page-doors" class="page">
+  <div class="topbar"><h1>Status das Portas</h1></div>
+  <div class="stats-row">
+    <div class="stat-card g"><div class="stat-label">Online</div><div class="stat-value" id="door-online">—</div></div>
+    <div class="stat-card w"><div class="stat-label">Offline</div><div class="stat-value" id="door-offline">—</div></div>
+  </div>
+  <div class="door-grid" id="doors-grid"></div>
+</div>
+
+<!-- Histórico -->
+<div id="page-history" class="page">
+  <div class="topbar"><h1>Histórico de Acessos</h1></div>
+  <div class="card"><div class="card-title">Registros <span class="tag" id="hist-count">—</span></div>
+    <div class="filter-bar"><input class="filter-input" id="hist-search" placeholder="🔍 Nome ou crachá..." oninput="filterHistory()" style="flex:2"><select class="filter-select" id="hist-porta" onchange="filterHistory()"><option value="">Todas as portas</option></select><button class="btn-secondary" onclick="clearHistoryFilters()">Limpar</button></div>
+    <div class="table-wrap"><table><thead><tr><th>DATA/HORA</th><th>NOME</th><th>CRACHÁ</th><th>REGISTRO</th><th>PORTA</th></tr></thead><tbody id="history-table"></tbody></table></div>
+  </div>
+</div>
+
+<!-- Cadastro RFID -->
+<div id="page-rfid" class="page">
+  <div class="topbar"><h1>Cadastro de Usuários RFID</h1></div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">➕ Novo Cadastro</div><input type="hidden" id="rfid-id"><div class="form-group"><label class="form-label">Nome completo</label><input class="form-input" id="rfid-nome" placeholder="Nome do usuário"></div><div class="form-row"><div class="form-group"><label class="form-label">Número</label><input class="form-input" id="rfid-numero" placeholder="Número"></div><div class="form-group"><label class="form-label">Registro</label><input class="form-input" id="rfid-registro" placeholder="Registro"></div></div><div class="form-group"><label class="form-label">ID do Crachá (HEX)</label><input class="form-input" id="rfid-cracha" placeholder="Ex: 73FE9C" style="text-transform:uppercase"></div><div style="display:flex;gap:10px;margin-top:16px;"><button class="btn-primary" onclick="saveRFID()">✓ Salvar</button><button class="btn-secondary" onclick="clearRFIDForm()">Limpar</button></div><div id="rfid-status" style="margin-top:12px;font-size:11px;color:var(--text-dim)"></div></div>
+    <div class="card"><div class="card-title">Lista de Cadastrados <span class="tag" id="rfid-count">0</span></div><input class="filter-input" id="rfid-search" placeholder="🔍 Buscar..." oninput="filterRFID()" style="width:100%;margin-bottom:12px"><div class="table-wrap" style="max-height:400px;overflow-y:auto"><table><thead><tr><th>#</th><th>NOME</th><th>CRACHÁ</th><th>AÇÕES</th></tr></thead><tbody id="rfid-table"></tbody></table></div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="card-title">📡 Status dos Dispositivos</div><div id="device-status" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
+</div>
+
+<!-- Usuários Sistema -->
+<div id="page-users" class="page">
+  <div class="topbar"><h1>Usuários do Sistema</h1></div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">➕ Novo Usuário</div><div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="user-nome" placeholder="Nome completo"></div><div class="form-group"><label class="form-label">Usuário (login)</label><input class="form-input" id="user-login" placeholder="login"></div><div class="form-group"><label class="form-label">Senha</label><input class="form-input" id="user-senha" type="password" placeholder="senha"></div><div class="form-group"><label class="form-label">Nível</label><select class="form-input" id="user-nivel"><option value="operacao">operação</option><option value="admin">admin</option><option value="dev">dev</option></select></div><button class="btn-primary" onclick="createUser()">✓ Criar Usuário</button></div>
+    <div class="card"><div class="card-title">Níveis de Acesso</div><div><div><span class="nivel-badge nivel-dev">dev</span> — Acesso total</div><div><span class="nivel-badge nivel-admin">admin</span> — Cadastro RFID, controle AC/portas</div><div><span class="nivel-badge nivel-op">operação</span> — Liga/desliga AC, ajusta temperatura</div></div></div>
+  </div>
+  <div class="card"><div class="card-title">Usuários Cadastrados <span class="tag" id="user-count">—</span></div><div class="table-wrap"></table><thead><tr><th>NOME</th><th>USUÁRIO</th><th>NÍVEL</th><th>STATUS</th><th>AÇÃO</th></tr></thead><tbody id="user-table"></tbody></table></div></div>
+</div>
+
+<!-- Configurações (Admin/Dev) -->
+<div id="page-config" class="page">
+  <div class="topbar"><h1>Configurações do Sistema</h1><div class="time-badge" id="clock4">--:--:--</div></div>
+  <div class="grid-2">
+    <div class="card"><div class="card-title">🏭 Grupos de ACs <button class="btn-icon" onclick="showAddGroupModal()" style="margin-left:8px">+ Grupo</button></div>
+      <div id="groups-list" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <div class="card"><div class="card-title">📋 Dispositivos <span class="tag">ACs e Portas</span></div>
+      <div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn-primary" onclick="showAddDeviceModal('ac')">+ Novo AC</button><button class="btn-primary" onclick="showAddDeviceModal('door')">+ Nova Porta</button></div>
+      <div class="table-wrap" style="max-height:400px;overflow-y:auto"><table><thead><tr><th>TIPO</th><th>ID</th><th>NOME</th><th>GRUPO</th><th>AÇÕES</th></tr></thead><tbody id="devices-table"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- Modais -->
+<div class="modal-overlay" id="modal-delete"><div class="modal"><div class="modal-title">⚠️ Confirmar exclusão</div><p>Deseja excluir <strong id="delete-name"></strong>?</p><div class="modal-btns"><button class="btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn-danger" onclick="confirmDelete()">Excluir</button></div></div></div>
+
+<div class="modal-overlay" id="modal-add-group"><div class="modal"><div class="modal-title">➕ Novo Grupo de ACs</div><div class="form-group"><label class="form-label">Nome do Grupo</label><input class="form-input" id="new-group-name" placeholder="Ex: Bloco A, Bloco B, Térreo..."></div><div class="form-group"><label class="form-label">Ícone (opcional)</label><input class="form-input" id="new-group-icon" placeholder="🅰️"></div><div class="modal-btns"><button class="btn-secondary" onclick="closeModal('modal-add-group')">Cancelar</button><button class="btn-primary" onclick="addGroup()">Criar</button></div></div></div>
+
+<div class="modal-overlay" id="modal-add-device"><div class="modal"><div class="modal-title" id="modal-device-title">➕ Novo Dispositivo</div><input type="hidden" id="device-type"><div class="form-group"><label class="form-label">ID do Dispositivo</label><input class="form-input" id="device-id" placeholder="Ex: 201a, 101, SESI"></div><div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="device-name" placeholder="Nome amigável"></div><div class="form-group" id="device-group-select"><label class="form-label">Grupo (apenas ACs)</label><select class="form-input" id="device-group"></select></div><div class="modal-btns"><button class="btn-secondary" onclick="closeModal('modal-add-device')">Cancelar</button><button class="btn-primary" onclick="saveDevice()">Salvar</button></div></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== CONFIGURAÇÃO INICIAL ====================
+const API = 'http://192.168.10.10:1880';
+const BROKER_IP = '192.168.10.10';
+const BROKER_PORT = 9001;
+const MARCAS = ['agratto', 'consul', 'hitachi', 'samsung'];
+
+// Estrutura de dados escalável
+let currentUser = null;
+let mqttClient = null;
+
+// Grupos de ACs (dinâmicos)
+let acGroups = [
+  { id: 'blocoA', name: 'Bloco A', icon: '🅰️', devices: ['201a','202a','203a','204a','205a','206a','207a','208a','209a','210a','211a'] },
+  { id: 'blocoB', name: 'Bloco B', icon: '🅱️', devices: ['201b','202b','203b','204b','205b','206b','207b','208b','209b'] }
+];
+
+// Dispositivos AC (todos os ACs)
+let acDevices = [
+  { id: '201a', name: 'Sala 201-A', group: 'blocoA' },
+  { id: '202a', name: 'Sala 202-A', group: 'blocoA' },
+  { id: '203a', name: 'Sala 203-A', group: 'blocoA' },
+  { id: '204a', name: 'Sala 204-A', group: 'blocoA' },
+  { id: '205a', name: 'Sala 205-A', group: 'blocoA' },
+  { id: '206a', name: 'Sala 206-A', group: 'blocoA' },
+  { id: '207a', name: 'Sala 207-A', group: 'blocoA' },
+  { id: '208a', name: 'Sala 208-A', group: 'blocoA' },
+  { id: '209a', name: 'Sala 209-A', group: 'blocoA' },
+  { id: '210a', name: 'Sala 210-A', group: 'blocoA' },
+  { id: '211a', name: 'Sala 211-A', group: 'blocoA' },
+  { id: '201b', name: 'Sala 201-B', group: 'blocoB' },
+  { id: '202b', name: 'Sala 202-B', group: 'blocoB' },
+  { id: '203b', name: 'Sala 203-B', group: 'blocoB' },
+  { id: '204b', name: 'Sala 204-B', group: 'blocoB' },
+  { id: '205b', name: 'Sala 205-B', group: 'blocoB' },
+  { id: '206b', name: 'Sala 206-B', group: 'blocoB' },
+  { id: '207b', name: 'Sala 207-B', group: 'blocoB' },
+  { id: '208b', name: 'Sala 208-B', group: 'blocoB' },
+  { id: '209b', name: 'Sala 209-B', group: 'blocoB' }
+];
+
+// Dispositivos Portas
+let doorDevices = [
+  { id: '101', name: 'Lab 101 - Automação' },
+  { id: '102', name: 'Lab 102 - Robótica' },
+  { id: '103', name: 'Lab 103 - EHP' },
+  { id: '104', name: 'Lab 104 - Elétrica' },
+  { id: '106', name: 'Lab 106 - Eletronica' },
+  { id: '107', name: 'Lab 107 - Senailab' },
+  { id: 'SESI', name: 'Entrada SESI' }
+];
+
+// Estados em tempo real
+let acState = {};
+let acTemp = {};
+let acSetTemp = {};
+let acMarca = {};
+let doorState = {};
+let accessLog = [];
+let rfidUsers = [];
+let systemUsers = [];
+let historyData = [];
+
+// ==================== PERSISTÊNCIA (localStorage) ====================
+function saveConfig() {
+  const config = { acGroups, acDevices, doorDevices };
+  localStorage.setItem('eduiot_config', JSON.stringify(config));
+}
+
+function loadConfig() {
+  const saved = localStorage.getItem('eduiot_config');
+  if (saved) {
+    try {
+      const config = JSON.parse(saved);
+      acGroups = config.acGroups || acGroups;
+      acDevices = config.acDevices || acDevices;
+      doorDevices = config.doorDevices || doorDevices;
+    } catch(e) {}
+  }
+}
+
+// ==================== GERENCIAMENTO DE GRUPOS ====================
+function renderNavGroups() {
+  const container = document.getElementById('ac-nav-container');
+  if (!container) return;
+  container.innerHTML = acGroups.map(group => `
+    <div class="nav-item" onclick="navGroup('${group.id}', '${group.name}', this)">
+      <span class="nav-icon">${group.icon || '🅰️'}</span><span>${group.name}</span>
+    </div>
+  `).join('');
+}
+
+function navGroup(groupId, groupName, el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-ac-group').classList.add('active');
+  document.getElementById('ac-group-title').innerHTML = `${groupName} — Controle AC`;
+  currentGroup = groupId;
+  renderACsByGroup(groupId);
+}
+
+let currentGroup = null;
+
+function renderACsByGroup(groupId) {
+  const container = document.getElementById('rooms-ac');
+  const devices = acDevices.filter(d => d.group === groupId);
+  container.innerHTML = devices.map(d => buildRoomCard(d.id, d.name)).join('');
+}
+
+function getACName(deviceId) {
+  const dev = acDevices.find(d => d.id === deviceId);
+  return dev ? dev.name : `Sala ${deviceId.toUpperCase()}`;
+}
+
+function getDoorName(deviceId) {
+  const dev = doorDevices.find(d => d.id === deviceId);
+  return dev ? dev.name : deviceId;
+}
+
+// ==================== GERENCIAMENTO DE DISPOSITIVOS ====================
+function renderDashboardGroups() {
+  const container = document.getElementById('dashboard-groups');
+  if (!container) return;
+  container.innerHTML = acGroups.map(group => `
+    <div class="card"><div class="card-title">${group.icon || '🏭'} ${group.name} <span class="tag">temperaturas</span></div><div class="room-grid" id="dash-${group.id}"></div></div>
+  `).join('');
+  acGroups.forEach(group => {
+    const container = document.getElementById(`dash-${group.id}`);
+    if (container) {
+      const devices = acDevices.filter(d => d.group === group.id);
+      container.innerHTML = devices.map(d => buildCompactRoomCard(d.id, d.name)).join('');
+    }
+  });
+}
+
+function renderTempsGroups() {
+  const container = document.getElementById('temps-groups');
+  if (!container) return;
+  container.innerHTML = acGroups.map(group => `
+    <div class="card"><div class="card-title">${group.icon || '🏭'} ${group.name}</div><div id="temps-${group.id}"></div></div>
+  `).join('');
+  acGroups.forEach(group => {
+    const container = document.getElementById(`temps-${group.id}`);
+    if (container) {
+      const devices = acDevices.filter(d => d.group === group.id);
+      container.innerHTML = devices.map(d => `<div style="display:flex;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px;margin-bottom:6px"><span>${d.name}</span><span style="color:${getTempColor(acTemp[d.id])}">${acTemp[d.id] != null ? acTemp[d.id] + '°C' : '—'}</span></div>`).join('');
+    }
+  });
+}
+
+function renderDevicesTable() {
+  const tb = document.getElementById('devices-table');
+  if (!tb) return;
+  const acRows = acDevices.map(d => `<tr><td>AC</td><td>${d.id}</td><td>${d.name}</td><td>${acGroups.find(g => g.id === d.group)?.name || '—'}</td><td><button class="act-btn edit" onclick="editDevice('ac','${d.id}')">✏️</button><button class="act-btn del" onclick="deleteDevice('ac','${d.id}')">🗑️</button></td></tr>`).join('');
+  const doorRows = doorDevices.map(d => `<tr><td>PORTA</td><td>${d.id}</td><td>${d.name}</td><td>—</td><td><button class="act-btn edit" onclick="editDevice('door','${d.id}')">✏️</button><button class="act-btn del" onclick="deleteDevice('door','${d.id}')">🗑️</button></td></tr>`).join('');
+  tb.innerHTML = acRows + doorRows;
+  document.getElementById('total-acs').textContent = acDevices.length;
+}
+
+function renderGroupsList() {
+  const container = document.getElementById('groups-list');
+  if (!container) return;
+  container.innerHTML = acGroups.map(g => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px">
+      <span><span style="font-size:18px;margin-right:8px">${g.icon || '🏭'}</span><strong>${g.name}</strong> (${acDevices.filter(d => d.group === g.id).length} ACs)</span>
+      <div><button class="act-btn edit" onclick="editGroup('${g.id}')">✏️</button><button class="act-btn del" onclick="deleteGroup('${g.id}')">🗑️</button></div>
+    </div>
+  `).join('');
+}
+
+function showAddGroupModal() { document.getElementById('modal-add-group').classList.add('open'); }
+function addGroup() {
+  const name = document.getElementById('new-group-name').value.trim();
+  const icon = document.getElementById('new-group-icon').value.trim() || '🏭';
+  if (!name) { toast('Nome do grupo é obrigatório', 'err'); return; }
+  const newId = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  acGroups.push({ id: newId, name, icon, devices: [] });
+  saveConfig();
+  renderNavGroups();
+  renderGroupsList();
+  renderDashboardGroups();
+  renderTempsGroups();
+  closeModal('modal-add-group');
+  document.getElementById('new-group-name').value = '';
+  document.getElementById('new-group-icon').value = '';
+  toast(`Grupo ${name} criado!`, 'ok');
+}
+
+function editGroup(id) {
+  const group = acGroups.find(g => g.id === id);
+  if (!group) return;
+  const newName = prompt('Novo nome do grupo:', group.name);
+  if (newName && newName.trim()) {
+    group.name = newName.trim();
+    saveConfig();
+    renderNavGroups();
+    renderGroupsList();
+    renderDashboardGroups();
+    renderTempsGroups();
+    toast(`Grupo renomeado para ${group.name}`, 'ok');
+  }
+}
+
+function deleteGroup(id) {
+  if (acDevices.some(d => d.group === id)) {
+    toast('Não é possível excluir grupo com dispositivos. Mova ou remova os ACs primeiro.', 'err');
+    return;
+  }
+  if (confirm(`Excluir grupo "${acGroups.find(g => g.id === id)?.name}"?`)) {
+    acGroups = acGroups.filter(g => g.id !== id);
+    saveConfig();
+    renderNavGroups();
+    renderGroupsList();
+    renderDashboardGroups();
+    renderTempsGroups();
+    toast('Grupo removido', 'ok');
+  }
+}
+
+function showAddDeviceModal(type) {
+  document.getElementById('device-type').value = type;
+  document.getElementById('modal-device-title').innerHTML = type === 'ac' ? '➕ Novo Ar Condicionado' : '➕ Nova Porta';
+  document.getElementById('device-id').value = '';
+  document.getElementById('device-name').value = '';
+  const groupSelect = document.getElementById('device-group');
+  if (type === 'ac') {
+    groupSelect.innerHTML = acGroups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+    document.getElementById('device-group-select').style.display = 'block';
+  } else {
+    document.getElementById('device-group-select').style.display = 'none';
+  }
+  document.getElementById('modal-add-device').classList.add('open');
+}
+
+function saveDevice() {
+  const type = document.getElementById('device-type').value;
+  const id = document.getElementById('device-id').value.trim();
+  const name = document.getElementById('device-name').value.trim();
+  const group = document.getElementById('device-group')?.value;
+  if (!id || !name) { toast('ID e Nome são obrigatórios', 'err'); return; }
+  if (type === 'ac') {
+    if (acDevices.some(d => d.id === id)) { toast('ID já existe', 'err'); return; }
+    acDevices.push({ id, name, group });
+    acState[id] = 'off';
+    acTemp[id] = null;
+    acSetTemp[id] = 20;
+    acMarca[id] = 'consul';
+  } else {
+    if (doorDevices.some(d => d.id === id)) { toast('ID já existe', 'err'); return; }
+    doorDevices.push({ id, name });
+    doorState[id] = { status: 'offline' };
+  }
+  saveConfig();
+  renderNavGroups();
+  renderDashboardGroups();
+  renderTempsGroups();
+  renderDevicesTable();
+  renderDoors();
+  updateDoorFilter();
+  closeModal('modal-add-device');
+  toast(`${type === 'ac' ? 'AC' : 'Porta'} ${name} adicionado!`, 'ok');
+}
+
+function editDevice(type, id) {
+  if (type === 'ac') {
+    const dev = acDevices.find(d => d.id === id);
+    if (!dev) return;
+    const newName = prompt('Novo nome:', dev.name);
+    if (newName && newName.trim()) {
+      dev.name = newName.trim();
+      saveConfig();
+      renderNavGroups();
+      renderDashboardGroups();
+      renderTempsGroups();
+      renderDevicesTable();
+      if (currentGroup === dev.group) renderACsByGroup(currentGroup);
+      toast(`AC renomeado para ${dev.name}`, 'ok');
+    }
+  } else {
+    const dev = doorDevices.find(d => d.id === id);
+    if (!dev) return;
+    const newName = prompt('Novo nome:', dev.name);
+    if (newName && newName.trim()) {
+      dev.name = newName.trim();
+      saveConfig();
+      renderDevicesTable();
+      renderDoors();
+      updateDoorFilter();
+      toast(`Porta renomeada para ${dev.name}`, 'ok');
+    }
+  }
+}
+
+function deleteDevice(type, id) {
+  if (confirm(`Remover ${type === 'ac' ? 'AC' : 'Porta'}?`)) {
+    if (type === 'ac') {
+      acDevices = acDevices.filter(d => d.id !== id);
+      delete acState[id];
+      delete acTemp[id];
+      delete acSetTemp[id];
+      delete acMarca[id];
+    } else {
+      doorDevices = doorDevices.filter(d => d.id !== id);
+      delete doorState[id];
+    }
+    saveConfig();
+    renderNavGroups();
+    renderDashboardGroups();
+    renderTempsGroups();
+    renderDevicesTable();
+    renderDoors();
+    updateDoorFilter();
+    toast('Dispositivo removido', 'ok');
+  }
+}
+
+function updateDoorFilter() {
+  const select = document.getElementById('hist-porta');
+  if (!select) return;
+  select.innerHTML = '<option value="">Todas as portas</option>' + doorDevices.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+}
+
+// ==================== RENDER FUNCTIONS ====================
+function getTempColor(t) { if(!t) return '#5a7299'; if(t < 20) return '#00d4ff'; if(t < 24) return '#00ff9d'; if(t < 27) return '#ffb800'; return '#ff4d6d'; }
+
+function buildRoomCard(id, displayName) {
+  const on = acState[id] === 'on';
+  const t = acTemp[id];
+  const setTemp = acSetTemp[id] || 20;
+  const marca = acMarca[id] || 'consul';
+  const canCtrl = canControlAC();
+  const canMarca = canChangeMarca();
+  const nextMarca = marca === 'consul' ? 'hitachi' : marca === 'hitachi' ? 'samsung' : marca === 'samsung' ? 'agratto' : 'consul';
+  return `<div class="room-card ${on ? 'ac-on' : ''}"><div class="room-header"><span class="room-name">${displayName}</span><div class="room-dot ${on ? 'on' : ''}"></div></div><div class="room-temp" style="color:${getTempColor(t)}">${t != null ? t : '—'}<span>°C</span></div><div class="marca-badge marca-${marca} ${!canMarca ? 'disabled' : ''}" ${canMarca ? `onclick="setMarca('${id}', '${nextMarca}')"` : ''}>${marca} ${canMarca ? '▼' : '🔒'}</div><div class="temp-control"><button class="temp-btn" onclick="adjustTemp('${id}', -1)">−</button><span class="temp-set">${setTemp}°C</span><button class="temp-btn" onclick="adjustTemp('${id}', 1)">+</button></div><div class="ac-buttons"><button class="ac-btn ${on ? 'on' : ''}" onclick="toggleAC('${id}', 'on')">LIGA</button><button class="ac-btn off" onclick="toggleAC('${id}', 'off')">DESL</button></div><div class="room-actions"><button onclick="editDevice('ac','${id}')" title="Editar">✏️</button><button onclick="deleteDevice('ac','${id}')" title="Excluir">🗑️</button></div></div>`;
+}
+
+function buildCompactRoomCard(id, displayName) {
+  const on = acState[id] === 'on';
+  const t = acTemp[id];
+  return `<div class="room-card ${on ? 'ac-on' : ''}"><div class="room-header"><span class="room-name">${displayName}</span><div class="room-dot ${on ? 'on' : ''}"></div></div><div class="room-temp" style="color:${getTempColor(t)}">${t != null ? t : '—'}<span>°C</span></div><div class="ac-buttons"><button class="ac-btn ${on ? 'on' : ''}" onclick="toggleAC('${id}', 'on')">LIGA</button><button class="ac-btn off" onclick="toggleAC('${id}', 'off')">DESL</button></div></div>`;
+}
+
+function renderHeatmap() {
+  const el = document.getElementById('heatmap');
+  if(!el) return;
+  el.innerHTML = acDevices.map(d => {
+    const t = acTemp[d.id];
+    const c = getTempColor(t);
+    return `<div class="hm-cell" style="background:${c}22;border:1px solid ${c}55"><div class="hm-room">${d.name}</div><div class="hm-val" style="color:${c}">${t != null ? t : '—'}</div><div class="hm-unit">°C</div></div>`;
+  }).join('');
+}
+
+function renderDoors() {
+  const grid = document.getElementById('doors-grid');
+  if(!grid) return;
+  let online = 0;
+  grid.innerHTML = doorDevices.map(d => {
+    const st = doorState[d.id] || { status: 'offline' };
+    if(st.status !== 'offline') online++;
+    return `<div class="door-card ${st.status === 'offline' ? 'offline' : 'online'}"><div class="door-header"><span class="door-name">${d.name}</span><span class="door-status ${st.status}">${st.status === 'aberta' ? '🔓 ABERTA' : st.status === 'fechada' ? '🔒 FECHADA' : '⭕ OFFLINE'}</span></div><div class="door-info">MAC: <span>${st.mac || '—'}</span></div><div class="door-info">RSSI: <span>${st.rssi != null ? st.rssi + ' dBm' : '—'}</span></div><div class="door-info">FW: <span>${st.fw || '—'}</span></div><div class="door-actions"><button onclick="editDevice('door','${d.id}')" title="Editar">✏️</button><button onclick="deleteDevice('door','${d.id}')" title="Excluir">🗑️</button></div></div>`;
+  }).join('');
+  document.getElementById('door-online').textContent = online;
+  document.getElementById('door-offline').textContent = doorDevices.length - online;
+}
+
+function renderLastAccess() {
+  const el = document.getElementById('last-access');
+  if(!el) return;
+  el.innerHTML = accessLog.slice(0, 10).map(a => `<tr><td>${a.time || '—'}</td><td style="color:var(--text)">${a.nome || '—'}</td><td style="color:var(--accent)">${a.cracha || '—'}</td><td>${getDoorName(a.porta)}</td><td class="${a.status === 'ok' ? 'badge-ok' : 'badge-neg'}">${a.status === 'ok' ? '✓ OK' : '✗ NEGADO'}</td></tr>`).join('');
+  const today = new Date().toISOString().split('T')[0];
+  const todayCount = accessLog.filter(a => a.data === today || a.time?.startsWith(today)).length;
+  document.getElementById('stat-acessos').textContent = todayCount;
+}
+
+function updateStats() {
+  const acOn = Object.values(acState).filter(v => v === 'on').length;
+  const temps = Object.values(acTemp).filter(v => v != null);
+  const avg = temps.length ? (temps.reduce((a,b)=>a+b,0)/temps.length).toFixed(1) : '—';
+  document.getElementById('stat-ac-on').textContent = acOn;
+  document.getElementById('stat-temp').textContent = avg + (avg !== '—' ? '°C' : '');
+  const online = Object.values(doorState).filter(d => d.status !== 'offline').length;
+  document.getElementById('stat-ac-online').textContent = online;
+}
+
+function renderAll() {
+  renderDashboardGroups();
+  renderTempsGroups();
+  if (currentGroup) renderACsByGroup(currentGroup);
+  renderHeatmap();
+  renderDoors();
+  renderLastAccess();
+  updateStats();
+  updateDeviceStatus();
+}
+
+// ==================== PERMISSÕES ====================
+const canControlAC = () => currentUser && (currentUser.nivel === 'op' || currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canChangeMarca = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageRFID = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageUsers = () => currentUser && currentUser.nivel === 'dev';
+const canAccessConfig = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+
+// ==================== AC CONTROL ====================
+function toggleAC(id, cmd) {
+  acState[id] = cmd;
+  mqttPublish(`/${id}/comando`, cmd === 'on' ? '1' : '0');
+  toast(`AC ${getACName(id)} → ${cmd === 'on' ? 'LIGADO' : 'DESLIGADO'}`, 'ok');
+  renderAll();
+}
+
+function adjustTemp(id, delta) {
+  let newTemp = (acSetTemp[id] || 20) + delta;
+  newTemp = Math.min(30, Math.max(18, newTemp));
+  acSetTemp[id] = newTemp;
+  if (acState[id] === 'on') mqttPublish(`/${id}/comando`, newTemp.toString());
+  toast(`${getACName(id)}: setpoint ${newTemp}°C`, 'ok');
+  renderAll();
+}
+
+function setMarca(id, marca) {
+  if (!canChangeMarca()) { toast('Permissão negada', 'warn'); return; }
+  acMarca[id] = marca;
+  mqttPublish(`/${id}/marca`, marca);
+  toast(`${getACName(id)} → Marca: ${marca}`, 'ok');
+  renderAll();
+}
+
+// ==================== API e MQTT (simplificados) ====================
+async function apiFetch(path, method = 'GET', body = null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${currentUser?.token}` } };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(API + path, opts);
+  return res.json();
+}
+
+function mqttPublish(topic, payload) { if(!mqttClient?.isConnected()) { toast('MQTT desconectado', 'warn'); return; } const msg = new Paho.MQTT.Message(String(payload)); msg.destinationName = topic; mqttClient.send(msg); }
+function setBrokerStatus(online) { const dot = document.getElementById('broker-dot'); const txt = document.getElementById('broker-text'); if(online) { dot.className = 'broker-dot online'; txt.textContent = 'broker · online'; } else { dot.className = 'broker-dot'; txt.textContent = 'broker · offline'; } }
+function reconnectMQTT() { if(!mqttClient?.isConnected()) initMQTT(); }
+
+function initMQTT() {
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js';
+  script.onload = () => connectMQTT();
+  document.head.appendChild(script);
+}
+
+function connectMQTT() {
+  if(mqttClient?.isConnected()) return;
+  mqttClient = new Paho.MQTT.Client(BROKER_IP, BROKER_PORT, 'dash_' + Date.now());
+  mqttClient.onConnectionLost = () => { setBrokerStatus(false); setTimeout(connectMQTT, 10000); };
+  mqttClient.onMessageArrived = onMQTTMessage;
+  mqttClient.connect({ keepAliveInterval: 60, onSuccess: () => { setBrokerStatus(true); const topics = ['/+/temperatura', '/+/estado', '/+/marca/get', '/+/status', '/+/entrada', '/cracha']; topics.forEach(t => mqttClient.subscribe(t)); toast('MQTT conectado!', 'ok'); }, onFailure: () => setTimeout(connectMQTT, 5000) });
+}
+
+function onMQTTMessage(msg) {
+  const top = msg.destinationName;
+  const pay = msg.payloadString.trim();
+  const tm = top.match(/\/(2\d\d[ab])\/temperatura/);
+  if(tm) { acTemp[tm[1]] = parseFloat(pay); renderAll(); return; }
+  const em = top.match(/\/(2\d\d[ab])\/estado/);
+  if(em) { const valor = parseInt(pay); acState[em[1]] = (valor > 0) ? 'on' : 'off'; renderAll(); return; }
+  const mm = top.match(/\/(2\d\d[ab])\/marca\/get/);
+  if(mm) { acMarca[mm[1]] = pay; renderAll(); return; }
+  const pm = top.match(/\/(10\d|SESI)\/status/);
+  if(pm) {
+    try { const d = JSON.parse(pay); doorState[pm[1]] = { status: d.mqtt === 'connected' ? 'fechada' : 'offline', mac: d.mac, rssi: d.rssi, fw: d.fw_version }; } catch(e) { doorState[pm[1]] = { status: 'offline' }; }
+    renderDoors(); updateDeviceStatus(); return;
+  }
+  const im = top.match(/\/(10\d|SESI)\/entrada/);
+  if(im) {
+    const user = rfidUsers.find(u => u.cracha.toUpperCase() === pay.toUpperCase());
+    const now = new Date();
+    const entry = { time: now.toLocaleString('pt-BR'), data: now.toISOString().split('T')[0], hora: now.toLocaleTimeString('pt-BR'), nome: user?.nome || '—', cracha: pay.toUpperCase(), registro: user?.registro || '—', porta: im[1], status: 'ok' };
+    accessLog.unshift(entry);
+    accessLog = accessLog.slice(0, 500);
+    renderHistory(); renderLastAccess(); return;
+  }
+  if(top === '/cracha') {
+    const crachaHex = pay.trim().toUpperCase();
+    const crachaInput = document.getElementById('rfid-cracha');
+    if(crachaInput) { crachaInput.value = crachaHex; crachaInput.style.borderColor = 'var(--accent2)'; crachaInput.style.backgroundColor = 'rgba(0,255,157,.1)'; setTimeout(() => { crachaInput.style.borderColor = ''; crachaInput.style.backgroundColor = ''; }, 2000); toast(`📇 Crachá ${crachaHex} detectado! Preencha os dados`, 'ok'); document.getElementById('rfid-nome').focus(); }
+    return;
+  }
+}
+
+// ==================== CRUD RFID e USUÁRIOS ====================
+async function loadRFIDUsers() { try { const data = await apiFetch('/api/cadastro'); if(data.ok) rfidUsers = data.dados; renderRFID(); } catch(e) {} }
+function renderRFID() { const tb = document.getElementById('rfid-table'); const ct = document.getElementById('rfid-count'); const search = document.getElementById('rfid-search')?.value.toLowerCase() || ''; const filtered = rfidUsers.filter(u => u.nome?.toLowerCase().includes(search) || u.cracha?.toLowerCase().includes(search)); ct.textContent = rfidUsers.length; const canEdit = canManageRFID(); tb.innerHTML = filtered.map((u, i) => `<tr><td>${i+1}</td><td style="color:var(--text)">${u.nome}</td><td style="color:var(--accent)">${u.cracha}</td><td>${canEdit ? `<button class="act-btn edit" onclick="editRFID(${u.id})">✏️</button><button class="act-btn del" onclick="deleteRFID(${u.id}, '${u.nome}')">🗑️</button>` : '<span class="act-btn disabled">—</span>'}</td>`).join(''); }
+function filterRFID() { renderRFID(); }
+function clearRFIDForm() { if(!canManageRFID()) return; document.getElementById('rfid-id').value = ''; document.getElementById('rfid-nome').value = ''; document.getElementById('rfid-numero').value = ''; document.getElementById('rfid-registro').value = ''; document.getElementById('rfid-cracha').value = ''; }
+function editRFID(id) { if(!canManageRFID()) return; const u = rfidUsers.find(x => x.id === id); if(u) { document.getElementById('rfid-id').value = u.id; document.getElementById('rfid-nome').value = u.nome; document.getElementById('rfid-numero').value = u.numero || ''; document.getElementById('rfid-registro').value = u.registro || ''; document.getElementById('rfid-cracha').value = u.cracha; } }
+async function saveRFID() { if(!canManageRFID()) { toast('Permissão negada', 'warn'); return; } const id = document.getElementById('rfid-id').value; const nome = document.getElementById('rfid-nome').value.trim(); const numero = document.getElementById('rfid-numero').value.trim(); const registro = document.getElementById('rfid-registro').value.trim(); const cracha = document.getElementById('rfid-cracha').value.trim().toUpperCase(); if(!nome || !cracha) { toast('Nome e crachá obrigatórios', 'err'); return; } try { let data; if(id) { data = await apiFetch(`/api/cadastro/${id}`, 'PUT', { nome, numero, registro, cracha }); } else { data = await apiFetch('/api/cadastro', 'POST', { nome, numero, registro, cracha }); } if(data.ok) { toast(`✓ Usuário ${id ? 'atualizado' : 'cadastrado'}!`, 'ok'); clearRFIDForm(); loadRFIDUsers(); publishRFIDList(); } else { toast(data.erro || 'Erro', 'err'); } } catch(e) { toast('Erro no servidor', 'err'); } }
+let deleteId = null;
+function deleteRFID(id, nome) { if(!canManageRFID()) return; deleteId = id; document.getElementById('delete-name').textContent = nome; document.getElementById('modal-delete').classList.add('open'); }
+function closeModal(id) { const modal = document.getElementById(id || 'modal-delete'); if(modal) modal.classList.remove('open'); deleteId = null; }
+async function confirmDelete() { if(!deleteId || !canManageRFID()) return; try { const data = await apiFetch(`/api/cadastro/${deleteId}`, 'DELETE'); if(data.ok) { toast('✓ Usuário removido!', 'ok'); loadRFIDUsers(); publishRFIDList(); } } catch(e) { toast('Erro ao excluir', 'err'); } closeModal(); }
+async function publishRFIDList() { const lista = rfidUsers.map(u => u.cracha).join(','); doorDevices.forEach(p => mqttPublish(`/${p.id}/acesso`, lista)); toast('📡 Lista enviada aos ESP32', 'ok'); }
+
+async function loadHistory() { try { const data = await apiFetch('/api/historico?limit=500'); if(data.ok) historyData = data.dados; renderHistory(); } catch(e) {} }
+function renderHistory() { const tb = document.getElementById('history-table'); const ct = document.getElementById('hist-count'); const search = document.getElementById('hist-search')?.value.toLowerCase() || ''; const porta = document.getElementById('hist-porta')?.value || ''; const combined = [...accessLog, ...historyData]; const filtered = combined.filter(h => { const matchSearch = !search || (h.nome || '').toLowerCase().includes(search) || (h.cracha || '').toLowerCase().includes(search); const matchPorta = !porta || h.porta === porta; return matchSearch && matchPorta; }); ct.textContent = filtered.length; if(filtered.length === 0) { tb.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhum registro encontrado</td></tr>'; return; } tb.innerHTML = filtered.slice(0, 500).map(h => { let dataHora = h.time || h.data_hora || ''; if(!dataHora && h.data && h.hora) dataHora = `${h.data} ${h.hora}`; return `<tr><td>${dataHora || '—'}</td><td style="color:var(--text)">${h.nome || '—'}</td><td style="color:var(--accent)">${h.cracha || '—'}</td><td>${h.registro || '—'}</td><td>${getDoorName(h.porta)}</td></tr>`; }).join(''); }
+function filterHistory() { renderHistory(); }
+function clearHistoryFilters() { document.getElementById('hist-search').value = ''; document.getElementById('hist-porta').value = ''; renderHistory(); }
+
+async function loadSystemUsers() { if(!canManageUsers()) return; try { const data = await apiFetch('/api/usuarios'); if(data.ok) systemUsers = data.dados; renderSystemUsers(); } catch(e) {} }
+function renderSystemUsers() { if(!canManageUsers()) return; const tb = document.getElementById('user-table'); const ct = document.getElementById('user-count'); ct.textContent = systemUsers.length; tb.innerHTML = systemUsers.map(u => `<tr><td style="color:var(--text)">${u.nome}</td><td>${u.usuario}</td><td><span class="nivel-badge ${u.nivel === 'dev' ? 'nivel-dev' : u.nivel === 'admin' ? 'nivel-admin' : 'nivel-op'}">${u.nivel}</span></td><td style="color:${u.ativo ? 'var(--accent2)' : 'var(--danger)'}">${u.ativo ? 'Ativo' : 'Inativo'}</td><td>${u.usuario !== currentUser.nome ? `<button class="act-btn del" onclick="disableUser(${u.id}, '${u.nome}')">Desativar</button>` : '—'}</td></tr>`).join(''); }
+async function createUser() { if(!canManageUsers()) { toast('Permissão negada', 'warn'); return; } const nome = document.getElementById('user-nome').value.trim(); const usuario = document.getElementById('user-login').value.trim(); const senha = document.getElementById('user-senha').value; const nivel = document.getElementById('user-nivel').value; if(!nome || !usuario || !senha) { toast('Preencha todos os campos', 'err'); return; } try { const data = await apiFetch('/api/usuarios', 'POST', { nome, usuario, senha, nivel }); if(data.ok) { toast('✓ Usuário criado!', 'ok'); document.getElementById('user-nome').value = ''; document.getElementById('user-login').value = ''; document.getElementById('user-senha').value = ''; loadSystemUsers(); } else { toast(data.erro || 'Erro', 'err'); } } catch(e) { toast('Erro', 'err'); } }
+async function disableUser(id, nome) { if(!canManageUsers()) return; if(!confirm(`Desativar usuário "${nome}"?`)) return; try { const data = await apiFetch(`/api/usuarios/${id}`, 'DELETE'); if(data.ok) { toast('✓ Usuário desativado', 'ok'); loadSystemUsers(); } } catch(e) { toast('Erro', 'err'); } }
+
+function updateDeviceStatus() { const el = document.getElementById('device-status'); if(!el) return; el.innerHTML = doorDevices.map(d => { const st = doorState[d.id] || {}; const online = st.status !== 'offline'; return `<div style="display:flex;align-items:center;gap:8px;background:var(--surface2);padding:6px 12px;border-radius:8px"><div style="width:8px;height:8px;border-radius:50%;background:${online ? 'var(--online)' : 'var(--offline)'}"></div><span style="font-size:11px">${d.name}</span>${online ? `<span style="font-size:10px;color:var(--text-dim)">${st.mac?.slice(-8) || ''} · ${st.rssi || '—'}dBm</span>` : ''}</div>`; }).join(''); }
+
+// ==================== LOGIN E INICIALIZAÇÃO ====================
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  if(!user || !pass) return;
+  try {
+    const res = await fetch(`${API}/api/login`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ usuario: user, senha: pass }) });
+    const data = await res.json();
+    if(!data.ok) { const el = document.getElementById('login-err'); el.textContent = data.erro || 'Credenciais inválidas'; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); return; }
+    currentUser = { token: data.token, nivel: data.nivel, nome: data.nome };
+    sessionStorage.setItem('auth', JSON.stringify(currentUser));
+    startApp();
+  } catch(e) { const el = document.getElementById('login-err'); el.textContent = 'Servidor indisponível'; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 3000); }
+}
+
+function doLogout() {
+  if(mqttClient?.isConnected()) mqttClient.disconnect();
+  currentUser = null;
+  sessionStorage.removeItem('auth');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('main-area').style.display = 'none';
+}
+
+function startApp() {
+  loadTheme();
+  loadConfig();
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('sidebar').style.display = 'flex';
+  document.getElementById('main-area').style.display = 'block';
+  document.getElementById('user-name').textContent = currentUser.nome;
+  const nivelMap = { dev:'nivel-dev', admin:'nivel-admin', op:'nivel-op' };
+  const nivelLabel = { dev:'⚡ Dev', admin:'🛡 Admin', op:'👁 Operação' };
+  document.getElementById('user-nivel').innerHTML = `<span class="nivel-badge ${nivelMap[currentUser.nivel]}">${nivelLabel[currentUser.nivel]}</span>`;
+  
+  const isAdmin = currentUser.nivel === 'admin' || currentUser.nivel === 'dev';
+  const isDev = currentUser.nivel === 'dev';
+  document.querySelectorAll('.nivel-admin').forEach(el => { if(!isAdmin) el.classList.add('hidden'); });
+  document.querySelectorAll('.nivel-dev').forEach(el => { if(!isDev) el.classList.add('hidden'); });
+  if(!canAccessConfig()) document.getElementById('nav-config')?.classList.add('hidden');
+  if(!canManageRFID()) document.getElementById('nav-rfid')?.classList.add('hidden');
+  if(!canManageUsers()) document.getElementById('nav-users')?.classList.add('hidden');
+  
+  initMQTT();
+  loadRFIDUsers();
+  loadHistory();
+  loadSystemUsers();
+  renderNavGroups();
+  renderGroupsList();
+  renderDevicesTable();
+  renderDashboardGroups();
+  renderTempsGroups();
+  renderDoors();
+  updateDoorFilter();
+  setInterval(updateClock, 1000);
+  updateClock();
+  setInterval(() => { renderAll(); }, 1000);
+}
+
+function toggleTheme() { document.body.classList.toggle('light'); localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); }
+function loadTheme() { const saved = localStorage.getItem('theme'); if(saved === 'light') document.body.classList.add('light'); }
+function updateClock() { const t = new Date().toLocaleTimeString('pt-BR'); document.getElementById('clock').textContent = t; ['clock2','clock3','clock4'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = t; }); }
+function toast(msg, type = 'ok') { const el = document.getElementById('toast'); el.textContent = msg; el.className = 'toast ' + type; el.style.display = 'block'; clearTimeout(el._t); el._t = setTimeout(() => el.style.display = 'none', 3000); }
+function nav(id, el) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); document.getElementById(`page-${id}`).classList.add('active'); if(id === 'history') loadHistory(); if(id === 'rfid') loadRFIDUsers(); if(id === 'users') loadSystemUsers(); if(id === 'config' && canAccessConfig()) { renderGroupsList(); renderDevicesTable(); } }
+
+// Inicialização
+(function() { const saved = sessionStorage.getItem('auth'); if(saved) { try { currentUser = JSON.parse(saved); if(currentUser?.token) { startApp(); return; } } catch(e) {} } document.getElementById('login-screen').style.display = 'flex'; })();
+</script>
+</body>
+</html>

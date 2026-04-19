@@ -13,11 +13,17 @@ $capacidade        = intval($_POST['capacidade']       ?? 0) ?: null;
 $descricao         = trim($_POST['descricao']          ?? '');
 $temPorta          = intval($_POST['temPorta']         ?? 0);
 $temArCondicionado = intval($_POST['temArCondicionado'] ?? 0);
+$temReserva        = isset($_POST['temReserva']) ? 1 : 0;
+$temEstoque        = isset($_POST['temEstoque']) ? 1 : 0;
+$temSala           = isset($_POST['temSala'])    ? 1 : 0;
 
-// Flags de função — checkbox desmarcado não envia valor, então default 0
-$temReserva = isset($_POST['temReserva']) ? 1 : 0;
-$temEstoque = isset($_POST['temEstoque']) ? 1 : 0;
-$temSala    = isset($_POST['temSala'])    ? 1 : 0;
+// MAC só é salvo quando o IoT correspondente está ativo
+$macPorta          = $temPorta          === 1 ? trim($_POST['macPorta']          ?? '') : null;
+$macArCondicionado = $temArCondicionado === 1 ? trim($_POST['macArCondicionado'] ?? '') : null;
+
+// Normaliza MAC: aceita vazio (NULL) mas não strings inválidas
+if($macPorta !== null && $macPorta === '')          $macPorta = null;
+if($macArCondicionado !== null && $macArCondicionado === '') $macArCondicionado = null;
 
 if(!$nome){
     header('location:cadastrarAmbiente.php?erro=1'); exit;
@@ -27,11 +33,15 @@ try{
     $pdo->prepare("
         INSERT INTO laboratorios
             (nome, localizacao, capacidade, descricao,
-             temPorta, temArCondicionado, temReserva, temEstoque, temSala)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+             temPorta, macPorta,
+             temArCondicionado, macArCondicionado,
+             temReserva, temEstoque, temSala)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ")->execute([
         $nome, $localizacao, $capacidade, $descricao,
-        $temPorta, $temArCondicionado, $temReserva, $temEstoque, $temSala
+        $temPorta, $macPorta,
+        $temArCondicionado, $macArCondicionado,
+        $temReserva, $temEstoque, $temSala
     ]);
     header('location:index.php?msg=criado');
 } catch(PDOException $e){

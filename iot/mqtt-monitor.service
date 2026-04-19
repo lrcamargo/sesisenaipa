@@ -1,0 +1,24 @@
+[Unit]
+Description=Monitor MQTT IoT — SENAI/SESI
+Documentation=file:///var/www/html/scripts/mqttMonitor.py
+After=network.target mosquitto.service mysqld.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/html/scripts
+ExecStart=/usr/bin/python3 /var/www/html/scripts/mqttMonitor.py
+Restart=on-failure
+RestartSec=10s
+StandardOutput=append:/var/www/html/logs/mqtt_monitor.log
+StandardError=append:/var/www/html/logs/mqtt_monitor.log
+
+# Garante que o diretório de dados existe antes de iniciar
+ExecStartPre=/bin/mkdir -p /var/www/html/data
+ExecStartPre=/bin/mkdir -p /var/www/html/logs
+ExecStartPre=/bin/chown www-data:www-data /var/www/html/data /var/www/html/logs
+
+[Install]
+WantedBy=multi-user.target
