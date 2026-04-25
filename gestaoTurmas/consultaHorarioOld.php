@@ -1,6 +1,8 @@
 <?php
 /*
  * consultaHorario.php
+ * Tela para supervisores consultarem o calendário de horários
+ * de um instrutor específico ou de uma turma específica.
  */
 
 require_once('../conexao.php');
@@ -16,12 +18,11 @@ if(!in_array($nivelNorm,['sup tecnica','sup pedagogica','gerencia','admin','admi
     header('location:../index.php'); exit;
 }
 
-/* ── Normalização para comparação ── */
-function normalizar(string $s): string {
-    $s = preg_replace('/\s+/', ' ', trim($s));
-    $s = mb_strtolower($s, 'UTF-8');
-    $s = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s) ?: $s;
-    return $s;
+/* ── Normalização (mesma do painelDocentes) ── */
+function normalizarNome(string $s): string {
+    $s = mb_strtolower(trim($s));
+    $s = iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$s) ?: $s;
+    return preg_replace('/[^a-z0-9 ]/','',$s);
 }
 
 /* ── Lista de instrutores do banco ── */
@@ -51,19 +52,30 @@ function tipoTurma(string $cod): array {
     return                                  ['label'=>'Outro',            'cor'=>'#37474f','bg'=>'#eceff1'];
 }
 
-/* ── Mapa de apelido normalizado → nome completo (banco) ── */
-$mapaApelidos = [];
+/* ── Mapa de nomes banco → tokens (para match com planilha) ── */
+$mapaInstrutores = []; // [token_normalizado] => nome completo
+$particulas = ['de','da','do','dos','das','e','a','o'];
 foreach($instrutores as $inst){
-    if(!empty($inst['apelido'])){
-        $mapaApelidos[normalizar($inst['apelido'])] = mb_strtoupper($inst['nome']);
+    $tokens = array_filter(explode(' ', normalizarNome($inst['nome'])),
+        fn($t) => strlen($t)>=3 && !in_array($t,$particulas));
+    // Passo 1: primeiro nome tem prioridade
+    $tks = array_values($tokens);
+    if(!empty($tks) && !isset($mapaInstrutores[$tks[0]]))
+        $mapaInstrutores[$tks[0]] = mb_strtoupper($inst['nome']);
+}
+foreach($instrutores as $inst){
+    $tokens = array_values(array_filter(explode(' ', normalizarNome($inst['nome'])),
+        fn($t) => strlen($t)>=3 && !in_array($t,$particulas)));
+    foreach(array_slice($tokens,1) as $tok){
+        if(!isset($mapaInstrutores[$tok]))
+            $mapaInstrutores[$tok] = mb_strtoupper($inst['nome']);
     }
 }
 
 /* ── Monta eventos conforme filtro (AJAX) ── */
 if(isset($_GET['ajax'])){
     header('Content-Type: application/json');
-    $modo   = $_GET['modo']   ??
-     '';
+    $modo   = $_GET['modo']   ?? '';   // 'instrutor' ou 'turma'
     $filtro = trim($_GET['filtro'] ?? '');
 
     $eventos = [];
@@ -72,10 +84,19 @@ if(isset($_GET['ajax'])){
     }
 
     if($modo === 'instrutor'){
+        // Filtra pelo nome do instrutor — mesma lógica de tokens
+        $tokensF = array_filter(explode(' ', normalizarNome($filtro)),
+            fn($t) => strlen($t)>=3 && !in_array($t,$particulas));
+
         foreach($cacheJson['dados'] as $data => $turmas){
             foreach($turmas as $cod => $info){
                 if(empty($info['instrutor'])) continue;
-                if(normalizar($info['instrutor']) !== normalizar($filtro)) continue;
+                // Match: algum token do nome curto está nos tokens do instrutor buscado
+                $tokensCurto = array_filter(explode(' ', normalizarNome($info['instrutor'])),
+                    fn($t) => strlen($t)>=3);
+                $match = false;
+                foreach($tokensCurto as $tok){ if(in_array($tok,$tokensF)){$match=true;break;} }
+                if(!$match) continue;
 
                 $tipo = tipoTurma($cod);
                 $uc   = $info['uc'] ?? '';
@@ -97,7 +118,6 @@ if(isset($_GET['ajax'])){
                 ];
             }
         }
-
     } elseif($modo === 'turma'){
         foreach($cacheJson['dados'] as $data => $turmas){
             if(!isset($turmas[$filtro])) continue;
@@ -105,12 +125,15 @@ if(isset($_GET['ajax'])){
             $tipo = tipoTurma($filtro);
             $uc   = $info['uc'] ?? '';
             $inst = $info['instrutor'] ?? '';
-
+            // Resolve nome completo do instrutor
             $nomeInst = '';
             if($inst){
-                $nomeInst = $mapaApelidos[normalizar($inst)] ?? mb_strtoupper($inst);
+                $tokInst = array_filter(explode(' ', normalizarNome($inst)), fn($t)=>strlen($t)>=3);
+                foreach($tokInst as $tok){
+                    if(isset($mapaInstrutores[$tok])){ $nomeInst = $mapaInstrutores[$tok]; break; }
+                }
+                if(!$nomeInst) $nomeInst = mb_strtoupper($inst);
             }
-
             $eventos[] = [
                 'id'              => md5($data.$filtro),
                 'title'           => $uc ?: $filtro,
@@ -125,7 +148,7 @@ if(isset($_GET['ajax'])){
                     'tipo'      => $tipo['label'],
                     'cor'       => $tipo['cor'],
                     'instrutor' => $nomeInst,
-                    'linha2'    => $nomeInst,
+                    'linha2'    => $nomeInst, // instrutor aparece como 2ª linha
                 ],
             ];
         }
@@ -137,6 +160,7 @@ if(isset($_GET['ajax'])){
 
 $cacheGeradoEm = $cacheJson['gerado_em'] ?? null;
 
+// Parâmetros GET para pré-selecionar filtro (vindo do clique na turma do painelDocentes)
 $preSelModo   = in_array($_GET['modo'] ?? '', ['instrutor','turma']) ? $_GET['modo'] : '';
 $preSelFiltro = trim($_GET['filtro'] ?? '');
 ?>
@@ -208,7 +232,8 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
             <label>Consultar por</label>
             <select id="selModo" onchange="trocarModo()">
                 <option value="instrutor" <?php echo $preSelModo==='instrutor'?'selected':''; ?>>Instrutor</option>
-                <option value="turma"     <?php echo $preSelModo==='turma'?'selected':''; ?>>Turma</option>
+                <option value="turma"     <?php echo ($preSelModo==='turma'||!$preSelModo)?'':''; ?>
+                    <?php echo $preSelModo==='turma'?'selected':''; ?>>Turma</option>
             </select>
         </div>
         <div class="fg" id="fgInstrutor">
@@ -216,8 +241,7 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
             <select id="selInstrutor" class="form-control" style="font-size:.85rem">
                 <option value="">— Selecione —</option>
                 <?php foreach($instrutores as $i): ?>
-                <?php if(empty($i['apelido'])) continue; ?>
-                <option value="<?php echo htmlspecialchars($i['apelido']); ?>">
+                <option value="<?php echo htmlspecialchars($i['nome']); ?>">
                     <?php echo htmlspecialchars(mb_strtoupper($i['nome'])); ?>
                 </option>
                 <?php endforeach; ?>
@@ -254,6 +278,8 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         <span><i class="fas fa-search mr-2"></i>Selecione um instrutor ou turma e clique em Buscar</span>
     </div>
     <div id="calendario" style="display:none"></div>
+
+
 
 </div>
 </div>
@@ -317,8 +343,8 @@ function buscar(){
                     var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(p.tipo)+'</span>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Data:</strong> '+dataFmt+'</div>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Turma:</strong> '+esc(p.turma)+'</div>';
-                    if(p.uc)        html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC:</strong> '+esc(p.uc)+'</div>';
-                    if(p.instrutor) html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Instrutor:</strong> '+esc(p.instrutor)+'</div>';
+                    if(p.uc)       html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC:</strong> '+esc(p.uc)+'</div>';
+                    if(p.instrutor)html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Instrutor:</strong> '+esc(p.instrutor)+'</div>';
                     document.getElementById('modalDetalheBody').innerHTML = html;
                     $('#modalDetalhe').modal('show');
                 },
@@ -346,6 +372,7 @@ function esc(s){
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// Busca automática se veio com parâmetros pré-selecionados
 <?php if($preSelModo && $preSelFiltro): ?>
 document.addEventListener('DOMContentLoaded', function(){
     trocarModo();

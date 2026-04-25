@@ -130,6 +130,7 @@
                             <th>Registro</th>
                             <th>Nome</th>
                             <th>Usuário</th>
+                            <th>Apelido</th>
                             <th>Editar</th>
                             <?php if($permReset){ echo '<th>Resetar Senha</th>'; } ?>
                             <th>Status</th>
@@ -157,6 +158,7 @@
             { data: 'registro' },
             { data: 'nome'     },
             { data: 'usuario'  },
+            { data: 'apelido'  },
             {
                 data: null,
                 orderable: false,
@@ -252,6 +254,7 @@
                  + '<li><strong>Registro:</strong> ' + d.registro + '</li>'
                  + '<li><strong>Nome:</strong> '     + escHtml(d.nome)    + '</li>'
                  + '<li><strong>Usuário:</strong> '  + escHtml(d.usuario) + '</li>'
+                 + '<li><strong>Apelido:</strong> '  + escHtml(d.apelido) + '</li>'
                  + '<li><strong>Status:</strong> <span class="' + statusClass + '">' + statusText + '</span></li>'
                  + '<li><strong>Perfil:</strong> '   + escHtml(d.perfil)  + '</li>'
                  + '</ul>';

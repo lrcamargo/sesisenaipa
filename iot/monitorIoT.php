@@ -53,7 +53,7 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['acao'])){
         $payload = trim($_POST['payload']   ?? '');
         if(!$tid || !$payload){ echo json_encode(['ok'=>false,'msg'=>'Dados inválidos.']); exit; }
         $cmd   = sprintf('mosquitto_pub -h localhost -p 1883 -t %s -m %s 2>&1',
-                    escapeshellarg('/'.$tid.'/cmd'), escapeshellarg($payload));
+                    escapeshellarg('/'.$tid.'/comando'), escapeshellarg($payload));
         $saida = shell_exec($cmd);
         try {
             $pdo->prepare("INSERT INTO iot_comandos (topico_id,comando,payload,enviado_por) VALUES (?,?,?,?)")
@@ -169,6 +169,30 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
     box-shadow:0 4px 12px rgba(0,0,0,.18);}
 #toastIoT.sucesso{background:#d4edda;color:#155724;border:1px solid #c3e6cb;}
 #toastIoT.erro   {background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;}
+
+/* Nome principal (banco) e sub-id */
+.iot-nome-principal{font-size:.95rem;font-weight:800;color:#212529;line-height:1.25;margin-top:2px;}
+.iot-id-sub{font-size:.68rem;color:#999;font-family:monospace;margin-top:1px;}
+/* Controles AC */
+.ac-controles{margin-top:8px;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;}
+.ac-btns-liga{display:flex;gap:5px;margin-bottom:7px;}
+.btn-ac-liga,.btn-ac-desliga{flex:1;padding:5px 6px;border:none;border-radius:5px;
+    font-size:.72rem;font-weight:700;cursor:pointer;transition:background .15s;}
+.btn-ac-liga{background:#e8f5e9;color:#2e7d32;}.btn-ac-liga:hover{background:#c8e6c9;}
+.btn-ac-desliga{background:#ffebee;color:#c62828;}.btn-ac-desliga:hover{background:#ffcdd2;}
+.ac-temp-ctrl{display:flex;align-items:center;gap:5px;justify-content:center;margin-top:4px;}
+.btn-temp-adj{width:28px;height:28px;border-radius:50%;border:1px solid #ced4da;background:#fff;
+    font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    color:#495057;transition:background .15s;padding:0;}
+.btn-temp-adj:hover{background:#e9ecef;}
+.ac-temp-display{display:flex;align-items:baseline;gap:1px;min-width:54px;justify-content:center;
+    background:#f8f9fa;border:1px solid #dee2e6;border-radius:6px;padding:3px 8px;}
+.ac-temp-num{font-size:1.3rem;font-weight:800;color:#0d6efd;line-height:1;}
+.ac-temp-deg{font-size:.75rem;color:#6c757d;font-weight:600;}
+.btn-temp-send{width:28px;height:28px;border-radius:50%;border:none;background:#0d6efd;
+    color:#fff;font-size:.75rem;cursor:pointer;display:flex;align-items:center;
+    justify-content:center;padding:0;transition:background .15s;}
+.btn-temp-send:hover{background:#0b5ed7;}
 </style>
 </head>
 <body>
@@ -241,8 +265,12 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
             <span class="iot-dot"></span><?php echo ucfirst($st); ?>
             <i class="fas <?php echo $icone; ?> ml-auto text-muted" style="font-size:.85rem"></i>
         </div>
+        <?php if($nome): ?>
+        <div class="iot-nome-principal"><?php echo htmlspecialchars($nome); ?></div>
+        <div class="iot-id-sub"><?php echo htmlspecialchars($d['topico_id']); ?></div>
+        <?php else: ?>
         <div class="iot-id"><?php echo htmlspecialchars($d['topico_id']); ?></div>
-        <?php if($nome): ?><div class="iot-nome"><?php echo htmlspecialchars($nome); ?></div><?php endif; ?>
+        <?php endif; ?>
         <?php if($d['mac']??null): ?><div class="iot-mac"><?php echo htmlspecialchars($d['mac']); ?></div><?php endif; ?>
         <div class="iot-meta">
             <?php if($d['rssi']??null): ?><span><i class="fas fa-wifi"></i> <?php echo $d['rssi']; ?> dBm</span><?php endif; ?>
@@ -250,8 +278,22 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
         </div>
         <div class="iot-tipo"><i class="fas <?php echo $icone; ?>"></i><?php echo $label; ?></div>
         <?php if($ua): ?>
+        <?php
+            // Resolve nome do crachá via cadastroiot.cadastro
+            static $nomesCracha = null;
+            if($nomesCracha === null){
+                $nomesCracha = [];
+                try {
+                    $pdoC = new PDO("mysql:host=localhost;dbname=cadastroiot;charset=utf8mb4","root","BdP@25!",
+                        [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+                    foreach($pdoC->query("SELECT cracha, nome FROM cadastro")->fetchAll(PDO::FETCH_ASSOC) as $c)
+                        $nomesCracha[$c['cracha']] = $c['nome'];
+                } catch(Exception $e){}
+            }
+            $nomeUa = $nomesCracha[$ua['cracha']] ?? $ua['cracha'];
+        ?>
         <div class="iot-acesso">
-            <i class="fas fa-id-card mr-1"></i><?php echo htmlspecialchars($ua['nome'] ?? $ua['cracha']); ?>
+            <i class="fas fa-id-card mr-1"></i><?php echo htmlspecialchars($nomeUa); ?>
             <span style="opacity:.7"><?php echo date('d/m H:i', strtotime($ua['data_hora'])); ?></span>
         </div>
         <?php endif; ?>
@@ -281,8 +323,12 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
             <span class="iot-dot"></span><?php echo ucfirst($st); ?>
             <i class="fas fa-snowflake ml-auto text-muted" style="font-size:.85rem"></i>
         </div>
+        <?php if($nome): ?>
+        <div class="iot-nome-principal"><?php echo htmlspecialchars($nome); ?></div>
+        <div class="iot-id-sub"><?php echo htmlspecialchars($d['topico_id']); ?></div>
+        <?php else: ?>
         <div class="iot-id"><?php echo htmlspecialchars($d['topico_id']); ?></div>
-        <?php if($nome): ?><div class="iot-nome"><?php echo htmlspecialchars($nome); ?></div><?php endif; ?>
+        <?php endif; ?>
         <?php if($d['mac']??null): ?><div class="iot-mac"><?php echo htmlspecialchars($d['mac']); ?></div><?php endif; ?>
         <div class="iot-meta">
             <?php if($d['rssi']??null): ?><span><i class="fas fa-wifi"></i> <?php echo $d['rssi']; ?> dBm</span><?php endif; ?>
@@ -291,6 +337,33 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
         <?php if($d['marca']??null): ?>
         <div class="iot-marca"><i class="fas fa-tag mr-1"></i><?php echo htmlspecialchars(ucfirst($d['marca'])); ?></div>
         <?php endif; ?>
+        <!-- Controles AC -->
+        <div class="ac-controles" onclick="event.stopPropagation()">
+            <div class="ac-btns-liga">
+                <button class="btn-ac-liga" onclick="cmdAC('<?php echo $d['topico_id']; ?>','liga')">
+                    <i class="fas fa-power-off"></i> Ligar
+                </button>
+                <button class="btn-ac-desliga" onclick="cmdAC('<?php echo $d['topico_id']; ?>','desliga')">
+                    <i class="fas fa-power-off"></i> Desligar
+                </button>
+            </div>
+            <div class="ac-temp-ctrl">
+                <button class="btn-temp-adj" onclick="ajustarTemp('<?php echo $d['topico_id']; ?>',-1)">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <div class="ac-temp-display" id="temp-<?php echo $d['topico_id']; ?>">
+                    <span class="ac-temp-num">22</span>
+                    <span class="ac-temp-deg">°C</span>
+                </div>
+                <button class="btn-temp-adj" onclick="ajustarTemp('<?php echo $d['topico_id']; ?>',+1)">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn-temp-send" onclick="enviarTemp('<?php echo $d['topico_id']; ?>')"
+                        title="Aplicar temperatura">
+                    <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
     </div>
     <?php endforeach; ?>
     </div>
@@ -305,11 +378,11 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
     </div>
     <?php endif; ?>
             </tr>
-            <!--<//?php endforeach; ?>-->
+            <?php //endforeach; ?>
             </tbody>
         </table>
         </div>
-    <!--<//?php endif; ?>-->
+    <?php //endif; ?>
     </div>
 
 </div>
@@ -324,14 +397,18 @@ $tipoIcones = ['porta_ambiente'=>'fa-door-open','portao_corredor'=>'fa-archway',
     </div>
     <div class="modal-body">
         <div id="modalDispInfo" class="mb-3" style="font-size:.85rem;line-height:1.9"></div>
-        <hr>
-        <p class="mb-1" style="font-size:.82rem;font-weight:700"><i class="fas fa-paper-plane mr-1"></i>Enviar comando MQTT</p>
-        <div class="d-flex" style="gap:8px">
-            <input type="text" id="modalCmdInput" class="form-control form-control-sm"
-                   placeholder="Ex: abrir, ligar, ON, OFF..." style="flex:1">
-            <button class="btn btn-warning btn-sm" onclick="enviarComando()">Enviar</button>
+        <div id="modalCmdArea" style="display:none">
+            <hr>
+            <p class="mb-1" style="font-size:.82rem;font-weight:700">
+                <i class="fas fa-paper-plane mr-1"></i>Enviar comando
+            </p>
+            <div class="d-flex" style="gap:8px">
+                <input type="text" id="modalCmdInput" class="form-control form-control-sm"
+                       placeholder="Payload..." style="flex:1">
+                <button class="btn btn-warning btn-sm" onclick="enviarComando()">Enviar</button>
+            </div>
+            <small class="text-muted">Publica em <code id="modalCmdTopico"></code></small>
         </div>
-        <small class="text-muted">Publica em <code id="modalCmdTopico"></code></small>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
@@ -365,26 +442,50 @@ function abrirModal(d){
               + ' — <span class="text-muted">'+esc(ua.data_hora)+'</span></div>';
     }
     document.getElementById('modalDispInfo').innerHTML = html||'<em class="text-muted">Sem dados.</em>';
-    document.getElementById('modalCmdTopico').textContent = '/'+d.topico_id+'/cmd';
+    document.getElementById('modalCmdTopico').textContent = '/'+d.topico_id+'/comando';
     document.getElementById('modalCmdInput').value = '';
+    // Mostra campo de comando apenas para ACs (portas não recebem comandos)
+    var cmdArea = document.getElementById('modalCmdArea');
+    if(cmdArea) cmdArea.style.display = d.tipo === 'ar_condicionado' ? '' : 'none';
     $('#modalDisp').modal('show');
+}
+
+/* ── Controle AC inline nos cards ── */
+var _acTemps = {}; // {topico_id: temp_atual}
+
+function ajustarTemp(tid, delta){
+    if(!_acTemps[tid]) _acTemps[tid] = 22;
+    _acTemps[tid] = Math.min(30, Math.max(16, _acTemps[tid] + delta));
+    var el = document.getElementById('temp-' + tid);
+    if(el) el.querySelector('.ac-temp-num').textContent = _acTemps[tid];
+}
+
+function enviarTemp(tid){
+    if(!_acTemps[tid]) _acTemps[tid] = 22;
+    _publicar(tid, String(_acTemps[tid]));
+}
+
+function cmdAC(tid, cmd){
+    _publicar(tid, cmd);
+}
+
+function _publicar(tid, payload){
+    var fd = new FormData();
+    fd.append('acao','comando');
+    fd.append('topico_id', tid);
+    fd.append('payload', payload);
+    fetch('monitorIoT.php',{method:'POST',body:fd})
+        .then(function(r){return r.json();})
+        .then(function(res){ mostrarToast(res.ok?'Enviado: '+payload:res.msg||'Erro.', res.ok?'sucesso':'erro'); })
+        .catch(function(){ mostrarToast('Erro de comunicação.','erro'); });
 }
 
 function enviarComando(){
     if(!_dispAtual) return;
     var payload = document.getElementById('modalCmdInput').value.trim();
     if(!payload){ mostrarToast('Digite um comando.','erro'); return; }
-    var fd = new FormData();
-    fd.append('acao','comando');
-    fd.append('topico_id', _dispAtual.topico_id);
-    fd.append('payload', payload);
-    fetch('monitorIoT.php',{method:'POST',body:fd})
-        .then(function(r){return r.json();})
-        .then(function(res){
-            mostrarToast(res.ok?'Comando enviado!':res.msg||'Erro.',res.ok?'sucesso':'erro');
-            if(res.ok){ document.getElementById('modalCmdInput').value=''; }
-        })
-        .catch(function(){ mostrarToast('Erro de comunicação.','erro'); });
+    _publicar(_dispAtual.topico_id, payload);
+    document.getElementById('modalCmdInput').value='';
 }
 
 /* ── Auto-refresh ── */

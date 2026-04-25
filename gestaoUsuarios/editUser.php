@@ -17,6 +17,7 @@ if(!isset($_SESSION['sLogin'])){
 $id          = intval(trim($_POST['id']       ?? 0));
 $registro    = trim($_POST['registro']        ?? '');
 $nome        = trim($_POST['nome']            ?? '');
+$apelido        = trim($_POST['apelido']            ?? '');
 $email       = trim($_POST['email']           ?? '');
 $usuarioNovo = trim($_POST['user']            ?? '');
 $senha       = $_POST['senha']                ?? '';
@@ -49,19 +50,19 @@ try{
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("
             UPDATE usuarios
-            SET nome=?, usuario=?, email=?, senha=?,
+            SET nome=?, usuario=?, apelido=?, email=?, senha=?,
                 perfil=?, registro=?, primeiro_login=1
             WHERE id=?
         ");
-        $stmt->execute([$nome, $usuarioNovo, $email, $senhaHash, $perfil, $registro, $id]);
+        $stmt->execute([$nome, $usuarioNovo, $apelido, $email, $senhaHash, $perfil, $registro, $id]);
     } else {
         $stmt = $pdo->prepare("
             UPDATE usuarios
-            SET nome=?, usuario=?, email=?,
+            SET nome=?, usuario=?, email=?, apelido=?,
                 perfil=?, registro=?
             WHERE id=?
         ");
-        $stmt->execute([$nome, $usuarioNovo, $email, $perfil, $registro, $id]);
+        $stmt->execute([$nome, $usuarioNovo, $email, $apelido, $perfil, $registro, $id]);
     }
 
     /* ── E-MAIL APENAS SE SENHA FOI ALTERADA ── */

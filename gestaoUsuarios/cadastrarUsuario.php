@@ -150,7 +150,11 @@
             </div>
             <div class="form-group">
                 <label for="user">Usuário</label>
-                <input type="text" id="user" name="user" placeholder="usuario" readonly required>
+                <input type="text" id="user" name="user" placeholder="Usuario" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="apelido">Apelido</label>
+                <input type="text" id="apelido" name="apelido" placeholder="Apelido" readonly required>
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>

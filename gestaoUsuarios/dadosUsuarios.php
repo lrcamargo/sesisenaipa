@@ -32,7 +32,7 @@ $totalFiltered = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 $stmt = $pdo->query("SELECT COUNT(*) as total FROM usuarios");
 $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-$sql = "SELECT id, registro, nome, usuario, status, perfil
+$sql = "SELECT id, registro, nome, usuario, apelido, status, perfil
         FROM usuarios
         $where
         ORDER BY status DESC, nome ASC

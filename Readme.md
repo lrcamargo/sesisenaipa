@@ -1,5 +1,10 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
+## Versão intranet: 3.2
+- Gestão de turmas: férias, aperfeiçoamento.
+- Monitor IoT - integração com portas e ar (leitura de status e dados).
+- Monitor IoT - envio da planta da escola e visualização.
+
 ## Versão intranet: 3.1
 - Leitura de horário do Excel - painel de gestão de instrutores e meus horários.
 - Monitor IoT - integração com portas e ar (leitura de status e dados).
@@ -71,16 +76,20 @@ Recursos da versão:
 - Login externo - alunos
 - Agenda laboratório v1.3 - 
 
-## Em desenvolvimento (update 02/04/2026):
+## Em desenvolvimento (update 19/04/2026):
+- Monitoramento e interface de monitor/controle IoT.
 - Atualização de layout - sistema sirene
-- Gestão de estoque
+- Gestão de estoque - cadastro de produtos
 - Atualizar sistema diretamente pelo GitHub e automaticamente
 - Integrar/criar botão centralizado para todos os sistemas internos *catraca, ar, portas*
 - Monitoramento dos dispositivos IoT.
+- Serivço para monitoramento de IoT automático.
+- Script para cadastrar na catraca os usuários de catraca offline.
+- Criação de turmas de aperfeiçoamento manualmente.
+- Cadastro de férias de turmas e instrutores.
 
 ## A desenvolver (update 02/04/2026):
 - Deploy automático por script às madrugadas.
-- Script para cadastrar na catraca os usuários de catraca offline.
 - Sistema de login: envio de e-mail automático na criação de usuário e na alteração de senha.
 - Reserva de laboratórios: envio de e-mail para reprovações ou reservas feitas pela supervisão; Adicionar aprovação automática; Fila de e-mails de comunicados; API para node-red; apagar registros antigos na base de histórico (cancelados/reprovados).
 

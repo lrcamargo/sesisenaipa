@@ -43,6 +43,7 @@ $registro = trim($_POST['registro'] ?? '');
 $nome     = trim($_POST['nome']     ?? '');
 $email    = trim($_POST['email']    ?? '');
 $usuario  = trim($_POST['user']     ?? '');
+$apelido  = trim($_POST['apelido']     ?? '');
 $senha    = $_POST['senha']          ?? '';
 $perfil   = trim($_POST['perfil']   ?? '');
 
@@ -68,9 +69,9 @@ $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
 try{
     $pdo->prepare("
-        INSERT INTO usuarios (registro, nome, email, usuario, senha, perfil, status, primeiro_login)
+        INSERT INTO usuarios (registro, nome, email, usuario, apelido, senha, perfil, status, primeiro_login)
         VALUES (?, ?, ?, ?, ?, ?, 1, 1)
-    ")->execute([$registro, $nome, $email, $usuario, $senhaHash, $perfil]);
+    ")->execute([$registro, $nome, $email, $usuario, $apelido, $senhaHash, $perfil]);
 
 } catch(PDOException $e){
     error_log("[cadUser] INSERT: " . $e->getMessage());

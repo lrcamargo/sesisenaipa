@@ -1,33 +1,119 @@
 {
   "106": {
     "topico_id": "106",
-    "status": "offline",
+    "status": "online",
     "device_name": "IOT_Acess_106",
     "mac": "F0:24:F9:44:98:CC",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -55,
-    "ultima_vez": "2026-04-18 19:40:48",
+    "rssi": -57,
+    "ultima_vez": "2026-04-24 21:16:22",
     "ultimo_acesso": {
-      "cracha": "E347EAD",
-      "nome": "Max Machado",
-      "data_hora": "2026-04-17 18:13:20"
-    }
+      "cracha": "39955C",
+      "data_hora": "2026-04-24 15:09:41"
+    },
+    "historico_acessos": [
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 15:09:41"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 14:59:04"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 14:50:13"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-24 11:58:03"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-23 18:31:52"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:17:01"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:46:07"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:05:22"
+      },
+      {
+        "cracha": "832F4B",
+        "data_hora": "2026-04-23 15:50:16"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:27:11"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 14:36:16"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-23 08:32:12"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-22 20:58:21"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-22 20:05:51"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 18:23:30"
+      }
+    ]
   },
   "103": {
     "topico_id": "103",
-    "status": "offline",
+    "status": "online",
     "device_name": "IOT_Acess_103",
     "mac": "34:5F:45:AB:23:80",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -58,
-    "ultima_vez": "2026-04-18 19:40:48",
+    "rssi": -62,
+    "ultima_vez": "2026-04-24 14:21:10",
     "ultimo_acesso": {
-      "cracha": "53786FC",
-      "nome": "Fabricio",
-      "data_hora": "2026-04-17 17:59:07"
-    }
+      "cracha": "D33114D",
+      "data_hora": "2026-04-24 17:58:53"
+    },
+    "historico_acessos": [
+      {
+        "cracha": "D33114D",
+        "data_hora": "2026-04-24 17:58:53"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 13:00:23"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-24 12:14:10"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-24 08:40:58"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-23 20:54:23"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-23 18:17:28"
+      }
+    ]
   },
   "102": {
     "topico_id": "102",
@@ -36,71 +122,561 @@
     "mac": "F0:24:F9:45:6C:FC",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -48,
-    "ultima_vez": "2026-04-18 21:35:16",
+    "rssi": -52,
+    "ultima_vez": "2026-04-24 20:33:20",
     "ultimo_acesso": {
-      "cracha": "397C9C",
-      "nome": "Jonas barbora",
-      "data_hora": "2026-04-18 15:52:08"
+      "cracha": "E347EAD",
+      "data_hora": "2026-04-24 17:01:52"
     },
     "tipo": "porta_ambiente",
-    "nomeAmbiente": "102B"
+    "nomeAmbiente": "102B",
+    "historico_acessos": [
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 17:01:52"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 15:18:34"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 15:13:43"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 15:10:20"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 15:08:12"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 15:06:14"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 14:44:46"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 14:26:08"
+      },
+      {
+        "cracha": "35D22E",
+        "data_hora": "2026-04-24 14:06:01"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-24 14:01:37"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 13:51:24"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 11:42:33"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-24 10:43:21"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 10:24:56"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 10:21:13"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 10:11:07"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 10:01:57"
+      },
+      {
+        "cracha": "35D22E",
+        "data_hora": "2026-04-24 09:51:20"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 09:48:31"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 09:41:24"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 09:31:42"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 08:15:40"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 21:09:36"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 20:50:24"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:25:00"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:17:29"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:46:32"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:24:29"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:19:24"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:50:57"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:28:06"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:17:02"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-23 15:16:26"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 13:56:02"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-22 18:30:20"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-22 17:09:16"
+      }
+    ]
   },
   "101": {
     "topico_id": "101",
-    "status": "offline",
+    "status": "online",
     "device_name": "IOT_Acess_101",
     "mac": "EC:62:60:B2:9A:5C",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -63,
-    "ultima_vez": "2026-04-18 19:40:48",
+    "rssi": -60,
+    "ultima_vez": "2026-04-24 14:19:52",
     "ultimo_acesso": {
-      "cracha": "53786FC",
-      "nome": "Fabricio",
-      "data_hora": "2026-04-17 18:49:46"
-    }
+      "cracha": "D33114D",
+      "data_hora": "2026-04-24 20:02:56"
+    },
+    "historico_acessos": [
+      {
+        "cracha": "D33114D",
+        "data_hora": "2026-04-24 20:02:56"
+      },
+      {
+        "cracha": "D33114D",
+        "data_hora": "2026-04-24 18:04:07"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-24 13:04:34"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 12:59:19"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-24 12:51:20"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-24 12:16:31"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-24 11:57:46"
+      },
+      {
+        "cracha": "F3E957E",
+        "data_hora": "2026-04-24 10:39:56"
+      },
+      {
+        "cracha": "35D22E",
+        "data_hora": "2026-04-24 10:20:18"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 10:01:14"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 09:54:42"
+      },
+      {
+        "cracha": "D3D2B614",
+        "data_hora": "2026-04-24 09:19:01"
+      },
+      {
+        "cracha": "73FE9C",
+        "data_hora": "2026-04-23 19:25:26"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:17:06"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:46:12"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:42:48"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:12:00"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:05:06"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:51:17"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:27:48"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:25:48"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:24:26"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:17:21"
+      },
+      {
+        "cracha": "F3E957E",
+        "data_hora": "2026-04-23 14:32:33"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-23 13:00:24"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 12:59:21"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 12:57:08"
+      },
+      {
+        "cracha": "F3E957E",
+        "data_hora": "2026-04-23 12:08:32"
+      },
+      {
+        "cracha": "D3D2B614",
+        "data_hora": "2026-04-23 11:41:40"
+      },
+      {
+        "cracha": "63A5CAD",
+        "data_hora": "2026-04-23 11:10:26"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-23 07:44:07"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 20:48:40"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 19:49:12"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-22 19:47:54"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 18:26:08"
+      }
+    ]
   },
   "107": {
     "topico_id": "107",
     "status": "online",
-    "ultima_vez": "2026-04-19 19:56:42",
+    "ultima_vez": "2026-04-24 15:24:18",
     "device_name": "IOT_Acess_107",
     "mac": "CC:7B:5C:1E:EE:08",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -69,
+    "rssi": -57,
     "tipo": "porta_ambiente",
-    "nomeAmbiente": null
+    "nomeAmbiente": "107B",
+    "ultimo_acesso": {
+      "cracha": "D33114D",
+      "data_hora": "2026-04-24 19:47:04"
+    },
+    "historico_acessos": [
+      {
+        "cracha": "D33114D",
+        "data_hora": "2026-04-24 19:47:04"
+      },
+      {
+        "cracha": "B3BE34D",
+        "data_hora": "2026-04-24 16:11:21"
+      },
+      {
+        "cracha": "B3BE34D",
+        "data_hora": "2026-04-24 16:05:11"
+      },
+      {
+        "cracha": "B3BE34D",
+        "data_hora": "2026-04-24 15:53:12"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 15:14:14"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 11:27:17"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-24 09:34:15"
+      },
+      {
+        "cracha": "31D26D",
+        "data_hora": "2026-04-24 09:30:37"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 08:38:48"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 08:36:31"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-24 08:15:16"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 07:49:24"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 07:48:42"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 07:36:15"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-24 07:33:51"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:16:57"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:42:54"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:05:24"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-23 13:14:04"
+      },
+      {
+        "cracha": "F37654E",
+        "data_hora": "2026-04-23 12:37:39"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-23 11:44:23"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-23 11:40:21"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-23 10:22:30"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-23 09:05:26"
+      },
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-23 08:05:46"
+      },
+      {
+        "cracha": "3B739D",
+        "data_hora": "2026-04-23 07:08:16"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-22 21:00:20"
+      },
+      {
+        "cracha": "83F674C",
+        "data_hora": "2026-04-22 21:00:11"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 18:30:26"
+      },
+      {
+        "cracha": "E3D514E",
+        "data_hora": "2026-04-22 16:51:55"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 15:54:29"
+      }
+    ]
   },
   "104": {
     "topico_id": "104",
-    "status": "offline",
+    "status": "online",
     "device_name": "IOT_Acess_104",
     "mac": "F0:24:F9:45:81:1C",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -54,
-    "ultima_vez": "2026-04-18 19:40:48",
+    "rssi": -71,
+    "ultima_vez": "2026-04-24 20:33:21",
     "ultimo_acesso": {
-      "cracha": "E347EAD",
-      "nome": "Max Machado",
-      "data_hora": "2026-04-17 20:03:17"
-    }
+      "cracha": "138CEC",
+      "data_hora": "2026-04-24 12:35:53"
+    },
+    "historico_acessos": [
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-24 12:35:53"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 21:07:14"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-23 19:14:38"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-23 19:12:47"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 18:17:25"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:46:26"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:24:19"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:24:13"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 16:19:30"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:28:00"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 15:17:13"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-23 14:34:55"
+      },
+      {
+        "cracha": "F3E957E",
+        "data_hora": "2026-04-23 13:17:39"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-23 13:15:44"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-23 09:54:04"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-23 09:03:57"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 20:20:24"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-22 20:19:52"
+      }
+    ]
   },
   "SESI": {
     "topico_id": "SESI",
-    "status": "online",
+    "status": "offline",
     "device_name": "IOT_Acess_SESI",
     "mac": "34:5F:45:AB:EC:EC",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -76,
-    "ultima_vez": "2026-04-19 19:08:00",
+    "rssi": -70,
+    "ultima_vez": "2026-04-22 14:09:53",
     "ultimo_acesso": {
       "cracha": "D36772D",
       "nome": "Rita",
-      "data_hora": "2026-04-18 06:02:56"
+      "registro": "9044920",
+      "data_hora": "2026-04-20 06:47:56"
     },
     "tipo": "porta_ambiente",
     "nomeAmbiente": null
@@ -112,8 +688,8 @@
     "mac": "D4:8C:49:58:54:44",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -56,
-    "ultima_vez": "2026-04-18 19:40:48",
+    "rssi": -49,
+    "ultima_vez": "2026-04-24 14:17:31",
     "tipo": "porta_ambiente",
     "nomeAmbiente": null
   },
@@ -123,6 +699,18 @@
     "tipo": "ar_condicionado",
     "marca": "hitachi",
     "status": "offline",
-    "ultima_vez": "2026-04-18 19:40:48"
+    "ultima_vez": "2026-04-22 14:09:53"
+  },
+  "comp1": {
+    "chave": "comp1",
+    "topico_id": "comp1",
+    "tipo": "porta_ambiente",
+    "status": "offline",
+    "device_name": "compressor",
+    "mac": null,
+    "wifi": "connected",
+    "mqtt_status": "connected",
+    "rssi": -68,
+    "ultima_vez": "2026-04-23 21:59:29"
   }
 }

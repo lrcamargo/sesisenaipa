@@ -1,10 +1,920 @@
 {
-  "gerado_em": "2026-04-17T13:15:19",
+  "gerado_em": "2026-04-24T21:02:28",
   "fonte": "/var/www/html/data/horarios.xlsm",
-  "total_registros": 8346,
+  "total_registros": 8351,
   "total_datas": 521,
   "erros_abas": 0,
   "dados": {
+    "2026-05-18": {
+      "AI-NR-10-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "NR 10 - SST",
+        "nome_turma": "Tec. Mecatrônica 01 - Trilhas nas Escolas"
+      },
+      "HT-MEP-01-M-26-13310": {
+        "instrutor": "Patrick",
+        "uc": "Metrologia",
+        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Tecnologia de Materiais",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HT-QUI-02-N-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Fundamentos de Química I",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HT-QUI-01-T-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Fundamentos de Química I",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-MET-01-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": "Projeto e Controle de Sistemas Automatizados",
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-MET-02-M-26-13310": {
+        "instrutor": "Tiago",
+        "uc": "1° Fundamentos da Eletrotécnica",
+        "nome_turma": "PRIMEIRO A"
+      },
+      "HT-AUT-03-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": "Instrumentação, Controle e Acionamentos Industriais - Prática",
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Max",
+        "uc": "Fundamentos Elétricos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Liliane",
+        "uc": "Rotinas de Apoio Administrativos a área de RH",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da Instrumentação",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Elétricos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Práticas Inovadoras",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Max",
+        "uc": "Máquinas Elétricas e Instalações Elétricas Industriais",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Tecnologia da Soldagem",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "José Rosa",
+        "uc": "Projeto de Inovação em Manutenção Industrial",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Giovani",
+        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-MEL-07-T-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-GEI-09-T-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
+      },
+      "AI-GEI-06-N-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Planejamento e Controle da Manutenção",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Técnicas de Controle",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
+    "2026-05-19": {
+      "AI-NR-10-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "NR 10 - SST",
+        "nome_turma": "Tec. Mecatrônica 01 - Trilhas nas Escolas"
+      },
+      "HT-MEP-01-M-26-13310": {
+        "instrutor": "Patrick",
+        "uc": "Desenho Técnico",
+        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Tecnologia de Materiais",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HT-QUI-02-N-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Fundamentos de Química I",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HT-QUI-01-T-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Fundamentos de Química I",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-MET-02-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": "Projeto e Controle de Sistemas Automatizados",
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-AUT-04-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": "Instrumentação, Controle e Acionamentos Industriais - Prática",
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-MET-01-M-26-13310": {
+        "instrutor": "Tiago",
+        "uc": "1°B Fundamentos da Eletrotécnica",
+        "nome_turma": "PRIMEIRO B - SALA 208 A"
+      },
+      "HT-MET-03-25-13310": {
+        "instrutor": "Eryson",
+        "uc": "2° Circuitos Eletropneumáticos e Eletro-hidráulicos Aplicados à Manufatura",
+        "nome_turma": "SEGUNDO"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Max",
+        "uc": "Fundamentos Elétricos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Liliane",
+        "uc": "Rotinas de Apoio Administrativos a área de RH",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da Instrumentação",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Elétricos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "CLP – Controlador lógico programável",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Tecnologia da Soldagem",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "José Rosa",
+        "uc": "Projeto de Inovação em Manutenção Industrial",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Giovani",
+        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-02-T-26-13310": {
+        "instrutor": "Clarice",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-MEL-07-T-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-GEI-09-T-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
+      },
+      "AI-GEI-06-N-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Planejamento e Controle da Manutenção",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Técnicas de Controle",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
+    "2026-05-20": {
+      "AI-NR-10-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "NR 10 - SST",
+        "nome_turma": "Tec. Mecatrônica 01 - Trilhas nas Escolas"
+      },
+      "HT-MEP-01-M-26-13310": {
+        "instrutor": "Patrick",
+        "uc": "Fundamentos Tecnologia Mecânica",
+        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Desenho Técnico",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HT-QUI-02-N-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Análises Microbiológicas",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HT-QUI-01-T-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Análises Microbiológicas",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-MET-01-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": "Projeto e Controle de Sistemas Automatizados - Prática",
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-MET-02-M-26-13310": {
+        "instrutor": "Tiago",
+        "uc": "1° Fundamentos da Eletrotécnica",
+        "nome_turma": "PRIMEIRO A"
+      },
+      "HT-MET-02-M-24-13310": {
+        "instrutor": "Eryson",
+        "uc": "3º Processos de Manufatura",
+        "nome_turma": "TERCEIRO"
+      },
+      "HT-AUT-03-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": "Acionamento para Sistemas Automatizados",
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Informática",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da Instrumentação",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "CLP – Controlador lógico programável",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Tecnologia da Soldagem",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "José Rosa",
+        "uc": "Projeto de Inovação em Manutenção Industrial",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Max",
+        "uc": "Circuitos Microcontrolados",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-02-T-26-13310": {
+        "instrutor": "Clarice",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-MEL-07-T-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-GEI-09-T-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
+      },
+      "AI-GEI-06-N-25-13310": {
+        "instrutor": "José Faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Planejamento e Controle da Manutenção",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Técnicas de Controle",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
+    "2026-05-21": {
+      "AI-NR-10-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "NR 10 - SST",
+        "nome_turma": "Tec. Mecatrônica 01 - Trilhas nas Escolas"
+      },
+      "HT-MEP-01-M-26-13310": {
+        "instrutor": "Patrick",
+        "uc": "Fundamentos Tecnologia Mecânica",
+        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Desenho Técnico",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HT-QUI-02-N-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Análises Microbiológicas",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HT-QUI-01-T-26-13310": {
+        "instrutor": "Matheus",
+        "uc": "Análises Microbiológicas",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HTELET-05-I-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Projetos Elétricos Prediais",
+        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-MET-02-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": "Projeto e Controle de Sistemas Automatizados - Prática",
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-AUT-04-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": "Acionamento para Sistemas Automatizados",
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-MET-03-25-13310": {
+        "instrutor": "Tiago",
+        "uc": "2° Acionamentos Eletroeletrônicos",
+        "nome_turma": "SEGUNDO"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Informática",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da Instrumentação",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HTELET-02-I-24-13310": {
+        "instrutor": "Max",
+        "uc": "Manutenção Elétrica Predial e Industrial",
+        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "CLP – Controlador lógico programável",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Tecnologia da Soldagem",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "José Rosa",
+        "uc": "Projeto de Inovação em Manutenção Industrial",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Max",
+        "uc": "Circuitos Microcontrolados",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Davi",
+        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-02-T-26-13310": {
+        "instrutor": "Clarice",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-MEL-07-T-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-GEI-09-T-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
+      },
+      "AI-GEI-06-N-25-13310": {
+        "instrutor": "José Faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Planejamento e Controle da Manutenção",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Sistemas de Automação Industrial",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Giovani",
+        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
+    "2026-05-22": {
+      "AI-NR-10-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "NR 10 - SST",
+        "nome_turma": "Tec. Mecatrônica 01 - Trilhas nas Escolas"
+      },
+      "HT-MEP-01-M-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde Segurança e Meio Ambiente - EAD",
+        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Tecnologia de Materiais - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HT-QUI-02-N-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Saúde, Segurança e Meio Ambiente -EaD",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HT-QUI-01-T-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Saúde, Segurança e Meio Ambiente -EaD",
+        "nome_turma": "Tecnico em Quimica - Noite"
+      },
+      "HTELET-05-I-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Projetos Elétricos Prediais",
+        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-MET-02-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": null,
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-MET-01-M-25-13310": {
+        "instrutor": "Leticia",
+        "uc": null,
+        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
+      },
+      "HT-AUT-04-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": null,
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-MET-01-M-26-13310": {
+        "instrutor": "Eryson",
+        "uc": "1°B Mecânica Aplicada a Sistemas Automatizados",
+        "nome_turma": "PRIMEIRO B - SALA 208 A"
+      },
+      "HT-AUT-03-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": null,
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Informática",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde, Segurança e Meio Ambiente - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
+      "HT-DCC-01-N-26-13310": {
+        "instrutor": "Rosane",
+        "uc": "Desenho Técnico para Projetos de Construção Civil  - EaD",
+        "nome_turma": "TEC_DESENHO_CONSTRUCAO_T6"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Tiago",
+        "uc": "Montagem e Manutenção de Sistemas Elétricos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Medições de Variáveis Físicas Industriais",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      },
+      "HTMECA-01-I-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Processos de Fabricação Mecânica",
+        "nome_turma": "TECNICO_MECANICA_25_SEMI"
+      },
+      "HTELET-02-I-24-13310": {
+        "instrutor": "Max",
+        "uc": "Manutenção Elétrica Predial e Industrial",
+        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção - Ead",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "CLP – Controlador lógico programável  - Ead",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Tecnologia da Soldagem  - Ead",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Manutenção e Operação de Sistemas Elétricos de Potência - SEP - Ead",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência - Ead",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II - Ead",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "José Rosa",
+        "uc": "Projeto de Inovação em Manutenção Industrial - Ead",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Giovani",
+        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0 - Ead",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Davi",
+        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-02-T-26-13310": {
+        "instrutor": "Clarice",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-MEL-07-T-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-GEI-09-T-25-13310": {
+        "instrutor": "Aline",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
+      },
+      "AI-GEI-06-N-25-13310": {
+        "instrutor": "José Faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Planejamento e Controle da Manutenção - Ead",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Lucas",
+        "uc": "Manufatura Mecânica Computadorizada - Ead",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Gabriel Robert",
+        "uc": "Técnicas de Controle - Ead",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
     "2026-03-30": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
@@ -3211,8 +4121,8 @@
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
-        "instrutor": "Leticia",
-        "uc": "Informática Básica",
+        "instrutor": "Thiago",
+        "uc": "Fundamentos da Mecânica aplicados a Refrigeração e Climatização",
         "nome_turma": "Tecnico em Refrigeração"
       },
       "HT-QUI-02-N-26-13310": {
@@ -3236,7 +4146,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Eryson",
+        "instrutor": "Davi",
         "uc": "1° Mecânica Aplicada a Sistemas Automatizados",
         "nome_turma": "PRIMEIRO A"
       },
@@ -3331,7 +4241,7 @@
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
       "AI-API-03-T-26-13310": {
-        "instrutor": "José Faria",
+        "instrutor": "Jose de Faria",
         "uc": "Elaboração de Documentos do Sistema da Qualidade",
         "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
@@ -3964,7 +4874,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Eryson",
+        "instrutor": "Davi",
         "uc": "1° Mecânica Aplicada a Sistemas Automatizados",
         "nome_turma": "PRIMEIRO A"
       },
@@ -5714,891 +6624,6 @@
       "HT-AUT-01-N-25-13310": {
         "instrutor": "Giovani",
         "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0 - Ead",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2026-05-18": {
-      "HT-MEP-01-M-26-13310": {
-        "instrutor": "Patrick",
-        "uc": "Metrologia",
-        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
-      },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Tecnologia de Materiais",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-QUI-02-N-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Fundamentos de Química I",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HT-QUI-01-T-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Fundamentos de Química I",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-MET-01-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": "Projeto e Controle de Sistemas Automatizados",
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-MET-02-M-26-13310": {
-        "instrutor": "Tiago",
-        "uc": "1° Fundamentos da Eletrotécnica",
-        "nome_turma": "PRIMEIRO A"
-      },
-      "HT-AUT-03-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": "Instrumentação, Controle e Acionamentos Industriais - Prática",
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Max",
-        "uc": "Fundamentos Elétricos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Liliane",
-        "uc": "Rotinas de Apoio Administrativos a área de RH",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Albert",
-        "uc": "Fundamentos da Instrumentação",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Elétricos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Práticas Inovadoras",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Max",
-        "uc": "Máquinas Elétricas e Instalações Elétricas Industriais",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Tecnologia da Soldagem",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "José Rosa",
-        "uc": "Projeto de Inovação em Manutenção Industrial",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Giovani",
-        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-MEL-07-T-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-GEI-09-T-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
-      },
-      "AI-GEI-06-N-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Planejamento e Controle da Manutenção",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Danilo",
-        "uc": "Manutenção Mecânica Aplicada",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Técnicas de Controle",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2026-05-19": {
-      "HT-MEP-01-M-26-13310": {
-        "instrutor": "Patrick",
-        "uc": "Desenho Técnico",
-        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
-      },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Tecnologia de Materiais",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-QUI-02-N-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Fundamentos de Química I",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HT-QUI-01-T-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Fundamentos de Química I",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-MET-02-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": "Projeto e Controle de Sistemas Automatizados",
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-AUT-04-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": "Instrumentação, Controle e Acionamentos Industriais - Prática",
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "HT-MET-01-M-26-13310": {
-        "instrutor": "Tiago",
-        "uc": "1°B Fundamentos da Eletrotécnica",
-        "nome_turma": "PRIMEIRO B - SALA 208 A"
-      },
-      "HT-MET-03-25-13310": {
-        "instrutor": "Eryson",
-        "uc": "2° Circuitos Eletropneumáticos e Eletro-hidráulicos Aplicados à Manufatura",
-        "nome_turma": "SEGUNDO"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Max",
-        "uc": "Fundamentos Elétricos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Liliane",
-        "uc": "Rotinas de Apoio Administrativos a área de RH",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Albert",
-        "uc": "Fundamentos da Instrumentação",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Elétricos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "CLP – Controlador lógico programável",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Tecnologia da Soldagem",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "José Rosa",
-        "uc": "Projeto de Inovação em Manutenção Industrial",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Giovani",
-        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-API-02-T-26-13310": {
-        "instrutor": "Clarice",
-        "uc": "Prática Inovadoras",
-        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
-      },
-      "AI-MEL-07-T-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-GEI-09-T-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
-      },
-      "AI-GEI-06-N-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Planejamento e Controle da Manutenção",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Danilo",
-        "uc": "Manutenção Mecânica Aplicada",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Técnicas de Controle",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2026-05-20": {
-      "HT-MEP-01-M-26-13310": {
-        "instrutor": "Patrick",
-        "uc": "Fundamentos Tecnologia Mecânica",
-        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
-      },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Desenho Técnico",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-QUI-02-N-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Análises Microbiológicas",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HT-QUI-01-T-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Análises Microbiológicas",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-MET-01-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": "Projeto e Controle de Sistemas Automatizados - Prática",
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-MET-02-M-26-13310": {
-        "instrutor": "Tiago",
-        "uc": "1° Fundamentos da Eletrotécnica",
-        "nome_turma": "PRIMEIRO A"
-      },
-      "HT-MET-02-M-24-13310": {
-        "instrutor": "Eryson",
-        "uc": "3º Processos de Manufatura",
-        "nome_turma": "TERCEIRO"
-      },
-      "HT-AUT-03-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": "Acionamento para Sistemas Automatizados",
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Informática",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Albert",
-        "uc": "Fundamentos da Instrumentação",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "CLP – Controlador lógico programável",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Tecnologia da Soldagem",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "José Rosa",
-        "uc": "Projeto de Inovação em Manutenção Industrial",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
-        "uc": "Circuitos Microcontrolados",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-API-02-T-26-13310": {
-        "instrutor": "Clarice",
-        "uc": "Prática Inovadoras",
-        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
-      },
-      "AI-MEL-07-T-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-GEI-09-T-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
-      },
-      "AI-GEI-06-N-25-13310": {
-        "instrutor": "José Faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Planejamento e Controle da Manutenção",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Danilo",
-        "uc": "Manutenção Mecânica Aplicada",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Técnicas de Controle",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2026-05-21": {
-      "HT-MEP-01-M-26-13310": {
-        "instrutor": "Patrick",
-        "uc": "Fundamentos Tecnologia Mecânica",
-        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
-      },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Desenho Técnico",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-QUI-02-N-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Análises Microbiológicas",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HT-QUI-01-T-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Análises Microbiológicas",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HTELET-05-I-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "Projetos Elétricos Prediais",
-        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-MET-02-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": "Projeto e Controle de Sistemas Automatizados - Prática",
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-AUT-04-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": "Acionamento para Sistemas Automatizados",
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "HT-MET-03-25-13310": {
-        "instrutor": "Tiago",
-        "uc": "2° Acionamentos Eletroeletrônicos",
-        "nome_turma": "SEGUNDO"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Informática",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Albert",
-        "uc": "Fundamentos da Instrumentação",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HTELET-02-I-24-13310": {
-        "instrutor": "Max",
-        "uc": "Manutenção Elétrica Predial e Industrial",
-        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "CLP – Controlador lógico programável",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Tecnologia da Soldagem",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "José Rosa",
-        "uc": "Projeto de Inovação em Manutenção Industrial",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
-        "uc": "Circuitos Microcontrolados",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Davi",
-        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-API-02-T-26-13310": {
-        "instrutor": "Clarice",
-        "uc": "Prática Inovadoras",
-        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
-      },
-      "AI-MEL-07-T-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-GEI-09-T-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
-      },
-      "AI-GEI-06-N-25-13310": {
-        "instrutor": "José Faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Planejamento e Controle da Manutenção",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Giovani",
-        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2026-05-22": {
-      "HT-MEP-01-M-26-13310": {
-        "instrutor": "Pompeu",
-        "uc": "Saúde Segurança e Meio Ambiente - EAD",
-        "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
-      },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Tecnologia de Materiais - EAD",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-QUI-02-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Saúde, Segurança e Meio Ambiente -EaD",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HT-QUI-01-T-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Saúde, Segurança e Meio Ambiente -EaD",
-        "nome_turma": "Tecnico em Quimica - Noite"
-      },
-      "HTELET-05-I-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "Projetos Elétricos Prediais",
-        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-MET-02-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": null,
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-MET-01-M-25-13310": {
-        "instrutor": "Leticia",
-        "uc": null,
-        "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      },
-      "HT-AUT-04-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": null,
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "HT-MET-01-M-26-13310": {
-        "instrutor": "Eryson",
-        "uc": "1°B Mecânica Aplicada a Sistemas Automatizados",
-        "nome_turma": "PRIMEIRO B - SALA 208 A"
-      },
-      "HT-AUT-03-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": null,
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Informática",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Pompeu",
-        "uc": "Saúde, Segurança e Meio Ambiente - EaD",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "HT-DCC-01-N-26-13310": {
-        "instrutor": "Rosane",
-        "uc": "Desenho Técnico para Projetos de Construção Civil  - EaD",
-        "nome_turma": "TEC_DESENHO_CONSTRUCAO_T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Tiago",
-        "uc": "Montagem e Manutenção de Sistemas Elétricos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Medições de Variáveis Físicas Industriais",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      },
-      "HTMECA-01-I-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Processos de Fabricação Mecânica",
-        "nome_turma": "TECNICO_MECANICA_25_SEMI"
-      },
-      "HTELET-02-I-24-13310": {
-        "instrutor": "Max",
-        "uc": "Manutenção Elétrica Predial e Industrial",
-        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção - Ead",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "CLP – Controlador lógico programável  - Ead",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Tecnologia da Soldagem  - Ead",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Manutenção e Operação de Sistemas Elétricos de Potência - SEP - Ead",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência - Ead",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II - Ead",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "José Rosa",
-        "uc": "Projeto de Inovação em Manutenção Industrial - Ead",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Giovani",
-        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0 - Ead",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Davi",
-        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-API-02-T-26-13310": {
-        "instrutor": "Clarice",
-        "uc": "Prática Inovadoras",
-        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
-      },
-      "AI-MEL-07-T-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC_07_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-GEI-09-T-25-13310": {
-        "instrutor": "Aline",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
-      },
-      "AI-GEI-06-N-25-13310": {
-        "instrutor": "José Faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "Aprendizagem Gestão Industrial - 06-25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Planejamento e Controle da Manutenção - Ead",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Lucas",
-        "uc": "Manufatura Mecânica Computadorizada - Ead",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Gabriel Robert",
-        "uc": "Técnicas de Controle - Ead",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
     },
@@ -9371,7 +9396,7 @@
         "nome_turma": "AP_MANT_ELETROMEC08"
       },
       "HT-MEC-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Danilo",
         "uc": "Desenvolvimento de Automação Mecânica",
         "nome_turma": "TECNICO_MECANICA01_T5"
       },

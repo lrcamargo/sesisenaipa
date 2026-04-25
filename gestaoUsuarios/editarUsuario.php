@@ -29,7 +29,7 @@
 
     if($idUsuario > 0){
         $stmt = $pdo->prepare("
-            SELECT id, registro, nome, email, usuario, perfil
+            SELECT id, registro, nome, email, usuario, apelido, perfil
             FROM usuarios
             WHERE id = ?
         ");
@@ -180,11 +180,18 @@
             <div class="form-group">
                 <label for="user">Usuário</label>
                 <input type="text" id="user" name="user"
-                       placeholder="usuario"
+                       placeholder="Usuario"
                        value="<?php echo htmlspecialchars($usuario['usuario'] ?? ''); ?>"
                        required>
             </div>
 
+            <div class="form-group">
+                <label for="apelido">Apelido</label>
+                <input type="text" id="apelido" name="apelido"
+                       placeholder="Apelido"
+                       value="<?php echo htmlspecialchars($usuario['apelido'] ?? ''); ?>"
+                       required>
+            </div>
             <!-- [#4] Senha não obrigatória ao editar -->
             <div class="form-group">
                 <label for="senha">Nova Senha</label>

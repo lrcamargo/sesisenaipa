@@ -6,7 +6,7 @@ date_default_timezone_set('America/Sao_Paulo');
 require_once __DIR__ . '/horariosHelper.php';
 
 /*
- * ocupacao_helper.php
+ * ocupacaoHelper.php
  * Lógica central de ocupação compartilhada entre painel.php e painel_logado.php.
  *
  * Dias da semana — bitmask (TINYINT):
@@ -114,22 +114,16 @@ function nomeCompletoInstrutor(PDO $pdo, string $nomeNaPlanilha): string {
 
     if(!$row){
         // Tentativa 2 — token em qualquer posição do nome (sobrenome/apelido)
-        /*$like = '%' . $token . '%';
+        $like = '%' . $token . '%';
         $stmt2 = $pdo->prepare("
             SELECT nome FROM usuarios
             WHERE perfil = 'Instrutor'
               AND LOWER(nome) LIKE ?
             LIMIT 1
-        ");*/
-        $stmt2 = $pdo->prepare("
-            SELECT apelido FROM usuarios
-            WHERE perfil = 'Instrutor'
-            AND LOWER(SUBSTRING_INDEX(apelido, ' ', 1)) = ?
-            LIMIT 1
         ");
-            $stmt2->execute([$like]);
-            $row = $stmt2->fetch(PDO::FETCH_ASSOC);
-        }
+        $stmt2->execute([$like]);
+        $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+    }
 
     $resultado = $row ? mb_strtoupper($row['nome']) : mb_strtoupper($nomeNaPlanilha);
     $cache[$token] = $resultado;
@@ -148,13 +142,83 @@ function calcularOcupacao(
     /* ── Reservas aprovadas/aguardando do dia ── */
     $stmtR = $pdo->prepare("
         SELECT r.laboratorio, r.horarioInicio, r.horarioFim,
-               r.turma, r.aprovado, u.nome AS solicitante
+               r.turma, r.aprovado, r.solicitante AS solicitanteId,
+               u.nome AS solicitante, u.registro AS solicitanteRegistro
         FROM reservas r
         JOIN usuarios u ON u.id = r.solicitante
         WHERE r.data = ? AND r.aprovado IN (0,1)
     ");
     $stmtR->execute([$data]);
     $reservas = $stmtR->fetchAll(PDO::FETCH_ASSOC);
+
+    /*
+     * Confirmação de presença via IoT — lê do iot_estado.json (sem banco).
+     *
+     * Fluxo:
+     * 1. Lê JSON de estado do mqttMonitor (histórico de acessos por porta)
+     * 2. Cruza MAC da porta com laboratorios.macPorta → sabe qual lab é qual porta
+     * 3. Para cada reserva aprovada: verifica se o crachá do solicitante
+     *    aparece no histórico da porta dentro da janela [início-15min, ∞]
+     * 4. Cruza crachá → registro via usuarios.cracha (sem abrir cadastroiot)
+     *
+     * Nota: usuarios.cracha deve conter o código do crachá — se não existir
+     * este campo, o cruzamento retorna vazio e o status fica 'ocupado' normal.
+     */
+    $acessosIoT = []; // [idLaboratorio] => [{cracha, data_hora}, ...]
+    try {
+        static $estadoIoT = null;
+        if($estadoIoT === null){
+            $arq = '/var/www/html/data/iot_estado.json';
+            $estadoIoT = file_exists($arq)
+                ? (json_decode(file_get_contents($arq), true) ?: [])
+                : [];
+        }
+
+        // Mapa MAC → idLaboratorio
+        $macParaLab = [];
+        $stmMac = $pdo->query("
+            SELECT idLaboratorio, macPorta FROM laboratorios
+            WHERE macPorta IS NOT NULL AND macPorta != ''
+        ");
+        foreach($stmMac->fetchAll(PDO::FETCH_ASSOC) as $m){
+            $macParaLab[strtoupper($m['macPorta'])] = $m['idLaboratorio'];
+        }
+
+        // Percorre dispositivos do JSON e coleta histórico de acessos
+        foreach($estadoIoT as $disp){
+            $mac = strtoupper($disp['mac'] ?? '');
+            if(!$mac || !isset($macParaLab[$mac])) continue;
+            $idLab    = $macParaLab[$mac];
+            $historico = $disp['historico_acessos'] ?? [];
+            if($disp['ultimo_acesso'] ?? null){
+                // Garante que último acesso está incluído
+                array_unshift($historico, $disp['ultimo_acesso']);
+            }
+            foreach($historico as $ac){
+                if(isset($ac['cracha']) && isset($ac['data_hora'])){
+                    if(!isset($acessosIoT[$idLab])) $acessosIoT[$idLab] = [];
+                    $acessosIoT[$idLab][] = [
+                        'cracha'    => $ac['cracha'],
+                        'data_hora' => $ac['data_hora'],
+                    ];
+                }
+            }
+        }
+    } catch(Exception $e){
+        $acessosIoT = [];
+    }
+
+    // Mapa crachá → registro (campo cracha na tabela usuarios, se existir)
+    $crachaParaRegistro = [];
+    try {
+        $cols = $pdo->query("SHOW COLUMNS FROM usuarios LIKE 'cracha'")->fetchAll();
+        if(!empty($cols)){
+            foreach($pdo->query("SELECT cracha, registro FROM usuarios WHERE cracha IS NOT NULL")->fetchAll(PDO::FETCH_ASSOC) as $u){
+                if($u['cracha'] && $u['registro'])
+                    $crachaParaRegistro[$u['cracha']] = $u['registro'];
+            }
+        }
+    } catch(Exception $e){}
 
     /* ── Vínculos turma→sala ── */
     $stmtV = $pdo->prepare("SELECT * FROM turma_sala");
@@ -211,11 +275,34 @@ function calcularOcupacao(
                 }
 
                 if($reservaDireta){
+                    $aprovado  = $reservaDireta['aprovado'] == 1;
+                    $registro  = $reservaDireta['solicitanteRegistro'] ?? '';
+
+                    // Verifica confirmação IoT:
+                    // Crachá do solicitante acessou a porta dentro da janela
+                    // [início da reserva - 15min, sem limite de fim]
+                    $confirmadoIoT = false;
+                    if($aprovado && $registro && isset($acessosIoT[$id])){
+                        $inicioReserva = strtotime($data.' '.$reservaDireta['horarioInicio']);
+                        $janelaInicio  = $inicioReserva - (15 * 60); // 15min antes
+                        foreach($acessosIoT[$id] as $ac){
+                            // Cruza crachá → registro
+                            $regAcesso = $crachaParaRegistro[$ac['cracha']] ?? null;
+                            if($regAcesso !== $registro) continue;
+                            // Verifica janela de tempo
+                            $tsAcesso = strtotime($ac['data_hora']);
+                            if($tsAcesso >= $janelaInicio){
+                                $confirmadoIoT = true;
+                                break;
+                            }
+                        }
+                    }
                     $resultado[$id][$turnoKey] = [
-                        'status'      => $reservaDireta['aprovado']==1 ? 'ocupado' : 'aguardando',
+                        'status'      => $confirmadoIoT ? 'confirmado'
+                                       : ($aprovado ? 'ocupado' : 'aguardando'),
                         'turma'       => $reservaDireta['turma'] ?? '',
-                        'sub'         => $reservaDireta['aprovado']==1 ? 'Reservado' : 'Aguardando',
-                        // Nome completo do banco, em maiúsculas
+                        'sub'         => $confirmadoIoT ? 'Confirmado ✓'
+                                       : ($aprovado ? 'Reservado' : 'Aguardando'),
                         'solicitante' => mb_strtoupper($reservaDireta['solicitante'] ?? ''),
                     ];
                 } else {
