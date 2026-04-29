@@ -45,15 +45,88 @@ $turnosConfig = [
 ];
 $cargas = [20, 25, 30, 40];
 
-$stmtInst = $pdo->prepare("SELECT id, nome, cargaHoraria, turnosTrabalho FROM usuarios WHERE perfil = 'Instrutor' ORDER BY nome");
+$stmtInst = $pdo->prepare("SELECT id, nome, apelido, cargaHoraria, turnosTrabalho FROM usuarios WHERE perfil = 'Instrutor' ORDER BY nome");
 $stmtInst->execute();
 $instrutores = $stmtInst->fetchAll(PDO::FETCH_ASSOC);
+
+/* ── Férias de instrutores na semana ── */
+$stmtInstFerias = $pdo->prepare("
+    SELECT u.nome, f.dataInicio, f.dataFim, f.descricao
+    FROM instrutor_ferias f
+    JOIN usuarios u ON u.id = f.idInstrutor
+    WHERE f.dataFim >= ? AND f.dataInicio <= ?
+");
+$stmtInstFerias->execute([$diasSemana[0], $diasSemana[5]]);
+$feriasPorInstrutor = [];
+foreach($stmtInstFerias->fetchAll(PDO::FETCH_ASSOC) as $fv){
+    $nomeNorm = normalizarNome($fv['nome']);
+    $di = new DateTime($fv['dataInicio']);
+    $df = new DateTime($fv['dataFim']);
+    $dc = clone $di;
+    while($dc <= $df){
+        $d = $dc->format('Y-m-d');
+        if($d >= $diasSemana[0] && $d <= $diasSemana[5])
+            $feriasPorInstrutor[$nomeNorm][$d] = $fv['descricao'];
+        $dc->modify('+1 day');
+    }
+}
+
+function instrutorEmFerias(string $nomeInstrutor, string $data): bool {
+    global $feriasPorInstrutor;
+    $nomeNorm = normalizarNome($nomeInstrutor);
+    if(isset($feriasPorInstrutor[$nomeNorm][$data])) return true;
+    foreach($feriasPorInstrutor as $k => $datas){
+        if(isset($datas[$data]) && (str_contains($nomeNorm, $k) || str_contains($k, $nomeNorm)))
+            return true;
+    }
+    return false;
+}
 
 $stmtVincCod = $pdo->query("SELECT codigoSistema, codigoExcel FROM turma_codigos_alt");
 $vinculosCodigos = [];
 foreach($stmtVincCod->fetchAll(PDO::FETCH_ASSOC) as $v){
     $vinculosCodigos[$v['codigoSistema']] = $v['codigoExcel'];
     $vinculosCodigos[$v['codigoExcel']]   = $v['codigoSistema'];
+}
+
+/* ── Férias das turmas na semana ── */
+$stmtFeriasTurmas = $pdo->prepare("
+    SELECT ft.codigoTurma, f.dataInicio, f.dataFim, f.descricao
+    FROM turma_ferias f
+    JOIN turma_ferias_turmas ft ON ft.idFerias = f.id
+    WHERE f.dataFim >= ? AND f.dataInicio <= ?
+");
+$stmtFeriasTurmas->execute([$diasSemana[0], $diasSemana[5]]);
+$feriasTurmas = [];
+foreach($stmtFeriasTurmas->fetchAll(PDO::FETCH_ASSOC) as $fv){
+    $di = new DateTime($fv['dataInicio']);
+    $df = new DateTime($fv['dataFim']);
+    $dc = clone $di;
+    while($dc <= $df){
+        $d = $dc->format('Y-m-d');
+        if($d >= $diasSemana[0] && $d <= $diasSemana[5])
+            $feriasTurmas[$fv['codigoTurma']][$d] = $fv['descricao'];
+        $dc->modify('+1 day');
+    }
+}
+
+/* ── Turmas APP manuais ativas na semana ── */
+$stmtApp = $pdo->prepare("
+    SELECT t.codigo, t.diasSemana,
+           tt.turno, tt.instrutor, COALESCE(l.nome,'Externo / In Company') AS nomeLab
+    FROM app_turmas t
+    JOIN app_turma_turnos tt ON tt.idTurma = t.id
+    LEFT JOIN laboratorios l ON l.idLaboratorio = tt.idLaboratorio
+    WHERE t.ativo = 1 AND t.dataInicio <= ? AND t.dataFim >= ?
+");
+$stmtApp->execute([$diasSemana[5], $diasSemana[0]]);
+$appTurmas = [];
+foreach($stmtApp->fetchAll(PDO::FETCH_ASSOC) as $ap){
+    $appTurmas[$ap['codigo']][$ap['turno']] = [
+        'instrutor'  => $ap['instrutor'],
+        'nomeLab'    => $ap['nomeLab'],
+        'diasSemana' => (int)$ap['diasSemana'],
+    ];
 }
 
 $stmtFer = $pdo->prepare("
@@ -74,6 +147,14 @@ foreach($stmtFer->fetchAll(PDO::FETCH_ASSOC) as $f){
     ];
 }
 
+function temFerias(string $codTurma, string $data): ?string {
+    global $feriasTurmas, $vinculosCodigos;
+    if(isset($feriasTurmas[$codTurma][$data])) return $feriasTurmas[$codTurma][$data];
+    $codAlt = $vinculosCodigos[$codTurma] ?? null;
+    if($codAlt && isset($feriasTurmas[$codAlt][$data])) return $feriasTurmas[$codAlt][$data];
+    return null;
+}
+
 function temFeriado(string $codTurma, string $data): ?array {
     global $feriadosSemana, $vinculosCodigos;
     if(!isset($feriadosSemana[$data])) return null;
@@ -87,8 +168,9 @@ function temFeriado(string $codTurma, string $data): ?array {
 }
 
 function ehTurmaSenai(string $cod): bool {
-    if(preg_match('/^(HT|AI|APP)-/i', $cod))  return true;
-    if(preg_match('/^EM-\w+-O\b/i',  $cod))   return true;
+    if(preg_match('/^EF-/i', $cod)) return false;
+    if(preg_match('/^(HT|AI|APP)-/i', $cod)) return true;
+    if(preg_match('/^EM-\w+-O\b/i',  $cod)) return true;
     return false;
 }
 function ehTurmaEM(string $cod): bool {
@@ -126,6 +208,7 @@ if($cacheJson && isset($cacheJson['dados'])){
 
 $todasTurmas = array_keys(array_merge($turmasPlanilha, $turmasAPI));
 foreach(array_keys($turmasAPI) as $c) if(!in_array($c,$todasTurmas)) $todasTurmas[] = $c;
+foreach(array_keys($appTurmas) as $c) if(!in_array($c,$todasTurmas)) $todasTurmas[] = $c;
 $todasTurmas = array_unique($todasTurmas);
 sort($todasTurmas);
 
@@ -147,34 +230,27 @@ foreach($vinculos as $v){
     $vincIdx[$v['codigoTurma']][$v['turno']][] = (int)$v['diasSemana'];
 }
 
-/* Mapa turma → idPredio externo (null = prédio principal) */
+/* Mapa turma → idPredio externo */
 $stmtPredioTurma = $pdo->query("
     SELECT tse.codigoTurma, se.idPredio, p.nome AS nomePredio
     FROM turma_sala_externa tse
     JOIN salas_externas se ON se.id = tse.idSala
     JOIN predios p ON p.id = se.idPredio
 ");
-$turmaParaPredio = []; // [codigoTurma] => ['id'=>idPredio, 'nome'=>nomePredio]
+$turmaParaPredio = [];
 foreach($stmtPredioTurma->fetchAll(PDO::FETCH_ASSOC) as $r){
     $turmaParaPredio[$r['codigoTurma']] = [
         'id'   => (int)$r['idPredio'],
         'nome' => mb_strtolower($r['nomePredio']),
     ];
 }
-// Nome parcial da escola com regra especial (case-insensitive)
 define('PREDIO_DUPLICATA_PERMITIDA', 'presidente bernardes');
-
 
 function instrutorNaData(string $cod, string $data): ?array {
     global $cacheJson;
     return $cacheJson['dados'][$data][$cod] ?? null;
 }
 
-
-/*
- * Abrevia nome: 1º + 2º token (se 2º for partícula, usa 1º + 3º)
- * JOSÉ DE FARIA TOLEDO → JOSÉ FARIA | GABRIEL HENRIQUE NOGUEIRA → GABRIEL HENRIQUE
- */
 function abreviarNome(string $nome): string {
     $particulas = ['DE','DA','DO','DOS','DAS','E','A','O'];
     $tokens = array_values(array_filter(explode(' ', mb_strtoupper(trim($nome)))));
@@ -196,28 +272,28 @@ function normalizarNome(string $s): string {
     return preg_replace('/[^a-z0-9 ]/','',$s);
 }
 
-/*
- * Mapa de resolução de nomes:
- * Passo 1 — indexa APENAS o primeiro nome de cada instrutor (prioridade máxima).
- *            Ex: "felipe" → FELIPE MATHEUS (não ERYSON FELIPE)
- * Passo 2 — indexa tokens subsequentes SÓ SE ainda não mapeados.
- *            Ex: "eryson" → ERYSON FELIPE FERNANDES (primeiro nome, sem conflito)
- * Resultado: a planilha escreve "Felipe" → resolve para FELIPE MATHEUS corretamente.
- */
 $mapaInstrutores = [];
 $particulas      = ['de','da','do','dos','das','e','a','o'];
 
-// Passo 1: somente primeiros nomes
 foreach($instrutores as $inst){
+    $apelido = trim($inst['apelido'] ?? '');
+    if(!$apelido) continue;
+    $tok = normalizarNome($apelido);
+    if($tok && !isset($mapaInstrutores[$tok]))
+        $mapaInstrutores[$tok] = mb_strtoupper($inst['nome']);
+}
+foreach($instrutores as $inst){
+    $apelido = trim($inst['apelido'] ?? '');
+    if($apelido) continue;
     $tokens = array_values(array_filter(explode(' ', normalizarNome($inst['nome']))));
     if(empty($tokens)) continue;
     $primeiro = $tokens[0];
-    if(strlen($primeiro) >= 3 && !in_array($primeiro, $particulas))
+    if(strlen($primeiro) >= 3 && !in_array($primeiro, $particulas) && !isset($mapaInstrutores[$primeiro]))
         $mapaInstrutores[$primeiro] = mb_strtoupper($inst['nome']);
 }
-
-// Passo 2: tokens subsequentes (sobrenomes/apelidos), sem sobrescrever
 foreach($instrutores as $inst){
+    $apelido = trim($inst['apelido'] ?? '');
+    if($apelido) continue;
     $tokens = array_values(array_filter(explode(' ', normalizarNome($inst['nome']))));
     foreach(array_slice($tokens, 1) as $tok){
         if(strlen($tok) < 3 || in_array($tok, $particulas)) continue;
@@ -246,7 +322,12 @@ function turnoDoCodigoTurma(string $cod): ?string {
 }
 
 function turmaDeveExibirNaTurno(string $cod, string $turno, array $diasSemana, array $diasBits): bool {
-    global $vincIdx, $cacheJson;
+    global $vincIdx, $cacheJson, $appTurmas;
+    if(isset($appTurmas[$cod][$turno])){
+        $mask = $appTurmas[$cod][$turno]['diasSemana'];
+        foreach($diasBits as $bit){ if($mask & $bit) return true; }
+        return false;
+    }
     if(isset($vincIdx[$cod][$turno])){
         foreach($diasSemana as $di => $data){
             if(turmaTemAulaHoje($cod, $turno, $diasBits[$di])) return true;
@@ -263,7 +344,7 @@ function turmaDeveExibirNaTurno(string $cod, string $turno, array $diasSemana, a
     return false;
 }
 
-/* ── POST: atualizar cache de horários (executa o script Python) ── */
+/* ── POST: atualizar cache ── */
 if($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualizar_cache'){
     ob_clean(); header('Content-Type: application/json');
     $script = '/var/www/html/scripts/gerarHorariosCache.py';
@@ -271,9 +352,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualiza
     if(file_exists($lock)){
         echo json_encode(['ok'=>false,'msg'=>'Atualização já em andamento. Aguarde.']);
     } else {
-        // Executa em background para não travar a requisição
         exec("nohup python3 {$script} >> /var/www/html/logs/horarios_cache.log 2>&1 &");
-        // Aguarda até 8s para o lock aparecer e desaparecer (script rápido)
         $inicio = time();
         while(!file_exists($lock) && time()-$inicio < 3) usleep(200000);
         echo json_encode(['ok'=>true,'msg'=>'Atualização iniciada. O cache será regenerado em instantes.']);
@@ -304,6 +383,54 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])){
 
 /* ── Alertas ── */
 $alertasEM = []; $alertasOutro = [];
+
+foreach($instrutores as $inst){
+    foreach($diasSemana as $di => $data){
+        if(!instrutorEmFerias($inst['nome'], $data)) continue;
+        // Planilha
+        if($cacheJson && isset($cacheJson['dados'][$data])){
+            foreach($cacheJson['dados'][$data] as $cod => $info){
+                if(empty($info['instrutor'])) continue;
+                $nomeNorm     = normalizarNome($inst['nome']);
+                $infoInstNorm = normalizarNome($info['instrutor']);
+                $apelido      = trim($inst['apelido'] ?? '');
+                $apelidoNorm  = $apelido ? normalizarNome($apelido) : '';
+                if($apelidoNorm && $infoInstNorm !== $apelidoNorm) continue;
+                if(!$apelidoNorm){
+                    $primeiro = explode(' ', $nomeNorm)[0] ?? '';
+                    if(!$primeiro || !str_contains($infoInstNorm, $primeiro)) continue;
+                }
+                foreach($turnosConfig as $tk => $tc){
+                    if(!turmaDeveExibirNaTurno($cod,$tk,$diasSemana,$diasBits)) continue;
+                    $alertasOutro[] = [
+                        'turma' => $cod,
+                        'turno' => $tc['label'],
+                        'dia'   => $diasNomes[$di].' '.date('d/m',strtotime($data)),
+                        'tipo'  => 'ferias_instrutor',
+                        'inst'  => mb_strtoupper($inst['nome']),
+                    ];
+                    break;
+                }
+            }
+        }
+        // APP manuais
+        foreach($appTurmas as $cod => $turnos){
+            foreach($turnos as $turno => $ap){
+                $bitDia = $diasBits[$di] ?? 0;
+                if(!($ap['diasSemana'] & $bitDia)) continue;
+                if(mb_strtoupper(trim($ap['instrutor'])) !== mb_strtoupper(trim($inst['nome']))) continue;
+                $alertasOutro[] = [
+                    'turma' => $cod,
+                    'turno' => $turnosConfig[$turno]['label'] ?? $turno,
+                    'dia'   => $diasNomes[$di].' '.date('d/m',strtotime($data)),
+                    'tipo'  => 'ferias_instrutor',
+                    'inst'  => mb_strtoupper($inst['nome']),
+                ];
+            }
+        }
+    }
+}
+
 foreach($todasTurmas as $cod){
     foreach($turnosConfig as $turnoKey => $tConf){
         if(!turmaDeveExibirNaTurno($cod, $turnoKey, $diasSemana, $diasBits)) continue;
@@ -317,63 +444,105 @@ foreach($todasTurmas as $cod){
             if(!$info || empty($info['instrutor'])){
                 $codExcel = $vinculosCodigos[$cod] ?? null;
                 if($codExcel){ $infoAlt = instrutorNaData($codExcel, $data); if($infoAlt && !empty($infoAlt['instrutor'])) continue; }
+                if(temFerias($cod, $data)) continue;
+                if(preg_match('/^APP-/i',$cod) && isset($appTurmas[$cod][$turnoKey])) continue;
                 $entry = ['turma'=>$cod,'turno'=>$tConf['label'],'dia'=>$diasNomes[$di].' '.date('d/m',strtotime($data)),'tipo'=>'sem_docente'];
                 if(ehTurmaEM($cod)) $alertasEM[] = $entry; else $alertasOutro[] = $entry;
             }
         }
     }
 }
+
+/* ── Duplicidade: planilha + APP ── */
 $instPorDiaTurno = [];
 foreach($todasTurmas as $cod){
     foreach($turnosConfig as $turnoKey => $tConf){
         foreach($diasSemana as $di => $data){
             $bit = $diasBits[$di];
+            if(temFerias($cod, $data)) continue;
             if(!turmaTemAulaHoje($cod,$turnoKey,$bit)) continue;
             $info = instrutorNaData($cod,$data);
             if(!$info || empty($info['instrutor'])) continue;
-            $instPorDiaTurno[$data][$turnoKey][$info['instrutor']][] = $cod;
+            $instPorDiaTurno[$data][$turnoKey][mb_strtolower(trim($info['instrutor']))][] = $cod;
         }
     }
 }
+// Adiciona turmas APP ao mapa de duplicidade
+// Usa o APELIDO do instrutor como chave (igual à planilha) para que colisões sejam detectadas
+foreach($appTurmas as $cod => $turnos){
+    foreach($turnos as $turno => $ap){
+        foreach($diasSemana as $di => $data){
+            $bitDia = $diasBits[$di];
+            if(!($ap['diasSemana'] & $bitDia)) continue;
+            if(temFerias($cod, $data)) continue;
+            // Resolve apelido do instrutor APP para bater com a chave da planilha
+            $nomeInstApp = mb_strtoupper(trim($ap['instrutor']));
+            // Busca apelido no mapa (inverso: nome completo → apelido)
+            $chaveApp = $nomeInstApp; // fallback: nome completo
+            foreach($GLOBALS['instrutores'] as $_i){
+                if(mb_strtoupper(trim($_i['nome'])) === $nomeInstApp){
+                    $chaveApp = !empty($_i['apelido'])
+                        ? mb_strtolower(trim($_i['apelido']))
+                        : mb_strtolower(explode(' ', trim($_i['nome']))[0]);
+                    break;
+                }
+            }
+            $instPorDiaTurno[$data][$turno][$chaveApp][] = $cod;
+        }
+    }
+}
+
 foreach($instPorDiaTurno as $data => $turnos){
     $di = array_search($data, $diasSemana);
     foreach($turnos as $turnoKey => $mapa){
         foreach($mapa as $inst => $turmasInst){
             if(count($turmasInst) < 2) continue;
-
-            /*
-             * Regra especial: E.E. Presidente Bernardes na sexta ou sábado.
-             * Instrutoras têm apenas 2 aulas por turma nesses dias,
-             * então podem cobrir 2 turmas — não é duplicata.
-             * Condições: todas as turmas no mesmo prédio (Presidente Bernardes)
-             *            E o dia é sexta (bit 16) ou sábado (bit 32).
-             */
-            $diaDaSemana = date('N', strtotime($data)); // 5=Sex, 6=Sáb
+            $diaDaSemana = date('N', strtotime($data));
             if(in_array($diaDaSemana, [5, 6])){
-                $prediosNomes = array_map(fn($c) => $turmaParaPredio[$c]['nome'] ?? '', $turmasInst);
-                $prediosIds   = array_unique(array_map(fn($c) => $turmaParaPredio[$c]['id'] ?? 0, $turmasInst));
-                $todasMesmoPredio = count($prediosIds) === 1 && $prediosIds[0] !== 0;
-                $ehPresidenteBernardes = $todasMesmoPredio &&
-                    str_contains(reset($prediosNomes), PREDIO_DUPLICATA_PERMITIDA);
-                if($ehPresidenteBernardes) continue;
+                $prediosIds = [];
+                foreach($turmasInst as $tc){
+                    if(isset($turmaParaPredio[$tc])){
+                        $prediosIds[] = $turmaParaPredio[$tc]['id'];
+                    } else {
+                        try {
+                            $stBP = $GLOBALS['pdo']->prepare("
+                                SELECT se.idPredio FROM turma_sala_externa tse
+                                JOIN salas_externas se ON se.id=tse.idSala
+                                WHERE tse.codigoTurma=? LIMIT 1
+                            ");
+                            $stBP->execute([$tc]);
+                            $rpB = $stBP->fetch(PDO::FETCH_ASSOC);
+                            if($rpB) $prediosIds[] = (int)$rpB['idPredio'];
+                        } catch(Exception $e){}
+                    }
+                }
+                $prediosIdsUniq = array_unique(array_filter($prediosIds));
+                if(count($prediosIdsUniq) !== 1) goto fim_presidente;
+                try {
+                    $stNome = $GLOBALS['pdo']->prepare("SELECT LOWER(nome) AS n FROM predios WHERE id=? LIMIT 1");
+                    $stNome->execute([reset($prediosIdsUniq)]);
+                    $rNome = $stNome->fetch(PDO::FETCH_ASSOC);
+                    if($rNome && str_contains($rNome['n'], PREDIO_DUPLICATA_PERMITIDA)) continue;
+                } catch(Exception $e){}
+                fim_presidente:
             }
-
-            $entry = ['turma'=>implode(' + ',$turmasInst),'turno'=>$turnosConfig[$turnoKey]['label'],
-                      'dia'=>$diasNomes[$di].' '.date('d/m',strtotime($data)),'tipo'=>'duplicado','inst'=>mb_strtoupper($inst)];
-            if(ehTurmaEM($turmasInst[0])) $alertasEM[] = $entry; else $alertasOutro[] = $entry;
+            // Resolve nome completo do instrutor a partir da chave lowercase
+            $nomeExibir = $mapaInstrutores[$inst] ?? mb_strtoupper($inst);
+            $entry = ['turma'=>implode(' + ',$turmasInst),'turno'=>$turnosConfig[$turnoKey]['label'] ?? $turnoKey,
+                      'dia'=>$diasNomes[$di].' '.date('d/m',strtotime($data)),'tipo'=>'duplicado','inst'=>$nomeExibir];
+            $primeiraT = $turmasInst[0];
+            if(ehTurmaEM($primeiraT)) $alertasEM[] = $entry; else $alertasOutro[] = $entry;
         }
     }
 }
 
 /* ── Pré-processa dados para o popup JS ── */
 $jsInstrutores = array_values(array_map(fn($i) => [
-    'nome'      => mb_strtoupper($i['nome']),
-    'bit'       => (int)($i['turnosTrabalho'] ?: 7),
-    'primeiro'  => mb_strtolower(explode(' ', trim($i['nome']))[0]),
+    'nome'     => mb_strtoupper($i['nome']),
+    'bit'      => (int)($i['turnosTrabalho'] ?: 7),
+    'primeiro' => mb_strtolower(trim($i['apelido'] ?? '') ?: explode(' ', trim($i['nome']))[0]),
 ], $instrutores));
 
-// Ocupa por dia/turno: [turno][data] = [primeiros nomes em minúsculo]
-// Inclui turmas COM vínculo (bitmask) E turmas SEM vínculo (só planilha)
 $jsOcupados = [];
 foreach(['manha','tarde','noite'] as $tk){
     $jsOcupados[$tk] = [];
@@ -384,13 +553,10 @@ foreach($todasTurmas as $cod){
         foreach($diasSemana as $di => $data){
             $temVinc = isset($vincIdx[$cod][$tk]);
             if($temVinc){
-                // Com vínculo: só conta se bitmask indicar aula neste dia
                 if(!turmaTemAulaHoje($cod,$tk,$diasBits[$di])) continue;
             } else {
-                // Sem vínculo: só inclui se a planilha tiver dado neste dia
                 $inf = instrutorNaData($cod,$data);
-                if(!$inf) continue; // sem dado na planilha = sem aula
-                // Filtra pelo turno do código (M/T/N); se indeterminado, inclui em todos
+                if(!$inf) continue;
                 $turnoCod = turnoDoCodigoTurma($cod);
                 if($turnoCod !== null && $turnoCod !== $tk) continue;
             }
@@ -400,6 +566,21 @@ foreach($todasTurmas as $cod){
         }
     }
 }
+foreach($instrutores as $inst){
+    $apelido = trim($inst['apelido'] ?? '');
+    $chaveMatch = $apelido
+        ? mb_strtolower($apelido)
+        : mb_strtolower(explode(' ',trim($inst['nome']))[0]);
+    foreach($diasSemana as $data){
+        if(!instrutorEmFerias($inst['nome'], $data)) continue;
+        foreach(['manha','tarde','noite'] as $tk){
+            if(!isset($jsOcupados[$tk][$data])) $jsOcupados[$tk][$data] = [];
+            if(!in_array($chaveMatch, $jsOcupados[$tk][$data]))
+                $jsOcupados[$tk][$data][] = $chaveMatch;
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -457,7 +638,6 @@ foreach($todasTurmas as $cod){
 .cel-sem-doc{background:#fff3cd;color:#856404;border-radius:3px;padding:2px 5px;font-size:.72rem;font-weight:600;}
 .th-hoje{background:#c07a00!important;}
 td.td-hoje{background:#fff9e6!important;}
-/* ── Cabeçalho clicável ── */
 .th-clicavel{cursor:pointer;}
 .th-clicavel:hover{background:#23272b!important;}
 .th-clicavel.ativo{background:#1a5276!important;outline:2px solid #aed6f1;}
@@ -486,7 +666,10 @@ td.td-hoje{background:#fff9e6!important;}
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0"><i class="fas fa-chalkboard-teacher mr-2"></i>Painel de Docentes</h4>
-        <div style="display:flex;gap:8px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a href="inconsistencias.php" class="btn btn-outline-warning btn-sm">
+                <i class="fas fa-exclamation-triangle mr-1"></i>Inconsistências
+            </a>
             <button class="btn btn-outline-success btn-sm" onclick="atualizarCache(this)"
                     title="Força a releitura do Excel e regenera o cache de horários">
                 <i class="fas fa-sync-alt mr-1"></i>Atualizar horários
@@ -514,7 +697,9 @@ td.td-hoje{background:#fff9e6!important;}
         <h6><i class="fas fa-exclamation-circle mr-1"></i>Atenção — ação necessária</h6>
         <?php foreach($alertasOutro as $al):
             $cls=$al['tipo']==='duplicado'?'duplicado':''; $icone=$al['tipo']==='duplicado'?'⚠️':'❌';
-            $txt=$al['tipo']==='sem_docente'?"{$icone} {$al['turma']} — sem docente — {$al['turno']} {$al['dia']}":"{$icone} Duplicado: {$al['inst']} em {$al['turma']} — {$al['turno']} {$al['dia']}";
+            $txt=$al['tipo']==='sem_docente'?"{$icone} {$al['turma']} — sem docente — {$al['turno']} {$al['dia']}":
+                ($al['tipo']==='ferias_instrutor'?"✈️ {$al['inst']} em férias com aula: {$al['turma']} — {$al['turno']} {$al['dia']}":
+                "{$icone} Duplicado: {$al['inst']} em {$al['turma']} — {$al['turno']} {$al['dia']}");
         ?><span class="badge-alerta <?php echo $cls; ?>"><?php echo htmlspecialchars($txt); ?></span>
         <?php endforeach; ?>
     </div>
@@ -554,11 +739,18 @@ td.td-hoje{background:#fff9e6!important;}
                     $instOcupados[mb_strtolower(trim($info['instrutor']))] = true;
             }
         }
-        $instDisponiveis = array_filter($instrutores, function($inst) use($bit_turno,$instOcupados){
+        $instDisponiveis = array_filter($instrutores, function($inst) use($bit_turno,$instOcupados,$diasSemana){
             $mask = (int)$inst['turnosTrabalho']; if($mask===0) $mask=7;
             if(!($mask & $bit_turno)) return false;
-            $primeiroNome = mb_strtolower(explode(' ',trim($inst['nome']))[0]);
-            return !isset($instOcupados[$primeiroNome]);
+            $apelido = trim($inst['apelido'] ?? '');
+            $chave   = $apelido
+                ? mb_strtolower($apelido)
+                : mb_strtolower(explode(' ',trim($inst['nome']))[0]);
+            if(isset($instOcupados[$chave])) return false;
+            foreach($diasSemana as $d){
+                if(instrutorEmFerias($inst['nome'], $d)) return false;
+            }
+            return true;
         });
     ?>
     <div class="turno-panel <?php echo $turnoKey==='manha'?'ativo':''; ?>" id="panel-<?php echo $turnoKey; ?>">
@@ -572,6 +764,7 @@ td.td-hoje{background:#fff9e6!important;}
                 <input type="date" class="input-data-ref" value="<?php echo $dataRef; ?>">
                 <button onclick="irParaData(this)">Ir</button>
             </div>
+
         </div>
 
         <div class="disponivel-box" id="disp-box-<?php echo $turnoKey; ?>"
@@ -602,14 +795,13 @@ td.td-hoje{background:#fff9e6!important;}
             <tbody>
             <?php
             $GLOBALS['pdo'] = $pdo;
-            $renderLinhas = function(array $lista) use ($turnoKey,$diasSemana,$diasBits,$hoje,$diasNomes,$vinculosCodigos): void {
+            $renderLinhas = function(array $lista) use ($turnoKey,$diasSemana,$diasBits,$hoje,$diasNomes,$vinculosCodigos,$appTurmas): void {
                 foreach($lista as $cod){
                     if(!turmaDeveExibirNaTurno($cod,$turnoKey,$diasSemana,$diasBits)) continue;
-                    // Coluna turma clicável → abre consultaHorario filtrado
                     echo "<tr><td title='Clique para ver o horário da turma' style='cursor:pointer'
-                        onclick='window.open(\"consultaHorario.php?modo=turma&filtro=" . urlencode($cod) . "\", \"_blank\")'>
-                        " . htmlspecialchars($cod) . "
-                    </td>";
+                               onclick=\"window.open('consultaHorario.php?modo=turma&filtro=".urlencode($cod)."','_blank')\">
+                               ".htmlspecialchars($cod)."
+                          </td>";
                     foreach($diasSemana as $di => $data){
                         $bit   = $diasBits[$di];
                         $tdCls = ($data===$hoje) ? " class='td-hoje'" : '';
@@ -617,18 +809,32 @@ td.td-hoje{background:#fff9e6!important;}
                         $temVinculo = isset($GLOBALS['vincIdx'][$cod][$turnoKey]);
                         $temAulaDia = $temVinculo ? turmaTemAulaHoje($cod,$turnoKey,$bit) : ($info !== null);
 
-                        // Verifica feriado ANTES do — para mostrar 🏖️ mesmo sem aula cadastrada
-                        $feriado = temFeriado($cod,$data);
-                        if(!$temAulaDia){
-                            if($feriado){
-                                // Dia de feriado sem aula = correto
-                                echo "<td{$tdCls}><span class='cel-sem-aula' title='".htmlspecialchars($feriado['nome'])."'>🏖️</span></td>";
-                            } else {
-                                echo "<td{$tdCls}><span class='cel-sem-aula'>—</span></td>";
-                            }
+                        $feriasTurma = temFerias($cod,$data);
+                        if($feriasTurma){
+                            echo "<td{$tdCls}><span class='cel-sem-aula' title='".htmlspecialchars($feriasTurma)."' style='font-size:.8rem'>🏖️ Férias</span></td>";
                             continue;
                         }
-                        // $temAulaDia = true abaixo — feriado será tratado no bloco seguinte
+
+                        if(preg_match('/^APP-/i',$cod) && isset($appTurmas[$cod][$turnoKey]) && ($bit & $appTurmas[$cod][$turnoKey]['diasSemana'])){
+                            $ap = $appTurmas[$cod][$turnoKey];
+                            echo "<td{$tdCls}><div class='cel-docente'>";
+                            echo "<span class='cel-uc' style='color:#e65100'>APP</span><br/>";
+                            $nomeAbrev = abreviarNome(mb_strtoupper($ap['instrutor']));
+                            echo "<span class='cel-doc-nome'>".htmlspecialchars($nomeAbrev)."</span><br/>";
+                            $localApp = $ap['nomeLab'] ?? '';
+                            if($localApp)
+                                echo "<span class='cel-local'>".htmlspecialchars($localApp)."</span>";
+                            else
+                                echo "<span class='cel-sem-sala'>⚠️ sem sala</span>";
+                            echo "</div></td>";
+                            continue;
+                        }
+
+                        $feriado = temFeriado($cod,$data);
+                        if(!$temAulaDia){
+                            echo "<td{$tdCls}><span class='cel-sem-aula'".($feriado?" title='".htmlspecialchars($feriado['nome'])."'":"").">".($feriado?'🏖️':'—')."</span></td>";
+                            continue;
+                        }
                         if($feriado){
                             $infoFer=$info; $codAltF=$vinculosCodigos[$cod]??null;
                             $infoAltF=$codAltF?instrutorNaData($codAltF,$data):null;
@@ -644,7 +850,6 @@ td.td-hoje{background:#fff9e6!important;}
                             continue;
                         }
                         echo "<td{$tdCls}><div class='cel-docente'>";
-                        // Determina instrutor e UC (direto ou via código alternativo EM↔HT)
                         $instNome = null; $instUC = null;
                         if($info && !empty($info['instrutor'])){
                             $instNome = resolverNomeInstrutor($info['instrutor']);
@@ -658,61 +863,28 @@ td.td-hoje{background:#fff9e6!important;}
                             }
                         }
                         if($instNome){
-                            // UC — linha 1
-                            if($instUC) echo "<span class='cel-uc'>".htmlspecialchars(mb_strtoupper($instUC))."</span>";
-                            echo "</br>";
-                            // Nome abreviado — linha 2
-                            echo "<span class='cel-doc-nome'>".htmlspecialchars(abreviarNome($instNome))."</span>";
-                            echo "</br>";
-                            // Sala — linha 3
-                            // Prioridade (igual ao painel de ocupação):
-                            // 1. Reserva aprovada/aguardando no laboratório nesta data
-                            // 2. Vínculo permanente em turma_sala (prédio principal)
-                            // 3. Vínculo permanente em turma_sala_externa
-                            // 4. Aviso de sem sala
+                            if($instUC) echo "<span class='cel-uc'>".htmlspecialchars(mb_strtoupper($instUC))."</span><br/>";
+                            echo "<span class='cel-doc-nome'>".htmlspecialchars(abreviarNome($instNome))."</span><br/>";
                             static $salaCache = [];
                             $chSala = $cod.'|'.$data.'|'.$turnoKey;
                             if(!isset($salaCache[$chSala])){
                                 $salaTurma = null;
-
-                                // 1. Reserva do dia (mesmo padrão do ocupacaoHelper)
-                                $stR = $GLOBALS['pdo']->prepare("
-                                    SELECT l.nome
-                                    FROM reservas r
-                                    JOIN laboratorios l ON l.idLaboratorio = r.laboratorio
-                                    WHERE r.turma = ? AND r.data = ? AND r.aprovado IN (0,1)
-                                    LIMIT 1
-                                ");
+                                $stR = $GLOBALS['pdo']->prepare("SELECT l.nome FROM reservas r JOIN laboratorios l ON l.idLaboratorio = r.laboratorio WHERE r.turma = ? AND r.data = ? AND r.aprovado IN (0,1) LIMIT 1");
                                 $stR->execute([$cod, $data]);
                                 $rR = $stR->fetch(PDO::FETCH_ASSOC);
                                 if($rR) $salaTurma = $rR['nome'];
-
-                                // 2. Vínculo permanente — prédio principal
                                 if(!$salaTurma){
-                                    $stS = $GLOBALS['pdo']->prepare("
-                                        SELECT l.nome FROM turma_sala ts
-                                        JOIN laboratorios l ON l.idLaboratorio = ts.idSala
-                                        WHERE ts.codigoTurma=? AND ts.turno=? LIMIT 1
-                                    ");
+                                    $stS = $GLOBALS['pdo']->prepare("SELECT l.nome FROM turma_sala ts JOIN laboratorios l ON l.idLaboratorio = ts.idSala WHERE ts.codigoTurma=? AND ts.turno=? LIMIT 1");
                                     $stS->execute([$cod, $turnoKey]);
                                     $rS = $stS->fetch(PDO::FETCH_ASSOC);
                                     if($rS) $salaTurma = $rS['nome'];
                                 }
-
-                                // 3. Vínculo permanente — prédio externo
                                 if(!$salaTurma){
-                                    $stE = $GLOBALS['pdo']->prepare("
-                                        SELECT se.nome AS nomeSala, p.nome AS nomePredio
-                                        FROM turma_sala_externa tse
-                                        JOIN salas_externas se ON se.id=tse.idSala
-                                        JOIN predios p ON p.id=se.idPredio
-                                        WHERE tse.codigoTurma=? AND tse.turno=? LIMIT 1
-                                    ");
+                                    $stE = $GLOBALS['pdo']->prepare("SELECT se.nome AS nomeSala, p.nome AS nomePredio FROM turma_sala_externa tse JOIN salas_externas se ON se.id=tse.idSala JOIN predios p ON p.id=se.idPredio WHERE tse.codigoTurma=? AND tse.turno=? LIMIT 1");
                                     $stE->execute([$cod, $turnoKey]);
                                     $rE = $stE->fetch(PDO::FETCH_ASSOC);
                                     if($rE) $salaTurma = $rE['nomeSala'].' ('.$rE['nomePredio'].')';
                                 }
-
                                 $salaCache[$chSala] = $salaTurma;
                             }
                             $salaTurma = $salaCache[$chSala];
@@ -780,7 +952,6 @@ td.td-hoje{background:#fff9e6!important;}
 <div id="toastDocentes"></div>
 <script src="../js/menu.js"></script>
 <script>
-/* Dados para o box de disponíveis — gerados pelo PHP antes do HTML */
 var _instList  = <?php echo json_encode($jsInstrutores, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE); ?>;
 var _ocupados  = <?php echo json_encode($jsOcupados,    JSON_HEX_TAG | JSON_UNESCAPED_UNICODE); ?>;
 var _feriados  = <?php
@@ -789,7 +960,6 @@ var _feriados  = <?php
     echo json_encode($jsFeriados, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE);
 ?>;
 
-/* Dados originais da semana (para restaurar ao clicar no th "Turma") */
 var _dispOriginal = <?php
     $orig = [];
     foreach(['manha','tarde','noite'] as $tk){
@@ -816,11 +986,7 @@ var _dispOriginal = <?php
     echo json_encode($orig, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE);
 ?>;
 
-/*
- * Ao clicar no th de um dia: atualiza o box "Disponíveis" do turno
- * mostrando quem está livre NAQUELE DIA ESPECÍFICO.
- * Ao clicar na coluna "Turma" (th sem data): restaura a visão da semana.
- */
+
 function mostrarDisponiveis(th) {
     var data  = th.dataset.data;
     var turno = th.dataset.turno;
@@ -840,13 +1006,11 @@ function mostrarDisponiveis(th) {
     var corpo  = document.getElementById('disp-corpo-'  + turno);
     if(!box) return;
 
-    // Destaca o th clicado e remove destaque dos outros do mesmo turno
     document.querySelectorAll('#panel-' + turno + ' .th-clicavel').forEach(function(t){
         t.classList.remove('ativo');
     });
     th.classList.add('ativo');
 
-    // Monta título
     var dFmt = th.querySelector('small') ? th.querySelector('small').textContent : data;
     var tituloTxt = 'Disponíveis ' + (labels[turno]||turno) + ' — ' + th.childNodes[0].textContent.trim() + ' ' + dFmt;
     if(ehFeria) tituloTxt += ' 🏖️';
@@ -854,7 +1018,6 @@ function mostrarDisponiveis(th) {
     titulo.innerHTML = '<i class="fas fa-user-check mr-1"></i>' + tituloTxt;
     corpo.innerHTML = '';
 
-    // Aviso de feriado
     if(ehFeria){
         var aviso = document.createElement('div');
         aviso.style.cssText = 'font-size:.78rem;color:#856404;background:#fff3cd;border-radius:4px;padding:3px 8px;margin-bottom:5px;';
@@ -878,17 +1041,14 @@ function mostrarDisponiveis(th) {
     }
 
     box.style.display = '';
-    // Rola suavemente até o box
     box.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
-/* ── Alertas EM ── */
 function toggleAlertas(){
     document.getElementById('toggleEM').classList.toggle('aberto');
     document.getElementById('bodyEM').classList.toggle('aberto');
 }
 
-/* ── Abas de turno ── */
 function trocarTurno(chave){
     document.querySelectorAll('.turno-tab').forEach(function(t){ t.classList.remove('ativo'); });
     document.querySelectorAll('.turno-panel').forEach(function(p){ p.classList.remove('ativo'); });
@@ -896,7 +1056,6 @@ function trocarTurno(chave){
     document.getElementById('panel-'+chave).classList.add('ativo');
 }
 
-/* ── Navegação ── */
 function irParaData(btn){
     var inp = btn.closest('.nav-semana').querySelector('.input-data-ref');
     if(inp && inp.value) window.location.href = '?data=' + inp.value;
@@ -907,7 +1066,6 @@ document.querySelectorAll('.input-data-ref').forEach(function(inp){
     });
 });
 
-/* ── Turnos no modal ── */
 document.querySelectorAll('.turno-ck-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
         this.classList.toggle('sel');
@@ -917,7 +1075,6 @@ document.querySelectorAll('.turno-ck-btn').forEach(function(btn){
     });
 });
 
-/* ── Salvar carga horária ── */
 document.querySelectorAll('.btn-salvar-inst').forEach(function(btn){
     btn.addEventListener('click', function(){
         var id=this.dataset.id;
@@ -935,7 +1092,6 @@ document.querySelectorAll('.btn-salvar-inst').forEach(function(btn){
     });
 });
 
-/* ── Atualizar cache de horários ── */
 function atualizarCache(btn){
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Atualizando...';
@@ -956,7 +1112,6 @@ function atualizarCache(btn){
         });
 }
 
-/* ── Toast ── */
 var _tt=null;
 function mostrarToast(msg,tipo){
     var el=document.getElementById('toastDocentes');

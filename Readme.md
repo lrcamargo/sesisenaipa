@@ -1,5 +1,12 @@
 Repositório para arquivos da intranet na escola SESI/SENAI Pouso Alegre.
 
+## Versão intranet: 3.3
+- Gestão de turmas: férias de turmas e de instrutores, criação de turmas de aperfeiçoamento.
+- Consulta Horários: adicionada turmas de aperfeiçoamento no registro, adicionadas férias da turma e férias do instrutor.
+- Meu Horário: Instrutor vê suas férias agendadas agora.
+- Painel Docentes: lista turmas de aperfeiçoamento, turmas que estao de férias, se o instrutor de férias não aparece como disponível e adicionado botão de listar todas as inconsistências.
+- Inconsistências: Lista e filtra as inconsistências no calendário para facilitar ajuste. Podem ser impressas.
+
 ## Versão intranet: 3.2
 - Gestão de turmas: férias, aperfeiçoamento.
 - Monitor IoT - integração com portas e ar (leitura de status e dados).
@@ -76,7 +83,7 @@ Recursos da versão:
 - Login externo - alunos
 - Agenda laboratório v1.3 - 
 
-## Em desenvolvimento (update 19/04/2026):
+## Em desenvolvimento (update 28/04/2026):
 - Monitoramento e interface de monitor/controle IoT.
 - Atualização de layout - sistema sirene
 - Gestão de estoque - cadastro de produtos
@@ -85,10 +92,6 @@ Recursos da versão:
 - Monitoramento dos dispositivos IoT.
 - Serivço para monitoramento de IoT automático.
 - Script para cadastrar na catraca os usuários de catraca offline.
-- Criação de turmas de aperfeiçoamento manualmente.
-- Cadastro de férias de turmas e instrutores.
-
-## A desenvolver (update 02/04/2026):
 - Deploy automático por script às madrugadas.
 - Sistema de login: envio de e-mail automático na criação de usuário e na alteração de senha.
 - Reserva de laboratórios: envio de e-mail para reprovações ou reservas feitas pela supervisão; Adicionar aprovação automática; Fila de e-mails de comunicados; API para node-red; apagar registros antigos na base de histórico (cancelados/reprovados).

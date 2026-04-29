@@ -106,8 +106,17 @@
                 <a href='../gestaoTurmas/index.php'>
                     <i class='fas fa-chalkboard'></i><span>Turmas</span>
                 </a>
+                <a href='../gestaoTurmas/cadastroAppManual.php' class='menu-btn'>
+                    <i class='fa fa-wrench'></i><span>Aperfeiçoamento</span>
+                </a>
                 <a href='../gestaoTurmas/cadastroFeriados.php' class='menu-btn'>
                     <i class='fa fa-sun'></i><span>Feriados</span>
+                </a>
+                <a href='../gestaoTurmas/cadastroFerias.php' class='menu-btn'>
+                    <i class='fa fa-plane'></i><span>Férias de Turmas</span>
+                </a>
+                <a href='../gestaoTurmas/cadastroFeriasInstrutor.php' class='menu-btn'>
+                    <i class='fas fa-plane-departure mr-2'></i><span>Férias de Instrutores</span>
                 </a>
             </div>
         </li>";
@@ -123,7 +132,7 @@
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
         //echo "<li class='item'><a href='../gestaoAmbientes/index.php' class='menu-btn'><i class='fas fa-map-signs'></i><span>Gestão Ambientes</span></a></li>";
         //echo "<li class='item'><a href='../gestaoTurmas/index.php' class='menu-btn'><i class='fas fa-search'></i><span>Gestão Turmas</span></a></li>";
-        // GESTÃO DE AMBIENTES, TURMAS E FERIADOS
+        // GESTÃO DE AMBIENTES, TURMAS, FERIADOS, APERFEIÇOAMENTO E FÉRIAS.
         echo "<li class='item' id='gestao-item'>
             <a href='#gestao-item' class='menu-btn'>
                 <i class='fas fa-cogs'></i><span>Gestão <i class='fas fa-chevron-down drop-down'></i></span>
@@ -135,8 +144,17 @@
                 <a href='../gestaoTurmas/index.php'>
                     <i class='fas fa-chalkboard'></i><span>Turmas</span>
                 </a>
+                <a href='../gestaoTurmas/cadastroAppManual.php' class='menu-btn'>
+                    <i class='fa fa-wrench'></i><span>Aperfeiçoamento</span>
+                </a>
                 <a href='../gestaoTurmas/cadastroFeriados.php' class='menu-btn'>
                     <i class='fa fa-sun'></i><span>Feriados</span>
+                </a>
+                <a href='../gestaoTurmas/cadastroFerias.php' class='menu-btn'>
+                    <i class='fa fa-plane'></i><span>Férias de Turmas</span>
+                </a>
+                <a href='../gestaoTurmas/cadastroFeriasInstrutor.php' class='menu-btn'>
+                    <i class='fas fa-plane-departure mr-2'></i><span>Férias de Instrutores</span>
                 </a>
             </div>
         </li>";

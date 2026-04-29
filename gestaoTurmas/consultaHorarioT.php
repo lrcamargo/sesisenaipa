@@ -1,8 +1,6 @@
 <?php
 /*
  * consultaHorario.php
- * Tela para supervisores consultarem o calendário de horários
- * de um instrutor específico ou de uma turma específica.
  */
 
 require_once('../conexao.php');
@@ -18,11 +16,12 @@ if(!in_array($nivelNorm,['sup tecnica','sup pedagogica','gerencia','admin','admi
     header('location:../index.php'); exit;
 }
 
-/* ── Normalização (mesma do painelDocentes) ── */
-function normalizarNome(string $s): string {
-    $s = mb_strtolower(trim($s));
-    $s = iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$s) ?: $s;
-    return preg_replace('/[^a-z0-9 ]/','',$s);
+/* ── Normalização para comparação ── */
+function normalizar(string $s): string {
+    $s = preg_replace('/\s+/', ' ', trim($s));
+    $s = mb_strtolower($s, 'UTF-8');
+    $s = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $s) ?: $s;
+    return $s;
 }
 
 /* ── Lista de instrutores do banco ── */
@@ -44,38 +43,26 @@ ksort($todasTurmasCache);
 
 /* ── Tipo de turma → cor ── */
 function tipoTurma(string $cod): array {
+    if(preg_match('/^APP-/i', $cod)) return ['label'=>'Aperfeiçoamento', 'cor'=>'#e65100','bg'=>'#fff3e0'];
     if(preg_match('/^AI-/i',  $cod)) return ['label'=>'Aprendizagem',    'cor'=>'#1565c0','bg'=>'#e3f2fd'];
     if(preg_match('/^HT-/i',  $cod)) return ['label'=>'Técnico',         'cor'=>'#1b5e20','bg'=>'#e8f5e9'];
-    if(preg_match('/^APP-/i', $cod)) return ['label'=>'Aperfeiçoamento', 'cor'=>'#e65100','bg'=>'#fff3e0'];
     if(preg_match('/^Q-/i',   $cod)) return ['label'=>'Qualificação',    'cor'=>'#6a1b9a','bg'=>'#f3e5f5'];
     if(preg_match('/^EM-/i',  $cod)) return ['label'=>'Ens. Médio',      'cor'=>'#880e4f','bg'=>'#fce4ec'];
     return                                  ['label'=>'Outro',            'cor'=>'#37474f','bg'=>'#eceff1'];
 }
 
-/* ── Mapa de nomes banco → tokens (para match com planilha) ── */
-$mapaInstrutores = []; // [token_normalizado] => nome completo
-$particulas = ['de','da','do','dos','das','e','a','o'];
+/* ── Mapa de apelido normalizado → nome completo (banco) ── */
+$mapaApelidos = [];
 foreach($instrutores as $inst){
-    $tokens = array_filter(explode(' ', normalizarNome($inst['nome'])),
-        fn($t) => strlen($t)>=3 && !in_array($t,$particulas));
-    // Passo 1: primeiro nome tem prioridade
-    $tks = array_values($tokens);
-    if(!empty($tks) && !isset($mapaInstrutores[$tks[0]]))
-        $mapaInstrutores[$tks[0]] = mb_strtoupper($inst['nome']);
-}
-foreach($instrutores as $inst){
-    $tokens = array_values(array_filter(explode(' ', normalizarNome($inst['nome'])),
-        fn($t) => strlen($t)>=3 && !in_array($t,$particulas)));
-    foreach(array_slice($tokens,1) as $tok){
-        if(!isset($mapaInstrutores[$tok]))
-            $mapaInstrutores[$tok] = mb_strtoupper($inst['nome']);
+    if(!empty($inst['apelido'])){
+        $mapaApelidos[normalizar($inst['apelido'])] = mb_strtoupper($inst['nome']);
     }
 }
 
 /* ── Monta eventos conforme filtro (AJAX) ── */
 if(isset($_GET['ajax'])){
     header('Content-Type: application/json');
-    $modo   = $_GET['modo']   ?? '';   // 'instrutor' ou 'turma'
+    $modo   = $_GET['modo'] ?? '';
     $filtro = trim($_GET['filtro'] ?? '');
 
     $eventos = [];
@@ -84,19 +71,10 @@ if(isset($_GET['ajax'])){
     }
 
     if($modo === 'instrutor'){
-        // Filtra pelo nome do instrutor — mesma lógica de tokens
-        $tokensF = array_filter(explode(' ', normalizarNome($filtro)),
-            fn($t) => strlen($t)>=3 && !in_array($t,$particulas));
-
         foreach($cacheJson['dados'] as $data => $turmas){
             foreach($turmas as $cod => $info){
                 if(empty($info['instrutor'])) continue;
-                // Match: algum token do nome curto está nos tokens do instrutor buscado
-                $tokensCurto = array_filter(explode(' ', normalizarNome($info['instrutor'])),
-                    fn($t) => strlen($t)>=3);
-                $match = false;
-                foreach($tokensCurto as $tok){ if(in_array($tok,$tokensF)){$match=true;break;} }
-                if(!$match) continue;
+                if(normalizar($info['instrutor']) !== normalizar($filtro)) continue;
 
                 $tipo = tipoTurma($cod);
                 $uc   = $info['uc'] ?? '';
@@ -118,22 +96,156 @@ if(isset($_GET['ajax'])){
                 ];
             }
         }
+
+        // APP manuais: busca pelo nome completo do instrutor
+        $nomeCompleto = null;
+        $idInstrutor  = null;
+        foreach($instrutores as $i){
+            if(normalizar($i['apelido'] ?? '') === normalizar($filtro)){
+                $nomeCompleto = $i['nome'];
+                $idInstrutor  = (int)$i['id'];
+                break;
+            }
+        }
+        if($nomeCompleto){
+            $bitsD = [1=>1,2=>2,3=>4,4=>8,5=>16,6=>32];
+            $labT  = ['manha'=>'Manhã','tarde'=>'Tarde','noite'=>'Noite'];
+            $stApp = $pdo->prepare("
+                SELECT t.codigo, t.nome AS nomeTurma,
+                       t.dataInicio, t.dataFim, t.diasSemana,
+                       tt.turno, tt.horarioInicio, tt.horarioFim, tt.instrutor,
+                       COALESCE(l.nome,'Externo') AS nomeLab
+                FROM app_turmas t
+                JOIN app_turma_turnos tt ON tt.idTurma = t.id
+                LEFT JOIN laboratorios l ON l.idLaboratorio = tt.idLaboratorio
+                WHERE t.ativo = 1 AND tt.instrutor = ?
+                ORDER BY t.dataInicio
+            ");
+            $stApp->execute([$nomeCompleto]);
+            foreach($stApp->fetchAll(PDO::FETCH_ASSOC) as $ap){
+                $tipo = tipoTurma($ap['codigo']);
+                $di   = new DateTime($ap['dataInicio']);
+                $df   = new DateTime($ap['dataFim']);
+                $dc   = clone $di;
+                while($dc <= $df){
+                    $dow  = (int)$dc->format('N');
+                    $data = $dc->format('Y-m-d');
+                    if((int)$ap['diasSemana'] & ($bitsD[$dow] ?? 0)){
+                        $lbl = $labT[$ap['turno']] ?? $ap['turno'];
+                        $hr  = substr($ap['horarioInicio'],0,5).' – '.substr($ap['horarioFim'],0,5);
+                        $eventos[] = [
+                            'id'              => 'app_'.md5($data.$ap['codigo'].$ap['turno']),
+                            'title'           => $ap['nomeTurma'] ?: $ap['codigo'],
+                            'start'           => $data,
+                            'allDay'          => true,
+                            'backgroundColor' => $tipo['bg'],
+                            'borderColor'     => $tipo['cor'],
+                            'textColor'       => $tipo['cor'],
+                            'extendedProps'   => [
+                                'turma'     => $ap['codigo'],
+                                'uc'        => $ap['nomeTurma'],
+                                'tipo'      => $tipo['label'],
+                                'cor'       => $tipo['cor'],
+                                'instrutor' => mb_strtoupper($ap['instrutor']),
+                                'linha2'    => $lbl.' · '.$hr,
+                                'horario'   => $hr,
+                            ],
+                        ];
+                    }
+                    $dc->modify('+1 day');
+                }
+            }
+
+            // Férias pelo id do instrutor
+            $stFer = $pdo->prepare(
+                "SELECT dataInicio, dataFim, descricao FROM instrutor_ferias WHERE idInstrutor = ? ORDER BY dataInicio"
+            );
+            $stFer->execute([$idInstrutor]);
+            foreach($stFer->fetchAll(PDO::FETCH_ASSOC) as $f){
+                $eventos[] = [
+                    'id'              => 'fer_'.md5($idInstrutor.$f['dataInicio']),
+                    'title'           => '🏖️ '.$f['descricao'],
+                    'start'           => $f['dataInicio'],
+                    'end'             => date('Y-m-d', strtotime($f['dataFim'].' +1 day')),
+                    'allDay'          => true,
+                    'backgroundColor' => '#fff3cd',
+                    'borderColor'     => '#ffc107',
+                    'textColor'       => '#856404',
+                    'extendedProps'   => [
+                        'isFerias'  => true,
+                        'descricao' => $f['descricao'],
+                        'de'        => date('d/m/Y', strtotime($f['dataInicio'])),
+                        'ate'       => date('d/m/Y', strtotime($f['dataFim'])),
+                        'tipo'      => 'Férias',
+                        'cor'       => '#856404',
+                        'turma'     => '',
+                        'uc'        => '',
+                        'linha2'    => '',
+                    ],
+                ];
+            }
+        }
+
     } elseif($modo === 'turma'){
+        $tipo = tipoTurma($filtro);
+
+        // APP manual
+        try {
+            $stApp = $pdo->prepare("
+                SELECT t.codigo, t.nome AS nomeTurma,
+                       t.dataInicio, t.dataFim, t.diasSemana,
+                       tt.turno, tt.horarioInicio, tt.horarioFim, tt.instrutor,
+                       COALESCE(l.nome,'Externo') AS nomeLab
+                FROM app_turmas t
+                JOIN app_turma_turnos tt ON tt.idTurma = t.id
+                LEFT JOIN laboratorios l ON l.idLaboratorio = tt.idLaboratorio
+                WHERE t.ativo = 1 AND t.codigo = ?
+                ORDER BY FIELD(tt.turno,'manha','tarde','noite')
+            ");
+            $stApp->execute([$filtro]);
+            $bitsD   = [1=>1,2=>2,3=>4,4=>8,5=>16,6=>32];
+            $labelsT = ['manha'=>'Manhã','tarde'=>'Tarde','noite'=>'Noite'];
+            foreach($stApp->fetchAll(PDO::FETCH_ASSOC) as $ap){
+                $di = new DateTime($ap['dataInicio']);
+                $df = new DateTime($ap['dataFim']);
+                $dc = clone $di;
+                while($dc <= $df){
+                    $dow  = (int)$dc->format('N');
+                    $data = $dc->format('Y-m-d');
+                    if((int)$ap['diasSemana'] & ($bitsD[$dow] ?? 0)){
+                        $lbl = $labelsT[$ap['turno']] ?? $ap['turno'];
+                        $hr  = substr($ap['horarioInicio'],0,5).' – '.substr($ap['horarioFim'],0,5);
+                        $eventos[] = [
+                            'id'              => 'app_'.md5($data.$ap['codigo'].$ap['turno']),
+                            'title'           => $ap['nomeTurma'] ?: $ap['codigo'],
+                            'start'           => $data,
+                            'allDay'          => true,
+                            'backgroundColor' => $tipo['bg'],
+                            'borderColor'     => $tipo['cor'],
+                            'textColor'       => $tipo['cor'],
+                            'extendedProps'   => [
+                                'turma'     => $ap['codigo'],
+                                'uc'        => $ap['nomeTurma'],
+                                'tipo'      => $tipo['label'],
+                                'cor'       => $tipo['cor'],
+                                'instrutor' => mb_strtoupper($ap['instrutor']),
+                                'linha2'    => mb_strtoupper($ap['instrutor']),
+                                'horario'   => $lbl.' · '.$hr,
+                            ],
+                        ];
+                    }
+                    $dc->modify('+1 day');
+                }
+            }
+        } catch(PDOException $e){}
+
+        // Planilha
         foreach($cacheJson['dados'] as $data => $turmas){
             if(!isset($turmas[$filtro])) continue;
-            $info = $turmas[$filtro];
-            $tipo = tipoTurma($filtro);
-            $uc   = $info['uc'] ?? '';
-            $inst = $info['instrutor'] ?? '';
-            // Resolve nome completo do instrutor
-            $nomeInst = '';
-            if($inst){
-                $tokInst = array_filter(explode(' ', normalizarNome($inst)), fn($t)=>strlen($t)>=3);
-                foreach($tokInst as $tok){
-                    if(isset($mapaInstrutores[$tok])){ $nomeInst = $mapaInstrutores[$tok]; break; }
-                }
-                if(!$nomeInst) $nomeInst = mb_strtoupper($inst);
-            }
+            $info     = $turmas[$filtro];
+            $uc       = $info['uc'] ?? '';
+            $inst     = $info['instrutor'] ?? '';
+            $nomeInst = $inst ? ($mapaApelidos[normalizar($inst)] ?? mb_strtoupper($inst)) : '';
             $eventos[] = [
                 'id'              => md5($data.$filtro),
                 'title'           => $uc ?: $filtro,
@@ -148,10 +260,45 @@ if(isset($_GET['ajax'])){
                     'tipo'      => $tipo['label'],
                     'cor'       => $tipo['cor'],
                     'instrutor' => $nomeInst,
-                    'linha2'    => $nomeInst, // instrutor aparece como 2ª linha
+                    'linha2'    => $nomeInst,
                 ],
             ];
         }
+
+        // Férias da turma
+        try {
+            $stFT = $pdo->prepare("
+                SELECT f.dataInicio, f.dataFim, f.descricao
+                FROM turma_ferias f
+                JOIN turma_ferias_turmas ft ON ft.idFerias = f.id
+                WHERE ft.codigoTurma = ?
+                ORDER BY f.dataInicio
+            ");
+            $stFT->execute([$filtro]);
+            foreach($stFT->fetchAll(PDO::FETCH_ASSOC) as $f){
+                $eventos[] = [
+                    'id'              => 'fert_'.md5($filtro.$f['dataInicio']),
+                    'title'           => '🏖️ '.$f['descricao'],
+                    'start'           => $f['dataInicio'],
+                    'end'             => date('Y-m-d', strtotime($f['dataFim'].' +1 day')),
+                    'allDay'          => true,
+                    'backgroundColor' => '#fff3cd',
+                    'borderColor'     => '#ffc107',
+                    'textColor'       => '#856404',
+                    'extendedProps'   => [
+                        'isFerias'  => true,
+                        'descricao' => $f['descricao'],
+                        'de'        => date('d/m/Y', strtotime($f['dataInicio'])),
+                        'ate'       => date('d/m/Y', strtotime($f['dataFim'])),
+                        'tipo'      => 'Férias',
+                        'cor'       => '#856404',
+                        'turma'     => $filtro,
+                        'uc'        => '',
+                        'linha2'    => '',
+                    ],
+                ];
+            }
+        } catch(PDOException $e){}
     }
 
     echo json_encode($eventos, JSON_HEX_TAG|JSON_UNESCAPED_UNICODE);
@@ -160,7 +307,6 @@ if(isset($_GET['ajax'])){
 
 $cacheGeradoEm = $cacheJson['gerado_em'] ?? null;
 
-// Parâmetros GET para pré-selecionar filtro (vindo do clique na turma do painelDocentes)
 $preSelModo   = in_array($_GET['modo'] ?? '', ['instrutor','turma']) ? $_GET['modo'] : '';
 $preSelFiltro = trim($_GET['filtro'] ?? '');
 ?>
@@ -199,7 +345,9 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .placeholder-cal{display:flex;align-items:center;justify-content:center;
     height:300px;color:#adb5bd;font-size:1rem;background:#fff;border-radius:8px;
     border:2px dashed #dee2e6;}
-.cache-info{font-size:.73rem;color:#6c757d;text-align:right;margin-top:8px;}
+.badge-ferias{display:inline-block;background:#fff3cd;color:#856404;
+    border:1px solid #ffc107;border-radius:4px;padding:2px 10px;
+    font-size:.75rem;font-weight:700;margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -232,8 +380,7 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
             <label>Consultar por</label>
             <select id="selModo" onchange="trocarModo()">
                 <option value="instrutor" <?php echo $preSelModo==='instrutor'?'selected':''; ?>>Instrutor</option>
-                <option value="turma"     <?php echo ($preSelModo==='turma'||!$preSelModo)?'':''; ?>
-                    <?php echo $preSelModo==='turma'?'selected':''; ?>>Turma</option>
+                <option value="turma"     <?php echo $preSelModo==='turma'?'selected':''; ?>>Turma</option>
             </select>
         </div>
         <div class="fg" id="fgInstrutor">
@@ -241,7 +388,8 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
             <select id="selInstrutor" class="form-control" style="font-size:.85rem">
                 <option value="">— Selecione —</option>
                 <?php foreach($instrutores as $i): ?>
-                <option value="<?php echo htmlspecialchars($i['nome']); ?>">
+                <?php if(empty($i['apelido'])) continue; ?>
+                <option value="<?php echo htmlspecialchars($i['apelido']); ?>">
                     <?php echo htmlspecialchars(mb_strtoupper($i['nome'])); ?>
                 </option>
                 <?php endforeach; ?>
@@ -265,12 +413,15 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 
     <!-- Legenda -->
     <div class="legenda">
+        <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1565c0"></div>Aprendizagem</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1b5e20"></div>Técnico</div>
-        <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#6a1b9a"></div>Qualificação</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#880e4f"></div>Ens. Médio</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#37474f"></div>Outro</div>
+        <div class="legenda-item">
+            <div class="legenda-dot" style="background:#ffc107;border-radius:2px;opacity:.8"></div>Férias
+        </div>
     </div>
 
     <!-- Calendário ou placeholder -->
@@ -278,8 +429,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         <span><i class="fas fa-search mr-2"></i>Selecione um instrutor ou turma e clique em Buscar</span>
     </div>
     <div id="calendario" style="display:none"></div>
-
-
 
 </div>
 </div>
@@ -316,7 +465,7 @@ function buscar(){
 
     if(!filtro){ alert('Selecione um '+(modo==='instrutor'?'instrutor':'turma')+'.'); return; }
 
-    fetch('consultaHorario.php?ajax=1&modo='+encodeURIComponent(modo)+'&filtro='+encodeURIComponent(filtro))
+    fetch('consultaHorarioT.php?ajax=1&modo='+encodeURIComponent(modo)+'&filtro='+encodeURIComponent(filtro))
         .then(function(r){ return r.json(); })
         .then(function(eventos){
             document.getElementById('placeholder').style.display = 'none';
@@ -337,14 +486,25 @@ function buscar(){
                 buttonText:{ today:'Hoje', month:'Mês', listMonth:'Lista' },
                 eventClick: function(info){
                     var p = info.event.extendedProps;
+
+                    if(p.isFerias){
+                        var html = '<div class="badge-ferias">🏖️ '+esc(p.descricao)+'</div>';
+                        html += '<div style="font-size:.88rem;margin-bottom:3px"><strong>De:</strong> '+esc(p.de)+'</div>';
+                        html += '<div style="font-size:.88rem"><strong>Até:</strong> '+esc(p.ate)+'</div>';
+                        document.getElementById('modalDetalheBody').innerHTML = html;
+                        $('#modalDetalhe').modal('show');
+                        return;
+                    }
+
                     var partes = info.event.startStr.split('-');
                     var dataFmt = partes[2]+'/'+partes[1]+'/'+partes[0];
                     var cor = p.cor;
                     var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(p.tipo)+'</span>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Data:</strong> '+dataFmt+'</div>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Turma:</strong> '+esc(p.turma)+'</div>';
-                    if(p.uc)       html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC:</strong> '+esc(p.uc)+'</div>';
-                    if(p.instrutor)html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Instrutor:</strong> '+esc(p.instrutor)+'</div>';
+                    if(p.uc)        html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC / Curso:</strong> '+esc(p.uc)+'</div>';
+                    if(p.instrutor) html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Instrutor:</strong> '+esc(p.instrutor)+'</div>';
+                    if(p.horario)   html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Horário:</strong> '+esc(p.horario)+'</div>';
                     document.getElementById('modalDetalheBody').innerHTML = html;
                     $('#modalDetalhe').modal('show');
                 },
@@ -360,7 +520,11 @@ function buscar(){
                 },
                 eventDidMount: function(info){
                     var p = info.event.extendedProps;
-                    info.el.title = (p.uc?p.uc+' — ':'')+p.turma+(p.instrutor?' ('+p.instrutor+')':'');
+                    if(p.isFerias){
+                        info.el.title = '🏖️ '+p.descricao+' ('+p.de+' a '+p.ate+')';
+                        return;
+                    }
+                    info.el.title = (p.uc?p.uc+' — ':'')+p.turma+(p.instrutor?' ('+p.instrutor+')':'')+(p.horario?' '+p.horario:'');
                 }
             });
             _cal.render();
@@ -372,7 +536,6 @@ function esc(s){
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// Busca automática se veio com parâmetros pré-selecionados
 <?php if($preSelModo && $preSelFiltro): ?>
 document.addEventListener('DOMContentLoaded', function(){
     trocarModo();

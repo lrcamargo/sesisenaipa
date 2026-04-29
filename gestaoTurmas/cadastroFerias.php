@@ -2,7 +2,6 @@
 /*
  * cadastroFerias.php
  * Cadastro de períodos de férias de turmas.
- * Férias suprimem alertas de "sem docente" no painelDocentes.
  */
 
 require_once('../conexao.php');
@@ -18,6 +17,7 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['acao'])){
     ob_clean(); header('Content-Type: application/json');
 
     if($_POST['acao']==='salvar'){
+        $id     = intval($_POST['id'] ?? 0); // 0 = novo
         $inicio = trim($_POST['dataInicio'] ?? '');
         $fim    = trim($_POST['dataFim']    ?? '');
         $desc   = trim($_POST['descricao']  ?? 'Férias');
@@ -30,9 +30,18 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['acao'])){
         }
         try {
             $pdo->beginTransaction();
-            $pdo->prepare("INSERT INTO turma_ferias (dataInicio,dataFim,descricao) VALUES (?,?,?)")
-                ->execute([$inicio,$fim,$desc]);
-            $idF = $pdo->lastInsertId();
+            if($id > 0){
+                // Edição
+                $pdo->prepare("UPDATE turma_ferias SET dataInicio=?,dataFim=?,descricao=? WHERE id=?")
+                    ->execute([$inicio,$fim,$desc,$id]);
+                $pdo->prepare("DELETE FROM turma_ferias_turmas WHERE idFerias=?")->execute([$id]);
+                $idF = $id;
+            } else {
+                // Inserção
+                $pdo->prepare("INSERT INTO turma_ferias (dataInicio,dataFim,descricao) VALUES (?,?,?)")
+                    ->execute([$inicio,$fim,$desc]);
+                $idF = $pdo->lastInsertId();
+            }
             $stT = $pdo->prepare("INSERT INTO turma_ferias_turmas (idFerias,codigoTurma) VALUES (?,?)");
             foreach($turmas as $t){ if(trim($t)) $stT->execute([$idF,trim($t)]); }
             $pdo->commit();
@@ -55,6 +64,20 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['acao'])){
         exit;
     }
 
+    // Carrega dados de um registro para edição
+    if($_POST['acao']==='carregar'){
+        $id = intval($_POST['id'] ?? 0);
+        $f  = $pdo->prepare("SELECT id,dataInicio,dataFim,descricao FROM turma_ferias WHERE id=?");
+        $f->execute([$id]);
+        $row = $f->fetch(PDO::FETCH_ASSOC);
+        if(!$row){ echo json_encode(['ok'=>false,'msg'=>'Não encontrado.']); exit; }
+        $turmas = $pdo->prepare("SELECT codigoTurma FROM turma_ferias_turmas WHERE idFerias=?");
+        $turmas->execute([$id]);
+        $row['turmas'] = $turmas->fetchAll(PDO::FETCH_COLUMN);
+        echo json_encode(['ok'=>true,'data'=>$row]);
+        exit;
+    }
+
     echo json_encode(['ok'=>false,'msg'=>'Ação inválida.']); exit;
 }
 
@@ -68,7 +91,6 @@ $ferias = $pdo->query("
     ORDER BY f.dataInicio DESC
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-// Turmas disponíveis para seleção — da API + banco
 $turmasDisponiveis = [];
 $ch = curl_init('http://172.16.95.253:3002/backapi/Turmas?dataInicio='.date('Y-m-d'));
 curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>5,CURLOPT_CONNECTTIMEOUT=>3]);
@@ -77,13 +99,12 @@ if($httpCode>=200 && $httpCode<300 && $resp){
     $dec = json_decode($resp,true);
     if(is_array($dec)) foreach($dec as $t) if(isset($t['nome'])) $turmasDisponiveis[] = $t['nome'];
 }
-// Adiciona turmas com vínculo que podem não estar na API
 $stTurmas = $pdo->query("
     SELECT DISTINCT CONVERT(codigoTurma USING utf8mb4) COLLATE utf8mb4_general_ci AS codigoTurma FROM turma_sala
     UNION
-    SELECT DISTINCT CONVERT(codigoTurma USING utf8mb4) COLLATE utf8mb4_general_ci AS codigoTurma FROM turma_sala_externa
+    SELECT DISTINCT CONVERT(codigoTurma USING utf8mb4) COLLATE utf8mb4_general_ci FROM turma_sala_externa
     UNION
-    SELECT DISTINCT CONVERT(codigo USING utf8mb4) COLLATE utf8mb4_general_ci AS codigoTurma FROM app_turmas WHERE ativo=1
+    SELECT DISTINCT CONVERT(codigo USING utf8mb4) COLLATE utf8mb4_general_ci FROM app_turmas WHERE ativo=1
 ");
 foreach($stTurmas->fetchAll(PDO::FETCH_COLUMN) as $t) if(!in_array($t,$turmasDisponiveis)) $turmasDisponiveis[] = $t;
 sort($turmasDisponiveis);
@@ -137,7 +158,7 @@ sort($turmasDisponiveis);
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="mb-0"><i class="fas fa-umbrella-beach mr-2"></i>Férias das Turmas</h4>
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalNovaFerias">
+    <button class="btn btn-primary btn-sm" onclick="abrirNovo()">
         <i class="fas fa-plus mr-1"></i>Novo período
     </button>
 </div>
@@ -169,9 +190,14 @@ sort($turmasDisponiveis);
                 <?php endforeach; ?>
             </div>
         </div>
-        <button class="btn btn-outline-danger btn-sm" onclick="excluir(<?php echo $f['id']; ?>)">
-            <i class="fas fa-trash"></i>
-        </button>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+            <button class="btn btn-outline-primary btn-sm" onclick="editar(<?php echo $f['id']; ?>)">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-outline-danger btn-sm" onclick="excluir(<?php echo $f['id']; ?>)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
     </div>
 </div>
 <?php endforeach; ?>
@@ -179,14 +205,17 @@ sort($turmasDisponiveis);
 
 </div></div>
 
-<!-- Modal novo período -->
+<!-- Modal novo/editar período -->
 <div class="modal fade" id="modalNovaFerias" tabindex="-1">
 <div class="modal-dialog modal-lg"><div class="modal-content">
     <div class="modal-header">
-        <h5 class="modal-title"><i class="fas fa-umbrella-beach mr-2"></i>Novo período de férias</h5>
+        <h5 class="modal-title" id="modalFeriasTitle">
+            <i class="fas fa-umbrella-beach mr-2"></i>Período de férias
+        </h5>
         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
     </div>
     <div class="modal-body">
+        <input type="hidden" id="fId" value="0">
         <div class="form-row mb-3">
             <div class="col">
                 <label class="font-weight-bold" style="font-size:.82rem">Descrição</label>
@@ -208,9 +237,9 @@ sort($turmasDisponiveis);
             Turmas afetadas
             <span id="selCount" class="badge badge-primary ml-1">0</span>
         </label>
-        <div class="d-flex gap-2 mb-2" style="gap:6px">
+        <div class="d-flex mb-2" style="gap:6px">
             <input type="text" class="filtro-turma" id="filtroTurma"
-                   placeholder="Filtrar turmas..." oninput="filtrarTurmas()">
+                   placeholder="Filtrar turmas..." oninput="filtrarTurmas()" style="margin-bottom:0">
             <button class="btn btn-outline-secondary btn-sm" onclick="selecionarTodas(true)">Todas</button>
             <button class="btn btn-outline-secondary btn-sm" onclick="selecionarTodas(false)">Nenhuma</button>
         </div>
@@ -237,12 +266,13 @@ sort($turmasDisponiveis);
 <script src="../js/menu.js"></script>
 <script>
 function toggleItem(lbl){
-    lbl.classList.toggle('selecionado', lbl.querySelector('input').checked);
+    var cb = lbl.querySelector('input');
+    lbl.classList.toggle('selecionado', cb.checked);
     atualizarCount();
 }
 function atualizarCount(){
-    var n=document.querySelectorAll('#turmaCheckGrid input:checked').length;
-    document.getElementById('selCount').textContent=n;
+    document.getElementById('selCount').textContent =
+        document.querySelectorAll('#turmaCheckGrid input:checked').length;
 }
 function filtrarTurmas(){
     var q=document.getElementById('filtroTurma').value.toLowerCase();
@@ -251,30 +281,78 @@ function filtrarTurmas(){
     });
 }
 function selecionarTodas(sel){
-    document.querySelectorAll('#turmaCheckGrid input').forEach(function(i){
-        i.checked=sel;
-        i.closest('.turma-check-item').classList.toggle('selecionado',sel);
+    document.querySelectorAll('#turmaCheckGrid .turma-check-item').forEach(function(l){
+        if(l.style.display==='none') return; // respeita filtro ativo
+        l.querySelector('input').checked=sel;
+        l.classList.toggle('selecionado',sel);
     });
     atualizarCount();
 }
+
+function abrirNovo(){
+    document.getElementById('fId').value='0';
+    document.getElementById('fDesc').value='Férias';
+    document.getElementById('fInicio').value='';
+    document.getElementById('fFim').value='';
+    document.getElementById('filtroTurma').value='';
+    document.querySelectorAll('#turmaCheckGrid .turma-check-item').forEach(function(l){
+        l.querySelector('input').checked=false;
+        l.classList.remove('selecionado');
+        l.style.display='';
+    });
+    atualizarCount();
+    document.getElementById('modalFeriasTitle').innerHTML='<i class="fas fa-umbrella-beach mr-2"></i>Novo período de férias';
+    $('#modalNovaFerias').modal('show');
+}
+
+function editar(id){
+    var fd=new FormData(); fd.append('acao','carregar'); fd.append('id',id);
+    fetch('cadastroFerias.php',{method:'POST',body:fd})
+        .then(function(r){return r.json();})
+        .then(function(res){
+            if(!res.ok){toast(res.msg||'Erro.','err');return;}
+            var d=res.data;
+            document.getElementById('fId').value=d.id;
+            document.getElementById('fDesc').value=d.descricao;
+            document.getElementById('fInicio').value=d.dataInicio;
+            document.getElementById('fFim').value=d.dataFim;
+            document.getElementById('filtroTurma').value='';
+            // Marca turmas
+            document.querySelectorAll('#turmaCheckGrid .turma-check-item').forEach(function(l){
+                var cb=l.querySelector('input');
+                var sel=d.turmas.indexOf(cb.value)>=0;
+                cb.checked=sel;
+                l.classList.toggle('selecionado',sel);
+                l.style.display='';
+            });
+            atualizarCount();
+            document.getElementById('modalFeriasTitle').innerHTML='<i class="fas fa-edit mr-2"></i>Editar período de férias';
+            $('#modalNovaFerias').modal('show');
+        }).catch(function(){toast('Erro ao carregar.','err');});
+}
+
 function salvarFerias(){
-    var inicio=document.getElementById('fInicio').value;
-    var fim   =document.getElementById('fFim').value;
-    var desc  =document.getElementById('fDesc').value.trim()||'Férias';
-    var turmas=[]; document.querySelectorAll('#turmaCheckGrid input:checked').forEach(function(i){turmas.push(i.value);});
+    var id    = document.getElementById('fId').value;
+    var inicio= document.getElementById('fInicio').value;
+    var fim   = document.getElementById('fFim').value;
+    var desc  = document.getElementById('fDesc').value.trim()||'Férias';
+    var turmas=[];
+    document.querySelectorAll('#turmaCheckGrid input:checked').forEach(function(i){turmas.push(i.value);});
     if(!inicio||!fim||!turmas.length){alert('Preencha as datas e selecione ao menos uma turma.');return;}
-    var fd=new FormData(); fd.append('acao','salvar');
+    var fd=new FormData();
+    fd.append('acao','salvar'); fd.append('id',id);
     fd.append('dataInicio',inicio); fd.append('dataFim',fim);
     fd.append('descricao',desc); fd.append('turmas',JSON.stringify(turmas));
     fetch('cadastroFerias.php',{method:'POST',body:fd})
         .then(function(r){return r.json();})
         .then(function(res){
             if(!res.ok){toast(res.msg||'Erro.','err');return;}
-            toast('Período salvo!','ok');
+            toast('Salvo!','ok');
             $('#modalNovaFerias').modal('hide');
             setTimeout(function(){location.reload();},700);
         }).catch(function(){toast('Erro.','err');});
 }
+
 function excluir(id){
     if(!confirm('Excluir este período de férias?')) return;
     var fd=new FormData(); fd.append('acao','excluir'); fd.append('id',id);
@@ -286,6 +364,7 @@ function excluir(id){
             toast('Removido.','ok');
         }).catch(function(){toast('Erro.','err');});
 }
+
 var _tt=null;
 function toast(msg,tipo){
     var el=document.getElementById('toastF');

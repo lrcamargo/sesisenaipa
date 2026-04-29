@@ -48,3 +48,56 @@
 23/04/2026 16:57:47 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
 23/04/2026 16:57:47 [INFO] Cache gerado: 8351 registros em 521 datas (0 erros).
 23/04/2026 16:57:47 [INFO] Concluído com sucesso. uid salvo: 325
+24/04/2026 23:08:02 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+24/04/2026 23:08:04 [INFO] Autenticado com sucesso.
+24/04/2026 23:08:05 [INFO] E-mail encontrado: uid=414 | 'HorarioSENAI' | Sat, 25 Apr 2026 00:48:33 +0000
+24/04/2026 23:08:05 [INFO] E-mail já processado (uid=414). Nada a fazer.
+24/04/2026 23:18:12 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+24/04/2026 23:18:13 [INFO] Autenticado com sucesso.
+24/04/2026 23:18:15 [INFO] E-mail encontrado: uid=414 | 'HorarioSENAI' | Sat, 25 Apr 2026 00:48:33 +0000
+24/04/2026 23:18:15 [INFO] E-mail já processado (uid=414). Nada a fazer.
+27/04/2026 19:11:42 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+27/04/2026 19:11:44 [INFO] Autenticado com sucesso.
+27/04/2026 19:11:45 [INFO] E-mail encontrado: uid=475 | 'HorarioSENAI' | Mon, 27 Apr 2026 21:27:37 +0000
+27/04/2026 19:11:45 [INFO] Novo e-mail detectado — baixando anexo...
+27/04/2026 19:11:47 [INFO] Anexo '/OCUPAÇÃO 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (466428 bytes)
+27/04/2026 19:11:48 [INFO] Gerando cache de horários...
+27/04/2026 19:11:48 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+27/04/2026 19:11:48 [INFO] 5 abas encontradas.
+27/04/2026 19:11:48 [WARNING] Aba 'Planilha4': sem código — ignorada.
+27/04/2026 19:11:48 [WARNING] Aba 'BD': sem código — ignorada.
+27/04/2026 19:11:48 [WARNING] Aba 'CALENDARIO': sem código — ignorada.
+27/04/2026 19:11:48 [WARNING] Aba 'CALENDARIO POR INSTRUTOR': sem código — ignorada.
+27/04/2026 19:11:48 [WARNING] Aba 'ONDE ESTA': sem código — ignorada.
+27/04/2026 19:11:48 [INFO] Cache gerado: 0 registros em 0 datas (0 erros).
+27/04/2026 19:11:48 [INFO] Concluído com sucesso. uid salvo: 475
+28/04/2026 20:34:04 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+28/04/2026 20:34:05 [INFO] Autenticado com sucesso.
+28/04/2026 20:34:06 [INFO] E-mail encontrado: uid=740 | 'HorarioSENAI' | Tue, 28 Apr 2026 23:32:31 +0000
+28/04/2026 20:34:06 [INFO] Novo e-mail detectado — baixando anexo...
+28/04/2026 20:34:15 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4742063 bytes)
+28/04/2026 20:34:16 [INFO] Gerando cache de horários...
+28/04/2026 20:34:16 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+28/04/2026 20:34:16 [INFO] 55 abas encontradas.
+28/04/2026 20:34:16 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+28/04/2026 20:34:16 [WARNING] Aba 'OMEGA': sem código — ignorada.
+28/04/2026 20:34:17 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+28/04/2026 20:34:17 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+28/04/2026 20:34:17 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+28/04/2026 20:34:18 [INFO] Cache gerado: 8366 registros em 521 datas (0 erros).
+28/04/2026 20:34:18 [INFO] Concluído com sucesso. uid salvo: 740
+28/04/2026 21:06:04 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+28/04/2026 21:06:06 [INFO] Autenticado com sucesso.
+28/04/2026 21:06:07 [INFO] E-mail encontrado: uid=743 | 'HorarioSENAI' | Wed, 29 Apr 2026 00:00:53 +0000
+28/04/2026 21:06:07 [INFO] Novo e-mail detectado — baixando anexo...
+28/04/2026 21:06:16 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4741724 bytes)
+28/04/2026 21:06:17 [INFO] Gerando cache de horários...
+28/04/2026 21:06:17 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+28/04/2026 21:06:17 [INFO] 55 abas encontradas.
+28/04/2026 21:06:17 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+28/04/2026 21:06:17 [WARNING] Aba 'OMEGA': sem código — ignorada.
+28/04/2026 21:06:18 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+28/04/2026 21:06:18 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+28/04/2026 21:06:18 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+28/04/2026 21:06:19 [INFO] Cache gerado: 8366 registros em 521 datas (0 erros).
+28/04/2026 21:06:19 [INFO] Concluído com sucesso. uid salvo: 743

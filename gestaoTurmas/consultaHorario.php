@@ -43,9 +43,9 @@ ksort($todasTurmasCache);
 
 /* ── Tipo de turma → cor ── */
 function tipoTurma(string $cod): array {
+    if(preg_match('/^APP-/i', $cod)) return ['label'=>'Aperfeiçoamento', 'cor'=>'#e65100','bg'=>'#fff3e0'];
     if(preg_match('/^AI-/i',  $cod)) return ['label'=>'Aprendizagem',    'cor'=>'#1565c0','bg'=>'#e3f2fd'];
     if(preg_match('/^HT-/i',  $cod)) return ['label'=>'Técnico',         'cor'=>'#1b5e20','bg'=>'#e8f5e9'];
-    if(preg_match('/^APP-/i', $cod)) return ['label'=>'Aperfeiçoamento', 'cor'=>'#e65100','bg'=>'#fff3e0'];
     if(preg_match('/^Q-/i',   $cod)) return ['label'=>'Qualificação',    'cor'=>'#6a1b9a','bg'=>'#f3e5f5'];
     if(preg_match('/^EM-/i',  $cod)) return ['label'=>'Ens. Médio',      'cor'=>'#880e4f','bg'=>'#fce4ec'];
     return                                  ['label'=>'Outro',            'cor'=>'#37474f','bg'=>'#eceff1'];
@@ -62,8 +62,7 @@ foreach($instrutores as $inst){
 /* ── Monta eventos conforme filtro (AJAX) ── */
 if(isset($_GET['ajax'])){
     header('Content-Type: application/json');
-    $modo   = $_GET['modo']   ??
-     '';
+    $modo   = $_GET['modo'] ?? '';
     $filtro = trim($_GET['filtro'] ?? '');
 
     $eventos = [];
@@ -98,19 +97,155 @@ if(isset($_GET['ajax'])){
             }
         }
 
-    } elseif($modo === 'turma'){
-        foreach($cacheJson['dados'] as $data => $turmas){
-            if(!isset($turmas[$filtro])) continue;
-            $info = $turmas[$filtro];
-            $tipo = tipoTurma($filtro);
-            $uc   = $info['uc'] ?? '';
-            $inst = $info['instrutor'] ?? '';
-
-            $nomeInst = '';
-            if($inst){
-                $nomeInst = $mapaApelidos[normalizar($inst)] ?? mb_strtoupper($inst);
+        // APP manuais: busca pelo nome completo do instrutor
+        $nomeCompleto = null;
+        $idInstrutor  = null;
+        foreach($instrutores as $i){
+            if(normalizar($i['apelido'] ?? '') === normalizar($filtro)){
+                $nomeCompleto = $i['nome'];
+                $idInstrutor  = (int)$i['id'];
+                break;
+            }
+        }
+        if($nomeCompleto){
+            $bitsD = [1=>1,2=>2,3=>4,4=>8,5=>16,6=>32];
+            $labT  = ['manha'=>'Manhã','tarde'=>'Tarde','noite'=>'Noite'];
+            $stApp = $pdo->prepare("
+                SELECT t.codigo, t.nome AS nomeTurma,
+                       t.dataInicio, t.dataFim, t.diasSemana,
+                       tt.turno, tt.horarioInicio, tt.horarioFim, tt.instrutor,
+                       COALESCE(l.nome,'Externo') AS nomeLab
+                FROM app_turmas t
+                JOIN app_turma_turnos tt ON tt.idTurma = t.id
+                LEFT JOIN laboratorios l ON l.idLaboratorio = tt.idLaboratorio
+                WHERE t.ativo = 1 AND tt.instrutor = ?
+                ORDER BY t.dataInicio
+            ");
+            $stApp->execute([$nomeCompleto]);
+            foreach($stApp->fetchAll(PDO::FETCH_ASSOC) as $ap){
+                $tipo = tipoTurma($ap['codigo']);
+                $di   = new DateTime($ap['dataInicio']);
+                $df   = new DateTime($ap['dataFim']);
+                $dc   = clone $di;
+                while($dc <= $df){
+                    $dow  = (int)$dc->format('N');
+                    $data = $dc->format('Y-m-d');
+                    if((int)$ap['diasSemana'] & ($bitsD[$dow] ?? 0)){
+                        $lbl = $labT[$ap['turno']] ?? $ap['turno'];
+                        $hr  = substr($ap['horarioInicio'],0,5).' – '.substr($ap['horarioFim'],0,5);
+                        $eventos[] = [
+                            'id'              => 'app_'.md5($data.$ap['codigo'].$ap['turno']),
+                            'title'           => $ap['nomeTurma'] ?: $ap['codigo'],
+                            'start'           => $data,
+                            'allDay'          => true,
+                            'backgroundColor' => $tipo['bg'],
+                            'borderColor'     => $tipo['cor'],
+                            'textColor'       => $tipo['cor'],
+                            'extendedProps'   => [
+                                'turma'     => $ap['codigo'],
+                                'uc'        => $ap['nomeTurma'],
+                                'tipo'      => $tipo['label'],
+                                'cor'       => $tipo['cor'],
+                                'instrutor' => mb_strtoupper($ap['instrutor']),
+                                'linha2'    => $lbl.' · '.$hr,
+                                'horario'   => $hr,
+                            ],
+                        ];
+                    }
+                    $dc->modify('+1 day');
+                }
             }
 
+            // Férias pelo id do instrutor
+            $stFer = $pdo->prepare(
+                "SELECT dataInicio, dataFim, descricao FROM instrutor_ferias WHERE idInstrutor = ? ORDER BY dataInicio"
+            );
+            $stFer->execute([$idInstrutor]);
+            foreach($stFer->fetchAll(PDO::FETCH_ASSOC) as $f){
+                $eventos[] = [
+                    'id'              => 'fer_'.md5($idInstrutor.$f['dataInicio']),
+                    'title'           => '🏖️ '.$f['descricao'],
+                    'start'           => $f['dataInicio'],
+                    'end'             => date('Y-m-d', strtotime($f['dataFim'].' +1 day')),
+                    'allDay'          => true,
+                    'backgroundColor' => '#fff3cd',
+                    'borderColor'     => '#ffc107',
+                    'textColor'       => '#856404',
+                    'extendedProps'   => [
+                        'isFerias'  => true,
+                        'descricao' => $f['descricao'],
+                        'de'        => date('d/m/Y', strtotime($f['dataInicio'])),
+                        'ate'       => date('d/m/Y', strtotime($f['dataFim'])),
+                        'tipo'      => 'Férias',
+                        'cor'       => '#856404',
+                        'turma'     => '',
+                        'uc'        => '',
+                        'linha2'    => '',
+                    ],
+                ];
+            }
+        }
+
+    } elseif($modo === 'turma'){
+        $tipo = tipoTurma($filtro);
+
+        // APP manual
+        try {
+            $stApp = $pdo->prepare("
+                SELECT t.codigo, t.nome AS nomeTurma,
+                       t.dataInicio, t.dataFim, t.diasSemana,
+                       tt.turno, tt.horarioInicio, tt.horarioFim, tt.instrutor,
+                       COALESCE(l.nome,'Externo') AS nomeLab
+                FROM app_turmas t
+                JOIN app_turma_turnos tt ON tt.idTurma = t.id
+                LEFT JOIN laboratorios l ON l.idLaboratorio = tt.idLaboratorio
+                WHERE t.ativo = 1 AND t.codigo = ?
+                ORDER BY FIELD(tt.turno,'manha','tarde','noite')
+            ");
+            $stApp->execute([$filtro]);
+            $bitsD   = [1=>1,2=>2,3=>4,4=>8,5=>16,6=>32];
+            $labelsT = ['manha'=>'Manhã','tarde'=>'Tarde','noite'=>'Noite'];
+            foreach($stApp->fetchAll(PDO::FETCH_ASSOC) as $ap){
+                $di = new DateTime($ap['dataInicio']);
+                $df = new DateTime($ap['dataFim']);
+                $dc = clone $di;
+                while($dc <= $df){
+                    $dow  = (int)$dc->format('N');
+                    $data = $dc->format('Y-m-d');
+                    if((int)$ap['diasSemana'] & ($bitsD[$dow] ?? 0)){
+                        $lbl = $labelsT[$ap['turno']] ?? $ap['turno'];
+                        $hr  = substr($ap['horarioInicio'],0,5).' – '.substr($ap['horarioFim'],0,5);
+                        $eventos[] = [
+                            'id'              => 'app_'.md5($data.$ap['codigo'].$ap['turno']),
+                            'title'           => $ap['nomeTurma'] ?: $ap['codigo'],
+                            'start'           => $data,
+                            'allDay'          => true,
+                            'backgroundColor' => $tipo['bg'],
+                            'borderColor'     => $tipo['cor'],
+                            'textColor'       => $tipo['cor'],
+                            'extendedProps'   => [
+                                'turma'     => $ap['codigo'],
+                                'uc'        => $ap['nomeTurma'],
+                                'tipo'      => $tipo['label'],
+                                'cor'       => $tipo['cor'],
+                                'instrutor' => mb_strtoupper($ap['instrutor']),
+                                'linha2'    => mb_strtoupper($ap['instrutor']),
+                                'horario'   => $lbl.' · '.$hr,
+                            ],
+                        ];
+                    }
+                    $dc->modify('+1 day');
+                }
+            }
+        } catch(PDOException $e){}
+
+        // Planilha
+        foreach($cacheJson['dados'] as $data => $turmas){
+            if(!isset($turmas[$filtro])) continue;
+            $info     = $turmas[$filtro];
+            $uc       = $info['uc'] ?? '';
+            $inst     = $info['instrutor'] ?? '';
+            $nomeInst = $inst ? ($mapaApelidos[normalizar($inst)] ?? mb_strtoupper($inst)) : '';
             $eventos[] = [
                 'id'              => md5($data.$filtro),
                 'title'           => $uc ?: $filtro,
@@ -129,6 +264,41 @@ if(isset($_GET['ajax'])){
                 ],
             ];
         }
+
+        // Férias da turma
+        try {
+            $stFT = $pdo->prepare("
+                SELECT f.dataInicio, f.dataFim, f.descricao
+                FROM turma_ferias f
+                JOIN turma_ferias_turmas ft ON ft.idFerias = f.id
+                WHERE ft.codigoTurma = ?
+                ORDER BY f.dataInicio
+            ");
+            $stFT->execute([$filtro]);
+            foreach($stFT->fetchAll(PDO::FETCH_ASSOC) as $f){
+                $eventos[] = [
+                    'id'              => 'fert_'.md5($filtro.$f['dataInicio']),
+                    'title'           => '🏖️ '.$f['descricao'],
+                    'start'           => $f['dataInicio'],
+                    'end'             => date('Y-m-d', strtotime($f['dataFim'].' +1 day')),
+                    'allDay'          => true,
+                    'backgroundColor' => '#fff3cd',
+                    'borderColor'     => '#ffc107',
+                    'textColor'       => '#856404',
+                    'extendedProps'   => [
+                        'isFerias'  => true,
+                        'descricao' => $f['descricao'],
+                        'de'        => date('d/m/Y', strtotime($f['dataInicio'])),
+                        'ate'       => date('d/m/Y', strtotime($f['dataFim'])),
+                        'tipo'      => 'Férias',
+                        'cor'       => '#856404',
+                        'turma'     => $filtro,
+                        'uc'        => '',
+                        'linha2'    => '',
+                    ],
+                ];
+            }
+        } catch(PDOException $e){}
     }
 
     echo json_encode($eventos, JSON_HEX_TAG|JSON_UNESCAPED_UNICODE);
@@ -175,7 +345,9 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .placeholder-cal{display:flex;align-items:center;justify-content:center;
     height:300px;color:#adb5bd;font-size:1rem;background:#fff;border-radius:8px;
     border:2px dashed #dee2e6;}
-.cache-info{font-size:.73rem;color:#6c757d;text-align:right;margin-top:8px;}
+.badge-ferias{display:inline-block;background:#fff3cd;color:#856404;
+    border:1px solid #ffc107;border-radius:4px;padding:2px 10px;
+    font-size:.75rem;font-weight:700;margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -241,12 +413,15 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 
     <!-- Legenda -->
     <div class="legenda">
+        <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1565c0"></div>Aprendizagem</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1b5e20"></div>Técnico</div>
-        <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#6a1b9a"></div>Qualificação</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#880e4f"></div>Ens. Médio</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#37474f"></div>Outro</div>
+        <div class="legenda-item">
+            <div class="legenda-dot" style="background:#ffc107;border-radius:2px;opacity:.8"></div>Férias
+        </div>
     </div>
 
     <!-- Calendário ou placeholder -->
@@ -311,14 +486,25 @@ function buscar(){
                 buttonText:{ today:'Hoje', month:'Mês', listMonth:'Lista' },
                 eventClick: function(info){
                     var p = info.event.extendedProps;
+
+                    if(p.isFerias){
+                        var html = '<div class="badge-ferias">🏖️ '+esc(p.descricao)+'</div>';
+                        html += '<div style="font-size:.88rem;margin-bottom:3px"><strong>De:</strong> '+esc(p.de)+'</div>';
+                        html += '<div style="font-size:.88rem"><strong>Até:</strong> '+esc(p.ate)+'</div>';
+                        document.getElementById('modalDetalheBody').innerHTML = html;
+                        $('#modalDetalhe').modal('show');
+                        return;
+                    }
+
                     var partes = info.event.startStr.split('-');
                     var dataFmt = partes[2]+'/'+partes[1]+'/'+partes[0];
                     var cor = p.cor;
                     var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(p.tipo)+'</span>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Data:</strong> '+dataFmt+'</div>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Turma:</strong> '+esc(p.turma)+'</div>';
-                    if(p.uc)        html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC:</strong> '+esc(p.uc)+'</div>';
+                    if(p.uc)        html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC / Curso:</strong> '+esc(p.uc)+'</div>';
                     if(p.instrutor) html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Instrutor:</strong> '+esc(p.instrutor)+'</div>';
+                    if(p.horario)   html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Horário:</strong> '+esc(p.horario)+'</div>';
                     document.getElementById('modalDetalheBody').innerHTML = html;
                     $('#modalDetalhe').modal('show');
                 },
@@ -334,7 +520,11 @@ function buscar(){
                 },
                 eventDidMount: function(info){
                     var p = info.event.extendedProps;
-                    info.el.title = (p.uc?p.uc+' — ':'')+p.turma+(p.instrutor?' ('+p.instrutor+')':'');
+                    if(p.isFerias){
+                        info.el.title = '🏖️ '+p.descricao+' ('+p.de+' a '+p.ate+')';
+                        return;
+                    }
+                    info.el.title = (p.uc?p.uc+' — ':'')+p.turma+(p.instrutor?' ('+p.instrutor+')':'')+(p.horario?' '+p.horario:'');
                 }
             });
             _cal.render();

@@ -187,10 +187,10 @@
                     } elseif($nivelNorm === 'instrutor'){
 
                     } elseif($nivelNorm === 'sup tecnica'){
-                        include('supTecnicaContainer.php');
+                        include('containers/supTecnicaContainer.php');
 
                     } elseif($nivelNorm === 'sup pedagogica'){
-                        include('supPedContainer.php');
+                        include('containers/supPedContainer.php');
 
                     } elseif($nivelNorm === 'gerencia'){
                         include('gerContainer.php');

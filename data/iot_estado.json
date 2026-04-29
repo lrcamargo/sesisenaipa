@@ -7,12 +7,48 @@
     "wifi": "connected",
     "mqtt_status": "connected",
     "rssi": -57,
-    "ultima_vez": "2026-04-24 21:16:22",
+    "ultima_vez": "2026-04-28 20:49:19",
     "ultimo_acesso": {
       "cracha": "39955C",
-      "data_hora": "2026-04-24 15:09:41"
+      "data_hora": "2026-04-28 18:22:53"
     },
     "historico_acessos": [
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 18:22:53"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 14:23:37"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-28 12:22:32"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-28 12:12:24"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-28 09:16:19"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 19:59:16"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 16:13:28"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 14:42:19"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 11:30:44"
+      },
       {
         "cracha": "39955C",
         "data_hora": "2026-04-24 15:09:41"
@@ -82,13 +118,81 @@
     "mac": "34:5F:45:AB:23:80",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -62,
-    "ultima_vez": "2026-04-24 14:21:10",
+    "rssi": -52,
+    "ultima_vez": "2026-04-28 22:08:50",
     "ultimo_acesso": {
-      "cracha": "D33114D",
-      "data_hora": "2026-04-24 17:58:53"
+      "cracha": "53786FC",
+      "data_hora": "2026-04-28 18:29:21"
     },
     "historico_acessos": [
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 18:29:21"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 16:58:18"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 16:56:11"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 15:30:35"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-28 14:42:01"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-28 09:53:17"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-28 08:57:31"
+      },
+      {
+        "cracha": "D3D2B614",
+        "data_hora": "2026-04-28 07:27:03"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-27 18:29:49"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 18:24:07"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 16:20:16"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 15:14:35"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 14:05:04"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 14:00:37"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 13:09:01"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-27 10:23:47"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-27 10:08:27"
+      },
       {
         "cracha": "D33114D",
         "data_hora": "2026-04-24 17:58:53"
@@ -122,15 +226,99 @@
     "mac": "F0:24:F9:45:6C:FC",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -52,
-    "ultima_vez": "2026-04-24 20:33:20",
+    "rssi": -53,
+    "ultima_vez": "2026-04-28 21:59:21",
     "ultimo_acesso": {
       "cracha": "E347EAD",
-      "data_hora": "2026-04-24 17:01:52"
+      "data_hora": "2026-04-28 20:38:07"
     },
     "tipo": "porta_ambiente",
     "nomeAmbiente": "102B",
     "historico_acessos": [
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 20:38:07"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 18:46:42"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 18:29:49"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 14:04:24"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 13:59:11"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 13:47:25"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 13:27:06"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 13:23:59"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 12:59:30"
+      },
+      {
+        "cracha": "D3D2B614",
+        "data_hora": "2026-04-28 07:47:16"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-27 18:30:52"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 18:29:48"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 18:23:23"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-27 17:00:32"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 16:35:30"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 16:17:33"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 16:09:12"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 15:53:25"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 15:14:47"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 13:00:02"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-27 11:57:40"
+      },
       {
         "cracha": "E347EAD",
         "data_hora": "2026-04-24 17:01:52"
@@ -284,13 +472,93 @@
     "mac": "EC:62:60:B2:9A:5C",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -60,
-    "ultima_vez": "2026-04-24 14:19:52",
+    "rssi": -54,
+    "ultima_vez": "2026-04-28 20:48:35",
     "ultimo_acesso": {
-      "cracha": "D33114D",
-      "data_hora": "2026-04-24 20:02:56"
+      "cracha": "23F1B9C",
+      "data_hora": "2026-04-28 18:28:03"
     },
     "historico_acessos": [
+      {
+        "cracha": "23F1B9C",
+        "data_hora": "2026-04-28 18:28:03"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 18:18:36"
+      },
+      {
+        "cracha": "E3D514E",
+        "data_hora": "2026-04-28 17:12:09"
+      },
+      {
+        "cracha": "E3D514E",
+        "data_hora": "2026-04-28 13:05:59"
+      },
+      {
+        "cracha": "63A5CAD",
+        "data_hora": "2026-04-28 09:38:54"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-28 09:18:05"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-28 09:00:02"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-28 08:28:47"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-28 07:51:00"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 18:27:11"
+      },
+      {
+        "cracha": "E3D514E",
+        "data_hora": "2026-04-27 17:00:31"
+      },
+      {
+        "cracha": "E3D514E",
+        "data_hora": "2026-04-27 13:04:11"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 12:58:31"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-27 12:56:37"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 11:42:55"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-27 09:56:00"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-27 09:17:14"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-27 09:09:05"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-27 09:01:53"
+      },
+      {
+        "cracha": "C369BC",
+        "data_hora": "2026-04-27 07:45:00"
+      },
       {
         "cracha": "D33114D",
         "data_hora": "2026-04-24 20:02:56"
@@ -436,19 +704,163 @@
   "107": {
     "topico_id": "107",
     "status": "online",
-    "ultima_vez": "2026-04-24 15:24:18",
+    "ultima_vez": "2026-04-28 21:19:18",
     "device_name": "IOT_Acess_107",
     "mac": "CC:7B:5C:1E:EE:08",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -57,
+    "rssi": -59,
     "tipo": "porta_ambiente",
     "nomeAmbiente": "107B",
     "ultimo_acesso": {
-      "cracha": "D33114D",
-      "data_hora": "2026-04-24 19:47:04"
+      "cracha": "331C7BD",
+      "data_hora": "2026-04-28 20:39:32"
     },
     "historico_acessos": [
+      {
+        "cracha": "331C7BD",
+        "data_hora": "2026-04-28 20:39:32"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 18:12:33"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 16:29:55"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 16:20:32"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 15:17:21"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 14:57:10"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 14:24:44"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-28 12:58:35"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-28 12:09:24"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-28 11:50:47"
+      },
+      {
+        "cracha": "13BEF6B",
+        "data_hora": "2026-04-28 10:12:35"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-28 08:22:27"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-28 08:13:22"
+      },
+      {
+        "cracha": "D3D2B614",
+        "data_hora": "2026-04-28 07:56:02"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 19:32:39"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 18:24:39"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 16:44:20"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 16:37:52"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-27 16:08:50"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 15:54:14"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 15:15:46"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-27 14:36:35"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-27 13:25:59"
+      },
+      {
+        "cracha": "39955C",
+        "data_hora": "2026-04-27 12:59:48"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 11:56:23"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 10:56:43"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-27 10:50:30"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 10:28:44"
+      },
+      {
+        "cracha": "E349D6C",
+        "data_hora": "2026-04-27 10:18:49"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 10:17:51"
+      },
+      {
+        "cracha": "F37654E",
+        "data_hora": "2026-04-27 09:53:19"
+      },
+      {
+        "cracha": "F37654E",
+        "data_hora": "2026-04-27 09:01:27"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 08:50:42"
+      },
+      {
+        "cracha": "F37654E",
+        "data_hora": "2026-04-27 08:47:28"
+      },
+      {
+        "cracha": "63E898D",
+        "data_hora": "2026-04-27 08:40:10"
+      },
+      {
+        "cracha": "3B739D",
+        "data_hora": "2026-04-27 07:07:35"
+      },
       {
         "cracha": "D33114D",
         "data_hora": "2026-04-24 19:47:04"
@@ -582,13 +994,57 @@
     "mac": "F0:24:F9:45:81:1C",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -71,
-    "ultima_vez": "2026-04-24 20:33:21",
+    "rssi": -68,
+    "ultima_vez": "2026-04-28 22:01:16",
     "ultimo_acesso": {
-      "cracha": "138CEC",
-      "data_hora": "2026-04-24 12:35:53"
+      "cracha": "397C9C",
+      "data_hora": "2026-04-28 21:08:25"
     },
     "historico_acessos": [
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-28 21:08:25"
+      },
+      {
+        "cracha": "631B42E",
+        "data_hora": "2026-04-28 20:26:41"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-28 19:31:07"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 16:07:27"
+      },
+      {
+        "cracha": "53786FC",
+        "data_hora": "2026-04-28 13:19:19"
+      },
+      {
+        "cracha": "E347EAD",
+        "data_hora": "2026-04-28 13:11:00"
+      },
+      {
+        "cracha": "C31BF4C",
+        "data_hora": "2026-04-28 09:21:55"
+      },
+      {
+        "cracha": "B524C197",
+        "data_hora": "2026-04-27 09:26:32"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 07:16:08"
+      },
+      {
+        "cracha": "138CEC",
+        "data_hora": "2026-04-27 07:13:44"
+      },
+      {
+        "cracha": "397C9C",
+        "data_hora": "2026-04-25 08:58:39"
+      },
       {
         "cracha": "138CEC",
         "data_hora": "2026-04-24 12:35:53"
@@ -688,8 +1144,8 @@
     "mac": "D4:8C:49:58:54:44",
     "wifi": "connected",
     "mqtt_status": "connected",
-    "rssi": -49,
-    "ultima_vez": "2026-04-24 14:17:31",
+    "rssi": -42,
+    "ultima_vez": "2026-04-28 13:27:48",
     "tipo": "porta_ambiente",
     "nomeAmbiente": null
   },

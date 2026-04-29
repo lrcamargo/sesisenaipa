@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-04-24T21:02:28",
+  "gerado_em": "2026-04-28T22:13:37",
   "fonte": "/var/www/html/data/horarios.xlsm",
-  "total_registros": 8351,
+  "total_registros": 8366,
   "total_datas": 521,
   "erros_abas": 0,
   "dados": {
@@ -125,6 +125,11 @@
         "instrutor": "Gabriel Nogueira",
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde e Segurança do Trabalho",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -303,6 +308,11 @@
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -466,7 +476,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -479,6 +489,11 @@
         "instrutor": "Clarice",
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -648,7 +663,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -661,6 +676,11 @@
         "instrutor": "Clarice",
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -4614,6 +4634,11 @@
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "José Faria",
+        "uc": "Elaboração de Documentos do Sistema da Qualidade",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -4790,6 +4815,11 @@
         "instrutor": "Thiago",
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -4968,6 +4998,11 @@
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde e Segurança do Trabalho",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -4999,12 +5034,12 @@
         "nome_turma": "AP_MANT_ELETROMEC08"
       },
       "HT-MEC-01-N-25-13310": {
-        "instrutor": "Danilo",
+        "instrutor": "Ewerton",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Ewerton",
+        "instrutor": "José Rosa",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
@@ -5150,6 +5185,11 @@
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -5181,12 +5221,12 @@
         "nome_turma": "AP_MANT_ELETROMEC08"
       },
       "HT-MEC-01-N-25-13310": {
-        "instrutor": "Danilo",
+        "instrutor": "Ewerton",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Ewerton",
+        "instrutor": "José Rosa",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
@@ -5332,6 +5372,11 @@
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -5343,12 +5388,12 @@
         "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
       },
       "HT-MEC-01-N-25-13310": {
-        "instrutor": "Danilo",
+        "instrutor": "Ewerton",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Ewerton",
+        "instrutor": "José Rosa",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
@@ -5489,6 +5534,11 @@
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -5500,12 +5550,12 @@
         "nome_turma": "AP_GESTAO_INDUSTRIAL_09"
       },
       "HT-MEC-01-N-25-13310": {
-        "instrutor": "Danilo",
+        "instrutor": "Ewerton",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Ewerton",
+        "instrutor": "José Rosa",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
@@ -5677,8 +5727,8 @@
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
       "AI-API-03-T-26-13310": {
-        "instrutor": "José Faria",
-        "uc": "Elaboração de Documentos do Sistema da Qualidade",
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
@@ -5837,6 +5887,11 @@
         "instrutor": "Thiago",
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde e Segurança do Trabalho",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -6020,6 +6075,11 @@
         "uc": "Informática",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde e Segurança do Trabalho",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -6202,6 +6262,11 @@
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
       },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Pompeu",
+        "uc": "Saúde e Segurança do Trabalho",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
         "uc": "Fundamentos Mecânicos",
@@ -6373,6 +6438,11 @@
         "instrutor": "Clarice",
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -6580,6 +6650,11 @@
         "instrutor": "Clarice",
         "uc": "Prática Inovadoras",
         "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Prática Inovadoras",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
       },
       "AI-MEL-07-T-25-13310": {
         "instrutor": "Ewerton",
@@ -6941,12 +7016,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -7063,7 +7138,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -7108,8 +7183,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -7230,7 +7305,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -7275,8 +7350,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -7427,7 +7502,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados  - Ead",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -7634,12 +7709,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -7801,12 +7876,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -7923,7 +7998,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -7968,8 +8043,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -8130,12 +8205,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -8292,12 +8367,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -8409,7 +8484,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -8454,8 +8529,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -8566,7 +8641,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -8611,8 +8686,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -8738,7 +8813,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados  - Ead",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -8930,12 +9005,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -9092,12 +9167,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
+        "instrutor": "Danilo",
         "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -9204,7 +9279,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -9249,8 +9324,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Sistemas de Automação Industrial",
+        "instrutor": "Danilo",
+        "uc": "Manutenção Mecânica Aplicada",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -9356,7 +9431,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -9401,8 +9476,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -9583,7 +9658,7 @@
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados  - Ead",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -9725,12 +9800,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -9877,12 +9952,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -10034,8 +10109,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -10141,7 +10216,7 @@
         "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
       },
       "HT-AUT-02-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO02_T5"
       },
@@ -10186,8 +10261,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -10353,7 +10428,7 @@
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados  - Ead",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -10490,12 +10565,12 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Jonas",
         "uc": "Circuitos Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
@@ -10632,8 +10707,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -10931,8 +11006,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -11073,8 +11148,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -11829,8 +11904,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -11976,8 +12051,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
@@ -12118,7 +12193,7 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
+        "instrutor": "Felipe",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
@@ -21564,8 +21639,8 @@
         "nome_turma": "TECNICO_MECANICA01_T5"
       },
       "HT-MEC-02-N-25-13310": {
-        "instrutor": "Patrick",
-        "uc": "Manutenção Mecânica Aplicada",
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial",
         "nome_turma": "TECNICO_MECANICA02_T5"
       },
       "HT-AUT-01-N-25-13310": {
