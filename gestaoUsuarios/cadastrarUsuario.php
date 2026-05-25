@@ -154,7 +154,7 @@
             </div>
             <div class="form-group">
                 <label for="apelido">Apelido</label>
-                <input type="text" id="apelido" name="apelido" placeholder="Apelido" readonly required>
+                <input type="text" id="apelido" name="apelido" placeholder="Apelido">
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>

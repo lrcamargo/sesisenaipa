@@ -70,7 +70,7 @@ $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 try{
     $pdo->prepare("
         INSERT INTO usuarios (registro, nome, email, usuario, apelido, senha, perfil, status, primeiro_login)
-        VALUES (?, ?, ?, ?, ?, ?, 1, 1)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 1, 1)
     ")->execute([$registro, $nome, $email, $usuario, $apelido, $senhaHash, $perfil]);
 
 } catch(PDOException $e){

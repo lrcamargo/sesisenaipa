@@ -108,7 +108,6 @@ body {
     top: 70px;
     width: 250px;
     height: calc(100vh - 70px);
-    /*height: calc(100% - 9%);*/
     overflow-y: auto;
     transition: 0.3s;
     transition-property: width;
@@ -182,15 +181,16 @@ body {
 
 .wrapper .main-container {
     min-height: 100vh;
-  width: calc(100% - 250px);  
-  /*width: calc(100%-250px);*/
+    width: calc(100% - 250px);
     background-color: #E7EBF4;
     background-size: cover;
     margin-top: 70px;
     margin-left: 250px;
-    height: 100rem;
+    /* CORRIGIDO: era height:100rem fixo, que cortava o fundo e
+       fazia o conteúdo sumir ao colapsar o menu.
+       min-height garante que o container sempre envolve o conteúdo. */
     padding: 30px 15px;
-    transition: 0.3s;  
+    transition: 0.3s;
 }
 
 .wrapper.collapse .sidebar {
@@ -215,6 +215,7 @@ body {
 .wrapper.collapse .sidebar a span {
     display: none;
 }
+
 /* Esconde a barra no Chrome, Safari e Opera */
 .wrapper .sidebar::-webkit-scrollbar {
     display: none;
@@ -222,9 +223,10 @@ body {
 
 /* Esconde a barra no IE, Edge e Firefox */
 .wrapper .sidebar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
+
 .info-container {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -491,11 +493,6 @@ body {
         display: none;
     }
 
-    /*.wrapper .main-container {
-    min-height: 100vh;
-        width: (100% - 70px);
-        margin-left: 70px;
-    }*/
     .wrapper.collapse .main-container {
         width: calc(100% - 250px) !important;
         margin-left: 250px;

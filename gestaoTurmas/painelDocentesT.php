@@ -167,12 +167,39 @@ function temFeriado(string $codTurma, string $data): ?array {
     return null;
 }
 
+/* ════════════════════════════════════════════════════════════
+   FUNÇÕES DE CLASSIFICAÇÃO DE TURMAS SEMIPRESENCIAIS
+   ════════════════════════════════════════════════════════════
+
+   Regras de negócio definidas:
+   - Turmas semipresenciais: código começa com HT e contém -I-
+     Exemplo: HTMECA-01-I-24-13310, HTAUTM-01-I-24-13310
+   - HTAUTM-*-I-*: ocorrem às sextas-feiras no turno da TARDE
+   - Todas as demais HT*-I-*: ocorrem às sextas-feiras no turno da NOITE
+   - Dia da semana: sexta = índice 4 nos $diasSemana (bit 16)
+*/
+
+function ehTurmaSemipresencial(string $cod): bool {
+    return preg_match('/^HT/i', $cod)
+        && strpos(strtoupper($cod), '-I-') !== false;
+}
+
+/* Retorna o turno fixo de uma turma semipresencial */
+function turnoSemipresencial(string $cod): string {
+    // HTAUTM-XX-I-XX-XXXXX → tarde; todas as demais → noite
+    if(preg_match('/^HTAUTM-/i', $cod)) return 'tarde';
+    return 'noite';
+}
+
+/* ── CORREÇÃO 1: ehTurmaSenai aceita HTXXXX sem hífen imediato ── */
 function ehTurmaSenai(string $cod): bool {
     if(preg_match('/^EF-/i', $cod)) return false;
-    if(preg_match('/^(HT|AI|APP)-/i', $cod)) return true;
-    if(preg_match('/^EM-\w+-O\b/i',  $cod)) return true;
+    if(preg_match('/^HT/i', $cod))  return true;   // cobre HT-XXX e HTXXX-XXX
+    if(preg_match('/^(AI|APP)-/i', $cod)) return true;
+    if(preg_match('/^EM-\w+-O\b/i', $cod)) return true;
     return false;
 }
+
 function ehTurmaEM(string $cod): bool {
     return (bool)preg_match('/^EM-/i', $cod);
 }
@@ -311,6 +338,7 @@ function turmaTemAulaHoje(string $cod, string $turno, int $bit): bool {
     return false;
 }
 
+/* ── CORREÇÃO 2: turnoDoCodigoTurma — semipresencial retorna string própria ── */
 function turnoDoCodigoTurma(string $cod): ?string {
     if(preg_match('/^[A-Z]+-[A-Z]+-\d+-([MTN])-/i', $cod, $m)){
         $letra = strtoupper($m[1]);
@@ -318,22 +346,49 @@ function turnoDoCodigoTurma(string $cod): ?string {
         if($letra === 'T') return 'tarde';
         if($letra === 'N') return 'noite';
     }
+    // Semipresencial: retorna o turno fixo definido pela regra de negócio
+    if(ehTurmaSemipresencial($cod)) return turnoSemipresencial($cod);
     return null;
 }
 
+/* ── CORREÇÃO 3: turmaDeveExibirNaTurno trata semipresencial com regra fixa ──
+   Semipresenciais ocorrem às SEXTAS-FEIRAS (bit 16 = índice 4 nos diasBits).
+   O turno depende do código: HTAUTM → tarde; demais HT*-I-* → noite.
+   A exibição na linha da semana só ocorre se houver registro no cache
+   para a sexta daquela semana (confirmando que a aula de fato acontece
+   nessa quinzena — o cache só terá entrada nas semanas com aula presencial).
+*/
 function turmaDeveExibirNaTurno(string $cod, string $turno, array $diasSemana, array $diasBits): bool {
     global $vincIdx, $cacheJson, $appTurmas;
+
+    // APP manual
     if(isset($appTurmas[$cod][$turno])){
         $mask = $appTurmas[$cod][$turno]['diasSemana'];
         foreach($diasBits as $bit){ if($mask & $bit) return true; }
         return false;
     }
+
+    // Semipresencial: lógica própria
+    if(ehTurmaSemipresencial($cod)){
+        $turnoCorreto = turnoSemipresencial($cod);
+        if($turno !== $turnoCorreto) return false;
+
+        // Verifica se há aula na sexta desta semana (índice 4 = sexta, bit 16)
+        $sexta = $diasSemana[4] ?? null; // índice 4 = sexta-feira
+        if(!$sexta) return false;
+
+        return isset($cacheJson['dados'][$sexta][$cod]);
+    }
+
+    // Vínculo explícito de sala
     if(isset($vincIdx[$cod][$turno])){
         foreach($diasSemana as $di => $data){
             if(turmaTemAulaHoje($cod, $turno, $diasBits[$di])) return true;
         }
         return false;
     }
+
+    // Turmas regulares sem vínculo de sala
     $turnoCodigo = turnoDoCodigoTurma($cod);
     if($turnoCodigo !== null && $turnoCodigo !== $turno) return false;
     if($cacheJson && isset($cacheJson['dados'])){
@@ -387,7 +442,6 @@ $alertasEM = []; $alertasOutro = [];
 foreach($instrutores as $inst){
     foreach($diasSemana as $di => $data){
         if(!instrutorEmFerias($inst['nome'], $data)) continue;
-        // Planilha
         if($cacheJson && isset($cacheJson['dados'][$data])){
             foreach($cacheJson['dados'][$data] as $cod => $info){
                 if(empty($info['instrutor'])) continue;
@@ -413,7 +467,6 @@ foreach($instrutores as $inst){
                 }
             }
         }
-        // APP manuais
         foreach($appTurmas as $cod => $turnos){
             foreach($turnos as $turno => $ap){
                 $bitDia = $diasBits[$di] ?? 0;
@@ -467,18 +520,14 @@ foreach($todasTurmas as $cod){
         }
     }
 }
-// Adiciona turmas APP ao mapa de duplicidade
-// Usa o APELIDO do instrutor como chave (igual à planilha) para que colisões sejam detectadas
 foreach($appTurmas as $cod => $turnos){
     foreach($turnos as $turno => $ap){
         foreach($diasSemana as $di => $data){
             $bitDia = $diasBits[$di];
             if(!($ap['diasSemana'] & $bitDia)) continue;
             if(temFerias($cod, $data)) continue;
-            // Resolve apelido do instrutor APP para bater com a chave da planilha
             $nomeInstApp = mb_strtoupper(trim($ap['instrutor']));
-            // Busca apelido no mapa (inverso: nome completo → apelido)
-            $chaveApp = $nomeInstApp; // fallback: nome completo
+            $chaveApp = $nomeInstApp;
             foreach($GLOBALS['instrutores'] as $_i){
                 if(mb_strtoupper(trim($_i['nome'])) === $nomeInstApp){
                     $chaveApp = !empty($_i['apelido'])
@@ -526,7 +575,6 @@ foreach($instPorDiaTurno as $data => $turnos){
                 } catch(Exception $e){}
                 fim_presidente:
             }
-            // Resolve nome completo do instrutor a partir da chave lowercase
             $nomeExibir = $mapaInstrutores[$inst] ?? mb_strtoupper($inst);
             $entry = ['turma'=>implode(' + ',$turmasInst),'turno'=>$turnosConfig[$turnoKey]['label'] ?? $turnoKey,
                       'dia'=>$diasNomes[$di].' '.date('d/m',strtotime($data)),'tipo'=>'duplicado','inst'=>$nomeExibir];
@@ -633,6 +681,10 @@ foreach($instrutores as $inst){
 .tabela-docentes td:first-child{text-align:left;font-weight:600;background:#f8f9fa;position:sticky;left:0;z-index:0;border-right:2px solid #dee2e6;}
 .tabela-docentes tbody tr:hover td{background:#f0f4ff!important;}
 .tabela-docentes tbody tr:hover td:first-child{background:#e8edff!important;}
+/* Badge visual para semipresenciais */
+.badge-semipresencial{display:inline-block;background:#fce7f3;color:#be185d;
+    border:1px solid #be185d;border-radius:3px;padding:0 5px;
+    font-size:.65rem;font-weight:700;margin-left:4px;vertical-align:middle;}
 .cel-doc-nome{font-size:.78rem;font-weight:700;color:#212529;}
 .cel-sem-aula{color:#dee2e6;font-size:1.4rem;}
 .cel-sem-doc{background:#fff3cd;color:#856404;border-radius:3px;padding:2px 5px;font-size:.72rem;font-weight:600;}
@@ -647,6 +699,78 @@ td.td-hoje{background:#fff9e6!important;}
 #toastDocentes{position:fixed;bottom:24px;right:24px;z-index:9999;min-width:260px;display:none;padding:12px 18px;border-radius:6px;font-size:.875rem;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.18);}
 #toastDocentes.sucesso{background:#d4edda;color:#155724;border:1px solid #c3e6cb;}
 #toastDocentes.erro{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb;}
+
+/* ── Correções baseadas no main.css real ──────────────────────────
+   1. Fundo cobre tudo: min-height no .wrapper (não no main-container
+      cujo height:100rem estava causando o colapso ao toggle)
+   2. Tabela com scroll horizontal e barra discreta
+──────────────────────────────────────────────────────────────── */
+
+/* 1 — wrapper cobre a viewport; não tocamos no main-container */
+.wrapper {
+    min-height: 100vh;
+}
+
+/* 2 — Barra de scroll fina e discreta */
+.tabela-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #ced4da #f8f9fa;
+}
+.tabela-wrapper::-webkit-scrollbar       { height: 5px; }
+.tabela-wrapper::-webkit-scrollbar-track { background: #f8f9fa; border-radius: 3px; }
+.tabela-wrapper::-webkit-scrollbar-thumb { background: #ced4da; border-radius: 3px; }
+.tabela-wrapper::-webkit-scrollbar-thumb:hover { background: #adb5bd; }
+
+/* Tabela proporcional com larguras fixas */
+.tabela-docentes {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+/* Coluna de turma: largura fixa, ellipsis no código */
+.tabela-docentes th:first-child,
+.tabela-docentes td:first-child {
+    width: 155px;
+    min-width: 155px;
+    max-width: 155px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Colunas dos dias: espaço restante dividido por 6 */
+.tabela-docentes th:not(:first-child),
+.tabela-docentes td:not(:first-child) {
+    width: calc((100% - 155px) / 6);
+}
+
+/* Cabeçalho compacto */
+.tabela-docentes th {
+    padding: 7px 5px;
+    font-size: .79rem;
+    white-space: nowrap;
+}
+
+/* Células: conteúdo pode quebrar linha */
+.tabela-docentes td {
+    padding: 5px 5px;
+    font-size: .79rem;
+    vertical-align: middle;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Conteúdo interno das células */
+.cel-docente   { line-height: 1.35; }
+.cel-doc-nome  { font-size: .74rem; font-weight: 700; color: #212529; display: block; white-space: normal; }
+.cel-uc        { font-size: .66rem; display: block; white-space: normal; color: #555; }
+.cel-local     { font-size: .65rem; display: block; white-space: normal; color: #6c757d; }
+.cel-sem-sala  { font-size: .65rem; display: block; color: #e65100; }
+.cel-sem-doc   { font-size: .68rem; font-weight: 600; }
+.badge-semipresencial { font-size: .58rem; padding: 0 4px; }
 </style>
 </head>
 <body>
@@ -764,7 +888,6 @@ td.td-hoje{background:#fff9e6!important;}
                 <input type="date" class="input-data-ref" value="<?php echo $dataRef; ?>">
                 <button onclick="irParaData(this)">Ir</button>
             </div>
-
         </div>
 
         <div class="disponivel-box" id="disp-box-<?php echo $turnoKey; ?>"
@@ -798,16 +921,28 @@ td.td-hoje{background:#fff9e6!important;}
             $renderLinhas = function(array $lista) use ($turnoKey,$diasSemana,$diasBits,$hoje,$diasNomes,$vinculosCodigos,$appTurmas): void {
                 foreach($lista as $cod){
                     if(!turmaDeveExibirNaTurno($cod,$turnoKey,$diasSemana,$diasBits)) continue;
+
+                    $badgeSemi = ehTurmaSemipresencial($cod)
+                        ? '<span class="badge-semipresencial">Semipresencial</span>'
+                        : '';
+
                     echo "<tr><td title='Clique para ver o horário da turma' style='cursor:pointer'
                                onclick=\"window.open('consultaHorario.php?modo=turma&filtro=".urlencode($cod)."','_blank')\">
-                               ".htmlspecialchars($cod)."
+                               ".htmlspecialchars($cod).$badgeSemi."
                           </td>";
+
                     foreach($diasSemana as $di => $data){
                         $bit   = $diasBits[$di];
                         $tdCls = ($data===$hoje) ? " class='td-hoje'" : '';
                         $info       = instrutorNaData($cod,$data);
                         $temVinculo = isset($GLOBALS['vincIdx'][$cod][$turnoKey]);
-                        $temAulaDia = $temVinculo ? turmaTemAulaHoje($cod,$turnoKey,$bit) : ($info !== null);
+
+                        // Semipresenciais só têm aula na sexta (índice 4)
+                        if(ehTurmaSemipresencial($cod)){
+                            $temAulaDia = ($di === 4) && ($info !== null);
+                        } else {
+                            $temAulaDia = $temVinculo ? turmaTemAulaHoje($cod,$turnoKey,$bit) : ($info !== null);
+                        }
 
                         $feriasTurma = temFerias($cod,$data);
                         if($feriasTurma){
@@ -952,6 +1087,10 @@ td.td-hoje{background:#fff9e6!important;}
 <div id="toastDocentes"></div>
 <script src="../js/menu.js"></script>
 <script>
+// ── Persistência do menu: único bloco, sem duplicatas ──
+// menu.js já registrou: $(document).ready(function(){ $(".sidebar-btn").click(function(){ $(".wrapper").toggleClass("collapse"); }); });
+// Aqui apenas salvamos/restauramos o estado, sem novo toggle.
+
 var _instList  = <?php echo json_encode($jsInstrutores, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE); ?>;
 var _ocupados  = <?php echo json_encode($jsOcupados,    JSON_HEX_TAG | JSON_UNESCAPED_UNICODE); ?>;
 var _feriados  = <?php
@@ -985,7 +1124,6 @@ var _dispOriginal = <?php
     }
     echo json_encode($orig, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE);
 ?>;
-
 
 function mostrarDisponiveis(th) {
     var data  = th.dataset.data;

@@ -94,10 +94,10 @@
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a></li>";
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
         //echo "<li class='item'><a href='../gestaoAmbientes/index.php' class='menu-btn'><i class='fas fa-map-signs'></i><span>Gestão Ambientes</span></a></li>";
-        // GESTÃO DE AMBIENTES, TURMAS E FERIADOS
+        // GESTÃO DE AMBIENTES, TURMAS, FERIADOS, APERFEIÇOAMENTO E FÉRIAS.
         echo "<li class='item' id='gestao-item'>
             <a href='#gestao-item' class='menu-btn'>
-                <i class='fas fa-cogs'></i><span>Gestão <i class='fas fa-chevron-down drop-down'></i></span>
+                <i class='fas fa-cogs'></i><span>Gestão Escolar<i class='fas fa-chevron-down drop-down'></i></span>
             </a>
             <div class='sub-menu'>
                 <a href='../gestaoAmbientes/index.php'>
@@ -117,6 +117,45 @@
                 </a>
                 <a href='../gestaoTurmas/cadastroFeriasInstrutor.php' class='menu-btn'>
                     <i class='fas fa-plane-departure mr-2'></i><span>Férias de Instrutores</span>
+                </a>
+            </div>
+        </li>";
+        //ESTOQUE
+         echo "<li class='item' id='estoque-item'>
+            <a href='#estoque-item' class='menu-btn'>
+                <i class='fas fa-archive'></i><span>Controle de Estoque <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../estoque/cadastroEstoqueItens.php'>
+                    <i class='fas fa-door-open'></i><span>Itens</span>
+                </a>
+            </div>
+        </li>";
+        //IoT
+        echo "<li class='item' id='iot-item'>
+            <a href='#iot-item' class='menu-btn'>
+                <i class='fa fa-cloud'></i><span>IoT <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../iot/plantaViewer.php'>
+                    <i class='fas fa-door-open'></i><span>Principal</span>
+                </a>
+                <a href='../iot/monitorIoT.php'>
+                    <i class='fas fa-door-open'></i><span>Monitor Geral</span>
+                </a>
+            </div>
+        </li>";
+        //HORÁRIOS
+        echo "<li class='item' id='horarios-item'>
+            <a href='#horarios-item' class='menu-btn'>
+                <i class='fa fa-cloud'></i><span>Horários <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../horarios/geradorHorario.php'>
+                    <i class='fas fa-door-open'></i><span>Gerar Horário</span>
+                </a>
+                <a href='../horarios/cadastroCursos.php'>
+                    <i class='fas fa-door-open'></i><span>Cursos e UCs</span>
                 </a>
             </div>
         </li>";
@@ -158,7 +197,48 @@
                 </a>
             </div>
         </li>";
-        echo "<li class='item'><a href='main.php' class='menu-btn'><i class='fas fa-archive'></i><span>Controle de Estoque</span></a></li>";
+        //ESTOQUE
+         echo "<li class='item' id='estoque-item'>
+            <a href='#estoque-item' class='menu-btn'>
+                <i class='fas fa-archive'></i><span>Controle de Estoque <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../estoque/estoqueMovimentacoes.php'>
+                    <i class='fas fa-door-open'></i><span>Movimentações</span>
+                </a>
+                <a href='../estoque/cadastroEstoqueItens.php'>
+                    <i class='fas fa-door-open'></i><span>Itens</span>
+                </a>
+            </div>
+        </li>";
+        //IoT
+        echo "<li class='item' id='iot-item'>
+            <a href='#iot-item' class='menu-btn'>
+                <i class='fa fa-cloud'></i><span>IoT <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../iot/plantaViewer.php'>
+                    <i class='fas fa-door-open'></i><span>Principal</span>
+                </a>
+                <a href='../iot/monitorIoT.php'>
+                    <i class='fas fa-door-open'></i><span>Monitor Geral</span>
+                </a>
+            </div>
+        </li>";
+        //HORÁRIOS
+        echo "<li class='item' id='horarios-item'>
+            <a href='#horarios-item' class='menu-btn'>
+                <i class='fas fa-clock'></i><span>Horários <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../horarios/geradorHorario.php'>
+                    <i class='fas fa-door-open'></i><span>Gerar Horário</span>
+                </a>
+                <a href='../horarios/cadastroCursos.php'>
+                    <i class='fas fa-door-open'></i><span>Cursos e UCs</span>
+                </a>
+            </div>
+        </li>";
         echo "<li class='item'><a href='../scripts/deploy.php' class='menu-btn'><i class='fas fa-rocket mr-1'></i><span>Deploy</span></a></li>";
         echo "<li class='item'><a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span>Sirene</span></a></li>";
     }

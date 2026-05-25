@@ -292,14 +292,15 @@ $nomesCrachaJson = json_encode($nomesCracha, JSON_HEX_TAG|JSON_UNESCAPED_UNICODE
 
 <div class="toast-iot" id="toastIoT"></div>
 <script src="../js/menu.js"></script>
+
 <script>
-var _pisos       = <?php echo $pisosJson; ?>;
-var _estado      = <?php echo $estadoJson; ?>;
-var _labsIoT     = <?php echo $labsIoTJson; ?>;
-var _nomesCracha = <?php echo $nomesCrachaJson; ?>;
-var _pisoAtivo   = 0;
-var _acTemps     = {};
-var _rafHandles  = []; // animações de pegadas ativas
+var _pisos        = <?php echo $pisosJson; ?>;
+var _estado       = <?php echo $estadoJson; ?>;
+var _labsIoT      = <?php echo $labsIoTJson; ?>;
+var _nomesCracha  = <?php echo $nomesCrachaJson; ?>;
+var _pisoAtivo    = 0;
+var _acTemps      = {};
+var _rafHandles   = []; // Controle global das animações
 
 function buildMacMap(est){
     var m={};
@@ -319,173 +320,237 @@ function trocarPiso(i){
     renderLayer(i);
 }
 
-/* ── Pegadas Mapa do Maroto (SVG inline, loop contínuo) ── */
+/* ── Pegadas Mapa do Maroto ── */
 function acessoRecente(dh, min){
     if(!dh) return false;
-    return Date.now()-new Date(dh.replace(' ','T')).getTime()<=min*60000;
+    // Converte data do SQL para objeto Date
+    var dataAcesso = new Date(dh.replace(/-/g, '/')); 
+    var agora = new Date();
+    return (agora - dataAcesso) <= min * 60000;
 }
 
-function iniciarPegadas(container, nome){
-    // Para qualquer animação anterior
-    _rafHandles.forEach(function(h){ cancelAnimationFrame(h.id); });
-    _rafHandles=[];
-
-    var ns='http://www.w3.org/2000/svg';
-    var svg=document.createElementNS(ns,'svg');
-    svg.setAttribute('width','100%'); svg.setAttribute('height','100%');
-    svg.style.cssText='position:absolute;inset:0;overflow:visible;pointer-events:none;';
-    svg.setAttribute('viewBox','0 0 100 100');
-    svg.setAttribute('preserveAspectRatio','none');
+function iniciarPegadas(container, nome) {
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:10;';
     container.appendChild(svg);
 
-    // Sola de sapato — esquerda e direita
-    function solaPath(dir){
-        return dir
-            ? 'M2,0 C0.5,0 0,1.5 0,3 L0,8 C0,10 0.5,11 2,11 L4,11 C5.5,11 6,9.5 6,8 L6.5,3 C6.5,1 5,0 3.5,0 Z'
-            : 'M4,0 C5.5,0 7,1 7,3 L7,8 C7,9.5 6.5,11 4,11 L2,11 C0.5,11 0,10 0,8 L0,3 C0,1.5 0.5,0 2,0 Z';
+    
+    function solaPath(isRight) {
+        // Sola frontal
+        // M1.5,1 L6.5,1 desenha uma linha reta no topo para achatar
+        var solaFrontal = 'M 1.5,1 L 6.5,1 C 7.5,3 7.5,7 6.5,10 L 1.5,10 C 0.5,7 0.5,3 1.5,1 Z';
+        
+        // Salto
+        var salto = 'M 1.5,11.5 C 3,11 5,11 6.5,11.5 L 6.5,14.5 C 5,15.5 3,15.5 1.5,14.5 Z';
+        return { solaFrontal: solaFrontal, salto: salto };
     }
 
-    var N=10; var cor='#5c3317';
-    var passos=[];
-    for(var i=0;i<N;i++){
-        var g=document.createElementNS(ns,'g');
-        var path=document.createElementNS(ns,'path');
-        path.setAttribute('d', solaPath(i%2===0));
-        path.setAttribute('fill',cor);
-        g.appendChild(path);
+    function gerarCaminhoMisterioso() {
+        var d = 'M' + (Math.random()*40+30) + ',' + (Math.random()*40+30);
+        for(var i = 0; i < 3; i++) {
+            d += ' C' + (Math.random()*100) + ',' + (Math.random()*100) + ' ' 
+                      + (Math.random()*100) + ',' + (Math.random()*100) + ' ' 
+                      + (Math.random()*80+10) + ',' + (Math.random()*80+10);
+        }
+        return d;
+    }
+
+    var caminhoRef = document.createElementNS(ns, 'path');
+    caminhoRef.setAttribute('d', gerarCaminhoMisterioso());
+    var totalLen = caminhoRef.getTotalLength() || 100;
+    
+    var stepDist = 9; // Distância entre as pegadas
+    var numSteps = Math.floor(totalLen / stepDist);
+    var passos = [];
+
+    // 3. Distribui as pegadas STATICAMENTE ao longo do caminho
+    for(var i = 0; i < numSteps; i++) {
+        var isRight = (i % 2 === 0);
+        var info = solaPath(isRight);
+        
+        var g = document.createElementNS(ns, 'g');
+        // Desenha sola e salto
+        g.innerHTML = '<path d="'+info.solaFrontal+'" fill="#4a2c16"/><path d="'+info.salto+'" fill="#4a2c16"/>';
+        
+        // Descobre onde este pé específico vai ficar plantado
+        var pt = caminhoRef.getPointAtLength(i * stepDist);
+        var ptNext = caminhoRef.getPointAtLength(Math.min((i * stepDist) + 1, totalLen));
+        
+        var angle = Math.atan2(ptNext.y - pt.y, ptNext.x - pt.x);
+        var rot = angle * 180 / Math.PI + 90;
+        
+        var sep = isRight ? 3.2 : -3.2; // Distância lateral entre os pés
+        var ox = sep * Math.cos(angle + Math.PI/2);
+        var oy = sep * Math.sin(angle + Math.PI/2);
+        
+        // Inclina levemente para diferenciar esquerda/direita (Skew)
+        var skew = isRight ? 6 : -6;
+
+        // Aplica transformações: tradução, rotação, skew e escala
+        g.setAttribute('transform', 'translate('+(pt.x + ox - 4)+', '+(pt.y + oy - 8)+') rotate('+rot+', 4, 8) skewX('+skew+') scale(0.6)');
+        g.style.opacity = '0'; // Começam invisíveis
+        
         svg.appendChild(g);
-        passos.push({el:g, angle:(i/N)*Math.PI*2});
+        passos.push(g);
     }
 
-    // Nome flutuante — texto SVG
-    var txt=document.createElementNS(ns,'text');
-    txt.setAttribute('text-anchor','middle');
-    txt.setAttribute('font-size','5');
-    txt.setAttribute('fill','#3a1f00');
-    txt.setAttribute('font-family','Georgia,serif');
-    txt.setAttribute('font-style','italic');
-    txt.setAttribute('font-weight','700');
-    txt.textContent=nome||'?';
-    // Fundo do texto
-    var rect=document.createElementNS(ns,'rect');
-    rect.setAttribute('rx','3'); rect.setAttribute('ry','3');
-    rect.setAttribute('fill','rgba(255,248,220,0.88)');
-    rect.setAttribute('stroke','rgba(92,51,23,0.3)');
-    rect.setAttribute('stroke-width','0.5');
-    svg.appendChild(rect); svg.appendChild(txt);
+    // 4. Label do Nome (Aumentado para legibilidade e itálico)
+    var gNome = document.createElementNS(ns, 'g');
+    var rect = document.createElementNS(ns, 'rect');
+    var txt = document.createElementNS(ns, 'text');
+    
+    txt.textContent = nome || "?";
+    txt.setAttribute('fill', '#2b1a0d');
+    txt.setAttribute('font-family', "'Georgia', serif");
+    txt.setAttribute('font-size', '9'); // Fonte maior
+    txt.setAttribute('font-style', 'italic'); // Itálico mantido
+    txt.setAttribute('font-weight', 'bold');
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('y', '2'); 
+    
+    rect.setAttribute('fill', 'rgba(255, 248, 220, 0.95)');
+    rect.setAttribute('stroke', '#5c3317');
+    rect.setAttribute('stroke-width', '0.3');
+    rect.setAttribute('rx', '2');
+    
+    gNome.appendChild(rect);
+    gNome.appendChild(txt);
+    gNome.style.opacity = '0'; // Começa invisível
+    svg.appendChild(gNome);
 
-    var t=0;
-    var cx=50, cy=50;
-    var rx=35, ry=22;
+    // Ajusta o fundo ao tamanho do texto (feito apenas 1 vez por sala)
+    setTimeout(function() {
+        try {
+            var b = txt.getBBox();
+            rect.setAttribute('x', b.x - 4); rect.setAttribute('y', b.y - 1.5);
+            rect.setAttribute('width', b.width + 8); rect.setAttribute('height', b.height + 3);
+        } catch(e){}
+    }, 50);
 
-    function frame(){
-        t+=0.015;
-        passos.forEach(function(p,i){
-            var a=p.angle+t;
-            var x=cx+rx*Math.cos(a);
-            var y=cy+ry*Math.sin(a);
-            var dx=-rx*Math.sin(a), dy=ry*Math.cos(a);
-            var ang=Math.atan2(dy,dx)*180/Math.PI + (i%2===0?-18:18);
-            var alpha=0.4+0.6*Math.abs(Math.sin(a));
-            var scale=0.8+0.3*alpha;
-            p.el.setAttribute('transform',
-                'translate('+(x-3.5)+','+(y-5.5)+') rotate('+ang+',3.5,5.5) scale('+scale+')');
-            p.el.style.opacity=alpha.toFixed(2);
+    // 5. A MÁGICA: Controle de tempo e transparência LENTA
+    var cabeca = 0;
+    var rafController = { id: null };
+    _rafHandles.push(rafController); // Cadastra a animação desta sala no array global
+
+    function frame() {
+        // VELOCIDADE DA CAMINHADA: Drasticamente reduzida para ser rítmica e lenta
+        cabeca += 0.012; 
+
+        if (cabeca > numSteps + 15) {
+            cabeca = 0; // Se andou tudo, recomeça o passeio
+        }
+
+        passos.forEach(function(p, i) {
+            var idade = cabeca - i; // Quão "velho" é este passo em relação à cabeça
+            var op = 0;
+            
+            // Efeito Mapa: Aparece, fica um pouco, e some devagar
+            if (idade >= 0 && idade < 9) {
+                if (idade < 0.3) op = idade * 3; // fade in rápido ao pisar
+                else op = 1 - ((idade - 0.3) / 8.7); // fade out lento de 9 passos atrás
+            }
+            p.style.opacity = Math.max(0, op).toFixed(2);
         });
-        // Posiciona o nome no topo da elipse
-        var nx=cx, ny=cy-ry-8;
-        txt.setAttribute('x',nx); txt.setAttribute('y',ny);
-        var bbox;
-        try{ bbox=txt.getBBox(); } catch(e){ bbox={x:nx-15,y:ny-5,width:30,height:6}; }
-        rect.setAttribute('x',bbox.x-2); rect.setAttribute('y',bbox.y-1);
-        rect.setAttribute('width',bbox.width+4); rect.setAttribute('height',bbox.height+2);
 
-        var h={id:requestAnimationFrame(frame)};
-        _rafHandles=[h];
+        // O nome flutua seguindo a cabeça
+        var currIdx = Math.floor(cabeca);
+        if (currIdx >= 0 && currIdx < numSteps) {
+            var pt = caminhoRef.getPointAtLength(currIdx * stepDist);
+            gNome.setAttribute('transform', 'translate('+pt.x+', '+(pt.y - 14)+')');
+            gNome.style.opacity = '1';
+        } else if (currIdx >= numSteps) {
+            // Nome some suavemente no fim do trajeto
+            var over = cabeca - numSteps;
+            gNome.style.opacity = Math.max(0, 1 - (over / 4)).toFixed(2);
+        }
+
+        rafController.id = requestAnimationFrame(frame);
     }
+    
+    // Inicia o motor
     frame();
 }
 
 /* ── Renderiza zonas ── */
 function renderLayer(pi){
-    // Para animações antigas
+    // Cancela todas as animações de pegadas antes de redesenhar
     _rafHandles.forEach(function(h){ cancelAnimationFrame(h.id); });
-    _rafHandles=[];
+    _rafHandles = [];
 
-    var layer=document.getElementById('vlayer-'+pi);
+    var layer = document.getElementById('vlayer-'+pi);
     if(!layer) return;
-    layer.innerHTML='';
-    var p=_pisos[pi]; if(!p) return;
+    layer.innerHTML = '';
+    var p = _pisos[pi]; if(!p) return;
 
     (p.zonas||[]).forEach(function(z){
-        var div=document.createElement('div');
-        div.className='zona-vw';
-        div.style.cssText='left:'+z.x+'%;top:'+z.y+'%;width:'+z.w+'%;height:'+z.h+'%';
+        var div = document.createElement('div');
+        div.className = 'zona-vw';
+        div.style.cssText = 'left:'+z.x+'%;top:'+z.y+'%;width:'+z.w+'%;height:'+z.h+'%';
 
-        var lab=z.idLaboratorio?_labsIoT[z.idLaboratorio]:null;
-        var dispP=lab&&lab.macPorta?_macMap[lab.macPorta.toUpperCase()]:null;
-        var dispA=lab&&lab.macArCondicionado?_macMap[lab.macArCondicionado.toUpperCase()]:null;
+        var lab = z.idLaboratorio ? _labsIoT[z.idLaboratorio] : null;
+        var dispP = lab && lab.macPorta ? _macMap[lab.macPorta.toUpperCase()] : null;
+        var dispA = lab && lab.macArCondicionado ? _macMap[lab.macArCondicionado.toUpperCase()] : null;
 
-        var stP=dispP?dispP.status:null, stA=dispA?dispA.status:null;
-        if(stP==='online'&&stA==='online')       div.classList.add('s-online');
-        else if(stP==='online'||stA==='online')  div.classList.add('s-misto');
-        else if(stP==='offline'||stA==='offline')div.classList.add('s-offline');
+        var stP = dispP ? dispP.status : null, stA = dispA ? dispA.status : null;
+        
+        // Classes de Status
+        if(stP==='online' && stA==='online') div.classList.add('s-online');
+        else if(stP==='online' || stA==='online') div.classList.add('s-misto');
+        else if(stP==='offline' || stA==='offline') div.classList.add('s-offline');
         else div.classList.add('s-livre');
 
         // Ícones compactos
-        if(dispP||dispA){
-            var ic=document.createElement('div'); ic.className='zona-icons';
-            if(dispP){ var b=document.createElement('div'); b.className='zi '+(stP==='online'?'p-on':'p-off'); b.innerHTML='<i class="fas fa-door-open"></i>'; ic.appendChild(b); }
-            if(dispA){ var b2=document.createElement('div'); b2.className='zi '+(stA==='online'?'a-on':'a-off'); b2.innerHTML='<i class="fas fa-snowflake"></i>'; ic.appendChild(b2); }
+        if(dispP || dispA){
+            var ic = document.createElement('div'); ic.className = 'zona-icons';
+            if(dispP){ 
+                var b = document.createElement('div'); 
+                b.className = 'zi ' + (stP==='online'?'p-on':'p-off'); 
+                b.innerHTML = '<i class="fas fa-door-open"></i>'; 
+                ic.appendChild(b); 
+            }
+            if(dispA){ 
+                var b2 = document.createElement('div'); 
+                b2.className = 'zi ' + (stA==='online'?'a-on':'a-off'); 
+                b2.innerHTML = '<i class="fas fa-snowflake"></i>'; 
+                ic.appendChild(b2); 
+            }
             div.appendChild(ic);
         }
 
-        // Pegadas + nome se acesso recente
-        if(dispP&&dispP.ultimo_acesso){
-            var ua=dispP.ultimo_acesso;
-            var nome=(_nomesCracha[ua.cracha]||ua.cracha);
-            // Nome do acesso
-            var na=document.createElement('div'); na.className='zona-acesso-nome';
-            na.textContent=nome; na.title='Último acesso: '+ua.data_hora;
-            div.appendChild(na);
+        // Se houver acesso recente (últimos 30 min), inicia as pegadas
+        if(dispP && dispP.ultimo_acesso && acessoRecente(dispP.ultimo_acesso.data_hora, 100)){
+            var nomeUsuario = (_nomesCracha[dispP.ultimo_acesso.cracha] || dispP.ultimo_acesso.cracha);
+            // Delay curto para garantir que o div foi renderizado
+            setTimeout(function(){
+                iniciarPegadas(div, nomeUsuario);
+            }, 100);
         }
 
-        // Rótulo
-        var lbl=document.createElement('div'); lbl.className='zona-label';
-        lbl.textContent=z.label||(lab?lab.nome:'');
+        // Rótulo da Sala
+        var lbl = document.createElement('div'); 
+        lbl.className = 'zona-label';
+        lbl.textContent = z.label || (lab ? lab.nome : '');
         div.appendChild(lbl);
 
-        // Clique → modal
-        div.onclick=(function(z,lab,dispP,dispA){
-            return function(){ abrirModal(z,lab,dispP,dispA); };
-        })(z,lab,dispP,dispA);
+        // Clique para abrir modal
+        div.onclick = function(){ abrirModal(z, lab, dispP, dispA); };
 
         layer.appendChild(div);
-
-        // Inicia pegadas se acesso recente
-        if(dispP&&dispP.ultimo_acesso&&acessoRecente(dispP.ultimo_acesso.data_hora,30)){
-            var nome2=(_nomesCracha[dispP.ultimo_acesso.cracha]||dispP.ultimo_acesso.cracha);
-            // Pequeno delay para o div estar no DOM
-            (function(d,n){ setTimeout(function(){ iniciarPegadas(d,n); },50); })(div,nome2);
-        }
     });
 }
 
-/* ── Modal ── */
+/* ── Modal e Comandos (Mantidos conforme seu original) ── */
 var _acTid=null;
-
 function abrirModal(z,lab,dispP,dispA){
     document.getElementById('mZonaTitulo').textContent=z.label||(lab?lab.nome:'Zona');
     document.getElementById('mZonaSub').textContent=lab&&lab.descricao?lab.descricao:'';
-
     var cards=document.getElementById('mZonaCards');
     cards.innerHTML='';
-
     if(!dispP&&!dispA){
         cards.innerHTML='<div class="text-muted text-center py-3 w-100"><i class="fas fa-plug mr-2"></i>Nenhum dispositivo IoT nesta sala.</div>';
     }
-
-    // Card Porta
     if(dispP){
         var stP=dispP.status;
         var ua=dispP.ultimo_acesso;
@@ -503,8 +568,6 @@ function abrirModal(z,lab,dispP,dispA){
             +'</div>';
         cards.appendChild(card);
     }
-
-    // Card AC
     if(dispA){
         _acTid=dispA.topico_id;
         if(!_acTemps[_acTid]) _acTemps[_acTid]=22;
@@ -518,7 +581,6 @@ function abrirModal(z,lab,dispP,dispA){
             +'<div class="dcm-body">'
             +'<div class="dcm-info"><span class="lbl">Status</span><span class="val" style="color:'+(stA==='online'?'#1565c0':'#c62828')+'">'+ucfirst(stA)+'</span></div>'
             +(dispA.rssi?'<div class="dcm-info"><span class="lbl">Sinal WiFi</span><span class="val">'+dispA.rssi+' dBm</span></div>':'')
-            // Controles
             +'<div class="btn-ac-row">'
             +'<button class="btn-ac liga" onclick="cmdAC(\'liga\')"><i class="fas fa-power-off"></i>Ligar</button>'
             +'<button class="btn-ac desliga" onclick="cmdAC(\'desliga\')"><i class="fas fa-power-off"></i>Desligar</button>'
@@ -537,7 +599,6 @@ function abrirModal(z,lab,dispP,dispA){
             +'</div>';
         cards.appendChild(card2);
     }
-
     $('#modalZona').modal('show');
 }
 
@@ -569,22 +630,21 @@ function cmdAC(payload){
         }).catch(function(){toast('Erro.','err');});
 }
 
-/* ── Atualização ── */
 function atualizarEstado(){
     fetch('plantaViewer.php?ajax_estado=1')
         .then(function(r){return r.json();})
         .then(function(est){
             _estado=est; _macMap=buildMacMap(est);
-            _pisos.forEach(function(p,i){ renderLayer(i); });
+            _pisos.forEach(function(p,i){ if(i === _pisoAtivo) renderLayer(i); });
         }).catch(function(){});
 }
+
 var _cd=15;
 setInterval(function(){
     _cd--; document.getElementById('countdown').textContent=_cd;
     if(_cd<=0){_cd=15;atualizarEstado();}
 },1000);
 
-/* ── Helpers ── */
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function ucfirst(s){s=String(s||'');return s.charAt(0).toUpperCase()+s.slice(1);}
 var _tt=null;
@@ -594,8 +654,8 @@ function toast(msg,tipo){
     if(_tt)clearTimeout(_tt); _tt=setTimeout(function(){el.style.display='none';},3000);
 }
 
-// Inicia
-_pisos.forEach(function(p,i){ renderLayer(i); });
+// Inicialização
+renderLayer(_pisoAtivo);
 </script>
 </body>
 </html>

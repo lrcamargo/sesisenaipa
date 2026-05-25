@@ -41,14 +41,20 @@ if($cacheJson && isset($cacheJson['dados'])){
 }
 ksort($todasTurmasCache);
 
-/* ── Tipo de turma → cor ── */
+/* ── Tipo de turma → cor ──
+   HT-I-XXXX = Técnico Semipresencial (turno "I"), identificado ANTES do HT genérico
+   O padrão do código é: HT-<turno>-<numero>, turno I = semipresencial
+*/
 function tipoTurma(string $cod): array {
-    if(preg_match('/^APP-/i', $cod)) return ['label'=>'Aperfeiçoamento', 'cor'=>'#e65100','bg'=>'#fff3e0'];
-    if(preg_match('/^AI-/i',  $cod)) return ['label'=>'Aprendizagem',    'cor'=>'#1565c0','bg'=>'#e3f2fd'];
-    if(preg_match('/^HT-/i',  $cod)) return ['label'=>'Técnico',         'cor'=>'#1b5e20','bg'=>'#e8f5e9'];
-    if(preg_match('/^Q-/i',   $cod)) return ['label'=>'Qualificação',    'cor'=>'#6a1b9a','bg'=>'#f3e5f5'];
-    if(preg_match('/^EM-/i',  $cod)) return ['label'=>'Ens. Médio',      'cor'=>'#880e4f','bg'=>'#fce4ec'];
-    return                                  ['label'=>'Outro',            'cor'=>'#37474f','bg'=>'#eceff1'];
+    if(preg_match('/^APP-/i',   $cod)) return ['label'=>'Aperfeiçoamento',        'cor'=>'#e65100','bg'=>'#fff3e0'];
+    if(preg_match('/^AI-/i',    $cod)) return ['label'=>'Aprendizagem',           'cor'=>'#1565c0','bg'=>'#e3f2fd'];
+    // HTXXXX-XX-I-XX-XXXXX = Técnico Semipresencial: "-I-" em qualquer posição num código que começa com HT
+    if(preg_match('/^HT/i', $cod) && strpos(strtoupper($cod), '-I-') !== false)
+        return ['label'=>'Técnico Semipresencial', 'cor'=>'#be185d','bg'=>'#fce7f3'];
+    if(preg_match('/^HT-/i',    $cod)) return ['label'=>'Técnico',                'cor'=>'#1b5e20','bg'=>'#e8f5e9'];
+    if(preg_match('/^Q-/i',     $cod)) return ['label'=>'Qualificação',           'cor'=>'#6a1b9a','bg'=>'#f3e5f5'];
+    if(preg_match('/^EM-/i',    $cod)) return ['label'=>'Ens. Médio',             'cor'=>'#880e4f','bg'=>'#fce4ec'];
+    return                                    ['label'=>'Outro',                  'cor'=>'#37474f','bg'=>'#eceff1'];
 }
 
 /* ── Mapa de apelido normalizado → nome completo (banco) ── */
@@ -326,6 +332,7 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
 <style>
+/* ── Layout geral ── */
 .filtro-bar{background:#fff;border:1px solid #dee2e6;border-radius:8px;
     padding:14px 16px;margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
 .filtro-bar .fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:180px;}
@@ -334,6 +341,13 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .btn-buscar{padding:6px 20px;border-radius:4px;border:none;background:#0d6efd;color:#fff;
     font-size:.85rem;font-weight:600;cursor:pointer;align-self:flex-end;}
 .btn-buscar:hover{background:#0b5ed7;}
+
+/* CORREÇÃO: botão imprimir começa oculto via JS, NÃO via CSS,
+   para evitar que a classe sobrescreva o style="" inline */
+.btn-imprimir{padding:6px 16px;border-radius:4px;border:none;background:#198754;color:#fff;
+    font-size:.85rem;font-weight:600;cursor:pointer;align-self:flex-end;}
+.btn-imprimir:hover{background:#157347;}
+
 .legenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
 .legenda-item{display:flex;align-items:center;gap:5px;font-size:.78rem;font-weight:600;}
 .legenda-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
@@ -348,6 +362,179 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .badge-ferias{display:inline-block;background:#fff3cd;color:#856404;
     border:1px solid #ffc107;border-radius:4px;padding:2px 10px;
     font-size:.75rem;font-weight:700;margin-bottom:8px;}
+
+/* ── Modal de período ── */
+#modalPeriodo .modal-header{background:#198754;}
+#modalPeriodo .modal-title,#modalPeriodo .close{color:#fff !important;opacity:1;}
+.periodo-opcoes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.btn-periodo{
+    padding:10px 8px;border:2px solid #dee2e6;border-radius:6px;background:#f8f9fa;
+    font-size:.82rem;font-weight:600;color:#495057;cursor:pointer;text-align:center;
+    transition:all .15s;width:100%;}
+.btn-periodo:hover,.btn-periodo.ativo{
+    border-color:#198754;background:#d1e7dd;color:#0f5132;}
+.campo-periodo{display:none;margin-bottom:12px;}
+.campo-periodo.visivel{display:block;}
+.campo-periodo label{font-size:.78rem;font-weight:600;color:#495057;display:block;margin-bottom:3px;}
+.campo-periodo input{width:100%;padding:5px 10px;border:1px solid #ced4da;border-radius:4px;font-size:.85rem;}
+.aviso-modal{background:#fff3cd;border:1px solid #ffc107;border-radius:6px;
+    padding:9px 12px;font-size:.8rem;color:#856404;}
+
+/* ── Área de impressão oculta na tela ── */
+#areaPrint{display:none;}
+
+/* ══════════════════════════════════════════
+   IMPRESSÃO — Calendário mensal em paisagem
+══════════════════════════════════════════ */
+@media print {
+    @page { size: A4 landscape; margin: 1cm 1.2cm; }
+
+    /* Oculta tudo exceto a área de impressão */
+    body > *:not(#areaPrint) { display:none !important; }
+
+    #areaPrint {
+        display: block !important;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 9pt;
+        color: #111;
+    }
+
+    /* Cabeçalho geral do documento */
+    .ph {
+        border-bottom: 2px solid #333;
+        padding-bottom: 7px;
+        margin-bottom: 10px;
+    }
+    .ph h2 { margin: 0 0 2px 0; font-size: 13pt; font-weight: 700; }
+    .ph p  { margin: 0 0 1px 0; font-size: 8.5pt; color: #444; }
+
+    /* Aviso de versão */
+    .pa {
+        background: #fff8e1 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border: 1px solid #f9a825;
+        border-radius: 3px;
+        padding: 5px 10px;
+        font-size: 8pt;
+        color: #4e342e;
+        margin-bottom: 14px;
+        line-height: 1.5;
+    }
+    .pa strong { color: #bf360c; }
+
+    /* Um bloco por mês, quebra de página entre meses quando necessário */
+    .pm {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    .pm-titulo {
+        font-size: 11pt;
+        font-weight: 700;
+        background: #eeeeee !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 4px 8px;
+        margin: 0 0 6px 0;
+        border-left: 4px solid #333;
+    }
+
+    /* Grade de calendário */
+    .cal-grid {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+    .cal-grid th {
+        background: #e0e0e0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border: 1px solid #bbb;
+        padding: 3px 4px;
+        text-align: center;
+        font-size: 8pt;
+        font-weight: 700;
+    }
+    .cal-grid td {
+        border: 1px solid #ccc;
+        vertical-align: top;
+        width: 14.28%;
+        height: 68px;
+        padding: 2px 3px;
+        font-size: 7.5pt;
+    }
+    /* Célula vazia (fora do mês) */
+    .cal-grid td.vazia {
+        background: #f9f9f9 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    /* Número do dia */
+    .cal-dia-num {
+        font-weight: 700;
+        font-size: 8pt;
+        color: #333;
+        display: block;
+        margin-bottom: 2px;
+    }
+    /* Hoje destacado */
+    .cal-hoje .cal-dia-num {
+        color: #fff;
+        background: #1565c0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        display: inline-block;
+    }
+    /* Cada evento dentro da célula */
+    .cal-ev {
+        display: block;
+        border-radius: 2px;
+        padding: 1px 3px;
+        font-size: 6.5pt;
+        font-weight: 700;
+        margin-bottom: 1px;
+        line-height: 1.3;
+        overflow: hidden;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    /* Férias */
+    .cal-ev-ferias {
+        background: #fff8e1 !important;
+        color: #5d4037;
+        border: 1px solid #f9a825;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Legenda de cores no rodapé do calendário */
+    .cal-legenda {
+        margin-top: 6px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .cal-legenda-item {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 7pt;
+        font-weight: 600;
+    }
+    .cal-legenda-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
 </style>
 </head>
 <body>
@@ -409,12 +596,20 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         <button class="btn-buscar" onclick="buscar()">
             <i class="fas fa-search mr-1"></i>Buscar
         </button>
+        <!--
+            Botão imprimir: visibilidade controlada APENAS por JS (não tem display:none no CSS)
+            para evitar conflito de especificidade
+        -->
+        <button class="btn-imprimir" id="btnImprimir" onclick="abrirModalPeriodo()" style="display:none">
+            <i class="fas fa-print mr-1"></i>Imprimir Horário
+        </button>
     </div>
 
     <!-- Legenda -->
     <div class="legenda">
         <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1565c0"></div>Aprendizagem</div>
+        <div class="legenda-item"><div class="legenda-dot" style="background:#be185d"></div>Técnico Semipresencial</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1b5e20"></div>Técnico</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#6a1b9a"></div>Qualificação</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#880e4f"></div>Ens. Médio</div>
@@ -433,7 +628,9 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 </div>
 </div>
 
-<!-- Modal detalhe -->
+<!-- ══════════════════════════════════════════════
+     Modal: detalhes do evento
+═══════════════════════════════════════════════ -->
 <div class="modal fade" id="modalDetalhe" tabindex="-1">
 <div class="modal-dialog modal-sm"><div class="modal-content">
     <div class="modal-header">
@@ -447,16 +644,92 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 </div></div>
 </div>
 
+<!-- ══════════════════════════════════════════════
+     Modal: seleção de período para impressão
+═══════════════════════════════════════════════ -->
+<div class="modal fade" id="modalPeriodo" tabindex="-1">
+<div class="modal-dialog modal-sm"><div class="modal-content">
+    <div class="modal-header" style="background:#198754;">
+        <h6 class="modal-title" style="color:#fff;font-size:.92rem;">
+            <i class="fas fa-print mr-2"></i>Imprimir Horário do Docente
+        </h6>
+        <button type="button" class="close" data-dismiss="modal" style="color:#fff;"><span>&times;</span></button>
+    </div>
+    <div class="modal-body">
+        <p style="font-size:.82rem;color:#6c757d;margin-bottom:10px;">
+            Selecione o período desejado:
+        </p>
+        <div class="periodo-opcoes">
+            <button class="btn-periodo ativo" data-p="mes" onclick="selecionarPeriodo('mes')">
+                <i class="fas fa-calendar-day d-block mb-1" style="font-size:1.1rem;"></i>
+                Mês atual
+            </button>
+            <button class="btn-periodo" data-p="semestre" onclick="selecionarPeriodo('semestre')">
+                <i class="fas fa-calendar-week d-block mb-1" style="font-size:1.1rem;"></i>
+                Semestre atual
+            </button>
+            <button class="btn-periodo" data-p="ano" onclick="selecionarPeriodo('ano')">
+                <i class="fas fa-calendar d-block mb-1" style="font-size:1.1rem;"></i>
+                Ano atual
+            </button>
+            <button class="btn-periodo" data-p="livre" onclick="selecionarPeriodo('livre')">
+                <i class="fas fa-sliders-h d-block mb-1" style="font-size:1.1rem;"></i>
+                Período livre
+            </button>
+        </div>
+        <div class="campo-periodo" id="campoPeriodoLivre">
+            <div class="row">
+                <div class="col-6">
+                    <label>De</label>
+                    <input type="date" id="printDe">
+                </div>
+                <div class="col-6">
+                    <label>Até</label>
+                    <input type="date" id="printAte">
+                </div>
+            </div>
+        </div>
+        <div class="aviso-modal">
+            <i class="fas fa-info-circle mr-1"></i>
+            O documento incluirá um <strong>aviso de versão</strong> com data e hora da impressão.
+            A impressão sairá em <strong>paisagem (A4)</strong>, um mês por grade de calendário.
+        </div>
+    </div>
+    <div class="modal-footer py-2">
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-sm btn-success" onclick="executarImpressao()">
+            <i class="fas fa-print mr-1"></i>Imprimir / Gerar PDF
+        </button>
+    </div>
+</div></div>
+</div>
+
+<!-- Área oculta de impressão -->
+<div id="areaPrint"></div>
+
 <script src="../js/menu.js"></script>
 <script>
-var _cal = null;
+/* ═══════════════════════════════════════════
+   Globais
+═══════════════════════════════════════════ */
+var _cal                = null;
+var _eventosCache       = [];
+var _nomeInstrutor      = '';
+var _periodoSelecionado = 'mes';
 
+/* ═══════════════════════════════════════════
+   Troca de modo
+═══════════════════════════════════════════ */
 function trocarModo(){
     var modo = document.getElementById('selModo').value;
     document.getElementById('fgInstrutor').style.display = modo==='instrutor' ? '' : 'none';
     document.getElementById('fgTurma').style.display     = modo==='turma'     ? '' : 'none';
+    if(modo !== 'instrutor') document.getElementById('btnImprimir').style.display = 'none';
 }
 
+/* ═══════════════════════════════════════════
+   Busca principal
+═══════════════════════════════════════════ */
 function buscar(){
     var modo   = document.getElementById('selModo').value;
     var filtro = modo==='instrutor'
@@ -465,17 +738,32 @@ function buscar(){
 
     if(!filtro){ alert('Selecione um '+(modo==='instrutor'?'instrutor':'turma')+'.'); return; }
 
+    if(modo === 'instrutor'){
+        var sel = document.getElementById('selInstrutor');
+        _nomeInstrutor = sel.options[sel.selectedIndex].text.trim();
+    } else {
+        _nomeInstrutor = '';
+    }
+
     fetch('consultaHorario.php?ajax=1&modo='+encodeURIComponent(modo)+'&filtro='+encodeURIComponent(filtro))
         .then(function(r){ return r.json(); })
         .then(function(eventos){
             document.getElementById('placeholder').style.display = 'none';
             document.getElementById('calendario').style.display  = '';
 
+            var dataAtual = _cal ? _cal.getDate() : null;
             if(_cal){ _cal.destroy(); _cal = null; }
+
+            _eventosCache = eventos;
+
+            // Mostra ou oculta o botão imprimir
+            document.getElementById('btnImprimir').style.display =
+                (modo === 'instrutor' && eventos.length > 0) ? 'inline-block' : 'none';
 
             _cal = new FullCalendar.Calendar(document.getElementById('calendario'), {
                 locale:      'pt-br',
                 initialView: 'dayGridMonth',
+                initialDate: dataAtual ? dataAtual : undefined,
                 height:      'auto',
                 events:      eventos,
                 headerToolbar: {
@@ -486,7 +774,6 @@ function buscar(){
                 buttonText:{ today:'Hoje', month:'Mês', listMonth:'Lista' },
                 eventClick: function(info){
                     var p = info.event.extendedProps;
-
                     if(p.isFerias){
                         var html = '<div class="badge-ferias">🏖️ '+esc(p.descricao)+'</div>';
                         html += '<div style="font-size:.88rem;margin-bottom:3px"><strong>De:</strong> '+esc(p.de)+'</div>';
@@ -495,10 +782,9 @@ function buscar(){
                         $('#modalDetalhe').modal('show');
                         return;
                     }
-
-                    var partes = info.event.startStr.split('-');
+                    var partes  = info.event.startStr.split('-');
                     var dataFmt = partes[2]+'/'+partes[1]+'/'+partes[0];
-                    var cor = p.cor;
+                    var cor     = p.cor;
                     var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(p.tipo)+'</span>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Data:</strong> '+dataFmt+'</div>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Turma:</strong> '+esc(p.turma)+'</div>';
@@ -509,17 +795,37 @@ function buscar(){
                     $('#modalDetalhe').modal('show');
                 },
                 eventContent: function(arg){
-                    var p   = arg.event.extendedProps;
+                    var p     = arg.event.extendedProps;
+                    var turma = (p.turma || '').toUpperCase();
+
+                    // Resolução de cor no lado JS — garante cor correta mesmo se o cache PHP
+                    // tiver sido gerado antes da correção do regex
+                    var cor, bg;
+                    if(/^APP-/i.test(turma))                          { cor='#e65100'; bg='#fff3e0'; }
+                    else if(/^AI-/i.test(turma))                      { cor='#1565c0'; bg='#e3f2fd'; }
+                    else if(/^HT/i.test(turma) && turma.indexOf('-I-') !== -1) { cor='#be185d'; bg='#fce7f3'; }
+                    else if(/^HT-?/i.test(turma))                     { cor='#1b5e20'; bg='#e8f5e9'; }
+                    else if(/^Q-/i.test(turma))                       { cor='#6a1b9a'; bg='#f3e5f5'; }
+                    else if(/^EM-/i.test(turma))                      { cor='#880e4f'; bg='#fce4ec'; }
+                    else if(p.isFerias)                                { cor='#856404'; bg='#fff3cd'; }
+                    else                                               { cor='#37474f'; bg='#eceff1'; }
+
                     var l1  = arg.event.title || '';
                     var l2  = p.linha2 || '';
                     var div = document.createElement('div');
-                    div.style.cssText = 'line-height:1.3;overflow:hidden;padding:1px 2px';
+                    div.style.cssText = 'background:'+bg+';border:1.5px solid '+cor+';border-radius:4px;'
+                        + 'color:'+cor+';line-height:1.3;overflow:hidden;padding:1px 4px;'
+                        + 'width:100%;box-sizing:border-box;';
                     div.innerHTML = '<div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(l1)+'</div>'
-                        + (l2 ? '<div style="font-size:.68rem;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(l2)+'</div>' : '');
+                        + (l2 ? '<div style="font-size:.68rem;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(l2)+'</div>' : '');
                     return { domNodes: [div] };
                 },
                 eventDidMount: function(info){
                     var p = info.event.extendedProps;
+                    // Remove o fundo padrão do FC para não conflitar com o nosso eventContent
+                    info.el.style.background   = 'transparent';
+                    info.el.style.border       = 'none';
+                    info.el.style.boxShadow    = 'none';
                     if(p.isFerias){
                         info.el.title = '🏖️ '+p.descricao+' ('+p.de+' a '+p.ate+')';
                         return;
@@ -532,10 +838,225 @@ function buscar(){
         .catch(function(){ alert('Erro ao buscar dados.'); });
 }
 
+/* ═══════════════════════════════════════════
+   Modal de período
+═══════════════════════════════════════════ */
+function abrirModalPeriodo(){
+    selecionarPeriodo('mes');
+    $('#modalPeriodo').modal('show');
+}
+
+function selecionarPeriodo(p){
+    _periodoSelecionado = p;
+    document.querySelectorAll('.btn-periodo').forEach(function(b){
+        b.classList.toggle('ativo', b.getAttribute('data-p') === p);
+    });
+    document.getElementById('campoPeriodoLivre').classList.toggle('visivel', p === 'livre');
+}
+
+/* ═══════════════════════════════════════════
+   Geração do calendário de impressão
+═══════════════════════════════════════════ */
+function montarCalendarioMes(ano, mes0based, eventosDomes){
+    /* eventosDomes: array de objetos evento filtrados para este mês */
+
+    var nomeDias  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+    var hoje      = new Date();
+    var hojeStr   = hoje.getFullYear()+'-'
+                  + (hoje.getMonth()<9?'0':'')+(hoje.getMonth()+1)+'-'
+                  + (hoje.getDate()<10?'0':'')+hoje.getDate();
+
+    // Indexa eventos por data YYYY-MM-DD → array de eventos
+    var evPorDia = {};
+    eventosDomes.forEach(function(ev){
+        var d = ev.start;
+        if(!evPorDia[d]) evPorDia[d] = [];
+        evPorDia[d].push(ev);
+    });
+
+    var primeiroDia   = new Date(ano, mes0based, 1);
+    var ultimoDia     = new Date(ano, mes0based + 1, 0);
+    var diaSemanaInicio = primeiroDia.getDay(); // 0=Dom
+    var totalDias     = ultimoDia.getDate();
+
+    var h = '<table class="cal-grid"><thead><tr>';
+    nomeDias.forEach(function(d){ h += '<th>'+d+'</th>'; });
+    h += '</tr></thead><tbody>';
+
+    var dia = 1;
+    var semanas = Math.ceil((diaSemanaInicio + totalDias) / 7);
+
+    for(var s = 0; s < semanas; s++){
+        h += '<tr>';
+        for(var col = 0; col < 7; col++){
+            var pos = s * 7 + col;
+            if(pos < diaSemanaInicio || dia > totalDias){
+                h += '<td class="vazia"></td>';
+            } else {
+                var mm  = mes0based + 1;
+                var dataStr = ano+'-'+(mm<10?'0':'')+mm+'-'+(dia<10?'0':'')+dia;
+                var isHoje  = (dataStr === hojeStr);
+                h += '<td'+(isHoje?' class="cal-hoje"':'')+'>';
+                h += '<span class="cal-dia-num">'+dia+'</span>';
+
+                // Eventos do dia
+                if(evPorDia[dataStr]){
+                    evPorDia[dataStr].forEach(function(ev){
+                        var p = ev.extendedProps;
+                        if(p.isFerias){
+                            h += '<span class="cal-ev cal-ev-ferias">🏖️ '+esc(p.descricao)+'</span>';
+                        } else {
+                            var cor = p.cor || '#333';
+                            var bg  = cor+'22';
+                            h += '<span class="cal-ev" style="background:'+bg+';color:'+cor+';border:1px solid '+cor+'">'
+                               + esc(p.turma || ev.title || '')
+                               + (p.horario ? ' · '+esc(p.horario) : (p.linha2 ? ' · '+esc(p.linha2) : ''))
+                               + '</span>';
+                        }
+                    });
+                }
+
+                h += '</td>';
+                dia++;
+            }
+        }
+        h += '</tr>';
+    }
+    h += '</tbody></table>';
+    return h;
+}
+
+/* ═══════════════════════════════════════════
+   Executa impressão
+═══════════════════════════════════════════ */
+function executarImpressao(){
+    var agora = new Date();
+    var ano   = agora.getFullYear();
+    var mes   = agora.getMonth();
+    var de, ate;
+
+    if(_periodoSelecionado === 'mes'){
+        de  = new Date(ano, mes, 1);
+        ate = new Date(ano, mes + 1, 0);
+    } else if(_periodoSelecionado === 'semestre'){
+        if(mes < 6){ de = new Date(ano,0,1);  ate = new Date(ano,5,30); }
+        else        { de = new Date(ano,6,1);  ate = new Date(ano,11,31); }
+    } else if(_periodoSelecionado === 'ano'){
+        de  = new Date(ano, 0, 1);
+        ate = new Date(ano, 11, 31);
+    } else {
+        var vDe  = document.getElementById('printDe').value;
+        var vAte = document.getElementById('printAte').value;
+        if(!vDe || !vAte){ alert('Informe as datas de início e fim.'); return; }
+        de  = new Date(vDe  + 'T00:00:00');
+        ate = new Date(vAte + 'T00:00:00');
+        if(de > ate){ alert('A data inicial deve ser anterior à data final.'); return; }
+    }
+
+    // Filtra eventos no intervalo
+    var evs = _eventosCache.filter(function(ev){
+        var d = new Date(ev.start + 'T00:00:00');
+        return d >= de && d <= ate;
+    });
+
+    // Descobre quais meses existem no intervalo
+    var meses = []; // { ano, mes0 }
+    var cursor = new Date(de.getFullYear(), de.getMonth(), 1);
+    var fimMes = new Date(ate.getFullYear(), ate.getMonth(), 1);
+    while(cursor <= fimMes){
+        meses.push({ ano: cursor.getFullYear(), mes0: cursor.getMonth() });
+        cursor.setMonth(cursor.getMonth() + 1);
+    }
+
+    var pad = function(n){ return n<10?'0'+n:n; };
+    var nomeMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                     'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    var dataImpressao =
+        pad(agora.getDate())+'/'+pad(agora.getMonth()+1)+'/'+agora.getFullYear()+
+        ' às '+pad(agora.getHours())+':'+pad(agora.getMinutes())+':'+pad(agora.getSeconds());
+
+    var labelPeriodo =
+        pad(de.getDate())+'/'+pad(de.getMonth()+1)+'/'+de.getFullYear()+
+        ' a '+
+        pad(ate.getDate())+'/'+pad(ate.getMonth()+1)+'/'+ate.getFullYear();
+
+    /* ── Monta HTML ── */
+    var h = '';
+
+    // Cabeçalho
+    h += '<div class="ph">';
+    h += '<h2>Horário do Docente</h2>';
+    h += '<p><strong>Docente:</strong> '+esc(_nomeInstrutor)+'</p>';
+    h += '<p><strong>Período:</strong> '+esc(labelPeriodo)+'</p>';
+    h += '</div>';
+
+    // Aviso de versão
+    h += '<div class="pa">';
+    h += '<strong>⚠️ ATENÇÃO:</strong> Sempre confira se esta é a versão mais atualizada do horário. ';
+    h += 'Horários estão sujeitos a alterações a qualquer momento.<br>';
+    h += '<span style="font-size:7.5pt;">Data de impressão: <strong>'+esc(dataImpressao)+'</strong></span>';
+    h += '</div>';
+
+    if(meses.length === 0 || evs.length === 0){
+        h += '<p style="color:#777;font-size:9pt;">Nenhuma aula encontrada no período selecionado.</p>';
+    } else {
+        meses.forEach(function(m){
+            var chaveM = m.ano+'-'+(m.mes0<9?'0':'')+(m.mes0+1);
+            // Filtra eventos deste mês
+            var evsMes = evs.filter(function(ev){
+                return ev.start.substring(0,7) === chaveM;
+            });
+
+            h += '<div class="pm">';
+            h += '<div class="pm-titulo">'+nomeMeses[m.mes0]+' de '+m.ano+'</div>';
+            h += montarCalendarioMes(m.ano, m.mes0, evsMes);
+
+            // Legenda de tipos presentes neste mês
+            var tiposVisto = {};
+            evsMes.forEach(function(ev){
+                var p = ev.extendedProps;
+                if(!p.isFerias && p.tipo && p.cor){
+                    tiposVisto[p.tipo] = p.cor;
+                }
+            });
+            var tiposArr = Object.keys(tiposVisto);
+            if(tiposArr.length > 0){
+                h += '<div class="cal-legenda">';
+                tiposArr.forEach(function(t){
+                    h += '<span class="cal-legenda-item">'
+                       + '<span class="cal-legenda-dot" style="background:'+tiposVisto[t]+'"></span>'
+                       + esc(t)+'</span>';
+                });
+                // Férias se houver
+                var temFerias = evsMes.some(function(ev){ return ev.extendedProps.isFerias; });
+                if(temFerias){
+                    h += '<span class="cal-legenda-item">'
+                       + '<span class="cal-legenda-dot" style="background:#ffc107;border-radius:2px;"></span>'
+                       + 'Férias</span>';
+                }
+                h += '</div>';
+            }
+
+            h += '</div>'; // .pm
+        });
+    }
+
+    document.getElementById('areaPrint').innerHTML = h;
+    $('#modalPeriodo').modal('hide');
+    setTimeout(function(){ window.print(); }, 380);
+}
+
+/* ═══════════════════════════════════════════
+   Utilitário
+═══════════════════════════════════════════ */
 function esc(s){
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+/* ═══════════════════════════════════════════
+   Pré-seleção via URL
+═══════════════════════════════════════════ */
 <?php if($preSelModo && $preSelFiltro): ?>
 document.addEventListener('DOMContentLoaded', function(){
     trocarModo();

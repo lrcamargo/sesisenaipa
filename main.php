@@ -121,7 +121,7 @@
                        title="Abre o painel de ocupação em nova aba">
                         <i class="fas fa-th-large"></i>
                         <center>
-                            <span>Painel de<br>Ocupação</span>
+                            <span>Ocupação de<br>Ambientes</span>
                         </center>
                     </a>
 
@@ -185,7 +185,7 @@
                         // include('./atividades/professor.php');
 
                     } elseif($nivelNorm === 'instrutor'){
-
+                        include('containers/instrutoresContainer.php');
                     } elseif($nivelNorm === 'sup tecnica'){
                         include('containers/supTecnicaContainer.php');
 
@@ -193,7 +193,7 @@
                         include('containers/supPedContainer.php');
 
                     } elseif($nivelNorm === 'gerencia'){
-                        include('gerContainer.php');
+                        include('containers/gerContainer.php');
 
                     } elseif($nivelNorm === 'secretaria'){
                         include('containers/secContainer.php');

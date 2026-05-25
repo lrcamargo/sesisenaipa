@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 
 <html>
-
+<?php 
+    include('conexao.php');
+    include('gestaoAmbientes/widgetOcupacao.php');
+?>
 <div class="mb-4">
     <h5 class="mb-3">
         <center>Atualizações de versão:
@@ -31,6 +34,9 @@
                 </tr>
                 <tr>
                     <td><b>Inconsistências:</b> Lista e filtra as inconsistências no calendário para facilitar ajuste. Podem ser impressas.</td>
+                </tr>
+                <tr>
+                    <td><b>Ocupação de espaços:</b> Gráfico de ocupação de espaços - salas e laboratórios.</td>
                 </tr>
             </tbody>
 </table>
