@@ -1,6 +1,6 @@
 <?php
 /*
- * secContainer.php
+ * instrutoresContainer.php
  * Dashboard do perfil Secretaria / Administrativo.
  * Exibe eventos dos próximos 30 dias:
  *   - reservas com tipo = 'evento'

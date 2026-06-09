@@ -150,6 +150,35 @@
                                     <i class='fas fa-calendar-alt'></i>
                                     <center><span>Consulta de<br>Horários</span></center>
                                 </a>";
+                          /*echo "<a href='pulso/status.php' class='btn-atalho' 
+                            style='background:linear-gradient(180deg, #ffffff, #ff9800);color:#fff' title='Ver status de pesquisa de Pulso Trimestral'>
+                                  <img src='img/pulso.png' style='width: 70%'></i>    
+                              </a>";*/
+                              //<!-- ── BOTÃO PULSOSENAI COM BADGE DE NOTIFICAÇÃO ── -->
+                                echo "<div style='position:relative;display:inline-block;'>
+                                    <a href='pulso/status.php'
+                                    id='btnPulso'
+                                    onclick='marcarPulsoLido()'
+                                    class='btn-atalho'
+                                    style='background:linear-gradient(135deg, #0d2d5e, #E84910);color:#fff'
+                                    title='PulsoSENAI — Pesquisa de Clima'>
+                                        <img src='img/pulso.png' style='width:70%;max-height:52px;object-fit:contain;'>
+                                    </a>
+                                    <!-- Badge de notificação — aparece via JS quando há novidades -->
+                                    <span id='pulsoBadge'
+                                        style='display:none;position:absolute;top:-8px;right:-8px;
+                                                background:#e53935;color:#fff;
+                                                font-size:11px;font-weight:800;
+                                                min-width:20px;height:20px;
+                                                border-radius:10px;padding:0 5px;
+                                                display:none;align-items:center;justify-content:center;
+                                                box-shadow:0 2px 6px rgba(0,0,0,.3);
+                                                border:2px solid #fff;
+                                                pointer-events:none;
+                                                z-index:10;'>
+                                        0
+                                    </span>
+                                </div>";
                      }
                      /*if(in_array($nivelNorm,['sup tecnica','sup pedagogica','gerencia','admin','administrator'])){
                             echo "<a href='gestaoTurmas/consultaHorario.php' class='btn-atalho' 
@@ -160,12 +189,38 @@
                                 </a>";
                         }*/
                      if($nivelNorm === 'instrutor'){
-                        echo "<a href='gestaoTurmas/meuHorario.php' class='btn-atalho' style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff' title='Ver meu calendário de aulas'>
+                        echo "<a href='gestaoTurmas/meuHorario.php' class='btn-atalho' 
+                        style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff' title='Ver meu calendário de aulas'>
                                   <i class='fas fa-calendar-alt'></i>
                                   <center>
                                     <span>Meu<br>Horário</span>
                                   </center>
                               </a>";
+                        //<!-- ── BOTÃO PULSOSENAI COM BADGE DE NOTIFICAÇÃO ── -->
+                                echo "<div style='position:relative;display:inline-block;'>
+                                    <a href='pulso/status.php'
+                                    id='btnPulso'
+                                    onclick='marcarPulsoLido()'
+                                    class='btn-atalho'
+                                    style='background:linear-gradient(135deg, #0d2d5e, #E84910);color:#fff'
+                                    title='PulsoSENAI — Pesquisa de Clima'>
+                                        <img src='img/pulso.png' style='width:70%;max-height:52px;object-fit:contain;'>
+                                    </a>
+                                    <!-- Badge de notificação — aparece via JS quando há novidades -->
+                                    <span id='pulsoBadge'
+                                        style='display:none;position:absolute;top:-8px;right:-8px;
+                                                background:#e53935;color:#fff;
+                                                font-size:11px;font-weight:800;
+                                                min-width:20px;height:20px;
+                                                border-radius:10px;padding:0 5px;
+                                                display:none;align-items:center;justify-content:center;
+                                                box-shadow:0 2px 6px rgba(0,0,0,.3);
+                                                border:2px solid #fff;
+                                                pointer-events:none;
+                                                z-index:10;'>
+                                        0
+                                    </span>
+                                </div>";
                     }
                     ?>
 
@@ -207,7 +262,40 @@
 
             </div>
         </div>
-
         <script type="text/javascript" src="../js/menu.js"></script>
+        <script>
+                (function() {
+                    // Consulta o endpoint a cada 60 segundos
+                    function verificarNotifPulso() {
+                        fetch('pulso/notif_count.php')
+                            .then(r => r.json())
+                            .then(data => {
+                                const badge = document.getElementById('pulsoBadge');
+                                if (!badge) return;
+                                if (data.count > 0) {
+                                    badge.textContent = data.count > 99 ? '99+' : data.count;
+                                    badge.style.display = 'flex';
+                                } else {
+                                    badge.style.display = 'none';
+                                }
+                            })
+                            .catch(() => {}); // falha silenciosa
+                    }
+                
+                    // Marca como lido ao clicar
+                    window.marcarPulsoLido = function() {
+                        fetch('pulso/notif_count.php?action=marcar')
+                            .then(() => {
+                                const badge = document.getElementById('pulsoBadge');
+                                if (badge) badge.style.display = 'none';
+                            })
+                            .catch(() => {});
+                    };
+                
+                    // Verifica imediatamente e depois a cada 60s
+                    verificarNotifPulso();
+                    setInterval(verificarNotifPulso, 60000);
+                })();
+                </script>
     </body>
 </html>

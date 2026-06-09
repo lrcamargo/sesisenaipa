@@ -87,12 +87,24 @@
     }
 
     /* SUP. TÉCNICA
-        Acesso: Dashboard + Reserva Laboratório + Gestão Usuários + Gestão Ambientes + Sirene (desativado temporariamente)
+        Acesso: Dashboard + Reserva Laboratório + Gestão Usuários + Gestão Ambientes (desativado temporariamente)
     */
     elseif($nivelNorm == 'sup tecnica'){
         echo "<li class='item'><a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span>Dashboard</span></a></li>";
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a></li>";
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
+        echo "<li style='padding:6px 16px;font-size:10px;font-weight:700;
+               color:rgba(255,255,255,.35);letter-spacing:1.2px;
+               text-transform:uppercase;margin-top:4px;'>
+        Pulso SENAI
+      </li>";
+      echo "<li class='item'>
+        <a href='../pulso/gestao.php' class='menu-btn'>
+            <i class='fa fa-heartbeat'></i>
+            <span>PulsoSENAI</span>
+        </a>
+      </li>";
+ 
         //echo "<li class='item'><a href='../gestaoAmbientes/index.php' class='menu-btn'><i class='fas fa-map-signs'></i><span>Gestão Ambientes</span></a></li>";
         // GESTÃO DE AMBIENTES, TURMAS, FERIADOS, APERFEIÇOAMENTO E FÉRIAS.
         echo "<li class='item' id='gestao-item'>
@@ -151,7 +163,7 @@
                 <i class='fa fa-cloud'></i><span>Horários <i class='fas fa-chevron-down drop-down'></i></span>
             </a>
             <div class='sub-menu'>
-                <a href='../horarios/geradorHorario.php'>
+                <a href='../horarios/calendarioAcademico.php'>
                     <i class='fas fa-door-open'></i><span>Gerar Horário</span>
                 </a>
                 <a href='../horarios/cadastroCursos.php'>
@@ -159,7 +171,7 @@
                 </a>
             </div>
         </li>";
-        //echo "<li class='item'><a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span>Sirene</span></a></li>";
+    
     }
 
     /* ADMINISTRATOR / ADMIN
@@ -169,6 +181,18 @@
         echo "<li class='item'><a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span>Dashboard</span></a></li>";
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a></li>";
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
+        /*echo "<li style='padding:6px 16px;font-size:10px;font-weight:700;
+               color:rgba(255,255,255,.35);letter-spacing:1.2px;
+               text-transform:uppercase;margin-top:4px;'>
+        Pulso SENAI
+      </li>"*/
+      echo "<li class='item'>
+        <a href='../pulso/gestao.php' class='menu-btn'>
+            <i class='fa fa-heartbeat'></i>
+            <span>PulsoSENAI</span>
+        </a>
+      </li>";
+ 
         //echo "<li class='item'><a href='../gestaoAmbientes/index.php' class='menu-btn'><i class='fas fa-map-signs'></i><span>Gestão Ambientes</span></a></li>";
         //echo "<li class='item'><a href='../gestaoTurmas/index.php' class='menu-btn'><i class='fas fa-search'></i><span>Gestão Turmas</span></a></li>";
         // GESTÃO DE AMBIENTES, TURMAS, FERIADOS, APERFEIÇOAMENTO E FÉRIAS.
@@ -231,7 +255,7 @@
                 <i class='fas fa-clock'></i><span>Horários <i class='fas fa-chevron-down drop-down'></i></span>
             </a>
             <div class='sub-menu'>
-                <a href='../horarios/geradorHorario.php'>
+                <a href='../horarios/calendarioAcademico.php'>
                     <i class='fas fa-door-open'></i><span>Gerar Horário</span>
                 </a>
                 <a href='../horarios/cadastroCursos.php'>
@@ -240,7 +264,7 @@
             </div>
         </li>";
         echo "<li class='item'><a href='../scripts/deploy.php' class='menu-btn'><i class='fas fa-rocket mr-1'></i><span>Deploy</span></a></li>";
-        echo "<li class='item'><a href='../sirene/index.php' class='menu-btn'><i class='fas fa-bell'></i><span>Sirene</span></a></li>";
+
     }
     /* GRUPO NÃO RECONHECIDO
         Exibe apenas Dashboard como fallback seguro.

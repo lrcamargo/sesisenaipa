@@ -94,6 +94,7 @@ class ComposerStaticInit0ea0cc07e3507d23f9fbb9164d1db64c
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
     );
 

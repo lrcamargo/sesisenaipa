@@ -1,8 +1,8 @@
 {
-  "gerado_em": "2026-05-25T15:57:52",
+  "gerado_em": "2026-06-08T14:38:06",
   "fonte": "/var/www/html/data/horarios.xlsm",
-  "total_registros": 9346,
-  "total_datas": 632,
+  "total_registros": 9423,
+  "total_datas": 653,
   "erros_abas": 0,
   "dados": {
     "2026-05-18": {
@@ -3691,7 +3691,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "uc": "Práticas Inovadoras",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HT-MEC-03-N-25-13310": {
@@ -3873,7 +3873,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "uc": "Práticas Inovadoras",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HT-MEC-03-N-25-13310": {
@@ -4070,7 +4070,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "uc": "Práticas Inovadoras",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HTAUTM-01-I-25-13310": {
@@ -6855,7 +6855,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Práticas Inovadoras",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HT-MEC-03-N-25-13310": {
@@ -7037,7 +7037,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Práticas Inovadoras",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HT-MEC-03-N-25-13310": {
@@ -7224,7 +7224,7 @@
       },
       "AI-PRD-01-T-26-13310": {
         "instrutor": "Thallyson",
-        "uc": "Práticas Inovadoras",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
         "nome_turma": "AP_PROC_PROD_IND_0126"
       },
       "HT-MEC-03-N-25-13310": {
@@ -7975,6 +7975,11 @@
         "uc": "Rotinas de Apoio Administrativos a área de RH",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -8157,6 +8162,11 @@
         "uc": "Informática",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Materiais de Construção",
@@ -8333,6 +8343,11 @@
         "instrutor": "Liliane",
         "uc": "Rotinas de Apoio Administrativos a área de RH",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
@@ -8516,6 +8531,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -8698,6 +8718,11 @@
         "uc": "Informática",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Materiais de Construção",
@@ -8875,6 +8900,11 @@
         "uc": "Informática",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Materiais de Construção",
@@ -8998,8 +9028,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção - EAD",
+        "instrutor": "Edvaldo",
+        "uc": "Tecnologia de Materiais - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -9249,6 +9279,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -9426,6 +9461,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -9559,8 +9599,8 @@
         "nome_turma": "Tecnico em Quimica - Noite"
       },
       "HT-QUI-01-T-26-13310": {
-        "instrutor": "Matheus",
-        "uc": "Fundamentos de Microbiologia",
+        "instrutor": "Fabricio",
+        "uc": "Informática Básica",
         "nome_turma": "Tecnico em Quimica - Noite"
       },
       "AI-MEL-04-T-26-13310": {
@@ -9602,6 +9642,11 @@
         "instrutor": "Liliane",
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
@@ -9736,8 +9781,8 @@
         "nome_turma": "Tecnico em Quimica - Noite"
       },
       "HT-QUI-01-T-26-13310": {
-        "instrutor": "Fabricio",
-        "uc": "Informática Básica",
+        "instrutor": "Matheus",
+        "uc": "Fundamentos de Microbiologia",
         "nome_turma": "Tecnico em Quimica - Noite"
       },
       "AI-MEL-04-T-26-13310": {
@@ -9774,6 +9819,11 @@
         "instrutor": "Aline",
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -9963,7 +10013,7 @@
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
       "HT-INI-01-N-26-13310": {
-        "instrutor": "Introdução à Indústria 4.0 - EaD",
+        "instrutor": "Aline",
         "uc": "Introdução à Indústria 4.0 - EaD",
         "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
@@ -10144,6 +10194,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -10310,6 +10365,11 @@
         "instrutor": "Liliane",
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
@@ -10483,6 +10543,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
         "uc": "Física Aplicada",
@@ -10650,6 +10715,11 @@
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
         "uc": "Física Aplicada",
@@ -10778,7 +10848,7 @@
         "nome_turma": "Tecnico em Quimica - Noite"
       },
       "HTELET-05-I-25-13310": {
-        "instrutor": "Pompeu",
+        "instrutor": "Max",
         "uc": "Segurança em Eletricidade",
         "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
       },
@@ -10826,6 +10896,11 @@
         "instrutor": "Aline",
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica  - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -10999,6 +11074,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -11165,6 +11245,11 @@
         "instrutor": "Liliane",
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
@@ -11333,6 +11418,11 @@
         "uc": "Rotinas de Apoio Administrativos as áreas de Logísticas, Produção e Projetos",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
         "uc": "Física Aplicada",
@@ -11499,6 +11589,11 @@
         "instrutor": "Aline",
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -11671,6 +11766,11 @@
         "instrutor": "Aline",
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica  - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -11849,6 +11949,11 @@
         "uc": "Planejamento e Programação da Produção",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -12020,6 +12125,11 @@
         "instrutor": "Liliane",
         "uc": "Planejamento e Programação da Produção",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
@@ -12193,6 +12303,11 @@
         "uc": "Planejamento e Programação da Produção",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
         "uc": "Física Aplicada",
@@ -12354,6 +12469,11 @@
         "instrutor": "Liliane",
         "uc": "Planejamento e Programação da Produção",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -12532,6 +12652,11 @@
         "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica  - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Aline",
         "uc": "Saúde, Segurança e Meio Ambiente - EaD",
@@ -12689,6 +12814,11 @@
         "uc": "Acionamento para Sistemas Automatizados - Prática",
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -12806,6 +12936,11 @@
         "uc": "2° Circuitos Eletropneumáticos e Eletro-hidráulicos Aplicados à Manufatura",
         "nome_turma": "SEGUNDO"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Rosane",
         "uc": "Projeto Arquitetônicos",
@@ -12922,6 +13057,11 @@
         "instrutor": "Marcia",
         "uc": "Acionamento para Sistemas Automatizados",
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Tatiane",
@@ -13106,6 +13246,11 @@
         "instrutor": "Marcia",
         "uc": null,
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica  - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
       },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Aline",
@@ -13670,11 +13815,6 @@
         "uc": "Gestão da Manutenção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção - EAD",
-        "nome_turma": "Tecnico em Soldagem"
-      },
       "HT-REC-01-N-26-13310": {
         "instrutor": "Thiago",
         "uc": "Fundamentos da Eletricidade aplicados a Refrigeração e Climatização  - EaD",
@@ -13730,6 +13870,11 @@
         "uc": "Planejamento e Programação da Produção",
         "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
       },
+      "HT-INI-01-N-26-13310": {
+        "instrutor": "Albert",
+        "uc": "Fundamentos da eletroeletrônica  - EaD",
+        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
+      },
       "HT-DCC-01-N-26-13310": {
         "instrutor": "Aline",
         "uc": "Saúde, Segurança e Meio Ambiente - EaD",
@@ -13741,7 +13886,7 @@
         "nome_turma": "AP_MANUTMEC_09_MANHA_25"
       },
       "HTAUTM-01-I-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Gustavo",
         "uc": "Circuito Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
       },
@@ -14306,7 +14451,7 @@
         "nome_turma": "AP_MANUTMEC_09_MANHA_25"
       },
       "HTAUTM-01-I-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Gustavo",
         "uc": "Circuito Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
       },
@@ -14338,8 +14483,8 @@
     },
     "2026-08-17": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção",
+        "instrutor": "Patrick",
+        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -14368,7 +14513,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -14440,8 +14585,8 @@
     },
     "2026-08-18": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção",
+        "instrutor": "Patrick",
+        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -14480,7 +14625,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -14746,7 +14891,7 @@
     },
     "2026-08-21": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -14858,8 +15003,8 @@
     },
     "2026-08-24": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção",
+        "instrutor": "Patrick",
+        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -14888,7 +15033,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -14950,8 +15095,8 @@
     },
     "2026-08-25": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção",
+        "instrutor": "Patrick",
+        "uc": "Processos Básicos de Fabricação Mecânica",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -14990,7 +15135,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -15246,7 +15391,7 @@
     },
     "2026-08-28": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -15358,8 +15503,8 @@
     },
     "2026-08-31": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Gestão da Produção",
+        "instrutor": "Patrick",
+        "uc": "Processos Básicos de Fabricação Mecânica",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -15388,7 +15533,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -15490,7 +15635,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -15548,7 +15693,7 @@
     "2026-09-02": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos Básicos de Fabricação Mecânica",
+        "uc": "Gestão da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -15650,7 +15795,7 @@
     "2026-09-03": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Projeto de Inovação em Mecânica de Precisão",
+        "uc": "Gestão da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -15746,7 +15891,7 @@
     },
     "2026-09-04": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -15786,7 +15931,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -15898,7 +16043,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -15956,7 +16101,7 @@
     "2026-09-09": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Projeto de Inovação em Mecânica de Precisão",
+        "uc": "Gestão da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -16058,7 +16203,7 @@
     "2026-09-10": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Projeto de Inovação em Mecânica de Precisão",
+        "uc": "Gestão da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -16154,13 +16299,13 @@
     },
     "2026-09-11": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Fundamentos Físicos - EAD",
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Gestão da Produção - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -16194,7 +16339,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -16296,7 +16441,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -16398,7 +16543,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -16553,7 +16698,7 @@
     "2026-09-17": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Projeto de Inovação em Mecânica de Precisão",
+        "uc": "Gestão da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -16649,13 +16794,13 @@
     },
     "2026-09-18": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Fundamentos Físicos - EAD",
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Gestão da Produção - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -16689,7 +16834,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -16791,7 +16936,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -16893,7 +17038,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -17144,13 +17289,13 @@
     },
     "2026-09-25": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
         "instrutor": "Edvaldo",
-        "uc": "Processos de Corte - EAD",
+        "uc": "Fundamentos Físicos - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -17184,7 +17329,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -17281,7 +17426,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Autoconhecimento",
         "nome_turma": "PRIMEIRO A"
       },
@@ -17383,7 +17528,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -17470,7 +17615,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -17629,7 +17774,7 @@
     },
     "2026-10-02": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -17669,7 +17814,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -17766,7 +17911,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -17868,7 +18013,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -17955,7 +18100,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -18114,7 +18259,7 @@
     },
     "2026-10-09": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -18154,7 +18299,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -18502,7 +18647,7 @@
     },
     "2026-10-16": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -18537,7 +18682,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -18644,7 +18789,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -18731,7 +18876,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -18890,7 +19035,7 @@
     },
     "2026-10-23": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
@@ -18930,7 +19075,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -19027,7 +19172,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -19090,7 +19235,7 @@
     "2026-10-27": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos Básicos de Fabricação Mecânica",
+        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -19129,7 +19274,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -19187,7 +19332,7 @@
     "2026-10-28": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
+        "uc": "Projeto de Inovação em Mecânica de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -19216,7 +19361,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -19284,7 +19429,7 @@
     "2026-10-29": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
+        "uc": "Projeto de Inovação em Mecânica de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -19375,13 +19520,13 @@
     },
     "2026-10-30": {
       "HT-MEP-01-M-26-13310": {
-        "instrutor": "Gabriel Nogueira",
+        "instrutor": "Patrick",
         "uc": "Gestão da Produção - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
         "instrutor": "Edvaldo",
-        "uc": "Controle de Qualidade dos Processos de Corte e Solda - EAD",
+        "uc": "Processos de Corte - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -19415,7 +19560,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -19522,7 +19667,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -19580,7 +19725,7 @@
     "2026-11-04": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
+        "uc": "Projeto de Inovação em Mecânica de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -19609,7 +19754,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -19677,7 +19822,7 @@
     "2026-11-05": {
       "HT-MEP-01-M-26-13310": {
         "instrutor": "Patrick",
-        "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão",
+        "uc": "Projeto de Inovação em Mecânica de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
@@ -19774,7 +19919,7 @@
       },
       "HT-SOL-01-M-26-13310": {
         "instrutor": "Edvaldo",
-        "uc": "Controle de Qualidade dos Processos de Corte e Solda - EAD",
+        "uc": "Fundamentos Físicos - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -19808,7 +19953,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -19900,7 +20045,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -20002,7 +20147,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -20089,7 +20234,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -20258,7 +20403,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -20360,7 +20505,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -20462,7 +20607,7 @@
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -20549,7 +20694,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -20760,7 +20905,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO A"
       },
@@ -20857,12 +21002,12 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
       "HT-MET-03-25-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "2° Mundo do Trabalho II",
         "nome_turma": "SEGUNDO"
       },
@@ -20949,7 +21094,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -21148,7 +21293,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -21250,7 +21395,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -21342,7 +21487,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -21419,7 +21564,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -21578,7 +21723,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -21660,7 +21805,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -21737,7 +21882,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -21809,7 +21954,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -21928,8 +22073,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Gestão da Manutenção - EAD",
+        "instrutor": "Edvaldo",
+        "uc": "Controle de Qualidade dos Processos de Corte e Solda - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -21963,7 +22108,7 @@
         "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
       },
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B  Mundo do Trabalho I",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -22045,7 +22190,7 @@
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
       },
       "HT-MET-02-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1° Projeto de Inovação: Processo Criativo – Indústria 4.0, Lean e Ideação",
         "nome_turma": "PRIMEIRO A"
       },
@@ -22183,8 +22328,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Gestão da Manutenção - EAD",
+        "instrutor": "Edvaldo",
+        "uc": "Controle de Qualidade dos Processos de Corte e Solda - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -22343,8 +22488,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Gestão da Manutenção - EAD",
+        "instrutor": "Edvaldo",
+        "uc": "Controle de Processos e Materiais - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HT-REC-01-N-26-13310": {
@@ -22652,8 +22797,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Controle de Processos e Materiais - EAD",
+        "instrutor": "Aline",
+        "uc": "Gestão da Manutenção - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HTAUTM-01-I-25-13310": {
@@ -22772,8 +22917,8 @@
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
       },
       "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": null,
+        "instrutor": "Aline",
+        "uc": "Gestão da Manutenção - EAD",
         "nome_turma": "Tecnico em Soldagem"
       },
       "HTAUTM-01-I-25-13310": {
@@ -22860,6 +23005,11 @@
         "instrutor": "Patrick",
         "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Gestão da Manutenção - EAD",
+        "nome_turma": "Tecnico em Soldagem"
       },
       "HTAUTM-01-I-25-13310": {
         "instrutor": "Gustavo",
@@ -22955,6 +23105,11 @@
         "instrutor": "Patrick",
         "uc": "Processos de Fabricação de Sistemas Mecânicos de Precisão - EAD",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
       },
       "HTAUTM-01-I-25-13310": {
         "instrutor": "Gustavo",
@@ -23658,6 +23813,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-15": {
@@ -23665,6 +23825,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-16": {
@@ -23696,6 +23861,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-22": {
@@ -23703,6 +23873,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-23": {
@@ -23734,6 +23909,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-29": {
@@ -23741,6 +23921,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-06-30": {
@@ -23748,6 +23933,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-01": {
@@ -23755,6 +23945,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-05": {
@@ -23762,6 +23957,11 @@
         "instrutor": "Patrick",
         "uc": "Manutenção Mecânica de Sistemas de Precisão",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-06": {
@@ -23769,6 +23969,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-07": {
@@ -23776,6 +23981,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-08": {
@@ -23795,6 +24005,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-13": {
@@ -23802,6 +24017,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-14": {
@@ -23809,6 +24029,11 @@
         "instrutor": "Patrick",
         "uc": "Planejamento e Controle da Manutenção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-26": {
@@ -23816,6 +24041,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-27": {
@@ -23823,6 +24053,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-28": {
@@ -23830,6 +24065,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-07-29": {
@@ -23849,6 +24089,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-03": {
@@ -23856,6 +24101,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-04": {
@@ -23863,6 +24113,11 @@
         "instrutor": "Planejamento e Controle da Produção",
         "uc": "Planejamento e Controle da Produção",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-05": {
@@ -23882,6 +24137,11 @@
         "instrutor": "Patrick",
         "uc": "Projetos de Inovação",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-12": {
@@ -23901,6 +24161,11 @@
         "instrutor": "Patrick",
         "uc": "Projetos de Inovação",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-17": {
@@ -23908,6 +24173,11 @@
         "instrutor": "Patrick",
         "uc": "Projetos de Inovação",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-18": {
@@ -23915,6 +24185,11 @@
         "instrutor": "Patrick",
         "uc": "Projetos de Inovação",
         "nome_turma": "TECNICO_MECANICAPRECISAO_T6"
+      },
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
       }
     },
     "2027-08-19": {
@@ -24026,173 +24301,6 @@
         "instrutor": "Leticia",
         "uc": null,
         "nome_turma": "Tec. Mecatrônica B - Trilhas nas Escolas"
-      }
-    },
-    "2026-06-05": {
-      "HT-SOL-01-M-26-13310": {
-        "instrutor": "Edvaldo",
-        "uc": "Tecnologia de Materiais - EAD",
-        "nome_turma": "Tecnico em Soldagem"
-      },
-      "HT-REC-01-N-26-13310": {
-        "instrutor": "Thiago",
-        "uc": "Fundamentos da Refrigeração e Climatização  - EaD",
-        "nome_turma": "Tecnico em Refrigeração"
-      },
-      "HTELET-05-I-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "Projetos Elétricos Prediais",
-        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
-      },
-      "AI-MEL-04-T-26-13310": {
-        "instrutor": "Marcus",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_Eletromec_Jacutinga"
-      },
-      "HT-AUT-04-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": null,
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "HT-AUT-03-M-25-13310": {
-        "instrutor": "Marcia",
-        "uc": null,
-        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
-      },
-      "AI-MEL-03-T-26-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC03_T"
-      },
-      "AI-MEL-02-T-26-13310": {
-        "instrutor": "Igor",
-        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
-        "nome_turma": "AP_MANUT_ELETROMEC02_T"
-      },
-      "AI-API-04-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Informática",
-        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
-      },
-      "HT-INI-01-N-26-13310": {
-        "instrutor": "Aline",
-        "uc": "Saúde, Segurança e Meio Ambiente - EaD",
-        "nome_turma": "TEC_INSTRUMETACAO_IND-T6"
-      },
-      "HT-DCC-01-N-26-13310": {
-        "instrutor": "Rosane",
-        "uc": "Materiais de Construção  - EaD",
-        "nome_turma": "TEC_DESENHO_CONSTRUCAO_T6"
-      },
-      "AI-MEL-09-M-25-13310": {
-        "instrutor": "Tiago",
-        "uc": "Montagem e Manutenção de Sistemas Elétricos",
-        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
-      },
-      "AI-PRD-01-T-26-13310": {
-        "instrutor": "Thallyson",
-        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
-        "nome_turma": "AP_PROC_PROD_IND_0126"
-      },
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Medições de Variáveis Físicas Industriais",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      },
-      "HTMECA-01-I-25-13310": {
-        "instrutor": "Ewerton",
-        "uc": "Processos de Fabricação Mecânica",
-        "nome_turma": "TECNICO_MECANICA_25_SEMI"
-      },
-      "HTELET-02-I-24-13310": {
-        "instrutor": "Max",
-        "uc": "Manutenção Elétrica Predial e Industrial",
-        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
-      },
-      "HT-MEC-03-N-25-13310": {
-        "instrutor": "Tatiane",
-        "uc": "Planejamento e otimização da produção - Ead",
-        "nome_turma": "TECNICO_MECANICA_PG_25"
-      },
-      "HT-ELM-02-N-25-13310": {
-        "instrutor": "Fabricio",
-        "uc": "CLP – Controlador lógico programável  - Ead",
-        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
-      },
-      "HT-ELM-01-N-25-13310": {
-        "instrutor": "Danilo",
-        "uc": "Eletrohidropneumática  - Ead",
-        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
-      },
-      "HT-ETT-02-N-25-13310": {
-        "instrutor": "Gustavo",
-        "uc": "Prototipagem de Negócios Inovadores - Ead",
-        "nome_turma": "TECNICO_ELETROTEC02_T5"
-      },
-      "HT-ETT-01-N-25-13310": {
-        "instrutor": "Philippe",
-        "uc": "Projetos de Instalações Elétricas de Potência - Ead",
-        "nome_turma": "TECNICO_ELETROTEC01_T5"
-      },
-      "HT-MMI-02-N-25-13310": {
-        "instrutor": "Rafael",
-        "uc": "Manutenção de Sistemas Automatizados - Ead",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
-      },
-      "HT-MMI-01-N-25-13310": {
-        "instrutor": "Marcelo",
-        "uc": "Manutenção de Máquinas e Equipamentos Industriais II - Ead",
-        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
-      },
-      "HT-AUT-02-N-25-13310": {
-        "instrutor": "Giovani",
-        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0 - Ead",
-        "nome_turma": "TECNICO_AUTOMACAO02_T5"
-      },
-      "AI-API-01-M-26-13310": {
-        "instrutor": "Davi",
-        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
-        "nome_turma": "Ap_Assistente_PCP_01"
-      },
-      "AI-API-02-T-26-13310": {
-        "instrutor": "Fabricio",
-        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
-        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
-      },
-      "AI-API-03-T-26-13310": {
-        "instrutor": "Philippe",
-        "uc": "Planejamento e Programação da Produção",
-        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
-      },
-      "AI-GEI-08-T-25-13310": {
-        "instrutor": "Gabriel Nogueira",
-        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
-        "nome_turma": "AP_GESTAO_IND_08_TARDE"
-      },
-      "AI-GEI-07-T-25-13310": {
-        "instrutor": "José faria",
-        "uc": "Fundamentos dos Processos Administrativos",
-        "nome_turma": "AP_GESTÃO_07_TARDE_25"
-      },
-      "AI-MEL-08-T-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Fundamentos Mecânicos",
-        "nome_turma": "AP_MANT_ELETROMEC08"
-      },
-      "HT-MEC-01-N-25-13310": {
-        "instrutor": "Max",
-        "uc": "Sistemas de Automação Industrial - Ead",
-        "nome_turma": "TECNICO_MECANICA01_T5"
-      },
-      "HT-MEC-02-N-25-13310": {
-        "instrutor": "Lucas",
-        "uc": "Manutenção Mecânica Aplicada - Ead",
-        "nome_turma": "TECNICO_MECANICA02_T5"
-      },
-      "HT-AUT-01-N-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Técnicas de Controle - Ead",
-        "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
     },
     "2026-07-20": {
@@ -24490,7 +24598,7 @@
         "nome_turma": "Tecnico em Soldagem"
       },
       "HTAUTM-01-I-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Gustavo",
         "uc": "Circuito Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
       },
@@ -25167,7 +25275,7 @@
         "nome_turma": "AP_MANUTMEC_09_MANHA_25"
       },
       "HTAUTM-01-I-25-13310": {
-        "instrutor": "Max",
+        "instrutor": "Gustavo",
         "uc": "Circuito Microcontrolados",
         "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
       },
@@ -25825,10 +25933,178 @@
         "nome_turma": "Tecnico em Soldagem"
       }
     },
+    "2027-03-12": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Projetos de Sistemas de Controle Industrial",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      },
+      "HTMECA-01-I-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Projeto de Inovação Mecânica",
+        "nome_turma": "TECNICO_MECANICA_25_SEMI"
+      }
+    },
+    "2027-03-19": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Projetos de Sistemas de Controle Industrial",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      },
+      "HTMECA-01-I-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Projeto de Inovação Mecânica",
+        "nome_turma": "TECNICO_MECANICA_25_SEMI"
+      }
+    },
+    "2027-03-26": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HTMECA-01-I-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Projeto de Inovação Mecânica",
+        "nome_turma": "TECNICO_MECANICA_25_SEMI"
+      }
+    },
+    "2027-04-02": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Projetos de Sistemas de Controle Industrial",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      }
+    },
+    "2027-04-09": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Processos de Soldagem - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Projetos de Sistemas de Controle Industrial",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      }
+    },
+    "2027-04-16": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Introdução à Indústria 4.0 - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-04-23": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Introdução à Indústria 4.0 - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-04-30": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Introdução à Indústria 4.0 - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-05-07": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Introdução à Indústria 4.0 - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-05-14": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Introdução à Indústria 4.0 - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-05-21": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-05-28": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-06-04": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-06-11": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-06-18": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-06-25": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-07-02": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-07-09": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
     "2027-07-15": {
       "HT-SOL-01-M-26-13310": {
         "instrutor": "Edvaldo",
         "uc": "Projeto de Inovação",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-07-16": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
         "nome_turma": "Tecnico em Soldagem"
       }
     },
@@ -25864,6 +26140,55 @@
       "HT-SOL-01-M-26-13310": {
         "instrutor": "Férias",
         "uc": "Férias",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-07-30": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-06": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-09": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-10": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Edvaldo",
+        "uc": "Suporte Técnico em Elaboração e Implementação de Projetos",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-13": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-20": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
+        "nome_turma": "Tecnico em Soldagem"
+      }
+    },
+    "2027-08-27": {
+      "HT-SOL-01-M-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Projeto de Inovação - EAD",
         "nome_turma": "Tecnico em Soldagem"
       }
     },
@@ -29219,6 +29544,153 @@
       "HT-AUT-01-N-25-13310": {
         "instrutor": "Jonas",
         "uc": "Elementos Finais de Controle - Ead",
+        "nome_turma": "TECNICO_AUTOMACAO01_T5"
+      }
+    },
+    "2026-06-05": {
+      "HTELET-05-I-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Projetos Elétricos Prediais",
+        "nome_turma": "TECNICO_ELETROTEC_25_SEMI"
+      },
+      "AI-MEL-04-T-26-13310": {
+        "instrutor": "Marcus",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_Eletromec_Jacutinga"
+      },
+      "HT-AUT-04-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": null,
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "HT-AUT-03-M-25-13310": {
+        "instrutor": "Marcia",
+        "uc": null,
+        "nome_turma": "Tec. Automação A - Trilhas nas Escolas"
+      },
+      "AI-MEL-03-T-26-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC03_T"
+      },
+      "AI-MEL-02-T-26-13310": {
+        "instrutor": "Igor",
+        "uc": "Montagem e Manutenção de Sistemas Mecânicos",
+        "nome_turma": "AP_MANUT_ELETROMEC02_T"
+      },
+      "AI-API-04-N-26-13310": {
+        "instrutor": "Aline",
+        "uc": "Informática",
+        "nome_turma": "APRENDIZAGEM ASSISTENT DE PCP - NOITE"
+      },
+      "AI-MEL-09-M-25-13310": {
+        "instrutor": "Tiago",
+        "uc": "Montagem e Manutenção de Sistemas Elétricos",
+        "nome_turma": "AP_MANUTMEC_09_MANHA_25"
+      },
+      "AI-PRD-01-T-26-13310": {
+        "instrutor": "Thallyson",
+        "uc": "Tecnologia de Maquinas e Equipamentos para  fabricação de remédios.",
+        "nome_turma": "AP_PROC_PROD_IND_0126"
+      },
+      "HTAUTM-01-I-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Medições de Variáveis Físicas Industriais",
+        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
+      },
+      "HTMECA-01-I-25-13310": {
+        "instrutor": "Ewerton",
+        "uc": "Processos de Fabricação Mecânica",
+        "nome_turma": "TECNICO_MECANICA_25_SEMI"
+      },
+      "HTELET-02-I-24-13310": {
+        "instrutor": "Max",
+        "uc": "Manutenção Elétrica Predial e Industrial",
+        "nome_turma": "TECNICO_ELETROTEC_24_SEMI"
+      },
+      "HT-MEC-03-N-25-13310": {
+        "instrutor": "Tatiane",
+        "uc": "Planejamento e otimização da produção - Ead",
+        "nome_turma": "TECNICO_MECANICA_PG_25"
+      },
+      "HT-ELM-02-N-25-13310": {
+        "instrutor": "Fabricio",
+        "uc": "CLP – Controlador lógico programável  - Ead",
+        "nome_turma": "TECNICO_ELETROMECANIC02_T5"
+      },
+      "HT-ELM-01-N-25-13310": {
+        "instrutor": "Danilo",
+        "uc": "Eletrohidropneumática  - Ead",
+        "nome_turma": "TECNICO_ELETROMECANIC01_T5"
+      },
+      "HT-ETT-02-N-25-13310": {
+        "instrutor": "Gustavo",
+        "uc": "Prototipagem de Negócios Inovadores - Ead",
+        "nome_turma": "TECNICO_ELETROTEC02_T5"
+      },
+      "HT-ETT-01-N-25-13310": {
+        "instrutor": "Philippe",
+        "uc": "Projetos de Instalações Elétricas de Potência - Ead",
+        "nome_turma": "TECNICO_ELETROTEC01_T5"
+      },
+      "HT-MMI-02-N-25-13310": {
+        "instrutor": "Rafael",
+        "uc": "Manutenção de Sistemas Automatizados - Ead",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND02_T5"
+      },
+      "HT-MMI-01-N-25-13310": {
+        "instrutor": "Marcelo",
+        "uc": "Manutenção de Máquinas e Equipamentos Industriais II - Ead",
+        "nome_turma": "TECNICO_MANUTENCAOMAQIND01_T5"
+      },
+      "HT-AUT-02-N-25-13310": {
+        "instrutor": "Giovani",
+        "uc": "Tecnologias da Informação e Comunicação APLICADAS À INDÚSTRIA 4.0 - Ead",
+        "nome_turma": "TECNICO_AUTOMACAO02_T5"
+      },
+      "AI-API-01-M-26-13310": {
+        "instrutor": "Davi",
+        "uc": "Fundamentos da Leitura de Desenhos Técnicos e Metrologia",
+        "nome_turma": "Ap_Assistente_PCP_01"
+      },
+      "AI-API-02-T-26-13310": {
+        "instrutor": "Fabricio",
+        "uc": "Softwares de Análise de Dados e Business Interlligence (BI)",
+        "nome_turma": "ASSISTENTE_PCP_02_TARDE"
+      },
+      "AI-API-03-T-26-13310": {
+        "instrutor": "Philippe",
+        "uc": "Planejamento e Programação da Produção",
+        "nome_turma": "ASSISTENTE_PCP_01_TARDE"
+      },
+      "AI-GEI-08-T-25-13310": {
+        "instrutor": "Gabriel Nogueira",
+        "uc": "Fundamentos dos Processos de Gestão de Pessoas",
+        "nome_turma": "AP_GESTAO_IND_08_TARDE"
+      },
+      "AI-GEI-07-T-25-13310": {
+        "instrutor": "José faria",
+        "uc": "Fundamentos dos Processos Administrativos",
+        "nome_turma": "AP_GESTÃO_07_TARDE_25"
+      },
+      "AI-MEL-08-T-25-13310": {
+        "instrutor": "Felipe",
+        "uc": "Fundamentos Mecânicos",
+        "nome_turma": "AP_MANT_ELETROMEC08"
+      },
+      "HT-MEC-01-N-25-13310": {
+        "instrutor": "Max",
+        "uc": "Sistemas de Automação Industrial - Ead",
+        "nome_turma": "TECNICO_MECANICA01_T5"
+      },
+      "HT-MEC-02-N-25-13310": {
+        "instrutor": "Lucas",
+        "uc": "Manutenção Mecânica Aplicada - Ead",
+        "nome_turma": "TECNICO_MECANICA02_T5"
+      },
+      "HT-AUT-01-N-25-13310": {
+        "instrutor": "Jonas",
+        "uc": "Técnicas de Controle - Ead",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
       }
     },
@@ -35291,7 +35763,7 @@
     },
     "2026-09-26": {
       "HT-MET-01-M-26-13310": {
-        "instrutor": "Gabriel",
+        "instrutor": "Gabriel Nogueira",
         "uc": "1°B Autoconhecimento",
         "nome_turma": "PRIMEIRO B - SALA 208 A"
       },
@@ -39983,44 +40455,6 @@
         "nome_turma": "AP_MANUTMEC_09_MANHA_25"
       }
     },
-    "2027-03-12": {
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Projetos de Sistemas de Controle Industrial",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      },
-      "HTMECA-01-I-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Projeto de Inovação Mecânica",
-        "nome_turma": "TECNICO_MECANICA_25_SEMI"
-      }
-    },
-    "2027-03-19": {
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Projetos de Sistemas de Controle Industrial",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      },
-      "HTMECA-01-I-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Projeto de Inovação Mecânica",
-        "nome_turma": "TECNICO_MECANICA_25_SEMI"
-      }
-    },
-    "2027-04-02": {
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Projetos de Sistemas de Controle Industrial",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      }
-    },
-    "2027-04-09": {
-      "HTAUTM-01-I-25-13310": {
-        "instrutor": "Jonas",
-        "uc": "Projetos de Sistemas de Controle Industrial",
-        "nome_turma": "TECNICO_AUTOMACAO_25_SEMI"
-      }
-    },
     "2025-09-12": {
       "HTMECA-01-I-25-13310": {
         "instrutor": "Danilo",
@@ -40126,13 +40560,6 @@
         "instrutor": "Guilherme",
         "uc": "Acionamentos Eletroeletrônicos - Ead",
         "nome_turma": "TECNICO_AUTOMACAO01_T5"
-      }
-    },
-    "2027-03-26": {
-      "HTMECA-01-I-25-13310": {
-        "instrutor": "Felipe",
-        "uc": "Projeto de Inovação Mecânica",
-        "nome_turma": "TECNICO_MECANICA_25_SEMI"
       }
     },
     "2025-01-31": {
