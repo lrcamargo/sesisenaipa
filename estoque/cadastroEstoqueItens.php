@@ -123,6 +123,7 @@ if($idLabSel){
     ");
     $st->execute([$idLabSel]);
     $itens = $st->fetchAll(PDO::FETCH_ASSOC);
+    if(isset($_GET['debug'])){ echo '<pre>IDs retornados: '; print_r(array_column($itens,'id')); exit; }
 }
 
 $labSelNome = '';

@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><b>Gestão de turmas:</b> férias de turmas e de instrutores, criação de turmas de aperfeiçoamento.</td>
+                    <td><b>Mídias para painel:</b> Adicionadas mídias para o painel de ocupação.</td>
                 </tr>
                 <tr>
                     <td><b>Consulta Horários:</b> adicionada turmas de aperfeiçoamento no registro, adicionadas férias da turma e férias do instrutor.</td>

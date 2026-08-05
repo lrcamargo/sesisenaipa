@@ -12,6 +12,11 @@
 body {
     background:  #E7EBF4;
 }
+/*primeira mudança*/
+html, body {
+    background-color: #E7EBF4 !important;
+    min-height: 100%;
+}
 
 .wrapper .header {
     z-index: 1;
@@ -471,8 +476,87 @@ body {
     background-color: #5474B2;
     border-color: #5474B2;
 }
-
+/* Segunda modificação */
 @media screen and (max-width: 1050px){
+    .wrapper .sidebar {
+        width: 70px;
+    }
+ 
+    .wrapper .sidebar .sidebar-menu .item .menu-btn {
+        font-size: 20px;
+        padding-left: 23px;
+    }
+ 
+    .wrapper .sidebar .sidebar-menu .item .sub-menu i {
+        font-size: 18px;
+        padding-left: 3px;
+    }
+ 
+    .wrapper .sidebar a span {
+        display: none;
+    }
+ 
+    /* ANTES estava comentado — é isso que causava a faixa branca
+       por padrão nessa faixa de tela, mesmo sem clicar no menu */
+    .wrapper .main-container {
+        min-height: 100vh;
+        width: calc(100% - 70px);
+        margin-left: 70px;
+    }
+ 
+    .wrapper.collapse .sidebar {
+        width: 250px;
+    }
+ 
+    /* Removida a declaração duplicada/inválida que existia aqui
+       (width: (100% - 250px) sem calc()) — esta já resolve sozinha */
+    .wrapper.collapse .main-container {
+        width: calc(100% - 250px) !important;
+        margin-left: 250px;
+    }
+ 
+    .wrapper.collapse .sidebar a span {
+        display: block;
+    }
+ 
+    .wrapper.collapse .sidebar .sidebar-menu .item .menu-btn {
+        color: #fff;
+        display: block;
+        position: relative;
+        padding: 18px 15px;
+        font-size: 18px;
+        transition: 0.3s;
+        transition-property: background, font-size;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .wrapper .sidebar {
+        width: 250px;
+        left: -250px;              /* escondida fora da tela por padrão */
+        transition: 0.3s;
+        transition-property: left;
+        z-index: 1050;
+    }
+ 
+    .wrapper .sidebar a span {
+        display: block;            /* no celular, sempre mostra o texto do menu quando aberto */
+    }
+ 
+    .wrapper.collapse .sidebar {
+        left: 0;                   /* clicou no sanduíche: desliza pra dentro, por cima do conteúdo */
+        width: 250px;
+    }
+ 
+    /* Conteúdo sempre ocupa 100% da tela no celular — a sidebar
+       flutua por cima (overlay), nunca empurra o main-container */
+    .wrapper .main-container,
+    .wrapper.collapse .main-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+/*@media screen and (max-width: 1050px){
 	.wrapper .sidebar {
         width: 70px;
     }
@@ -496,6 +580,7 @@ body {
         width: (100% - 70px);
         margin-left: 70px;
     }*/
+    /*
     .wrapper.collapse .main-container {
         width: calc(100% - 250px) !important;
         margin-left: 250px;
@@ -523,7 +608,7 @@ body {
         transition: 0.3s;
         transition-property: background, font-size;
     }
-}
+}*/
 
 @media screen and (max-width: 840px){
   .info-container {

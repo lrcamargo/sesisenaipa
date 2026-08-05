@@ -1233,7 +1233,7 @@ if($permSolicitante){
                         <label><b>Solicitante</b></label>
                         <select name="solicitante" class="form-control">
                             <?php
-                            $stmt2 = $pdo->prepare("SELECT id, nome FROM usuarios ORDER BY nome");
+                            $stmt2 = $pdo->prepare("SELECT id, nome FROM usuarios WHERE status=1 ORDER BY nome");
                             $stmt2->execute();
                             $users2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             foreach($users2 as $u){

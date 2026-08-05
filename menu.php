@@ -26,6 +26,19 @@
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span>
                 </a>
             </li>";
+        //ESTOQUE
+         echo "<li class='item' id='estoque-item'>
+            <a href='#estoque-item' class='menu-btn'>
+                <i class='fas fa-archive'></i><span>Controle de Estoque <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../estoque/cadastroEstoqueItens.php'>
+                    <i class='fas fa-door-open'></i><span>Itens</span>
+                </a>
+            </div>
+        </li>";
+        //PAINEL MÍDIAS
+        echo "<li class='item'><a href='../painelMidias/cadastroMidiasPainel.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Mídias para o Painel</span></a></li>";
 
     }
     /* SECRETARIA
@@ -57,6 +70,22 @@
         echo "<li class='item'><a href='../main.php' class='menu-btn'><i class='fas fa-home'></i><span>Dashboard</span></a></li>";
         echo "<li class='item'><a href='../reservaLaboratorio/principal.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Reserva Laboratório</span></a></li>";
         echo "<li class='item'><a href='../gestaoUsuarios/index.php' class='menu-btn'><i class='fas fa-users'></i><span>Gestão Usuários</span></a></li>";
+        echo "<li class='item' id='chamada-item'>
+            <a href='#chamada-item' class='menu-btn'>
+                <i class='fas fa-archive'></i><span>Frequência <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../frequencia/chamada.php'>
+                    <i class='fas fa-door-open'></i><span>Chamada Diária</span>
+                </a>
+            </div>
+            <div class='sub-menu'>
+                <a href='../frequencia/relatorios.php'>
+                    <i class='fas fa-door-open'></i><span>Relatórios</span>
+                </a>
+            </div>
+        </li>";
+        //echo "<li class='item'><a href='../frequencia/chamada.php' class='menu-btn'><i class='fas fa-users'></i><span>Chamada diária</span></a></li>";
     }
 
     /* GERÊNCIA
@@ -99,7 +128,7 @@
         Pulso SENAI
       </li>";
       echo "<li class='item'>
-        <a href='../pulso/gestao.php' class='menu-btn'>
+        <a href='../pulso/gestao/gestao.php' class='menu-btn'>
             <i class='fa fa-heartbeat'></i>
             <span>PulsoSENAI</span>
         </a>
@@ -187,7 +216,7 @@
         Pulso SENAI
       </li>"*/
       echo "<li class='item'>
-        <a href='../pulso/gestao.php' class='menu-btn'>
+        <a href='../pulso/gestao/gestao.php' class='menu-btn'>
             <i class='fa fa-heartbeat'></i>
             <span>PulsoSENAI</span>
         </a>
@@ -235,6 +264,8 @@
                 </a>
             </div>
         </li>";
+        //PAINEL MÍDIAS
+        echo "<li class='item'><a href='../painelMidias/cadastroMidiasPainel.php' class='menu-btn'><i class='fas fa-calendar-day'></i><span>Mídias para o Painel</span></a></li>";
         //IoT
         echo "<li class='item' id='iot-item'>
             <a href='#iot-item' class='menu-btn'>
@@ -249,6 +280,23 @@
                 </a>
             </div>
         </li>";
+        //FREQUÊNCIA
+        echo "<li class='item' id='chamada-item'>
+            <a href='#chamada-item' class='menu-btn'>
+                <i class='fas fa-archive'></i><span>Frequência <i class='fas fa-chevron-down drop-down'></i></span>
+            </a>
+            <div class='sub-menu'>
+                <a href='../frequencia/chamada.php'>
+                    <i class='fas fa-door-open'></i><span>Chamada Diária</span>
+                </a>
+            </div>
+            <div class='sub-menu'>
+                <a href='../frequencia/relatorios.php'>
+                    <i class='fas fa-door-open'></i><span>Relatórios</span>
+                </a>
+            </div>
+        </li>";
+        //echo "<li class='item'><a href='../frequencia/chamada.php' class='menu-btn'><i class='fas fa-users'></i><span>Chamada diária</span></a></li>";
         //HORÁRIOS
         echo "<li class='item' id='horarios-item'>
             <a href='#horarios-item' class='menu-btn'>
@@ -263,6 +311,7 @@
                 </a>
             </div>
         </li>";
+        //echo "<li class='item'><a href='../frequencia/chamada.php' class='menu-btn'><i class='fas fa-users'></i><span>Chamada diária</span></a></li>";
         echo "<li class='item'><a href='../scripts/deploy.php' class='menu-btn'><i class='fas fa-rocket mr-1'></i><span>Deploy</span></a></li>";
 
     }

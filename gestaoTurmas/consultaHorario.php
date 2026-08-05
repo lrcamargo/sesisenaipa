@@ -48,13 +48,49 @@ ksort($todasTurmasCache);
 function tipoTurma(string $cod): array {
     if(preg_match('/^APP-/i',   $cod)) return ['label'=>'Aperfeiçoamento',        'cor'=>'#e65100','bg'=>'#fff3e0'];
     if(preg_match('/^AI-/i',    $cod)) return ['label'=>'Aprendizagem',           'cor'=>'#1565c0','bg'=>'#e3f2fd'];
-    // HTXXXX-XX-I-XX-XXXXX = Técnico Semipresencial: "-I-" em qualquer posição num código que começa com HT
     if(preg_match('/^HT/i', $cod) && strpos(strtoupper($cod), '-I-') !== false)
         return ['label'=>'Técnico Semipresencial', 'cor'=>'#be185d','bg'=>'#fce7f3'];
     if(preg_match('/^HT-/i',    $cod)) return ['label'=>'Técnico',                'cor'=>'#1b5e20','bg'=>'#e8f5e9'];
     if(preg_match('/^Q-/i',     $cod)) return ['label'=>'Qualificação',           'cor'=>'#6a1b9a','bg'=>'#f3e5f5'];
     if(preg_match('/^EM-/i',    $cod)) return ['label'=>'Ens. Médio',             'cor'=>'#880e4f','bg'=>'#fce4ec'];
     return                                    ['label'=>'Outro',                  'cor'=>'#37474f','bg'=>'#eceff1'];
+}
+
+/* ── Cor estável por texto (usada pra colorir por UC no modo turma) ──
+   Mesmo texto sempre gera a mesma cor (hash simples → hue), então a cor
+   não muda a cada recarregamento — só muda quando a UC muda. */
+function hslParaHex(float $h, float $s, float $l): string {
+    $h = $h / 360; $s = $s / 100; $l = $l / 100;
+    if($s == 0){
+        $r = $g = $b = $l;
+    } else {
+        $hue2rgb = function($p, $q, $t){
+            if($t < 0) $t += 1;
+            if($t > 1) $t -= 1;
+            if($t < 1/6) return $p + ($q - $p) * 6 * $t;
+            if($t < 1/2) return $q;
+            if($t < 2/3) return $p + ($q - $p) * (2/3 - $t) * 6;
+            return $p;
+        };
+        $q = $l < 0.5 ? $l * (1 + $s) : $l + $s - $l * $s;
+        $p = 2 * $l - $q;
+        $r = $hue2rgb($p, $q, $h + 1/3);
+        $g = $hue2rgb($p, $q, $h);
+        $b = $hue2rgb($p, $q, $h - 1/3);
+    }
+    return sprintf('#%02x%02x%02x', (int)round($r*255), (int)round($g*255), (int)round($b*255));
+}
+function corPorTexto(string $texto): array {
+    $texto = trim($texto) ?: 'sem-uc';
+    $hash = 0;
+    for($i = 0; $i < strlen($texto); $i++){
+        $hash = ($hash * 31 + ord($texto[$i])) & 0x7FFFFFFF;
+    }
+    $hue = $hash % 360;
+    return [
+        'cor' => hslParaHex($hue, 62, 33), // tom escuro/saturado: borda e texto
+        'bg'  => hslParaHex($hue, 70, 93), // tom claro: fundo do card
+    ];
 }
 
 /* ── Mapa de apelido normalizado → nome completo (banco) ── */
@@ -103,7 +139,6 @@ if(isset($_GET['ajax'])){
             }
         }
 
-        // APP manuais: busca pelo nome completo do instrutor
         $nomeCompleto = null;
         $idInstrutor  = null;
         foreach($instrutores as $i){
@@ -162,7 +197,6 @@ if(isset($_GET['ajax'])){
                 }
             }
 
-            // Férias pelo id do instrutor
             $stFer = $pdo->prepare(
                 "SELECT dataInicio, dataFim, descricao FROM instrutor_ferias WHERE idInstrutor = ? ORDER BY dataInicio"
             );
@@ -195,7 +229,6 @@ if(isset($_GET['ajax'])){
     } elseif($modo === 'turma'){
         $tipo = tipoTurma($filtro);
 
-        // APP manual
         try {
             $stApp = $pdo->prepare("
                 SELECT t.codigo, t.nome AS nomeTurma,
@@ -221,19 +254,21 @@ if(isset($_GET['ajax'])){
                     if((int)$ap['diasSemana'] & ($bitsD[$dow] ?? 0)){
                         $lbl = $labelsT[$ap['turno']] ?? $ap['turno'];
                         $hr  = substr($ap['horarioInicio'],0,5).' – '.substr($ap['horarioFim'],0,5);
+                        $corUc = corPorTexto($ap['nomeTurma'] ?: $ap['codigo']);
                         $eventos[] = [
                             'id'              => 'app_'.md5($data.$ap['codigo'].$ap['turno']),
                             'title'           => $ap['nomeTurma'] ?: $ap['codigo'],
                             'start'           => $data,
                             'allDay'          => true,
-                            'backgroundColor' => $tipo['bg'],
-                            'borderColor'     => $tipo['cor'],
-                            'textColor'       => $tipo['cor'],
+                            'backgroundColor' => $corUc['bg'],
+                            'borderColor'     => $corUc['cor'],
+                            'textColor'       => $corUc['cor'],
                             'extendedProps'   => [
                                 'turma'     => $ap['codigo'],
                                 'uc'        => $ap['nomeTurma'],
                                 'tipo'      => $tipo['label'],
-                                'cor'       => $tipo['cor'],
+                                'cor'       => $corUc['cor'],
+                                'bg'        => $corUc['bg'],
                                 'instrutor' => mb_strtoupper($ap['instrutor']),
                                 'linha2'    => mb_strtoupper($ap['instrutor']),
                                 'horario'   => $lbl.' · '.$hr,
@@ -245,33 +280,33 @@ if(isset($_GET['ajax'])){
             }
         } catch(PDOException $e){}
 
-        // Planilha
         foreach($cacheJson['dados'] as $data => $turmas){
             if(!isset($turmas[$filtro])) continue;
             $info     = $turmas[$filtro];
             $uc       = $info['uc'] ?? '';
             $inst     = $info['instrutor'] ?? '';
             $nomeInst = $inst ? ($mapaApelidos[normalizar($inst)] ?? mb_strtoupper($inst)) : '';
+            $corUc = corPorTexto($uc ?: $filtro);
             $eventos[] = [
                 'id'              => md5($data.$filtro),
                 'title'           => $uc ?: $filtro,
                 'start'           => $data,
                 'allDay'          => true,
-                'backgroundColor' => $tipo['bg'],
-                'borderColor'     => $tipo['cor'],
-                'textColor'       => $tipo['cor'],
+                'backgroundColor' => $corUc['bg'],
+                'borderColor'     => $corUc['cor'],
+                'textColor'       => $corUc['cor'],
                 'extendedProps'   => [
                     'turma'     => $filtro,
                     'uc'        => $uc,
                     'tipo'      => $tipo['label'],
-                    'cor'       => $tipo['cor'],
+                    'cor'       => $corUc['cor'],
+                    'bg'        => $corUc['bg'],
                     'instrutor' => $nomeInst,
                     'linha2'    => $nomeInst,
                 ],
             ];
         }
 
-        // Férias da turma
         try {
             $stFT = $pdo->prepare("
                 SELECT f.dataInicio, f.dataFim, f.descricao
@@ -332,7 +367,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
 <style>
-/* ── Layout geral ── */
 .filtro-bar{background:#fff;border:1px solid #dee2e6;border-radius:8px;
     padding:14px 16px;margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
 .filtro-bar .fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:180px;}
@@ -341,13 +375,9 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .btn-buscar{padding:6px 20px;border-radius:4px;border:none;background:#0d6efd;color:#fff;
     font-size:.85rem;font-weight:600;cursor:pointer;align-self:flex-end;}
 .btn-buscar:hover{background:#0b5ed7;}
-
-/* CORREÇÃO: botão imprimir começa oculto via JS, NÃO via CSS,
-   para evitar que a classe sobrescreva o style="" inline */
 .btn-imprimir{padding:6px 16px;border-radius:4px;border:none;background:#198754;color:#fff;
     font-size:.85rem;font-weight:600;cursor:pointer;align-self:flex-end;}
 .btn-imprimir:hover{background:#157347;}
-
 .legenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
 .legenda-item{display:flex;align-items:center;gap:5px;font-size:.78rem;font-weight:600;}
 .legenda-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
@@ -362,8 +392,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .badge-ferias{display:inline-block;background:#fff3cd;color:#856404;
     border:1px solid #ffc107;border-radius:4px;padding:2px 10px;
     font-size:.75rem;font-weight:700;margin-bottom:8px;}
-
-/* ── Modal de período ── */
 #modalPeriodo .modal-header{background:#198754;}
 #modalPeriodo .modal-title,#modalPeriodo .close{color:#fff !important;opacity:1;}
 .periodo-opcoes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
@@ -379,160 +407,69 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 .campo-periodo input{width:100%;padding:5px 10px;border:1px solid #ced4da;border-radius:4px;font-size:.85rem;}
 .aviso-modal{background:#fff3cd;border:1px solid #ffc107;border-radius:6px;
     padding:9px 12px;font-size:.8rem;color:#856404;}
-
-/* ── Área de impressão oculta na tela ── */
 #areaPrint{display:none;}
-
-/* ══════════════════════════════════════════
-   IMPRESSÃO — Calendário mensal em paisagem
-══════════════════════════════════════════ */
 @media print {
     @page { size: A4 landscape; margin: 1cm 1.2cm; }
-
-    /* Oculta tudo exceto a área de impressão */
     body > *:not(#areaPrint) { display:none !important; }
-
     #areaPrint {
         display: block !important;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 9pt;
         color: #111;
     }
-
-    /* Cabeçalho geral do documento */
-    .ph {
-        border-bottom: 2px solid #333;
-        padding-bottom: 7px;
-        margin-bottom: 10px;
-    }
+    .ph { border-bottom: 2px solid #333; padding-bottom: 7px; margin-bottom: 10px; }
     .ph h2 { margin: 0 0 2px 0; font-size: 13pt; font-weight: 700; }
     .ph p  { margin: 0 0 1px 0; font-size: 8.5pt; color: #444; }
-
-    /* Aviso de versão */
     .pa {
         background: #fff8e1 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        border: 1px solid #f9a825;
-        border-radius: 3px;
-        padding: 5px 10px;
-        font-size: 8pt;
-        color: #4e342e;
-        margin-bottom: 14px;
-        line-height: 1.5;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        border: 1px solid #f9a825; border-radius: 3px; padding: 5px 10px;
+        font-size: 8pt; color: #4e342e; margin-bottom: 14px; line-height: 1.5;
     }
     .pa strong { color: #bf360c; }
-
-    /* Um bloco por mês, quebra de página entre meses quando necessário */
-    .pm {
-        page-break-inside: avoid;
-        margin-bottom: 20px;
-    }
+    .pm { page-break-inside: avoid; margin-bottom: 20px; }
     .pm-titulo {
-        font-size: 11pt;
-        font-weight: 700;
+        font-size: 11pt; font-weight: 700;
         background: #eeeeee !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        padding: 4px 8px;
-        margin: 0 0 6px 0;
-        border-left: 4px solid #333;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        padding: 4px 8px; margin: 0 0 6px 0; border-left: 4px solid #333;
     }
-
-    /* Grade de calendário */
-    .cal-grid {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: fixed;
-    }
+    .cal-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
     .cal-grid th {
         background: #e0e0e0 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        border: 1px solid #bbb;
-        padding: 3px 4px;
-        text-align: center;
-        font-size: 8pt;
-        font-weight: 700;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        border: 1px solid #bbb; padding: 3px 4px; text-align: center;
+        font-size: 8pt; font-weight: 700;
     }
     .cal-grid td {
-        border: 1px solid #ccc;
-        vertical-align: top;
-        width: 14.28%;
-        height: 68px;
-        padding: 2px 3px;
-        font-size: 7.5pt;
+        border: 1px solid #ccc; vertical-align: top; width: 14.28%;
+        height: 68px; padding: 2px 3px; font-size: 7.5pt;
     }
-    /* Célula vazia (fora do mês) */
     .cal-grid td.vazia {
         background: #f9f9f9 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
-    /* Número do dia */
-    .cal-dia-num {
-        font-weight: 700;
-        font-size: 8pt;
-        color: #333;
-        display: block;
-        margin-bottom: 2px;
-    }
-    /* Hoje destacado */
+    .cal-dia-num { font-weight: 700; font-size: 8pt; color: #333; display: block; margin-bottom: 2px; }
     .cal-hoje .cal-dia-num {
-        color: #fff;
-        background: #1565c0 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        text-align: center;
-        display: inline-block;
+        color: #fff; background: #1565c0 !important;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        border-radius: 50%; width: 16px; height: 16px; line-height: 16px;
+        text-align: center; display: inline-block;
     }
-    /* Cada evento dentro da célula */
     .cal-ev {
-        display: block;
-        border-radius: 2px;
-        padding: 1px 3px;
-        font-size: 6.5pt;
-        font-weight: 700;
-        margin-bottom: 1px;
-        line-height: 1.3;
-        overflow: hidden;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        display: block; border-radius: 2px; padding: 1px 3px; font-size: 6.5pt;
+        font-weight: 700; margin-bottom: 1px; line-height: 1.3; overflow: hidden;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
-    /* Férias */
     .cal-ev-ferias {
-        background: #fff8e1 !important;
-        color: #5d4037;
-        border: 1px solid #f9a825;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        background: #fff8e1 !important; color: #5d4037; border: 1px solid #f9a825;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
-
-    /* Legenda de cores no rodapé do calendário */
-    .cal-legenda {
-        margin-top: 6px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    .cal-legenda-item {
-        display: flex;
-        align-items: center;
-        gap: 3px;
-        font-size: 7pt;
-        font-weight: 600;
-    }
+    .cal-legenda { margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .cal-legenda-item { display: flex; align-items: center; gap: 3px; font-size: 7pt; font-weight: 600; }
     .cal-legenda-dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+        width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
 }
 </style>
@@ -561,7 +498,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         <?php endif; ?>
     </div>
 
-    <!-- Filtro -->
     <div class="filtro-bar">
         <div class="fg" style="max-width:160px">
             <label>Consultar por</label>
@@ -596,17 +532,12 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         <button class="btn-buscar" onclick="buscar()">
             <i class="fas fa-search mr-1"></i>Buscar
         </button>
-        <!--
-            Botão imprimir: visibilidade controlada APENAS por JS (não tem display:none no CSS)
-            para evitar conflito de especificidade
-        -->
         <button class="btn-imprimir" id="btnImprimir" onclick="abrirModalPeriodo()" style="display:none">
             <i class="fas fa-print mr-1"></i>Imprimir Horário
         </button>
     </div>
 
-    <!-- Legenda -->
-    <div class="legenda">
+    <div class="legenda" id="legendaInstrutor">
         <div class="legenda-item"><div class="legenda-dot" style="background:#e65100"></div>Aperfeiçoamento</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#1565c0"></div>Aprendizagem</div>
         <div class="legenda-item"><div class="legenda-dot" style="background:#be185d"></div>Técnico Semipresencial</div>
@@ -619,7 +550,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
         </div>
     </div>
 
-    <!-- Calendário ou placeholder -->
     <div id="placeholder" class="placeholder-cal">
         <span><i class="fas fa-search mr-2"></i>Selecione um instrutor ou turma e clique em Buscar</span>
     </div>
@@ -628,9 +558,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 </div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     Modal: detalhes do evento
-═══════════════════════════════════════════════ -->
 <div class="modal fade" id="modalDetalhe" tabindex="-1">
 <div class="modal-dialog modal-sm"><div class="modal-content">
     <div class="modal-header">
@@ -644,9 +571,6 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 </div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════
-     Modal: seleção de período para impressão
-═══════════════════════════════════════════════ -->
 <div class="modal fade" id="modalPeriodo" tabindex="-1">
 <div class="modal-dialog modal-sm"><div class="modal-content">
     <div class="modal-header" style="background:#198754;">
@@ -704,32 +628,26 @@ $preSelFiltro = trim($_GET['filtro'] ?? '');
 </div></div>
 </div>
 
-<!-- Área oculta de impressão -->
 <div id="areaPrint"></div>
 
 <script src="../js/menu.js"></script>
 <script>
-/* ═══════════════════════════════════════════
-   Globais
-═══════════════════════════════════════════ */
 var _cal                = null;
 var _eventosCache       = [];
-var _nomeInstrutor      = '';
+var _tituloImpressao    = '';
+var _modoImpressao      = '';
 var _periodoSelecionado = 'mes';
 
-/* ═══════════════════════════════════════════
-   Troca de modo
-═══════════════════════════════════════════ */
 function trocarModo(){
     var modo = document.getElementById('selModo').value;
     document.getElementById('fgInstrutor').style.display = modo==='instrutor' ? '' : 'none';
     document.getElementById('fgTurma').style.display     = modo==='turma'     ? '' : 'none';
-    if(modo !== 'instrutor') document.getElementById('btnImprimir').style.display = 'none';
+    // Legenda por categoria só faz sentido no modo instrutor — no modo turma a
+    // cor é por UC, sem legenda (só a cor mesmo).
+    document.getElementById('legendaInstrutor').style.display = modo==='instrutor' ? '' : 'none';
+    document.getElementById('btnImprimir').style.display = 'none';
 }
 
-/* ═══════════════════════════════════════════
-   Busca principal
-═══════════════════════════════════════════ */
 function buscar(){
     var modo   = document.getElementById('selModo').value;
     var filtro = modo==='instrutor'
@@ -740,10 +658,11 @@ function buscar(){
 
     if(modo === 'instrutor'){
         var sel = document.getElementById('selInstrutor');
-        _nomeInstrutor = sel.options[sel.selectedIndex].text.trim();
+        _tituloImpressao = sel.options[sel.selectedIndex].text.trim();
     } else {
-        _nomeInstrutor = '';
+        _tituloImpressao = filtro;
     }
+    _modoImpressao = modo;
 
     fetch('consultaHorario.php?ajax=1&modo='+encodeURIComponent(modo)+'&filtro='+encodeURIComponent(filtro))
         .then(function(r){ return r.json(); })
@@ -756,9 +675,8 @@ function buscar(){
 
             _eventosCache = eventos;
 
-            // Mostra ou oculta o botão imprimir
             document.getElementById('btnImprimir').style.display =
-                (modo === 'instrutor' && eventos.length > 0) ? 'inline-block' : 'none';
+                (eventos.length > 0) ? 'inline-block' : 'none';
 
             _cal = new FullCalendar.Calendar(document.getElementById('calendario'), {
                 locale:      'pt-br',
@@ -785,7 +703,8 @@ function buscar(){
                     var partes  = info.event.startStr.split('-');
                     var dataFmt = partes[2]+'/'+partes[1]+'/'+partes[0];
                     var cor     = p.cor;
-                    var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(p.tipo)+'</span>';
+                    var labelBadge = (_modoImpressao === 'turma' && p.uc) ? p.uc : p.tipo;
+                    var html = '<span style="display:inline-block;border-radius:4px;padding:2px 10px;font-size:.75rem;font-weight:700;margin-bottom:8px;background:'+cor+'22;color:'+cor+';border:1px solid '+cor+'">'+esc(labelBadge)+'</span>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Data:</strong> '+dataFmt+'</div>';
                     html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>Turma:</strong> '+esc(p.turma)+'</div>';
                     if(p.uc)        html += '<div style="font-size:.88rem;margin-bottom:4px"><strong>UC / Curso:</strong> '+esc(p.uc)+'</div>';
@@ -798,16 +717,20 @@ function buscar(){
                     var p     = arg.event.extendedProps;
                     var turma = (p.turma || '').toUpperCase();
 
-                    // Resolução de cor no lado JS — garante cor correta mesmo se o cache PHP
-                    // tiver sido gerado antes da correção do regex
                     var cor, bg;
-                    if(/^APP-/i.test(turma))                          { cor='#e65100'; bg='#fff3e0'; }
+                    if(p.isFerias){
+                        cor='#856404'; bg='#fff3cd';
+                    } else if(_modoImpressao === 'turma'){
+                        // No modo turma a cor é por UC (gerada no PHP), não por categoria.
+                        cor = p.cor || '#37474f';
+                        bg  = p.bg  || '#eceff1';
+                    }
+                    else if(/^APP-/i.test(turma))                          { cor='#e65100'; bg='#fff3e0'; }
                     else if(/^AI-/i.test(turma))                      { cor='#1565c0'; bg='#e3f2fd'; }
                     else if(/^HT/i.test(turma) && turma.indexOf('-I-') !== -1) { cor='#be185d'; bg='#fce7f3'; }
                     else if(/^HT-?/i.test(turma))                     { cor='#1b5e20'; bg='#e8f5e9'; }
                     else if(/^Q-/i.test(turma))                       { cor='#6a1b9a'; bg='#f3e5f5'; }
                     else if(/^EM-/i.test(turma))                      { cor='#880e4f'; bg='#fce4ec'; }
-                    else if(p.isFerias)                                { cor='#856404'; bg='#fff3cd'; }
                     else                                               { cor='#37474f'; bg='#eceff1'; }
 
                     var l1  = arg.event.title || '';
@@ -822,7 +745,6 @@ function buscar(){
                 },
                 eventDidMount: function(info){
                     var p = info.event.extendedProps;
-                    // Remove o fundo padrão do FC para não conflitar com o nosso eventContent
                     info.el.style.background   = 'transparent';
                     info.el.style.border       = 'none';
                     info.el.style.boxShadow    = 'none';
@@ -838,10 +760,10 @@ function buscar(){
         .catch(function(){ alert('Erro ao buscar dados.'); });
 }
 
-/* ═══════════════════════════════════════════
-   Modal de período
-═══════════════════════════════════════════ */
 function abrirModalPeriodo(){
+    var titulo = _modoImpressao === 'turma' ? 'Imprimir Horário da Turma' : 'Imprimir Horário do Docente';
+    document.querySelector('#modalPeriodo .modal-title').innerHTML =
+        '<i class="fas fa-print mr-2"></i>'+titulo;
     selecionarPeriodo('mes');
     $('#modalPeriodo').modal('show');
 }
@@ -854,19 +776,13 @@ function selecionarPeriodo(p){
     document.getElementById('campoPeriodoLivre').classList.toggle('visivel', p === 'livre');
 }
 
-/* ═══════════════════════════════════════════
-   Geração do calendário de impressão
-═══════════════════════════════════════════ */
 function montarCalendarioMes(ano, mes0based, eventosDomes){
-    /* eventosDomes: array de objetos evento filtrados para este mês */
-
     var nomeDias  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
     var hoje      = new Date();
     var hojeStr   = hoje.getFullYear()+'-'
                   + (hoje.getMonth()<9?'0':'')+(hoje.getMonth()+1)+'-'
                   + (hoje.getDate()<10?'0':'')+hoje.getDate();
 
-    // Indexa eventos por data YYYY-MM-DD → array de eventos
     var evPorDia = {};
     eventosDomes.forEach(function(ev){
         var d = ev.start;
@@ -876,7 +792,7 @@ function montarCalendarioMes(ano, mes0based, eventosDomes){
 
     var primeiroDia   = new Date(ano, mes0based, 1);
     var ultimoDia     = new Date(ano, mes0based + 1, 0);
-    var diaSemanaInicio = primeiroDia.getDay(); // 0=Dom
+    var diaSemanaInicio = primeiroDia.getDay();
     var totalDias     = ultimoDia.getDate();
 
     var h = '<table class="cal-grid"><thead><tr>';
@@ -899,7 +815,6 @@ function montarCalendarioMes(ano, mes0based, eventosDomes){
                 h += '<td'+(isHoje?' class="cal-hoje"':'')+'>';
                 h += '<span class="cal-dia-num">'+dia+'</span>';
 
-                // Eventos do dia
                 if(evPorDia[dataStr]){
                     evPorDia[dataStr].forEach(function(ev){
                         var p = ev.extendedProps;
@@ -926,9 +841,6 @@ function montarCalendarioMes(ano, mes0based, eventosDomes){
     return h;
 }
 
-/* ═══════════════════════════════════════════
-   Executa impressão
-═══════════════════════════════════════════ */
 function executarImpressao(){
     var agora = new Date();
     var ano   = agora.getFullYear();
@@ -953,14 +865,12 @@ function executarImpressao(){
         if(de > ate){ alert('A data inicial deve ser anterior à data final.'); return; }
     }
 
-    // Filtra eventos no intervalo
     var evs = _eventosCache.filter(function(ev){
         var d = new Date(ev.start + 'T00:00:00');
         return d >= de && d <= ate;
     });
 
-    // Descobre quais meses existem no intervalo
-    var meses = []; // { ano, mes0 }
+    var meses = [];
     var cursor = new Date(de.getFullYear(), de.getMonth(), 1);
     var fimMes = new Date(ate.getFullYear(), ate.getMonth(), 1);
     while(cursor <= fimMes){
@@ -981,17 +891,17 @@ function executarImpressao(){
         ' a '+
         pad(ate.getDate())+'/'+pad(ate.getMonth()+1)+'/'+ate.getFullYear();
 
-    /* ── Monta HTML ── */
+    var labelTipo = _modoImpressao === 'turma' ? 'Turma'            : 'Docente';
+    var tituloDoc = _modoImpressao === 'turma' ? 'Horário da Turma' : 'Horário do Docente';
+
     var h = '';
 
-    // Cabeçalho
     h += '<div class="ph">';
-    h += '<h2>Horário do Docente</h2>';
-    h += '<p><strong>Docente:</strong> '+esc(_nomeInstrutor)+'</p>';
+    h += '<h2>'+esc(tituloDoc)+'</h2>';
+    h += '<p><strong>'+esc(labelTipo)+':</strong> '+esc(_tituloImpressao)+'</p>';
     h += '<p><strong>Período:</strong> '+esc(labelPeriodo)+'</p>';
     h += '</div>';
 
-    // Aviso de versão
     h += '<div class="pa">';
     h += '<strong>⚠️ ATENÇÃO:</strong> Sempre confira se esta é a versão mais atualizada do horário. ';
     h += 'Horários estão sujeitos a alterações a qualquer momento.<br>';
@@ -1003,7 +913,6 @@ function executarImpressao(){
     } else {
         meses.forEach(function(m){
             var chaveM = m.ano+'-'+(m.mes0<9?'0':'')+(m.mes0+1);
-            // Filtra eventos deste mês
             var evsMes = evs.filter(function(ev){
                 return ev.start.substring(0,7) === chaveM;
             });
@@ -1012,14 +921,15 @@ function executarImpressao(){
             h += '<div class="pm-titulo">'+nomeMeses[m.mes0]+' de '+m.ano+'</div>';
             h += montarCalendarioMes(m.ano, m.mes0, evsMes);
 
-            // Legenda de tipos presentes neste mês
             var tiposVisto = {};
-            evsMes.forEach(function(ev){
-                var p = ev.extendedProps;
-                if(!p.isFerias && p.tipo && p.cor){
-                    tiposVisto[p.tipo] = p.cor;
-                }
-            });
+            if(_modoImpressao !== 'turma'){
+                evsMes.forEach(function(ev){
+                    var p = ev.extendedProps;
+                    if(!p.isFerias && p.tipo && p.cor){
+                        tiposVisto[p.tipo] = p.cor;
+                    }
+                });
+            }
             var tiposArr = Object.keys(tiposVisto);
             if(tiposArr.length > 0){
                 h += '<div class="cal-legenda">';
@@ -1028,7 +938,6 @@ function executarImpressao(){
                        + '<span class="cal-legenda-dot" style="background:'+tiposVisto[t]+'"></span>'
                        + esc(t)+'</span>';
                 });
-                // Férias se houver
                 var temFerias = evsMes.some(function(ev){ return ev.extendedProps.isFerias; });
                 if(temFerias){
                     h += '<span class="cal-legenda-item">'
@@ -1038,7 +947,7 @@ function executarImpressao(){
                 h += '</div>';
             }
 
-            h += '</div>'; // .pm
+            h += '</div>';
         });
     }
 
@@ -1047,16 +956,10 @@ function executarImpressao(){
     setTimeout(function(){ window.print(); }, 380);
 }
 
-/* ═══════════════════════════════════════════
-   Utilitário
-═══════════════════════════════════════════ */
 function esc(s){
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* ═══════════════════════════════════════════
-   Pré-seleção via URL
-═══════════════════════════════════════════ */
 <?php if($preSelModo && $preSelFiltro): ?>
 document.addEventListener('DOMContentLoaded', function(){
     trocarModo();

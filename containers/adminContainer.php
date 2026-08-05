@@ -16,12 +16,12 @@
                style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
             <thead style="background:#3C60A7;color:#fff">
                 <tr>
-                   <th>Versão intranet: 3.3</th>
+                   <th>Versão intranet: 3.4</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><b>Gestão de turmas:</b> férias de turmas e de instrutores, criação de turmas de aperfeiçoamento.</td>
+                    <td><b>Mídias para painel:</b> Adicionadas mídias para o painel de ocupação.</td>
                 </tr>
                 <tr>
                     <td><b>Consulta Horários:</b> adicionada turmas de aperfeiçoamento no registro, adicionadas férias da turma e férias do instrutor.</td>

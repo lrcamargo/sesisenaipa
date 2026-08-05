@@ -6,6 +6,7 @@
 <title>EduIoT — Sistema Modular de Gerenciamento</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 /* ==================== ESTILOS (mesmos do original) ==================== */
 :root{
@@ -171,6 +172,13 @@ tr:hover td{background:var(--card-hover);}
 .toast.err{border-color:var(--danger);color:var(--danger);}
 .toast.warn{border-color:var(--warn);color:var(--warn);}
 
+/* Compressor */
+.form-input:disabled{opacity:.5;cursor:not-allowed;}
+.btn-primary:disabled,.btn-danger:disabled{opacity:.4;cursor:not-allowed;}
+.oil-bar-bg{background:var(--surface2);border-radius:6px;height:10px;overflow:hidden;margin-top:8px;}
+.oil-bar{height:100%;border-radius:6px;transition:width .3s, background .3s;}
+.compressor-chart-wrap{position:relative;height:260px;}
+
 .empty-state{text-align:center;padding:40px;color:var(--text-dim);}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 @media(max-width:768px){.sidebar{width:60px;}.main{margin-left:60px;}.sidebar .brand,.sidebar-sub,.user-card,.nav-section,.nav-item span{display:none;}.nav-item{justify-content:center;padding:12px;}.stats-row{grid-template-columns:1fr 1fr;}.grid-2{grid-template-columns:1fr;}}
@@ -212,6 +220,8 @@ tr:hover td{background:var(--card-hover);}
   <div class="nav-item" onclick="nav('doors',this)"><span class="nav-icon">🔐</span><span>Portas</span></div>
   <div class="nav-item" onclick="nav('history',this)"><span class="nav-icon">📋</span><span>Histórico</span></div>
   <div class="nav-item" id="nav-rfid" onclick="nav('rfid',this)"><span class="nav-icon">🆔</span><span>Cadastro RFID</span></div>
+  <div class="nav-section">Utilidades</div>
+  <div class="nav-item" onclick="nav('compressor',this)"><span class="nav-icon">🌀</span><span>Compressor</span></div>
   <div class="nav-section nivel-admin nivel-dev">Sistema</div>
   <div class="nav-item nivel-admin nivel-dev" id="nav-users" onclick="nav('users',this)"><span class="nav-icon">👥</span><span>Usuários</span></div>
   <div class="nav-item nivel-dev" id="nav-config" onclick="nav('config',this)"><span class="nav-icon">⚙️</span><span>Configurações</span></div>
@@ -278,6 +288,70 @@ tr:hover td{background:var(--card-hover);}
   <div class="card" style="margin-top:16px"><div class="card-title">📡 Status dos Dispositivos</div><div id="device-status" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
 </div>
 
+<!-- Compressor -->
+<div id="page-compressor" class="page">
+  <div class="topbar"><h1>Compressor de Ar</h1><div class="time-badge" id="clock5">--:--:--</div></div>
+  <div class="stats-row" style="grid-template-columns:repeat(5,1fr)">
+    <div class="stat-card"><div class="stat-label">Corrente</div><div class="stat-value" id="comp-corrente">—</div><div class="stat-sub">Ampères</div></div>
+    <div class="stat-card w"><div class="stat-label">Potência Instantânea</div><div class="stat-value" id="comp-potencia">—</div><div class="stat-sub">kW</div></div>
+    <div class="stat-card g"><div class="stat-label">Status</div><div class="stat-value" id="comp-status" style="font-size:18px">—</div></div>
+    <div class="stat-card"><div class="stat-label">Horímetro</div><div class="stat-value" id="comp-horimetro" style="font-size:22px">00:00:00</div><div class="stat-sub">tempo de funcionamento</div></div>
+    <div class="stat-card d"><div class="stat-label">Acionamentos</div><div class="stat-value" id="comp-acionamentos">0</div><div class="stat-sub">vezes ligado</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Corrente do Compressor <span class="tag">tempo real</span></div>
+    <div class="compressor-chart-wrap"><canvas id="chart-corrente"></canvas></div>
+    <div style="font-size:11px;color:var(--text-dim);margin-top:8px">Últimas leituras recebidas via MQTT nesta sessão do navegador.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Consumo de Energia <span class="tag" id="comp-energia">— kWh</span></div>
+      <div class="compressor-chart-wrap"><canvas id="chart-consumo"></canvas></div>
+      <button class="btn-secondary" style="margin-top:12px" onclick="requestConsumo()">🔄 Atualizar Gráfico</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Manutenção · Troca de Óleo</div>
+      <div id="comp-oleo-texto" style="font-family:'DM Mono',monospace;font-size:13px;color:var(--text-mid)">—</div>
+      <div class="oil-bar-bg"><div class="oil-bar" id="comp-oleo-bar" style="width:0%;background:var(--accent2)"></div></div>
+      <div class="form-group" style="margin-top:18px">
+        <label class="form-label">Setpoint troca de óleo (horas)</label>
+        <input class="form-input compressor-admin-field" id="comp-setpoint" type="number" min="1" step="10" placeholder="500">
+      </div>
+      <button class="btn-primary compressor-admin-field" onclick="saveMotorConfig()">💾 Salvar Setpoint</button>
+      <hr style="border:none;border-top:1px solid var(--border);margin:18px 0">
+      <div class="form-label" style="margin-bottom:8px">Zerar Horímetro</div>
+      <button class="btn-danger compressor-admin-field" onclick="resetHorimetro()">🔒 Zerar Horímetro (Admin/Dev)</button>
+      <div class="form-label" style="margin-top:16px;margin-bottom:8px">Zerar Contador de Acionamentos</div>
+      <button class="btn-danger compressor-admin-field" onclick="resetAcionamentos()">🔒 Zerar Acionamentos (Admin/Dev)</button>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:8px" class="compressor-op-only">Apenas Admin ou Dev podem alterar o setpoint, zerar o horímetro e zerar os acionamentos.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Dados de Placa do Motor <span class="tag">usado no cálculo de consumo</span></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Potência (CV)</label><input class="form-input compressor-admin-field" id="motor-potencia" type="number" step="0.5"></div>
+      <div class="form-group"><label class="form-label">Tensão Nominal (V)</label><input class="form-input compressor-admin-field" id="motor-tensao" type="number" step="1"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Corrente Nominal (A)</label><input class="form-input compressor-admin-field" id="motor-corrente" type="number" step="0.1"></div>
+      <div class="form-group"><label class="form-label">Fator de Potência (cosφ)</label><input class="form-input compressor-admin-field" id="motor-fp" type="number" step="0.01" min="0" max="1"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Rendimento (%)</label><input class="form-input compressor-admin-field" id="motor-rendimento" type="number" step="0.5" min="0" max="100"></div>
+      <div class="form-group"><label class="form-label">Tipo de Ligação</label>
+        <select class="form-input compressor-admin-field" id="motor-tipo">
+          <option value="trifasico">Trifásico</option>
+          <option value="monofasico">Monofásico</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-primary compressor-admin-field" onclick="saveMotorConfig()">💾 Salvar Dados de Placa</button>
+  </div>
+</div>
+
 <!-- Usuários Sistema -->
 <div id="page-users" class="page">
   <div class="topbar"><h1>Usuários do Sistema</h1></div>
@@ -315,8 +389,12 @@ tr:hover td{background:var(--card-hover);}
 
 <script>
 // ==================== CONFIGURAÇÃO INICIAL ====================
-const API = 'http://192.168.10.10:1880';
-const BROKER_IP = '192.168.10.10';
+// IMPORTANTE: usar o host que o navegador realmente usou para abrir a página
+// (e não um IP fixo). Assim o dashboard funciona tanto em 192.168.10.10 quanto
+// em 172.16.95.254 (ou qualquer outro IP/hostname do servidor Node-RED),
+// desde que a API e o broker MQTT (WebSocket) estejam no mesmo host.
+const API = `${window.location.protocol}//${window.location.hostname}:1880`;
+const BROKER_IP = window.location.hostname;
 const BROKER_PORT = 9001;
 const MARCAS = ['agratto', 'consul', 'hitachi', 'samsung'];
 
@@ -370,11 +448,21 @@ let acState = {};
 let acTemp = {};
 let acSetTemp = {};
 let acMarca = {};
+let acOnline = {};
 let doorState = {};
 let accessLog = [];
 let rfidUsers = [];
 let systemUsers = [];
 let historyData = [];
+
+// Compressor
+let compData = { corrente: null, status: '—', horimetro: '00:00:00', potencia: null, energia: null, acionamentos: 0, alarmeOleo: { ativo: false, mensagem: '—' } };
+let motorConfig = {};
+let consumoHistorico = [];
+let consumoChart = null;
+let correnteHistorico = []; // buffer local (não persiste ao recarregar a página)
+let correnteChart = null;
+const CORRENTE_MAX_PONTOS = 60;
 
 // ==================== PERSISTÊNCIA (localStorage) ====================
 function saveConfig() {
@@ -486,6 +574,7 @@ function renderGroupsList() {
 
 function showAddGroupModal() { document.getElementById('modal-add-group').classList.add('open'); }
 function addGroup() {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   const name = document.getElementById('new-group-name').value.trim();
   const icon = document.getElementById('new-group-icon').value.trim() || '🏭';
   if (!name) { toast('Nome do grupo é obrigatório', 'err'); return; }
@@ -503,6 +592,7 @@ function addGroup() {
 }
 
 function editGroup(id) {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   const group = acGroups.find(g => g.id === id);
   if (!group) return;
   const newName = prompt('Novo nome do grupo:', group.name);
@@ -518,6 +608,7 @@ function editGroup(id) {
 }
 
 function deleteGroup(id) {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   if (acDevices.some(d => d.group === id)) {
     toast('Não é possível excluir grupo com dispositivos. Mova ou remova os ACs primeiro.', 'err');
     return;
@@ -549,6 +640,7 @@ function showAddDeviceModal(type) {
 }
 
 function saveDevice() {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   const type = document.getElementById('device-type').value;
   const id = document.getElementById('device-id').value.trim();
   const name = document.getElementById('device-name').value.trim();
@@ -578,6 +670,7 @@ function saveDevice() {
 }
 
 function editDevice(type, id) {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   if (type === 'ac') {
     const dev = acDevices.find(d => d.id === id);
     if (!dev) return;
@@ -608,6 +701,7 @@ function editDevice(type, id) {
 }
 
 function deleteDevice(type, id) {
+  if (!canManageDevices()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
   if (confirm(`Remover ${type === 'ac' ? 'AC' : 'Porta'}?`)) {
     if (type === 'ac') {
       acDevices = acDevices.filter(d => d.id !== id);
@@ -647,7 +741,7 @@ function buildRoomCard(id, displayName) {
   const canCtrl = canControlAC();
   const canMarca = canChangeMarca();
   const nextMarca = marca === 'consul' ? 'hitachi' : marca === 'hitachi' ? 'samsung' : marca === 'samsung' ? 'agratto' : 'consul';
-  return `<div class="room-card ${on ? 'ac-on' : ''}"><div class="room-header"><span class="room-name">${displayName}</span><div class="room-dot ${on ? 'on' : ''}"></div></div><div class="room-temp" style="color:${getTempColor(t)}">${t != null ? t : '—'}<span>°C</span></div><div class="marca-badge marca-${marca} ${!canMarca ? 'disabled' : ''}" ${canMarca ? `onclick="setMarca('${id}', '${nextMarca}')"` : ''}>${marca} ${canMarca ? '▼' : '🔒'}</div><div class="temp-control"><button class="temp-btn" onclick="adjustTemp('${id}', -1)">−</button><span class="temp-set">${setTemp}°C</span><button class="temp-btn" onclick="adjustTemp('${id}', 1)">+</button></div><div class="ac-buttons"><button class="ac-btn ${on ? 'on' : ''}" onclick="toggleAC('${id}', 'on')">LIGA</button><button class="ac-btn off" onclick="toggleAC('${id}', 'off')">DESL</button></div><div class="room-actions"><button onclick="editDevice('ac','${id}')" title="Editar">✏️</button><button onclick="deleteDevice('ac','${id}')" title="Excluir">🗑️</button></div></div>`;
+  return `<div class="room-card ${on ? 'ac-on' : ''}"><div class="room-header"><span class="room-name">${displayName}</span><div class="room-dot ${on ? 'on' : ''}"></div></div><div class="room-temp" style="color:${getTempColor(t)}">${t != null ? t : '—'}<span>°C</span></div><div class="marca-badge marca-${marca} ${!canMarca ? 'disabled' : ''}" ${canMarca ? `onclick="setMarca('${id}', '${nextMarca}')"` : ''}>${marca} ${canMarca ? '▼' : '🔒'}</div><div class="temp-control"><button class="temp-btn" onclick="adjustTemp('${id}', -1)">−</button><span class="temp-set">${setTemp}°C</span><button class="temp-btn" onclick="adjustTemp('${id}', 1)">+</button></div><div class="ac-buttons"><button class="ac-btn ${on ? 'on' : ''}" onclick="toggleAC('${id}', 'on')">LIGA</button><button class="ac-btn off" onclick="toggleAC('${id}', 'off')">DESL</button></div>${canManageDevices() ? `<div class="room-actions"><button onclick="editDevice('ac','${id}')" title="Editar">✏️</button><button onclick="deleteDevice('ac','${id}')" title="Excluir">🗑️</button></div>` : ''}</div>`;
 }
 
 function buildCompactRoomCard(id, displayName) {
@@ -673,7 +767,7 @@ function renderDoors() {
   grid.innerHTML = doorDevices.map(d => {
     const st = doorState[d.id] || { status: 'offline' };
     if(st.status !== 'offline') online++;
-    return `<div class="door-card ${st.status === 'offline' ? 'offline' : 'online'}"><div class="door-header"><span class="door-name">${d.name}</span><span class="door-status ${st.status}">${st.status === 'aberta' ? '🔓 ABERTA' : st.status === 'fechada' ? '🔒 FECHADA' : '⭕ OFFLINE'}</span></div><div class="door-info">MAC: <span>${st.mac || '—'}</span></div><div class="door-info">RSSI: <span>${st.rssi != null ? st.rssi + ' dBm' : '—'}</span></div><div class="door-info">FW: <span>${st.fw || '—'}</span></div><div class="door-actions"><button onclick="editDevice('door','${d.id}')" title="Editar">✏️</button><button onclick="deleteDevice('door','${d.id}')" title="Excluir">🗑️</button></div></div>`;
+    return `<div class="door-card ${st.status === 'offline' ? 'offline' : 'online'}"><div class="door-header"><span class="door-name">${d.name}</span><span class="door-status ${st.status}">${st.status === 'aberta' ? '🔓 ABERTA' : st.status === 'fechada' ? '🔒 FECHADA' : '⭕ OFFLINE'}</span></div><div class="door-info">MAC: <span>${st.mac || '—'}</span></div><div class="door-info">RSSI: <span>${st.rssi != null ? st.rssi + ' dBm' : '—'}</span></div><div class="door-info">FW: <span>${st.fw || '—'}</span></div>${canManageDevices() ? `<div class="door-actions"><button onclick="editDevice('door','${d.id}')" title="Editar">✏️</button><button onclick="deleteDevice('door','${d.id}')" title="Excluir">🗑️</button></div>` : ''}</div>`;
   }).join('');
   document.getElementById('door-online').textContent = online;
   document.getElementById('door-offline').textContent = doorDevices.length - online;
@@ -694,7 +788,7 @@ function updateStats() {
   const avg = temps.length ? (temps.reduce((a,b)=>a+b,0)/temps.length).toFixed(1) : '—';
   document.getElementById('stat-ac-on').textContent = acOn;
   document.getElementById('stat-temp').textContent = avg + (avg !== '—' ? '°C' : '');
-  const online = Object.values(doorState).filter(d => d.status !== 'offline').length;
+  const online = acDevices.filter(d => acOnline[d.id]?.online).length;
   document.getElementById('stat-ac-online').textContent = online;
 }
 
@@ -707,6 +801,7 @@ function renderAll() {
   renderLastAccess();
   updateStats();
   updateDeviceStatus();
+  renderCompressor();
 }
 
 // ==================== PERMISSÕES ====================
@@ -715,6 +810,8 @@ const canChangeMarca = () => currentUser && (currentUser.nivel === 'admin' || cu
 const canManageRFID = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
 const canManageUsers = () => currentUser && currentUser.nivel === 'dev';
 const canAccessConfig = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageCompressor = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
+const canManageDevices = () => currentUser && (currentUser.nivel === 'admin' || currentUser.nivel === 'dev');
 
 // ==================== AC CONTROL ====================
 function toggleAC(id, cmd) {
@@ -765,18 +862,25 @@ function connectMQTT() {
   mqttClient = new Paho.MQTT.Client(BROKER_IP, BROKER_PORT, 'dash_' + Date.now());
   mqttClient.onConnectionLost = () => { setBrokerStatus(false); setTimeout(connectMQTT, 10000); };
   mqttClient.onMessageArrived = onMQTTMessage;
-  mqttClient.connect({ keepAliveInterval: 60, onSuccess: () => { setBrokerStatus(true); const topics = ['/+/temperatura', '/+/estado', '/+/marca/get', '/+/status', '/+/entrada', '/cracha']; topics.forEach(t => mqttClient.subscribe(t)); toast('MQTT conectado!', 'ok'); }, onFailure: () => setTimeout(connectMQTT, 5000) });
+  mqttClient.connect({ keepAliveInterval: 60, onSuccess: () => { setBrokerStatus(true); const topics = ['/+/temperatura', '/+/estado', '/+/marca/get', '/+/status', '/+/ar/status', '/+/entrada', '/cracha', '/comp1/#']; topics.forEach(t => mqttClient.subscribe(t)); toast('MQTT conectado!', 'ok'); }, onFailure: () => setTimeout(connectMQTT, 5000) });
 }
 
 function onMQTTMessage(msg) {
   const top = msg.destinationName;
   const pay = msg.payloadString.trim();
+  if (top.startsWith('/comp1/')) { handleCompressorMessage(top, pay); return; }
   const tm = top.match(/\/(2\d\d[ab])\/temperatura/);
   if(tm) { acTemp[tm[1]] = parseFloat(pay); renderAll(); return; }
   const em = top.match(/\/(2\d\d[ab])\/estado/);
   if(em) { const valor = parseInt(pay); acState[em[1]] = (valor > 0) ? 'on' : 'off'; renderAll(); return; }
   const mm = top.match(/\/(2\d\d[ab])\/marca\/get/);
   if(mm) { acMarca[mm[1]] = pay; renderAll(); return; }
+  const am = top.match(/\/(2\d\d[ab])\/ar\/status/);
+  if(am) {
+    if (pay === 'offline') { acOnline[am[1]] = { online: false }; }
+    else { try { const d = JSON.parse(pay); acOnline[am[1]] = { online: true, mac: d.mac, rssi: d.rssi, ip: d.ip, fw: d.fw_version }; } catch(e) { acOnline[am[1]] = { online: true }; } }
+    renderAll(); return;
+  }
   const pm = top.match(/\/(10\d|SESI)\/status/);
   if(pm) {
     try { const d = JSON.parse(pay); doorState[pm[1]] = { status: d.mqtt === 'connected' ? 'fechada' : 'offline', mac: d.mac, rssi: d.rssi, fw: d.fw_version }; } catch(e) { doorState[pm[1]] = { status: 'offline' }; }
@@ -797,6 +901,148 @@ function onMQTTMessage(msg) {
     if(crachaInput) { crachaInput.value = crachaHex; crachaInput.style.borderColor = 'var(--accent2)'; crachaInput.style.backgroundColor = 'rgba(0,255,157,.1)'; setTimeout(() => { crachaInput.style.borderColor = ''; crachaInput.style.backgroundColor = ''; }, 2000); toast(`📇 Crachá ${crachaHex} detectado! Preencha os dados`, 'ok'); document.getElementById('rfid-nome').focus(); }
     return;
   }
+}
+
+// ==================== COMPRESSOR ====================
+// Toda a persistência do compressor (dados de placa, setpoint, histórico de consumo)
+// acontece via MQTT (retained/request-response) - não depende de nenhum endpoint REST,
+// evitando os erros de "servidor" que ocorrem quando não existe rota HTTP correspondente.
+function handleCompressorMessage(top, pay) {
+  if (top === '/comp1/current') {
+    compData.corrente = parseFloat(pay);
+    correnteHistorico.push({ t: new Date(), v: compData.corrente });
+    if (correnteHistorico.length > CORRENTE_MAX_PONTOS) correnteHistorico.shift();
+    renderCorrenteChart();
+  }
+  else if (top === '/comp1/status') { compData.status = pay; }
+  else if (top === '/comp1/horimetro') { compData.horimetro = pay; }
+  else if (top === '/comp1/potencia') { compData.potencia = parseFloat(pay); }
+  else if (top === '/comp1/energia') { compData.energia = pay; }
+  else if (top === '/comp1/acionamentos') { compData.acionamentos = parseInt(pay) || 0; }
+  else if (top === '/comp1/alarme_oleo') { try { compData.alarmeOleo = JSON.parse(pay); } catch(e) { compData.alarmeOleo = { ativo: false, mensagem: pay }; } }
+  else if (top === '/comp1/motor/config') {
+    // Mensagem retida publicada pelo Node-RED sempre que os dados de placa são salvos
+    // (e também ao iniciar o flow) - é assim que o formulário é preenchido automaticamente.
+    try { motorConfig = JSON.parse(pay); fillMotorForm(); } catch(e) {}
+  }
+  else if (top === '/comp1/consumo/resposta') {
+    try { consumoHistorico = JSON.parse(pay) || []; renderConsumoChart(); } catch(e) {}
+  }
+  else { return; }
+  renderCompressor();
+}
+
+function renderCompressor() {
+  const elCorrente = document.getElementById('comp-corrente');
+  if (!elCorrente) return; // página ainda não está no DOM ativo desta sessão
+  document.getElementById('comp-potencia').textContent = compData.potencia != null ? compData.potencia.toFixed(2) : '—';
+  elCorrente.textContent = compData.corrente != null ? compData.corrente.toFixed(1) + ' A' : '—';
+  document.getElementById('comp-status').textContent = compData.status || '—';
+  document.getElementById('comp-acionamentos').textContent = compData.acionamentos;
+  document.getElementById('comp-horimetro').textContent = compData.horimetro || '00:00:00';
+  document.getElementById('comp-energia').textContent = compData.energia || '— kWh';
+
+  const alarme = compData.alarmeOleo || { ativo: false, mensagem: '—' };
+  const elOleoTexto = document.getElementById('comp-oleo-texto');
+  elOleoTexto.textContent = alarme.mensagem || '—';
+  elOleoTexto.style.color = alarme.ativo ? 'var(--danger)' : 'var(--text-mid)';
+  const setpoint = parseFloat(motorConfig.setpoint_oleo_horas) || 500;
+  const partes = (compData.horimetro || '00:00:00').split(':');
+  const horasAtuais = partes.length === 3 ? (parseInt(partes[0]) + parseInt(partes[1]) / 60) : 0;
+  const pct = Math.min(100, Math.max(0, (horasAtuais / setpoint) * 100));
+  const elOleoBar = document.getElementById('comp-oleo-bar');
+  elOleoBar.style.width = pct + '%';
+  elOleoBar.style.background = alarme.ativo ? 'var(--danger)' : (pct > 80 ? 'var(--warn)' : 'var(--accent2)');
+}
+
+function fillMotorForm() {
+  document.getElementById('motor-potencia').value = motorConfig.potencia_cv ?? '';
+  document.getElementById('motor-tensao').value = motorConfig.tensao_v ?? '';
+  document.getElementById('motor-corrente').value = motorConfig.corrente_nominal_a ?? '';
+  document.getElementById('motor-fp').value = motorConfig.fator_potencia ?? '';
+  document.getElementById('motor-rendimento').value = motorConfig.rendimento_pct ?? '';
+  document.getElementById('motor-tipo').value = motorConfig.trifasico === false ? 'monofasico' : 'trifasico';
+  document.getElementById('comp-setpoint').value = motorConfig.setpoint_oleo_horas ?? 500;
+}
+
+function saveMotorConfig() {
+  if (!canManageCompressor()) { toast('Permissão negada - apenas admin/dev', 'warn'); return; }
+  const body = {
+    potencia_cv: parseFloat(document.getElementById('motor-potencia').value),
+    tensao_v: parseFloat(document.getElementById('motor-tensao').value),
+    corrente_nominal_a: parseFloat(document.getElementById('motor-corrente').value),
+    fator_potencia: parseFloat(document.getElementById('motor-fp').value) || 0.85,
+    rendimento_pct: parseFloat(document.getElementById('motor-rendimento').value) || 90,
+    trifasico: document.getElementById('motor-tipo').value === 'trifasico',
+    setpoint_oleo_horas: parseFloat(document.getElementById('comp-setpoint').value) || 500
+  };
+  if (!body.potencia_cv || !body.tensao_v || !body.corrente_nominal_a) {
+    toast('Preencha ao menos Potência, Tensão e Corrente Nominal', 'err');
+    return;
+  }
+  // Publica como comando (não retido) - o Node-RED grava no banco e republica
+  // /comp1/motor/config (retido) com o valor confirmado.
+  mqttPublish('/comp1/motor/set', JSON.stringify(body));
+  toast('💾 Dados enviados - aguardando confirmação do compressor...', 'ok');
+}
+
+function resetHorimetro() {
+  if (!canManageCompressor()) { toast('Permissão negada - apenas admin/dev podem resetar', 'warn'); return; }
+  if (!confirm('Confirma zerar o horímetro do compressor?')) return;
+  mqttPublish('/comp1/reset_horimetro', '1');
+  toast('🔄 Comando de reset enviado ao compressor', 'ok');
+}
+
+function resetAcionamentos() {
+  if (!canManageCompressor()) { toast('Permissão negada - apenas admin/dev podem resetar', 'warn'); return; }
+  if (!confirm('Confirma zerar o contador de acionamentos do compressor?')) return;
+  mqttPublish('/comp1/reset_acionamentos', '1');
+  toast('🔄 Comando de reset enviado ao compressor', 'ok');
+}
+
+function renderCorrenteChart() {
+  const canvas = document.getElementById('chart-corrente');
+  if (!canvas || typeof Chart === 'undefined') return;
+  const labels = correnteHistorico.map(r => r.t.toLocaleTimeString('pt-BR'));
+  const valores = correnteHistorico.map(r => r.v);
+  if (correnteChart) { correnteChart.data.labels = labels; correnteChart.data.datasets[0].data = valores; correnteChart.update(); return; }
+  correnteChart = new Chart(canvas, {
+    type: 'line',
+    data: { labels, datasets: [{ label: 'Corrente (A)', data: valores, borderColor: '#ffb800', backgroundColor: 'rgba(255,184,0,.12)', tension: 0.3, pointRadius: 2, fill: true }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#5a7299', maxTicksLimit: 8 }, grid: { color: 'rgba(31,46,69,.4)' } },
+        y: { ticks: { color: '#5a7299' }, grid: { color: 'rgba(31,46,69,.4)' }, beginAtZero: true }
+      }
+    }
+  });
+}
+
+function requestConsumo() {
+  // Solicita ao Node-RED o histórico de consumo; a resposta chega em /comp1/consumo/resposta
+  mqttPublish('/comp1/consumo/consultar', '1');
+}
+
+function renderConsumoChart() {
+  const canvas = document.getElementById('chart-consumo');
+  if (!canvas || typeof Chart === 'undefined') return;
+  const labels = consumoHistorico.map(r => new Date(r.timestamp).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }));
+  const valores = consumoHistorico.map(r => parseFloat(r.energia_kwh_acumulada));
+  if (consumoChart) { consumoChart.data.labels = labels; consumoChart.data.datasets[0].data = valores; consumoChart.update(); return; }
+  consumoChart = new Chart(canvas, {
+    type: 'line',
+    data: { labels, datasets: [{ label: 'Energia Acumulada (kWh)', data: valores, borderColor: '#00d4ff', backgroundColor: 'rgba(0,212,255,.12)', tension: 0.3, pointRadius: 2, fill: true }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#5a7299', maxTicksLimit: 8 }, grid: { color: 'rgba(31,46,69,.4)' } },
+        y: { ticks: { color: '#5a7299' }, grid: { color: 'rgba(31,46,69,.4)' } }
+      }
+    }
+  });
 }
 
 // ==================== CRUD RFID e USUÁRIOS ====================
@@ -866,7 +1112,12 @@ function startApp() {
   if(!canAccessConfig()) document.getElementById('nav-config')?.classList.add('hidden');
   if(!canManageRFID()) document.getElementById('nav-rfid')?.classList.add('hidden');
   if(!canManageUsers()) document.getElementById('nav-users')?.classList.add('hidden');
-  
+
+  // Compressor: campos/botões de edição só para admin/dev
+  const canComp = canManageCompressor();
+  document.querySelectorAll('.compressor-admin-field').forEach(el => { el.disabled = !canComp; });
+  document.querySelectorAll('.compressor-op-only').forEach(el => { el.style.display = canComp ? 'none' : 'block'; });
+
   initMQTT();
   loadRFIDUsers();
   loadHistory();
@@ -885,9 +1136,9 @@ function startApp() {
 
 function toggleTheme() { document.body.classList.toggle('light'); localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); }
 function loadTheme() { const saved = localStorage.getItem('theme'); if(saved === 'light') document.body.classList.add('light'); }
-function updateClock() { const t = new Date().toLocaleTimeString('pt-BR'); document.getElementById('clock').textContent = t; ['clock2','clock3','clock4'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = t; }); }
+function updateClock() { const t = new Date().toLocaleTimeString('pt-BR'); document.getElementById('clock').textContent = t; ['clock2','clock3','clock4','clock5'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = t; }); }
 function toast(msg, type = 'ok') { const el = document.getElementById('toast'); el.textContent = msg; el.className = 'toast ' + type; el.style.display = 'block'; clearTimeout(el._t); el._t = setTimeout(() => el.style.display = 'none', 3000); }
-function nav(id, el) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); document.getElementById(`page-${id}`).classList.add('active'); if(id === 'history') loadHistory(); if(id === 'rfid') loadRFIDUsers(); if(id === 'users') loadSystemUsers(); if(id === 'config' && canAccessConfig()) { renderGroupsList(); renderDevicesTable(); } }
+function nav(id, el) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); document.getElementById(`page-${id}`).classList.add('active'); if(id === 'history') loadHistory(); if(id === 'rfid') loadRFIDUsers(); if(id === 'users') loadSystemUsers(); if(id === 'config' && canAccessConfig()) { renderGroupsList(); renderDevicesTable(); } if(id === 'compressor') { renderCompressor(); fillMotorForm(); requestConsumo(); } }
 
 // Inicialização
 (function() { const saved = sessionStorage.getItem('auth'); if(saved) { try { currentUser = JSON.parse(saved); if(currentUser?.token) { startApp(); return; } } catch(e) {} } document.getElementById('login-screen').style.display = 'flex'; })();

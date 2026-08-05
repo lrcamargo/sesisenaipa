@@ -515,3 +515,263 @@
 08/06/2026 14:38:05 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
 08/06/2026 14:38:06 [INFO] Cache gerado: 9423 registros em 653 datas (0 erros).
 08/06/2026 14:38:06 [INFO] Concluído com sucesso. uid salvo: 2019
+12/06/2026 13:25:03 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+12/06/2026 13:25:04 [INFO] Autenticado com sucesso.
+12/06/2026 13:25:06 [INFO] E-mail encontrado: uid=2072 | 'HorarioSENAI' | Fri, 12 Jun 2026 16:20:00 +0000
+12/06/2026 13:25:06 [INFO] Novo e-mail detectado — baixando anexo...
+12/06/2026 13:25:19 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4617815 bytes)
+12/06/2026 13:25:20 [INFO] Gerando cache de horários...
+12/06/2026 13:25:20 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+12/06/2026 13:25:20 [INFO] 57 abas encontradas.
+12/06/2026 13:25:20 [WARNING] Aba 'AP_PRC_PROD_YOKI_TARDE': sem código — ignorada.
+12/06/2026 13:25:20 [WARNING] Aba 'AP_PRC_PROD_YOKI_MANHA': sem código — ignorada.
+12/06/2026 13:25:20 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+12/06/2026 13:25:20 [WARNING] Aba 'OMEGA': sem código — ignorada.
+12/06/2026 13:25:21 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+12/06/2026 13:25:21 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+12/06/2026 13:25:21 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+12/06/2026 13:25:22 [INFO] Cache gerado: 9439 registros em 653 datas (0 erros).
+12/06/2026 13:25:22 [INFO] Concluído com sucesso. uid salvo: 2072
+12/06/2026 14:05:29 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+12/06/2026 14:05:30 [INFO] Autenticado com sucesso.
+12/06/2026 14:05:31 [INFO] E-mail encontrado: uid=2079 | 'HorarioSENAI' | Fri, 12 Jun 2026 16:52:52 +0000
+12/06/2026 14:05:31 [INFO] Novo e-mail detectado — baixando anexo...
+12/06/2026 14:05:39 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4629004 bytes)
+12/06/2026 14:05:40 [INFO] Gerando cache de horários...
+12/06/2026 14:05:40 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+12/06/2026 14:05:40 [INFO] 57 abas encontradas.
+12/06/2026 14:05:40 [WARNING] Aba 'AP_PRC_PROD_YOKI_TARDE': sem código — ignorada.
+12/06/2026 14:05:40 [WARNING] Aba 'AP_PRC_PROD_YOKI_MANHA': sem código — ignorada.
+12/06/2026 14:05:40 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+12/06/2026 14:05:40 [WARNING] Aba 'OMEGA': sem código — ignorada.
+12/06/2026 14:05:41 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+12/06/2026 14:05:41 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+12/06/2026 14:05:41 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+12/06/2026 14:05:42 [INFO] Cache gerado: 9439 registros em 653 datas (0 erros).
+12/06/2026 14:05:42 [INFO] Concluído com sucesso. uid salvo: 2079
+12/06/2026 14:07:39 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+12/06/2026 14:07:40 [INFO] Autenticado com sucesso.
+12/06/2026 14:07:41 [INFO] E-mail encontrado: uid=2079 | 'HorarioSENAI' | Fri, 12 Jun 2026 16:52:52 +0000
+12/06/2026 14:07:41 [INFO] E-mail já processado (uid=2079). Nada a fazer.
+12/06/2026 14:07:54 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+12/06/2026 14:07:55 [INFO] Autenticado com sucesso.
+12/06/2026 14:07:57 [INFO] E-mail encontrado: uid=2080 | 'HorarioSENAI' | Fri, 12 Jun 2026 17:06:21 +0000
+12/06/2026 14:07:57 [INFO] Novo e-mail detectado — baixando anexo...
+12/06/2026 14:08:05 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4629004 bytes)
+12/06/2026 14:08:06 [INFO] Gerando cache de horários...
+12/06/2026 14:08:06 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+12/06/2026 14:08:06 [INFO] 57 abas encontradas.
+12/06/2026 14:08:06 [WARNING] Aba 'AP_PRC_PROD_YOKI_TARDE': sem código — ignorada.
+12/06/2026 14:08:06 [WARNING] Aba 'AP_PRC_PROD_YOKI_MANHA': sem código — ignorada.
+12/06/2026 14:08:06 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+12/06/2026 14:08:06 [WARNING] Aba 'OMEGA': sem código — ignorada.
+12/06/2026 14:08:07 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+12/06/2026 14:08:07 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+12/06/2026 14:08:07 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+12/06/2026 14:08:08 [INFO] Cache gerado: 9439 registros em 653 datas (0 erros).
+12/06/2026 14:08:08 [INFO] Concluído com sucesso. uid salvo: 2080
+25/06/2026 13:50:40 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+25/06/2026 13:50:41 [INFO] Autenticado com sucesso.
+25/06/2026 13:50:43 [INFO] E-mail encontrado: uid=2299 | 'HorarioSENAI' | Thu, 25 Jun 2026 16:49:50 +0000
+25/06/2026 13:50:43 [INFO] Novo e-mail detectado — baixando anexo...
+25/06/2026 13:50:54 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4626397 bytes)
+25/06/2026 13:50:55 [INFO] Gerando cache de horários...
+25/06/2026 13:50:55 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+25/06/2026 13:50:55 [INFO] 57 abas encontradas.
+25/06/2026 13:50:55 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+25/06/2026 13:50:55 [WARNING] Aba 'OMEGA': sem código — ignorada.
+25/06/2026 13:50:56 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+25/06/2026 13:50:56 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+25/06/2026 13:50:57 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+25/06/2026 13:50:57 [INFO] Cache gerado: 9813 registros em 659 datas (0 erros).
+25/06/2026 13:50:57 [INFO] Concluído com sucesso. uid salvo: 2299
+25/06/2026 13:53:31 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+25/06/2026 13:53:33 [INFO] Autenticado com sucesso.
+25/06/2026 13:53:34 [INFO] E-mail encontrado: uid=2302 | 'HorarioSENAI' | Thu, 25 Jun 2026 16:52:22 +0000
+25/06/2026 13:53:34 [INFO] Novo e-mail detectado — baixando anexo...
+25/06/2026 13:53:47 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4626782 bytes)
+25/06/2026 13:53:47 [INFO] Gerando cache de horários...
+25/06/2026 13:53:47 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+25/06/2026 13:53:48 [INFO] 57 abas encontradas.
+25/06/2026 13:53:48 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+25/06/2026 13:53:48 [WARNING] Aba 'OMEGA': sem código — ignorada.
+25/06/2026 13:53:49 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+25/06/2026 13:53:49 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+25/06/2026 13:53:49 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+25/06/2026 13:53:50 [INFO] Cache gerado: 9813 registros em 659 datas (0 erros).
+25/06/2026 13:53:50 [INFO] Concluído com sucesso. uid salvo: 2302
+25/06/2026 13:54:47 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+25/06/2026 13:54:48 [INFO] Autenticado com sucesso.
+25/06/2026 13:54:49 [INFO] E-mail encontrado: uid=2303 | 'HorarioSENAI' | Thu, 25 Jun 2026 16:53:54 +0000
+25/06/2026 13:54:49 [INFO] Novo e-mail detectado — baixando anexo...
+25/06/2026 13:54:59 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4628119 bytes)
+25/06/2026 13:55:00 [INFO] Gerando cache de horários...
+25/06/2026 13:55:00 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+25/06/2026 13:55:00 [INFO] 57 abas encontradas.
+25/06/2026 13:55:00 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+25/06/2026 13:55:00 [WARNING] Aba 'OMEGA': sem código — ignorada.
+25/06/2026 13:55:01 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+25/06/2026 13:55:01 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+25/06/2026 13:55:01 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+25/06/2026 13:55:02 [INFO] Cache gerado: 9814 registros em 659 datas (0 erros).
+25/06/2026 13:55:02 [INFO] Concluído com sucesso. uid salvo: 2303
+29/06/2026 16:53:46 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+29/06/2026 16:53:48 [INFO] Autenticado com sucesso.
+29/06/2026 16:53:49 [INFO] E-mail encontrado: uid=2389 | 'HorarioSENAI' | Mon, 29 Jun 2026 19:48:19 +0000
+29/06/2026 16:53:49 [INFO] Novo e-mail detectado — baixando anexo...
+29/06/2026 16:53:59 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4746734 bytes)
+29/06/2026 16:53:59 [INFO] Gerando cache de horários...
+29/06/2026 16:53:59 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+29/06/2026 16:54:00 [INFO] 59 abas encontradas.
+29/06/2026 16:54:00 [WARNING] Aba 'QUALF_ELETRICISTA_IND_26': sem código — ignorada.
+29/06/2026 16:54:00 [WARNING] Aba 'QUALF_FERRAMENTARIA_26': sem código — ignorada.
+29/06/2026 16:54:00 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+29/06/2026 16:54:00 [WARNING] Aba 'OMEGA': sem código — ignorada.
+29/06/2026 16:54:00 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+29/06/2026 16:54:00 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+29/06/2026 16:54:01 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+29/06/2026 16:54:01 [INFO] Cache gerado: 9867 registros em 662 datas (0 erros).
+29/06/2026 16:54:01 [INFO] Concluído com sucesso. uid salvo: 2389
+29/06/2026 16:57:05 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+29/06/2026 16:57:07 [INFO] Autenticado com sucesso.
+29/06/2026 16:57:09 [INFO] E-mail encontrado: uid=2391 | 'HorarioSENAI' | Mon, 29 Jun 2026 19:54:34 +0000
+29/06/2026 16:57:09 [INFO] Novo e-mail detectado — baixando anexo...
+29/06/2026 16:57:19 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4756536 bytes)
+29/06/2026 16:57:20 [INFO] Gerando cache de horários...
+29/06/2026 16:57:20 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+29/06/2026 16:57:20 [INFO] 59 abas encontradas.
+29/06/2026 16:57:20 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+29/06/2026 16:57:20 [WARNING] Aba 'OMEGA': sem código — ignorada.
+29/06/2026 16:57:21 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+29/06/2026 16:57:21 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+29/06/2026 16:57:21 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+29/06/2026 16:57:22 [INFO] Cache gerado: 10038 registros em 662 datas (0 erros).
+29/06/2026 16:57:22 [INFO] Concluído com sucesso. uid salvo: 2391
+03/07/2026 08:52:59 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+03/07/2026 08:53:01 [INFO] Autenticado com sucesso.
+03/07/2026 08:53:02 [INFO] E-mail encontrado: uid=2495 | 'HorarioSENAI' | Fri, 3 Jul 2026 11:50:08 +0000
+03/07/2026 08:53:02 [INFO] Novo e-mail detectado — baixando anexo...
+03/07/2026 08:53:15 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4896644 bytes)
+03/07/2026 08:53:15 [INFO] Gerando cache de horários...
+03/07/2026 08:53:16 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+03/07/2026 08:53:16 [INFO] 61 abas encontradas.
+03/07/2026 08:53:16 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+03/07/2026 08:53:16 [WARNING] Aba 'OMEGA': sem código — ignorada.
+03/07/2026 08:53:17 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+03/07/2026 08:53:17 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+03/07/2026 08:53:17 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+03/07/2026 08:53:18 [INFO] Cache gerado: 10154 registros em 662 datas (0 erros).
+03/07/2026 08:53:18 [INFO] Concluído com sucesso. uid salvo: 2495
+05/07/2026 14:30:51 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+05/07/2026 14:30:52 [INFO] Autenticado com sucesso.
+05/07/2026 14:30:53 [INFO] E-mail encontrado: uid=2504 | 'HorarioSENAI' | Fri, 3 Jul 2026 20:01:12 +0000
+05/07/2026 14:30:53 [INFO] Novo e-mail detectado — baixando anexo...
+05/07/2026 14:31:02 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4896916 bytes)
+05/07/2026 14:31:02 [INFO] Gerando cache de horários...
+05/07/2026 14:31:02 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+05/07/2026 14:31:03 [INFO] 61 abas encontradas.
+05/07/2026 14:31:03 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+05/07/2026 14:31:03 [WARNING] Aba 'OMEGA': sem código — ignorada.
+05/07/2026 14:31:04 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+05/07/2026 14:31:04 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+05/07/2026 14:31:04 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+05/07/2026 14:31:05 [INFO] Cache gerado: 10154 registros em 662 datas (0 erros).
+05/07/2026 14:31:05 [INFO] Concluído com sucesso. uid salvo: 2504
+09/07/2026 10:01:08 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+09/07/2026 10:01:15 [INFO] Autenticado com sucesso.
+09/07/2026 10:01:16 [INFO] E-mail encontrado: uid=2528 | 'HorarioSENAI' | Wed, 8 Jul 2026 20:48:24 +0000
+09/07/2026 10:01:16 [INFO] Novo e-mail detectado — baixando anexo...
+09/07/2026 10:01:26 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4890805 bytes)
+09/07/2026 10:01:26 [INFO] Gerando cache de horários...
+09/07/2026 10:01:26 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+09/07/2026 10:01:27 [INFO] 61 abas encontradas.
+09/07/2026 10:01:27 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+09/07/2026 10:01:27 [WARNING] Aba 'OMEGA': sem código — ignorada.
+09/07/2026 10:01:28 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+09/07/2026 10:01:28 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+09/07/2026 10:01:28 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+09/07/2026 10:01:29 [INFO] Cache gerado: 10154 registros em 662 datas (0 erros).
+09/07/2026 10:01:29 [INFO] Concluído com sucesso. uid salvo: 2528
+13/07/2026 14:23:13 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+13/07/2026 14:23:14 [INFO] Autenticado com sucesso.
+13/07/2026 14:23:15 [INFO] E-mail encontrado: uid=2537 | 'HorarioSENAI' | Mon, 13 Jul 2026 17:21:50 +0000
+13/07/2026 14:23:15 [INFO] Novo e-mail detectado — baixando anexo...
+13/07/2026 14:23:19 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4890290 bytes)
+13/07/2026 14:23:20 [INFO] Gerando cache de horários...
+13/07/2026 14:23:20 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+13/07/2026 14:23:20 [INFO] 61 abas encontradas.
+13/07/2026 14:23:20 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+13/07/2026 14:23:20 [WARNING] Aba 'OMEGA': sem código — ignorada.
+13/07/2026 14:23:21 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+13/07/2026 14:23:21 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+13/07/2026 14:23:21 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+13/07/2026 14:23:22 [INFO] Cache gerado: 10154 registros em 662 datas (0 erros).
+13/07/2026 14:23:22 [INFO] Concluído com sucesso. uid salvo: 2537
+13/07/2026 14:23:32 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+13/07/2026 14:23:33 [INFO] Autenticado com sucesso.
+13/07/2026 14:23:34 [INFO] E-mail encontrado: uid=2537 | 'HorarioSENAI' | Mon, 13 Jul 2026 17:21:50 +0000
+13/07/2026 14:23:34 [INFO] E-mail já processado (uid=2537). Nada a fazer.
+23/07/2026 14:32:12 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+23/07/2026 14:32:14 [INFO] Autenticado com sucesso.
+23/07/2026 14:32:15 [INFO] E-mail encontrado: uid=2674 | 'HorarioSENAI' | Thu, 23 Jul 2026 17:27:34 +0000
+23/07/2026 14:32:15 [INFO] Novo e-mail detectado — baixando anexo...
+23/07/2026 14:32:21 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4918499 bytes)
+23/07/2026 14:32:22 [INFO] Gerando cache de horários...
+23/07/2026 14:32:22 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+23/07/2026 14:32:22 [INFO] 61 abas encontradas.
+23/07/2026 14:32:23 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+23/07/2026 14:32:23 [WARNING] Aba 'OMEGA': sem código — ignorada.
+23/07/2026 14:32:23 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+23/07/2026 14:32:23 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+23/07/2026 14:32:24 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+23/07/2026 14:32:24 [INFO] Cache gerado: 10218 registros em 658 datas (0 erros).
+23/07/2026 14:32:24 [INFO] Concluído com sucesso. uid salvo: 2674
+30/07/2026 15:36:23 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+30/07/2026 15:36:25 [INFO] Autenticado com sucesso.
+30/07/2026 15:36:26 [INFO] E-mail encontrado: uid=2756 | 'HorarioSENAI' | Thu, 30 Jul 2026 18:35:45 +0000
+30/07/2026 15:36:26 [INFO] Novo e-mail detectado — baixando anexo...
+30/07/2026 15:36:37 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (5220905 bytes)
+30/07/2026 15:36:37 [INFO] Gerando cache de horários...
+30/07/2026 15:36:37 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+30/07/2026 15:36:38 [INFO] 62 abas encontradas.
+30/07/2026 15:36:38 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+30/07/2026 15:36:38 [WARNING] Aba 'OMEGA': sem código — ignorada.
+30/07/2026 15:36:39 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+30/07/2026 15:36:39 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+30/07/2026 15:36:39 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+30/07/2026 15:36:40 [INFO] Cache gerado: 10288 registros em 658 datas (0 erros).
+30/07/2026 15:36:40 [INFO] Concluído com sucesso. uid salvo: 2756
+30/07/2026 15:36:41 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+30/07/2026 15:36:43 [INFO] Autenticado com sucesso.
+30/07/2026 15:36:45 [INFO] E-mail encontrado: uid=2756 | 'HorarioSENAI' | Thu, 30 Jul 2026 18:35:45 +0000
+30/07/2026 15:36:45 [INFO] E-mail já processado (uid=2756). Nada a fazer.
+31/07/2026 14:23:09 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+31/07/2026 14:23:11 [INFO] Autenticado com sucesso.
+31/07/2026 14:23:12 [INFO] E-mail encontrado: uid=2834 | 'HorarioSENAI' | Fri, 31 Jul 2026 17:21:45 +0000
+31/07/2026 14:23:12 [INFO] Novo e-mail detectado — baixando anexo...
+31/07/2026 14:23:23 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4915858 bytes)
+31/07/2026 14:23:23 [INFO] Gerando cache de horários...
+31/07/2026 14:23:23 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+31/07/2026 14:23:24 [INFO] 61 abas encontradas.
+31/07/2026 14:23:24 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+31/07/2026 14:23:24 [WARNING] Aba 'OMEGA': sem código — ignorada.
+31/07/2026 14:23:25 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+31/07/2026 14:23:25 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+31/07/2026 14:23:25 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+31/07/2026 14:23:26 [INFO] Cache gerado: 10190 registros em 658 datas (0 erros).
+31/07/2026 14:23:26 [INFO] Concluído com sucesso. uid salvo: 2834
+02/08/2026 15:40:17 [INFO] Conectando ao Gmail IMAP (orion.sspa@gmail.com)...
+02/08/2026 15:40:18 [INFO] Autenticado com sucesso.
+02/08/2026 15:40:19 [INFO] E-mail encontrado: uid=2835 | 'HorarioSENAI' | Fri, 31 Jul 2026 19:52:32 +0000
+02/08/2026 15:40:19 [INFO] Novo e-mail detectado — baixando anexo...
+02/08/2026 15:40:32 [INFO] Anexo '/HORÁRIOS- 2026-V3.xlsm' salvo em /var/www/html/data/horarios.xlsm (4916578 bytes)
+02/08/2026 15:40:32 [INFO] Gerando cache de horários...
+02/08/2026 15:40:32 [INFO] Lendo Excel: /var/www/html/data/horarios.xlsm
+02/08/2026 15:40:32 [INFO] 61 abas encontradas.
+02/08/2026 15:40:33 [WARNING] Aba 'TECNICO_INSTRUMENTACAO': sem código — ignorada.
+02/08/2026 15:40:33 [WARNING] Aba 'OMEGA': sem código — ignorada.
+02/08/2026 15:40:33 [WARNING] Aba 'TEC_MECATRONICA_01_PB': sem código — ignorada.
+02/08/2026 15:40:33 [WARNING] Aba 'SEGUNDO_OMEGA': sem código — ignorada.
+02/08/2026 15:40:34 [WARNING] Aba 'AP_PCP_MEIODOANO': sem código — ignorada.
+02/08/2026 15:40:34 [INFO] Cache gerado: 10190 registros em 658 datas (0 erros).
+02/08/2026 15:40:34 [INFO] Concluído com sucesso. uid salvo: 2835

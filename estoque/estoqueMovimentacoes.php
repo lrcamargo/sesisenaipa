@@ -87,11 +87,21 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['acao'])){
                 exit;
             }
             // Cria novo item no setor destino
+            $pdo->beginTransaction();
             $pdo->prepare("INSERT INTO estoque_itens (idLaboratorio,descricao,idUnidade,estoqueMinimo) VALUES (?,?,?,?)")
                 ->execute([$idLabDestino, $orig['descricao'], $orig['idUnidade'], $orig['estoqueMinimo']]);
             $idNovo = $pdo->lastInsertId();
+            // Cria movimentação inicial com saldo zero para que o item passe a
+            // aparecer em v_estoque_saldo (a view depende de existir ao menos
+            // 1 registro em estoque_movimentacoes para calcular o saldo).
+            $pdo->prepare("
+                INSERT INTO estoque_movimentacoes (idItem,tipo,quantidade,saldoApos,observacao)
+                VALUES (?, 'inventario', 0, 0, 'Vínculo automático - item já cadastrado em outro setor')
+            ")->execute([$idNovo]);
+            $pdo->commit();
             echo json_encode(['ok'=>true,'idNovoItem'=>$idNovo]);
         } catch(PDOException $e){
+            if($pdo->inTransaction()) $pdo->rollBack();
             echo json_encode(['ok'=>false,'msg'=>'Erro ao vincular: '.$e->getMessage()]);
         }
         exit;
@@ -117,6 +127,7 @@ if($idLabSel){
     $st = $pdo->prepare("SELECT * FROM v_estoque_saldo WHERE idLaboratorio=? ORDER BY descricao");
     $st->execute([$idLabSel]);
     $itens = $st->fetchAll(PDO::FETCH_ASSOC);
+     //if(isset($_GET['debug'])){ echo '<pre>IDs retornados: '; print_r(array_column($itens,'id')); exit; }
 }
 
 // Seleciona primeiro item se nenhum selecionado
@@ -231,6 +242,8 @@ $tiposLabels = [
 .form-tipo-btn.sel-saida  {border-color:#dc3545;background:#f8d7da;color:#721c24;}
 .form-tipo-btn.sel-ajuste {border-color:#ffc107;background:#fff3cd;color:#664d03;}
 .form-tipo-btn.sel-inventario{border-color:#0dcaf0;background:#cff4fc;color:#055160;}
+.contexto-mov{background:#e7f1ff;border:1px solid #b6d4fe;border-radius:6px;padding:8px 10px;
+    font-size:.78rem;margin-bottom:12px;display:none;color:#084298;}
 </style>
 </head>
 <body>
@@ -334,13 +347,13 @@ $tiposLabels = [
 <script>
 var _alertasPorSetor = <?php
     $js = [];
-    foreach($alertasPorSetor as $setor => $itens){
+    foreach($alertasPorSetor as $setor => $itensAlertaSetor){
         $js[$setor] = array_map(fn($a)=>[
             'descricao'    => $a['descricao'],
             'saldoAtual'   => $a['saldoAtual'],
             'estoqueMinimo'=> $a['estoqueMinimo'],
             'unidadeAbv'   => $a['unidadeAbv'],
-        ], $itens);
+        ], $itensAlertaSetor);
     }
     echo json_encode($js, JSON_UNESCAPED_UNICODE);
 ?>;
@@ -549,20 +562,21 @@ var _alertasTodos = <?php echo json_encode(array_map(fn($a)=>[
         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
     </div>
     <div class="modal-body">
+        <div class="contexto-mov" id="mContexto"></div>
         <!-- Seletor de tipo -->
         <div class="mb-3">
             <label class="font-weight-bold d-block mb-2" style="font-size:.82rem">Tipo <span class="text-danger">*</span></label>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <button type="button" class="form-tipo-btn" onclick="selTipo('entrada',this)">
+                <button type="button" class="form-tipo-btn" data-tipo="entrada" onclick="selTipo('entrada',this)">
                     <i class="fas fa-arrow-down mr-1"></i>Entrada
                 </button>
-                <button type="button" class="form-tipo-btn" onclick="selTipo('saida',this)">
+                <button type="button" class="form-tipo-btn" data-tipo="saida" onclick="selTipo('saida',this)">
                     <i class="fas fa-arrow-up mr-1"></i>Saída
                 </button>
-                <button type="button" class="form-tipo-btn" onclick="selTipo('ajuste',this)">
+                <button type="button" class="form-tipo-btn" data-tipo="ajuste" onclick="selTipo('ajuste',this)">
                     <i class="fas fa-balance-scale mr-1"></i>Ajuste
                 </button>
-                <button type="button" class="form-tipo-btn" onclick="selTipo('inventario',this)">
+                <button type="button" class="form-tipo-btn" data-tipo="inventario" onclick="selTipo('inventario',this)">
                     <i class="fas fa-clipboard-list mr-1"></i>Inventário
                 </button>
             </div>
@@ -619,15 +633,7 @@ var _alertasTodos = <?php echo json_encode(array_map(fn($a)=>[
 var _idItemSel = <?php echo $idItemSel ?: 0; ?>;
 var _idLabSel  = <?php echo $idLabSel  ?: 0; ?>;
 var _labSelNome = <?php echo json_encode($labSelNome); ?>;
-var _todosItens = <?php
-    $todosItensAll = $pdo->query("
-        SELECT i.id, i.idLaboratorio, i.descricao, l.nome AS laboratorio
-        FROM estoque_itens i
-        JOIN laboratorios l ON l.idLaboratorio=i.idLaboratorio
-        WHERE i.ativo=1 ORDER BY i.descricao
-    ")->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($todosItensAll, JSON_UNESCAPED_UNICODE);
-?>;
+
 /* Todos os itens de todos os setores para busca cross-setor */
 var _todosItens = <?php
     $todosItens = $pdo->query("
@@ -639,7 +645,6 @@ var _todosItens = <?php
     ")->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($todosItens, JSON_UNESCAPED_UNICODE);
 ?>;
-var _labSelNome = <?php echo json_encode($labSelNome); ?>;
 
 /* ── Gráfico de consumo ── */
 <?php if(!empty($consumoMensal)): ?>
@@ -684,7 +689,25 @@ var _tipoDescs = {
     inventario: 'Define o saldo real atual — substitui o valor calculado.'
 };
 
-function abrirMovimentacao(){
+function aplicarTipo(tipo){
+    _tipoSel = tipo;
+    document.getElementById('mTipo').value = tipo;
+    document.getElementById('mTipoInfo').textContent = _tipoDescs[tipo] || '';
+    document.querySelectorAll('.form-tipo-btn').forEach(function(b){
+        b.className = 'form-tipo-btn' + (b.dataset.tipo === tipo ? ' sel-' + tipo : '');
+    });
+    // Custo só faz sentido na entrada
+    document.getElementById('mCustoWrap').style.display = tipo === 'entrada' ? '' : 'none';
+    // Label da quantidade
+    document.getElementById('mQtdLabel').textContent = tipo === 'inventario' ? '(novo saldo total)' : '';
+}
+
+function selTipo(tipo, btn){
+    aplicarTipo(tipo);
+}
+
+function abrirMovimentacao(idItemForcado, contextoTexto){
+    _idItemSel = idItemForcado || <?php echo $idItemSel ?: 0; ?>;
     _tipoSel='';
     document.getElementById('mTipo').value='';
     document.getElementById('mTipoInfo').textContent='';
@@ -695,20 +718,14 @@ function abrirMovimentacao(){
     document.querySelectorAll('.form-tipo-btn').forEach(b=>{
         b.className='form-tipo-btn';
     });
+    var ctx = document.getElementById('mContexto');
+    if(contextoTexto){
+        ctx.innerHTML = '<i class="fas fa-info-circle mr-1"></i>' + contextoTexto;
+        ctx.style.display = '';
+    } else {
+        ctx.style.display = 'none';
+    }
     $('#modalMov').modal('show');
-}
-
-function selTipo(tipo, btn){
-    _tipoSel = tipo;
-    document.getElementById('mTipo').value = tipo;
-    document.getElementById('mTipoInfo').textContent = _tipoDescs[tipo] || '';
-    document.querySelectorAll('.form-tipo-btn').forEach(b=>b.className='form-tipo-btn');
-    btn.classList.add('sel-'+tipo);
-    // Custo só faz sentido na entrada
-    document.getElementById('mCustoWrap').style.display = tipo==='entrada' ? '' : 'none';
-    // Label da quantidade
-    var label = tipo==='inventario' ? '(novo saldo total)' : '';
-    document.getElementById('mQtdLabel').textContent = label;
 }
 // Esconde custo inicialmente
 document.getElementById('mCustoWrap').style.display='none';
@@ -753,20 +770,21 @@ function filtrarItens(q){
                 && String(it.idLaboratorio) !== String(_idLabSel);
         });
         if(outros.length > 0){
-            var html = '<strong>Não encontrado neste setor.</strong> Encontrado em:<br>';
+            var html = '';
             outros.slice(0,5).forEach(function(it){
                 html += '<div style="margin-top:6px;padding-top:6px;border-top:1px solid #ffe0b2">'
-                    +'<span style="color:#e65100;font-weight:600">'+esc(it.descricao)+'</span>'
-                    +' — <em>'+esc(it.laboratorio)+'</em><br>'
-                    +'<button class="btn btn-outline-warning btn-sm mt-1 mr-1" style="font-size:.7rem"'
-                    +'  onclick="vincularItem('+it.id+','+it.idLaboratorio+',''+escJS(it.descricao)+'',''+escJS(it.laboratorio)+'')">'
-                    +'  <i class="fas fa-link mr-1"></i>Vincular a este setor também'
-                    +'</button>'
-                    +'<button class="btn btn-outline-primary btn-sm mt-1" style="font-size:.7rem"'
-                    +'  onclick="movimentarOutroSetor('+it.id+',''+escJS(it.descricao)+'',''+escJS(it.laboratorio)+'')">'
-                    +'  <i class="fas fa-exchange-alt mr-1"></i>Entrada no setor original'
-                    +'</button>'
-                    +'</div>';
+                    + '<strong>"' + esc(it.descricao) + '"</strong> não está cadastrado no setor selecionado '
+                    + '(<em>' + esc(_labSelNome) + '</em>). Ele já existe em <em>' + esc(it.laboratorio) + '</em>.'
+                    + '<div style="margin-top:6px">'
+                    + '<button class="btn btn-outline-warning btn-sm mr-1" style="font-size:.7rem" '
+                    + 'onclick="vincularItem(' + it.id + ',' + it.idLaboratorio + ')">'
+                    + '<i class="fas fa-link mr-1"></i>Adicionar ao setor novo (' + esc(_labSelNome) + ')'
+                    + '</button>'
+                    + '<button class="btn btn-outline-primary btn-sm" style="font-size:.7rem" '
+                    + 'onclick="movimentarOutroSetor(' + it.id + ',\'' + escJS(it.descricao) + '\',\'' + escJS(it.laboratorio) + '\')">'
+                    + '<i class="fas fa-exchange-alt mr-1"></i>Dar entrada no setor onde já existe (' + esc(it.laboratorio) + ')'
+                    + '</button>'
+                    + '</div></div>';
             });
             crossMsg.innerHTML = html;
             crossMsg.style.display = '';
@@ -779,9 +797,8 @@ function filtrarItens(q){
     }
 }
 
-function vincularItem(idItem, idLabOrigem, descricao, labOrigem){
-    if(!confirm('Vincular "'+descricao+'" ('+labOrigem+') a este setor também?
-Um novo registro será criado com saldo inicial zero.')) return;
+function vincularItem(idItem, idLabOrigem){
+    if(!confirm('Adicionar este item também ao setor "'+_labSelNome+'"? Ele será criado com saldo inicial zero, mantendo o cadastro original intacto.')) return;
     var fd = new FormData();
     fd.append('acao','vincular_item');
     fd.append('idItemOrigem', idItem);
@@ -795,12 +812,14 @@ Um novo registro será criado com saldo inicial zero.')) return;
 }
 
 function movimentarOutroSetor(idItem, descricao, labOrigem){
-    if(!confirm('Dar entrada de "'+descricao+'" no setor original ('+labOrigem+')?')) return;
-    _idItemSel = idItem;
-    abrirMovimentacao();
+    var contexto = 'Esta movimentação será registrada para <strong>"'+esc(descricao)+'"</strong> no setor original: <strong>'+esc(labOrigem)+'</strong>.';
+    abrirMovimentacao(idItem, contexto);
     document.getElementById('buscaItem').value = '';
     document.getElementById('crossSetorMsg').style.display = 'none';
     document.querySelectorAll('#listaItens a').forEach(function(card){ card.style.display='block'; });
+    // Pré-seleciona "entrada", já que normalmente é o caso de uso (reposição vinda de outro setor)
+    var btnEntrada = document.querySelector('.form-tipo-btn[data-tipo="entrada"]');
+    if(btnEntrada) selTipo('entrada', btnEntrada);
 }
 
 function escJS(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }

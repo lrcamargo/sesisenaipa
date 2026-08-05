@@ -189,7 +189,8 @@
                                 </a>";
                         }*/
                      if($nivelNorm === 'instrutor'){
-                        echo "<a href='gestaoTurmas/meuHorario.php' class='btn-atalho' 
+                        //echo "<a href='gestaoTurmas/meuHorario.php' class='btn-atalho' 
+                        echo "<a href='manutencao.html' class='btn-atalho' 
                         style='background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff' title='Ver meu calendário de aulas'>
                                   <i class='fas fa-calendar-alt'></i>
                                   <center>
@@ -237,8 +238,7 @@
                      * Containers por nível (nivelNorm).
                      */
                     if($nivelNorm === 'professor'){
-                        // include('./atividades/professor.php');
-
+                        include('containers/professoresContainer.php');
                     } elseif($nivelNorm === 'instrutor'){
                         include('containers/instrutoresContainer.php');
                     } elseif($nivelNorm === 'sup tecnica'){
